@@ -1,0 +1,277 @@
+.al_mx-auto {
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.al_login_container {
+    height: 100%;
+    font-size: 15px;
+    line-height: 1.5;
+
+    form {
+        height: 100%;
+
+        .al_login_section {
+            height: 100%;
+
+            .al_left_login {
+                background: url('../../images/alfredlogin.jpg') no-repeat center #F5F7F9;
+                background-size: cover;
+                padding: 0;
+
+                a {
+                    position: absolute;
+                    top: 50px;
+                    left: 40px;
+                }
+
+                img {
+                    height: 65px;
+                }
+
+                .wd-flex-center {
+                    justify-content: center;
+
+                    .al_sub_heading {
+                        font-size: 20px;
+                        margin-top: 15px;
+                    }
+                }
+
+                .al_login-header {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                }
+            }
+
+            .al_login-right {
+                padding: 3% 8%;
+                background-color: #ffffff;
+
+                .al_65 {
+                    width: 65%;
+                    justify-content: center;
+                }
+
+                .al_login-form {
+                    margin-top: 10px;
+
+                    &.wflexScroll {
+                        flex: 0 1 auto;
+                        padding-right: 5px;
+                    }
+
+                    div {
+                        i {
+                            position: absolute;
+                            top: 12px;
+                            font-size: 20px;
+                            color: #78889B;
+                            left: 15px;
+                        }
+                    }
+                }
+
+                .al_registrationform {
+
+                    .al_otpfields {
+                        margin-top: 40px;
+                        margin-bottom: 40px;
+                        justify-content: center;
+
+                        .col {
+                            max-width: 65px;
+                            height: 55px;
+
+                            input {
+                                font-size: 20px;
+                                height: 55px;
+                                border-radius: 12px !important;
+                                border: 1px solid #B9C4D2;
+
+                                &:focus {
+                                    border: 1px solid #429DAD;
+                                    box-shadow: 0 0 20px rgba(186, 254, 246, 0.6) !important;
+                                }
+                            }
+                        }
+                    }
+
+                    textarea.form-control {
+                        height: auto;
+                        max-height: 150px !important;
+                    }
+                }
+
+                .al_login_button {
+                    background-color: #04C1D6;
+                    width: 100%;
+                    border-radius: 15px;
+                    padding: 10px 20px;
+                    color: #ffffff;
+                    border: 1px solid #04C1D6;
+                    font-weight: 500;
+                    font-size: 14px;
+
+                    &:hover {
+                        background: #039fb1;
+                    }
+                }
+
+                .al_signinbuttons {
+                    background-color: #FFFFFF;
+                    width: 100%;
+                    border-radius: 15px;
+                    padding: 12px 20px;
+                    color: #1F1F21;
+                    border: 1px solid #B9C4D2;
+                    font-weight: 500;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 15px;
+
+                    &:hover {
+                        background: #f4feff;
+                    }
+
+                    i {
+                        margin-right: 12px;
+                        font-size: 1rem;
+                    }
+                }
+
+                .al_login_button_back {
+                    border: 1px solid #F3F8FC;
+                    background-color: #F3F8FC;
+                    color: #566170;
+                    border-radius: 15px;
+                    padding: 10px 20px;
+                    width: 100%;
+                    font-weight: 400;
+
+                    a {
+                        color: #566170 !important;
+                    }
+
+                    strong {
+                        color: #1C77CA;
+                        font-weight: 600;
+                    }
+
+                    &:hover {
+                        background: #ecf6fd;
+                    }
+                }
+
+                .wflex-items-center {
+                    display: flex;
+                    justify-content: center;
+
+                    .al_login_footer {
+                        text-align: center;
+                        font-size: 14px;
+
+                        .al_forgot_pw {
+                            float: right;
+                            margin-bottom: 20px;
+                            font-size: 12px;
+                        }
+
+                        .alhr-or {
+                            position: relative;
+                            max-width: 100%;
+                            margin: 20px auto;
+                            text-align: center;
+                            color: #1F1F21;
+
+                            &:before {
+                                content: " ";
+                                display: block;
+                                height: 1px;
+                                width: 42%;
+                                position: absolute;
+                                top: 50%;
+                                left: 0;
+                                background: #B9C4D2;
+                            }
+
+                            &:after {
+                                content: " ";
+                                height: 1px;
+                                width: 42%;
+                                background: #B9C4D2;
+                                display: block;
+                                position: absolute;
+                                top: 50%;
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+
+                h5 {
+                    font-size: 20px;
+                    color: #1C2C3C;
+                    font-weight: 600;
+                }
+
+                .planscard {
+                    flex-wrap: nowrap;
+                    line-height: normal;
+
+                    .card {
+                        border: none !important;
+                        margin-bottom: 15px;
+                    }
+
+                    h6 {
+                        font-weight: 500;
+                        font-size: 13px;
+                    }
+
+                    span {
+                        font-size: 11px;
+                    }
+
+                    .form-check-label {
+                        width: 100%;
+                        justify-content: space-between;
+                    }
+
+                    .col-sm-10 {
+                        &:nth-of-type(1) {
+                            .card {
+                                background-color: #FEFBEB;
+                            }
+                        }
+
+                        &:nth-of-type(2) {
+                            .card {
+                                background-color: #E9E8FF;
+                            }
+                        }
+
+                        &:nth-of-type(3) {
+                            .card {
+                                background-color: #DDF2F0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

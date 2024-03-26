@@ -12,6 +12,14 @@
     font-size: 13px;
 }
 
+.al_chatbot {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 9;
+}
+
 .cs_mainsearch {
     form {
         position: relative;
@@ -23,7 +31,7 @@
         input {
             padding: 8px 15px;
             border-radius: 25px;
-            max-width: 250px;
+            max-width: 15vw;
             outline: none;
             transition: all 0.3s ease;
             border: 1px solid rgba(48, 123, 196, 0.5);

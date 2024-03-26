@@ -220,7 +220,7 @@ export default function HomeStyle3() {
   return (
     <>
       <HeroStyle3
-        title="Your navigator in journey of Atrial fibrillation"
+        title="Hi, Iam Alfred your navigator and health coach"
         subTitle="What do you want to accomplish?"
         bgUrl="/images/home_3/hero_bg.svg"
         imgUrl="/images/home_3/hero_img_1.png"

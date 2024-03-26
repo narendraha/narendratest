@@ -22,7 +22,7 @@
 
 .cs_toolbox {
   display: flex;
-  gap: 40px;
+  gap: 25px;
   align-items: center;
 
   .cs_toolbox_btn {
@@ -340,7 +340,7 @@
   display: inline-block;
 
   img {
-    height: 65px;
+    height: 60px;
   }
 }
 
@@ -389,7 +389,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px 70px;
+      gap: 20px 35px;
     }
   }
 
@@ -415,7 +415,7 @@
 
           +div {
             a {
-              font-size: 14px;
+              font-size: 13px;
             }
           }
         }
@@ -434,7 +434,7 @@
           position: relative;
           height: inherit;
           align-items: center;
-          font-size: 14px;
+          font-size: 13px;
         }
 
         >ul {

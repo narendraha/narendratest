@@ -1,0 +1,10 @@
+node_modules
+build
+BACKUP
+RELEASES
+src/pages/Clerk/.DS_Store
+src/pages/.DS_Store
+src/.DS_Store
+.DS_Store
+*.zip
+*.rar

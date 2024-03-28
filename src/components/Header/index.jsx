@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import DropDown from './DropDown';
 import SocialWidget from '../Widget/SocialWidget';
 import Newsletter from '../Widget/Newsletter';
 import IconBoxStyle11 from '../IconBox/IconBoxStyle11';
 import Spacing from '../Spacing';
 
+
 export default function Header({ logoSrc, variant }) {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   const [sideNav, setSideNav] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,7 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '1',
       name: 'Home',
-      link: '/'
+      link: ''
     },
     {
       moduleId: '6',
@@ -40,7 +42,7 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '2',
       name: 'Disease Journey',
-      link: '/',
+      link: '/affaq',
       subModules: [
         { id: "1", name: "AF FAQ's", link: 'affaq' },
         { id: "2", name: "Symptoms", link: 'symptoms' },
@@ -79,7 +81,7 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '3',
       name: 'Disease Tasks',
-      link: '/',
+      link: '/appointments',
       subModules: [
         { id: "1", name: "Appointments", link: 'appointments' },
         { id: "2", name: "Pharmacy", link: 'pharmacy' },
@@ -89,7 +91,7 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '4',
       name: 'Ecosystem Partners',
-      link: '/',
+      link: '/healthplan',
       subModules: [
         { id: "1", name: "Health Plan", link: 'healthplan' },
         { id: "2", name: "Accountable Care Organization", link: 'aco' },
@@ -125,24 +127,24 @@ export default function Header({ logoSrc, variant }) {
                     {homemenuData.map((menu, index) => {
                       return <React.Fragment key={index}>
                         <li className={menu.subModules?.length > 0 ? 'menu-item-has-children' : ''}>
-                          <Link to={menu.link}>{menu.name}</Link>
+                          <Link to={menu.link} className={(location.pathname === '/' + menu.link ? 'active' : '')}>{menu.name}</Link>
                           {menu.subModules?.length > 0 &&
                             <DropDown>
                               <ul>
                                 {menu.subModules.map((submenu, index) => {
                                   return <li key={index}>
-                                    {!submenu.innerModules && <Link to={submenu.link}>{submenu.name}</Link>}
+                                    {!submenu.innerModules && <Link to={submenu.link} className={(location.pathname === '/' + submenu.link ? 'active' : '')}>{submenu.name}</Link>}
                                     {submenu.innerModules?.length > 0 && <>
                                       <div className='cs_nav_innersubmenu'>{submenu.name}</div>
                                       <div className='px-3'>
                                         {submenu.innerModules?.map((innermenu, index) => {
                                           return <React.Fragment key={index}>
-                                            {!innermenu.innersubModules && <Link to={innermenu.link} key={index}>{innermenu.name}</Link>}
+                                            {!innermenu.innersubModules && <Link to={innermenu.link} className={(location.pathname === '/' + innermenu.link ? 'active' : '')} key={index}>{innermenu.name}</Link>}
                                             {innermenu.innersubModules?.length > 0 && <>
                                               <div className='cs_nav_innersubmenu'>{innermenu.name}</div>
                                               <div className='px-3'>
                                                 {innermenu.innersubModules?.map((innersubmenu, index) => {
-                                                  return <Link to={innersubmenu.link} key={index}>{innersubmenu.name}</Link>
+                                                  return <Link to={innersubmenu.link} key={index} className={(location.pathname === '/' + innersubmenu.link ? 'active' : '')}>{innersubmenu.name}</Link>
                                                 })}
                                               </div>
                                             </>
@@ -175,17 +177,17 @@ export default function Header({ logoSrc, variant }) {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
-                  <div className='cs_mainsearch'>
+                  {/*  <div className='cs_mainsearch'>
                     <form action="#">
                       <input
                         type="text"
                         placeholder="Enter Text"
                       />
-                      {/* <button className="cs_btn cs_style_1">
+                     <button className="cs_btn cs_style_1">
                         <span><i className='icon_alfred_speech' style={{ height: "auto" }}></i></span>
-                      </button> */}
+                      </button> 
                     </form>
-                  </div>
+                  </div>*/}
                   <Link to="/signin">Sign In</Link>
 
                   <button

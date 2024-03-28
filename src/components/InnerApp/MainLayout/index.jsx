@@ -4,6 +4,7 @@ import Topbar from './Topbar';
 import SideNav from './SideNav';
 import LayoutAlertMessage from './LayoutAlertMessage';
 import ConfirmationAction from './ConfirmationAction';
+import ChatBotAuth from '../ChatBotAuth';
 
 export default function MainLayout() {
     
@@ -13,6 +14,7 @@ export default function MainLayout() {
         <div className='al_site_container'>
             {/* <LayoutAlertMessage /> */}
             {/* <ConfirmationAction /> */}
+            <ChatBotAuth />
             <div className='wflexLayout flex-row position-relative'>
                 <SideNav isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
                 <div className='al_right_container'>

@@ -220,6 +220,31 @@
   }
 }
 
+.cs_mainsearch {
+  form {
+    position: relative;
+
+    span {
+      line-height: 0;
+    }
+
+    input {
+      padding: 8px 15px;
+      border-radius: 25px;
+      outline: none;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(48, 123, 196, 0.5);
+    }
+
+    button.cs_btn {
+      position: absolute !important;
+      top: 0;
+      right: 0;
+      padding: 12px;
+    }
+  }
+}
+
 .cs_header_search {
   position: fixed;
   top: 0;
@@ -409,13 +434,13 @@
         height: inherit;
 
         .cs_nav_innersubmenu {
-          font-size: 15px;
+          font-size: 12px;
           margin-top: 5px;
-          color: #404567;
+          color: #9d9fad;
 
           +div {
             a {
-              font-size: 13px;
+              font-size: 1vw;
             }
           }
         }
@@ -434,7 +459,12 @@
           position: relative;
           height: inherit;
           align-items: center;
-          font-size: 13px;
+          font-size: 0.9vw;
+          color: #47474C;
+
+          &.active {
+            color: #1C77CA;
+          }
         }
 
         >ul {
@@ -456,6 +486,11 @@
         &.menu-item-has-children {
           >a {
             position: relative;
+            color: #47474C;
+
+            &.active {
+              color: #1C77CA;
+            }
 
             &::after {
               content: '';
@@ -511,8 +546,14 @@
           display: block;
           line-height: inherit;
           padding: 6px 20px;
+          color: #47474C;
           font-size: 15px;
           line-height: normal;
+
+          &.active {
+            color: #1C77CA;
+          }
+
         }
 
         ul {
@@ -815,6 +856,7 @@
 
   .cs_nav .cs_nav_list a {
     position: relative;
+    color: #47474C;
   }
 
   .cs_site_header.cs_style1 .cs_main_header_in {

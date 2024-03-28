@@ -5,10 +5,7 @@ import user from '../../../images/userprofileImg.png';
 
 export default function Topbar(props) {
   const [menu, setMenu] = useState();
-  const [slang, setSlang] = useState();
   const navigate = useNavigate();
-
-  const selectedLanguage = "en";
 
   const handleProfile = () => {
     navigate('profile')

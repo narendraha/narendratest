@@ -203,7 +203,7 @@ export default function Home() {
                                                                         selected={new Date()}
                                                                         onChange={(e) => { }}
                                                                         dateFormat={'MM/dd/yyyy'}
-                                                                        minDate={new Date().setDate(new Date().getDate() - 7)}
+                                                                        minDate={new Date().setMonth(new Date().getMonth() - 1)}
                                                                         maxDate={new Date()}
                                                                         autoComplete="off"
                                                                         showMonthDropdown

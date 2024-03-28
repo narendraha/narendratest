@@ -1,6 +1,10 @@
 #al_main_landing {
-    width: 100%;
     overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
 
 .w-80 {
@@ -13,37 +17,129 @@
 }
 
 .al_chatbot {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    cursor: pointer;
+    position: absolute;
+    top: 110px;
+    left: 80px;
     z-index: 9;
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        min-width: 27vw;
+        max-width: 27vw;
+        min-height: 55vh;
+        box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.5);
+
+        .card-body {
+            padding: 30px;
+            height: 70vh;
+            overflow-y: auto;
+        }
+    }
 }
 
-.cs_mainsearch {
-    form {
-        position: relative;
+.al_chatbotauth {
+    position: absolute;
+    bottom: 30px;
+    right: 35px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
 
-        span {
-            line-height: 0;
+    img {
+        width: 55px;
+        margin-left: auto;
+        cursor: pointer;
+    }
+
+    .card {
+        border: none;
+        border-radius: 20px;
+        min-width: 27vw;
+        max-width: 27vw;
+        height: 0;
+        box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.3);
+        margin-bottom: 5px;
+        transition: all 0.3s ease;
+
+        &.al_chatopen {
+            height: 70vh;
         }
 
-        input {
-            padding: 8px 15px;
-            border-radius: 25px;
-            max-width: 15vw;
-            outline: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(48, 123, 196, 0.5);
+        &.al_chatclose {
+            height: 0;
+
+            .card-body {
+                padding: 0;
+            }
         }
 
-        button.cs_btn {
-            position: absolute !important;
-            top: 0;
-            right: 0;
-            padding: 12px;
-            width: 43px;
-            height: 43px;
+        .card-body {
+            padding: 30px;
+            height: 100%;
+            overflow-y: auto;
+        }
+    }
+}
+
+.cs_homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    h3 {
+        font-weight: normal;
+        font-size: 36px;
+        width: 50%;
+        text-align: center;
+    }
+
+    .cs_mainsearch {
+        form {
+            position: relative;
+
+            span {
+                line-height: 0;
+            }
+
+            .icon_alfred_search {
+                position: absolute;
+                font-size: 1.3vw;
+                left: 20px;
+                top: 33%;
+                font-weight: 600;
+            }
+
+            input {
+                padding: 1.5vh 55px;
+                border-radius: 25px;
+                min-width: 38vw;
+                max-width: 38vw;
+                outline: none;
+                transition: all 0.3s ease;
+                border: 1px solid #D0D5DD;
+                font-size: 1em;
+
+                &::placeholder {
+                    font-size: 1em;
+                }
+
+                &:focus {
+                    border: 1px solid #a8cbdf;
+                    box-shadow: 0 4px 8px rgba(0, 98, 153, 0.2) !important;
+                }
+            }
+
+            .icon_alfred_speech {
+                position: absolute !important;
+                top: 28%;
+                right: 25px;
+                color: #004B75;
+                font-size: 1.5vw;
+                cursor: pointer;
+            }
         }
     }
 }
@@ -727,6 +823,8 @@
             .modelFooter {
                 button {
                     margin-right: 15px;
+                    min-width: 100px;
+                    font-weight: 500;
 
                     &:last-child {
                         margin-right: 0;

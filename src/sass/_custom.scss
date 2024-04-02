@@ -285,7 +285,9 @@ hr {
 
     li {
       font-weight: 400;
-
+      display: flex;
+      justify-content: space-between;
+      
       &::before {
         height: 8px;
         width: 8px;

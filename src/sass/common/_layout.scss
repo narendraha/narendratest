@@ -14,6 +14,7 @@
 .al_note {
     color: #727F90;
     font-size: 13px;
+    line-height: normal;
 }
 
 .al_chatbot {
@@ -21,6 +22,7 @@
     top: 110px;
     left: 80px;
     z-index: 9;
+    font-size: 14px;
 
     .card {
         border: none;
@@ -31,25 +33,39 @@
         box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.5);
 
         .card-body {
-            padding: 30px;
-            height: 70vh;
-            overflow-y: auto;
+            padding: 0;
+
+            .scrolldiv {
+                height: 55vh;
+                margin-top: 20px;
+                padding: 0 20px 20px;
+                overflow-y: auto;
+            }
         }
     }
 }
 
 .al_chatbotauth {
-    position: absolute;
-    bottom: 30px;
-    right: 35px;
     z-index: 9;
     display: flex;
     flex-direction: column;
 
     img {
         width: 55px;
-        margin-left: auto;
         cursor: pointer;
+        position: relative;
+    }
+
+    button#chatpopover {
+        background-color: transparent;
+        width: max-content;
+        padding: 0;
+        border: none;
+        position: absolute;
+        bottom: 30px;
+        right: 35px;
+        outline: none;
+        box-shadow: none;
     }
 
     .card {
@@ -57,27 +73,43 @@
         border-radius: 20px;
         min-width: 27vw;
         max-width: 27vw;
-        height: 0;
         box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.3);
         margin-bottom: 5px;
-        transition: all 0.3s ease;
+        position: absolute;
+        bottom: 85px;
+        right: 35px;
+
+        .scrolldiv {
+            transition: all 0.3s ease;
+        }
 
         &.al_chatopen {
-            height: 70vh;
+            .scrolldiv {
+                height: 53vh;
+            }
         }
 
         &.al_chatclose {
-            height: 0;
+            .scrolldiv {
+                height: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
 
-            .card-body {
-                padding: 0;
+            .al_chatfooter {
+                display: none;
             }
         }
 
         .card-body {
-            padding: 30px;
+            padding: 0;
             height: 100%;
-            overflow-y: auto;
+
+            .scrolldiv {
+                margin-top: 20px;
+                padding: 0 20px 20px;
+                overflow-y: auto;
+            }
         }
     }
 }
@@ -102,43 +134,6 @@
 
             span {
                 line-height: 0;
-            }
-
-            .icon_alfred_search {
-                position: absolute;
-                font-size: 1.3vw;
-                left: 20px;
-                top: 33%;
-                font-weight: 600;
-            }
-
-            input {
-                padding: 1.5vh 55px;
-                border-radius: 25px;
-                min-width: 38vw;
-                max-width: 38vw;
-                outline: none;
-                transition: all 0.3s ease;
-                border: 1px solid #D0D5DD;
-                font-size: 1em;
-
-                &::placeholder {
-                    font-size: 1em;
-                }
-
-                &:focus {
-                    border: 1px solid #a8cbdf;
-                    box-shadow: 0 4px 8px rgba(0, 98, 153, 0.2) !important;
-                }
-            }
-
-            .icon_alfred_speech {
-                position: absolute !important;
-                top: 28%;
-                right: 25px;
-                color: #004B75;
-                font-size: 1.5vw;
-                cursor: pointer;
             }
         }
     }

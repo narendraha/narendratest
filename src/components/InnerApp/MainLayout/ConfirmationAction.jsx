@@ -21,7 +21,6 @@ export default function ConfirmationAction() {
 
                 <div className="modelFooter text-center mb-3">
                     <Button type="button" className="text-capitalize btn al_button_add" onClick={() => setCloseconfirmModal(!closeconfirmModal)}>OK</Button>
-                    <Button type="button" className="text-capitalize btn al_button_cancel" onClick={() => setCloseconfirmModal(!closeconfirmModal)}>Cancel</Button>
                 </div>
             </Modal>}
         </>

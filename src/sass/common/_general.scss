@@ -359,7 +359,7 @@ hr {
 
 @media (min-width: 1701px) {
   .container {
-    max-width: 1550px;
+    max-width: 1650px;
   }
 }
 
@@ -615,7 +615,7 @@ input::-ms-input-placeholder,
 
     @media (max-width: 1700px) {
       top: 20px;
-      right: 20px;
+      left: 20px;
     }
   }
 }
@@ -1022,12 +1022,12 @@ input::-ms-input-placeholder,
 
     &.cs_position_1 {
       right: initial;
-      left: -39%;
+      left: -38%;
       top: -59%;
     }
 
     &.cs_position_2 {
-      right: 39%;
+      right: 38%;
       top: 39%;
     }
 

@@ -74,7 +74,7 @@ ul {
 
                     div {
                         i {
-                            position: absolute;
+                            // position: absolute;
                             top: 12px;
                             font-size: 20px;
                             color: #78889B;
@@ -270,6 +270,12 @@ ul {
                             }
                         }
                     }
+                    .standardPlans{
+                         li{
+                            display: flex;
+                            justify-content: space-between;
+                         }
+                        }
                 }
             }
         }

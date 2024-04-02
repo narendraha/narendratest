@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DropDown from './DropDown';
 import SocialWidget from '../Widget/SocialWidget';
 import Newsletter from '../Widget/Newsletter';
 import IconBoxStyle11 from '../IconBox/IconBoxStyle11';
 import Spacing from '../Spacing';
 
-
 export default function Header({ logoSrc, variant }) {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   const [sideNav, setSideNav] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,17 +30,15 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '1',
       name: 'Home',
-      link: ''
-    },
-    {
-      moduleId: '6',
-      name: 'Personomics',
-      link: '/personomics'
+      link: '/',
+      subModules: [
+        {}
+      ]
     },
     {
       moduleId: '2',
       name: 'Disease Journey',
-      link: '/affaq',
+      link: 'affaq',
       subModules: [
         { id: "1", name: "AF FAQ's", link: 'affaq' },
         { id: "2", name: "Symptoms", link: 'symptoms' },
@@ -61,7 +57,7 @@ export default function Header({ logoSrc, variant }) {
             { id: "42", name: "Sleep apnea", link: 'sleepapnea' },
             {
               id: "43", name: "Habits", link: '',
-              innersubModules: [
+              innerModules: [
                 { id: "431", name: "Alcohol", link: 'alocohol' },
                 { id: "432", name: "Smoking", link: 'smoking' },
                 { id: "433", name: "Exercise", link: 'exercise' }
@@ -70,7 +66,7 @@ export default function Header({ logoSrc, variant }) {
           ]
         },
         {
-          id: "5", name: "Heart Disease", link: '',
+          id: "5", name: "Heart Disesase", link: '',
           innerModules: [
             { id: "51", name: "Coronary", link: 'coronary' },
             { id: "52", name: "Vascular", link: 'vascular' }
@@ -81,28 +77,22 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '3',
       name: 'Disease Tasks',
-      link: '/appointments',
+      link: 'appointments',
       subModules: [
         { id: "1", name: "Appointments", link: 'appointments' },
         { id: "2", name: "Pharmacy", link: 'pharmacy' },
-        { id: "3", name: "Community Resources(Health Equity)", link: 'communityresources' }
+        { id: "3", name: "Community Resources", link: 'communityresources' }
       ]
     },
     {
       moduleId: '4',
       name: 'Ecosystem Partners',
-      link: '/healthplan',
+      link: 'healthplan',
       subModules: [
         { id: "1", name: "Health Plan", link: 'healthplan' },
         { id: "2", name: "Accountable Care Organization", link: 'aco' },
-        { id: "3", name: "Pharmacy", link: 'pharmacy' },
-        { id: "4", name: "Dietician", link: 'dietician' }
+        { id: "3", name: "Dietician", link: 'dietician' }
       ]
-    },
-    {
-      moduleId: '5',
-      name: 'About',
-      link: 'about'
     }
   ]
 
@@ -124,43 +114,85 @@ export default function Header({ logoSrc, variant }) {
                     className={`${mobileToggle ? 'cs_nav_list cs_active' : 'cs_nav_list'
                       }`}
                   >
-                    {homemenuData.map((menu, index) => {
-                      return <React.Fragment key={index}>
-                        <li className={menu.subModules?.length > 0 ? 'menu-item-has-children' : ''}>
-                          <Link to={menu.link} className={(location.pathname === '/' + menu.link ? 'active' : '')}>{menu.name}</Link>
-                          {menu.subModules?.length > 0 &&
-                            <DropDown>
-                              <ul>
-                                {menu.subModules.map((submenu, index) => {
-                                  return <li key={index}>
-                                    {!submenu.innerModules && <Link to={submenu.link} className={(location.pathname === '/' + submenu.link ? 'active' : '')}>{submenu.name}</Link>}
-                                    {submenu.innerModules?.length > 0 && <>
-                                      <div className='cs_nav_innersubmenu'>{submenu.name}</div>
-                                      <div className='px-3'>
-                                        {submenu.innerModules?.map((innermenu, index) => {
-                                          return <React.Fragment key={index}>
-                                            {!innermenu.innersubModules && <Link to={innermenu.link} className={(location.pathname === '/' + innermenu.link ? 'active' : '')} key={index}>{innermenu.name}</Link>}
-                                            {innermenu.innersubModules?.length > 0 && <>
-                                              <div className='cs_nav_innersubmenu'>{innermenu.name}</div>
-                                              <div className='px-3'>
-                                                {innermenu.innersubModules?.map((innersubmenu, index) => {
-                                                  return <Link to={innersubmenu.link} key={index} className={(location.pathname === '/' + innersubmenu.link ? 'active' : '')}>{innersubmenu.name}</Link>
-                                                })}
-                                              </div>
-                                            </>
-                                            }
-                                          </React.Fragment>
-                                        })}
-                                      </div>
-                                    </>
-                                    }
-                                  </li>
-                                })}
-                              </ul>
-                            </DropDown>}
-                        </li>
-                      </React.Fragment>
-                    })}
+                    <li>
+                      <Link to="/">Home</Link>
+                    </li>
+                    <li className='menu-item-has-children'>
+                      <Link to="/affaq">Disease Journey</Link>
+                      <DropDown>
+                        <ul>
+                          <li>
+                            <Link to="/affaq">AF FAQ's</Link>
+                          </li>
+                          <li>
+                            <Link to="/symptoms">Symptoms</Link>
+                          </li>
+                          <li>
+                            <div className='cs_nav_innersubmenu'>Rhythm Management</div>
+                            <div className='px-3'>
+                              <Link to="/medications">Medications</Link>
+                              <Link to="/ablation">Ablation</Link>
+                              <Link to="/devicepacemaker">Device/Pacemaker</Link>
+                            </div>
+                          </li>
+                          <li>
+                            <div className='cs_nav_innersubmenu'>Risk Factors</div>
+                            <div className='px-3'>
+                              <Link to="/obesity">Obesity</Link>
+                              <Link to="/sleepapnea">Sleep apnea</Link>
+                              <div className='cs_nav_innersubmenu'>Habits</div>
+                              <div className='px-3'>
+                                <Link to="/alcohol">Alcohol</Link>
+                                <Link to="/smoking">Smoking</Link>
+                                <Link to="/exercise">Exercise</Link>
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div className='cs_nav_innersubmenu'>Heart Disease</div>
+                            <div className='px-3'>
+                              <Link to="/coronary">Coronary</Link>
+                              <Link to="/vascular">Vascular</Link>
+                            </div>
+                          </li>
+                        </ul>
+                      </DropDown>
+                    </li>
+                    <li className='menu-item-has-children'>
+                      <Link to="/appointments">Disease Tasks</Link>
+                      <DropDown>
+                        <ul>
+                          <li>
+                            <Link to="/appointments">Appointments</Link>
+                          </li>
+                          <li>
+                            <Link to="/pharmacy">Pharmacy</Link>
+                          </li>
+                          <li>
+                            <Link to="/communityresources">Community Resources</Link>
+                          </li>
+                        </ul>
+                      </DropDown>
+                    </li>
+                    <li className='menu-item-has-children'>
+                      <Link to="/healthplan">Ecosystem Partners</Link>
+                      <DropDown>
+                        <ul>
+                          <li>
+                            <Link to="/healthplan">Health Plan</Link>
+                          </li>
+                          <li>
+                            <Link to="/aco">Accountable Care Organization</Link>
+                          </li>
+                          <li>
+                            <Link to="/dietician">Dietician</Link>
+                          </li>
+                        </ul>
+                      </DropDown>
+                    </li>
+                    <li>
+                      <Link to="/about">About</Link>
+                    </li>
                   </ul>
 
                   <span
@@ -177,27 +209,26 @@ export default function Header({ logoSrc, variant }) {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
-                  {/*  <div className='cs_mainsearch'>
+                  <Link to="/signin">Sign In</Link>
+                  <div className='cs_mainsearch'>
                     <form action="#">
                       <input
                         type="text"
                         placeholder="Enter Text"
                       />
-                     <button className="cs_btn cs_style_1">
+                      <button className="cs_btn cs_style_1">
                         <span><i className='icon_alfred_speech' style={{ height: "auto" }}></i></span>
-                      </button> 
+                      </button>
                     </form>
-                  </div>*/}
-                  <Link to="/signin">Sign In</Link>
-
+                  </div>
                   <button
                     className="cs_toolbox_btn cs_sidebar_toggle_btn"
                     type="button"
                     onClick={() => setSideNav(!sideNav)}
                   >
                     <svg
-                      width={20}
-                      height={20}
+                      width={30}
+                      height={30}
                       viewBox="0 0 35 30"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -254,7 +285,7 @@ export default function Header({ logoSrc, variant }) {
           <Spacing md="30" lg="30" xl="30" />
           <IconBoxStyle11
             title="Email"
-            subTitle="helloalfred@gmail.com"
+            subTitle="hellocallcenter@gmail.com"
             iconSrc="/images/contact/icon_2.svg"
           />
           <Spacing md="30" lg="30" xl="30" />

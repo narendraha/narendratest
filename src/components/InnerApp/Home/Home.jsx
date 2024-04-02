@@ -11,8 +11,6 @@ import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css'
 import LayoutAlertMessage from '../MainLayout/LayoutAlertMessage';
 import ConfirmationAction from '../MainLayout/ConfirmationAction';
-import Highcharts from 'highcharts';
-import { useEffect } from 'react';
 
 export default function Home() {
     const [tab, setTab] = useState("1");
@@ -47,125 +45,6 @@ export default function Home() {
             setTab("3")
         }
     }
-
-    const sorteddata = [
-        [Date.UTC(2024, 2, 21), 81],
-        [Date.UTC(2024, 2, 22), 95],
-        [Date.UTC(2024, 2, 23), 91],
-        [Date.UTC(2024, 2, 24), 98],
-        [Date.UTC(2024, 2, 25), 83],
-        [Date.UTC(2024, 2, 26), 95],
-        [Date.UTC(2024, 2, 27), 80],
-        [Date.UTC(2024, 2, 28), 90],
-        [Date.UTC(2024, 2, 29), 100]
-    ]
-
-    useEffect(() => {
-        Highcharts.chart('expertmonitoringgraph', {
-            chart: {
-                type: 'area',
-                style: {
-                    fontFamily: 'Poppins'
-                },
-                panning: true,
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                type: "datetime",
-                min: Math.min.apply(null, sorteddata.slice(-7).map(function (point) {
-                    return point[0];
-                })),
-                max: Math.max.apply(null, sorteddata.slice(-7).map(function (point) {
-                    return point[0];
-                })),
-                labels: {
-                    distance: 5,
-                    padding: 5,
-                    overflow: 'justify',
-                    style: {
-                        fontSize: "11px"
-                    },
-                    formatter: function () {
-                        return Highcharts.dateFormat('%d-%m-%Y', new Date(this.value));
-                    },
-                    rotation: -45
-                },
-                title: {
-                    text: null
-                },
-                scrollbar: {
-                    enabled: true
-                },
-                tickLength: 0,
-                gridLineWidth: 0,
-                lineWidth: 0,
-                showLastLabel: true,
-                showEmpty: false
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Pulse'
-                },
-                labels: {
-                    distance: 5,
-                    padding: 5,
-                    style: {
-                        fontSize: "11px"
-                    }
-                },
-                endOnTick: false,
-                gridLineWidth: 1,
-                showEmpty: false
-            },
-            tooltip: {
-                valueSuffix: ' bpm'
-            },
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    }
-                }]
-            },
-            plotOptions: {
-                area: {
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 2,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
-                    },
-                    color: "#0079ca"
-                },
-                series: {
-                    groupPadding: 1,
-                    pointPadding: 1,
-                    pointPlacement: 'on',
-                    borderWidth: 0,
-                    pointWidth: 50,
-                }
-            },
-            navigator: {
-                enabled: true
-            },
-            credits: {
-                enabled: false
-            },
-            legend: { enabled: false },
-            series: [{
-                name: 'Pulse',
-                data: sorteddata
-            }]
-        });
-    }, []);
-
     return (
         <>
             <div className="wflexLayout">
@@ -235,6 +114,7 @@ export default function Home() {
                             <TabContent activeTab={tab}>
                                 <TabPane tabId="1">
                                     <p>Knowing about AF will reduce the risk</p>
+
                                     <Row>
                                         <Col lg="9" sm="12">
                                             <div className='mb-4'>
@@ -281,105 +161,98 @@ export default function Home() {
                                 </TabPane>
                                 <TabPane tabId="2">
                                     <h5>Health details</h5>
-                                    <Row>
-                                        <Col lg="6" sm="12">
-                                            <Formik
-                                                initialValues={{}}
-                                                validationSchema={Yup.object().shape({
-                                                    weight: Yup.number().typeError("Must be a number").required("This field is required"),
-                                                    height: Yup.number().typeError("Must be a number").required("This field is required"),
-                                                    bloodpressure: Yup.number().typeError("Must be a number").required("This field is required"),
-                                                    pulse: Yup.number().typeError("Must be a number").required("This field is required")
-                                                })}
-                                                onSubmit={() => { }}
-                                            >
-                                                {
-                                                    ({ }) => {
-                                                        return <Form>
+                                    <Formik
+                                        initialValues={{}}
+                                        validationSchema={Yup.object().shape({
+                                            weight: Yup.number().typeError("Must be a number").required("This field is required"),
+                                            height: Yup.number().typeError("Must be a number").required("This field is required"),
+                                            bloodpressure: Yup.number().typeError("Must be a number").required("This field is required"),
+                                            pulse: Yup.number().typeError("Must be a number").required("This field is required")
+                                        })}
+                                        onSubmit={() => { }}
+                                    >
+                                        {
+                                            ({ }) => {
+                                                return <Form className='w-50'>
+                                                    <Row>
+                                                        <Col sm="4">
+                                                            <FormGroup>
+                                                                <Label>Height(ft)</Label>
+                                                                <Field type="text" name='height' placeholder="Enter Height" className='form-control' />
+                                                                <ErrorMessage name='height' component={'div'} className="text-danger" />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
+                                                    <Card className='mb-4 al_cardnoborder mt-2'>
+                                                        <CardBody>
+                                                            <Row>
+                                                                <Col sm="4" className='mb-3'>
+                                                                    <Label>Date</Label>
+                                                                    <DatePicker className='form-control al_calendarIcon'
+                                                                        name="date"
+                                                                        placeholderText="Select date"
+                                                                        popperPlacement="auto"
+                                                                        popperModifiers={{
+                                                                            flip: {
+                                                                                behavior: ["bottom"]
+                                                                            },
+                                                                            preventOverflow: {
+                                                                                enabled: false
+                                                                            }
+                                                                        }}
+                                                                        selected={new Date()}
+                                                                        onChange={(e) => { }}
+                                                                        dateFormat={'MM/dd/yyyy'}
+                                                                        minDate={new Date().setDate(new Date().getDate() - 7)}
+                                                                        maxDate={new Date()}
+                                                                        autoComplete="off"
+                                                                        showMonthDropdown
+                                                                        showYearDropdown
+                                                                        dropdownMode="select"
+                                                                    />
+                                                                </Col>
+                                                            </Row>
                                                             <Row>
                                                                 <Col sm="4">
                                                                     <FormGroup>
-                                                                        <Label>Height(ft)</Label>
-                                                                        <Field type="text" name='height' placeholder="Enter Height" className='form-control' />
-                                                                        <ErrorMessage name='height' component={'div'} className="text-danger" />
+                                                                        <Label>Weight(lbs)</Label>
+                                                                        <Field type="text" name='weight' placeholder="Enter Weight" className='form-control' />
+                                                                        <ErrorMessage name='weight' component={'div'} className="text-danger" />
+                                                                    </FormGroup>
+                                                                </Col>
+                                                                <Col sm="4">
+                                                                    <FormGroup>
+                                                                        <Label>Blood Pressure</Label>
+                                                                        <Field type="text" name='bloodpressure' placeholder="Enter Blood Pressure" className='form-control' />
+                                                                        <ErrorMessage name='bloodpressure' component={'div'} className="text-danger" />
+                                                                    </FormGroup>
+                                                                </Col>
+                                                                <Col sm="4">
+                                                                    <FormGroup>
+                                                                        <Label>Pulse</Label>
+                                                                        <Field type="text" name='pulse' placeholder="Enter Pulse" className='form-control' />
+                                                                        <ErrorMessage name='pulse' component={'div'} className="text-danger" />
                                                                     </FormGroup>
                                                                 </Col>
                                                             </Row>
-                                                            <Card className='mb-4 al_cardnoborder mt-2'>
-                                                                <CardBody>
-                                                                    <Row>
-                                                                        <Col sm="4" className='mb-3'>
-                                                                            <Label>Date</Label>
-                                                                            <DatePicker className='form-control al_calendarIcon'
-                                                                                name="date"
-                                                                                placeholderText="Select date"
-                                                                                popperPlacement="auto"
-                                                                                popperModifiers={{
-                                                                                    flip: {
-                                                                                        behavior: ["bottom"]
-                                                                                    },
-                                                                                    preventOverflow: {
-                                                                                        enabled: false
-                                                                                    }
-                                                                                }}
-                                                                                selected={new Date()}
-                                                                                onChange={(e) => { }}
-                                                                                dateFormat={'MM/dd/yyyy'}
-                                                                                minDate={new Date().setMonth(new Date().getMonth() - 1)}
-                                                                                maxDate={new Date()}
-                                                                                autoComplete="off"
-                                                                                showMonthDropdown
-                                                                                showYearDropdown
-                                                                                dropdownMode="select"
-                                                                            />
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col sm="4">
-                                                                            <FormGroup>
-                                                                                <Label>Weight(lbs)</Label>
-                                                                                <Field type="text" name='weight' placeholder="Enter Weight" className='form-control' />
-                                                                                <ErrorMessage name='weight' component={'div'} className="text-danger" />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col sm="4">
-                                                                            <FormGroup>
-                                                                                <Label>Blood Pressure</Label>
-                                                                                <Field type="text" name='bloodpressure' placeholder="Enter Blood Pressure" className='form-control' />
-                                                                                <ErrorMessage name='bloodpressure' component={'div'} className="text-danger" />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                        <Col sm="4">
-                                                                            <FormGroup>
-                                                                                <Label>Pulse</Label>
-                                                                                <Field type="text" name='pulse' placeholder="Enter Pulse" className='form-control' />
-                                                                                <ErrorMessage name='pulse' component={'div'} className="text-danger" />
-                                                                            </FormGroup>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </CardBody>
-                                                            </Card>
+                                                        </CardBody>
+                                                    </Card>
 
-                                                            <FormGroup check inline className="me-0 ps-0 w-100">
-                                                                <Label check className="me-2 d-flex align-items-center">
-                                                                    <Field type="checkbox" name='consent' /><span>Above mentioned details are valid as per the medical records</span>
-                                                                </Label>
-                                                                <ErrorMessage name='consent' component={'div'} className="text-danger" />
-                                                            </FormGroup>
-                                                            <div className='mt-4'>
-                                                                <button type="button" className='al_grey_borderbtn' onClick={() => { setTab("1") }}>Back</button>
-                                                                <button type="button" className='al_greybgbutton mx-3' onClick={() => { shownextStep() }}>Proceed</button>
-                                                            </div>
-                                                            {showconfirm && <ConfirmationAction />}
-                                                        </Form>
-                                                    }
-                                                }
-                                            </Formik>
-                                        </Col>
-                                        <Col lg="6" sm="12">
-                                            <div id="expertmonitoringgraph" style={{ height: "350px" }}></div>
-                                        </Col>
-                                    </Row>
+                                                    <FormGroup check inline className="me-0 ps-0 w-100">
+                                                        <Label check className="me-2 d-flex align-items-center">
+                                                            <Field type="checkbox" name='consent' /><span>Above mentioned details are valid as per the medical records</span>
+                                                        </Label>
+                                                        <ErrorMessage name='consent' component={'div'} className="text-danger" />
+                                                    </FormGroup>
+                                                    <div className='mt-4'>
+                                                        <button type="button" className='al_grey_borderbtn' onClick={() => { setTab("1") }}>Back</button>
+                                                        <button type="button" className='al_greybgbutton mx-3' onClick={() => { shownextStep() }}>Proceed</button>
+                                                    </div>
+                                                    {showconfirm && <ConfirmationAction />}
+                                                </Form>
+                                            }
+                                        }
+                                    </Formik>
                                 </TabPane>
                                 <TabPane tabId="3">
                                     <p>Select the symptoms range listed below</p>

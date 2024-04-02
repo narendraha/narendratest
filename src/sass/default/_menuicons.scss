@@ -25,23 +25,182 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_speech:before {
+  content: "\e9b0";
+}
+.icon_alfred_bankcard:before {
+  content: "\e976";
+}
+.icon_alfred_knowledgebank:before {
+  content: "\e977";
+}
+.icon_alfred_goals:before {
+  content: "\e978";
+}
 .icon_alfred_doctor:before {
-  content: "\e915";
+  content: "\e979";
 }
-.icon_alfred_goal:before {
-  content: "\e923";
+.icon_alfred_L:before {
+  content: "\e97a";
 }
-.icon_alfred_appointments:before {
-  content: "\e924";
+.icon_alfred_H:before {
+  content: "\e97b";
+}
+.icon_alfred_E:before {
+  content: "\e97c";
+}
+.icon_alfred_O:before {
+  content: "\e97d";
+}
+.icon_alfred_schedules:before {
+  content: "\e97e";
 }
 .icon_alfred_home:before {
-  content: "\e911";
+  content: "\e97f";
 }
-.icon_alfred_speech:before {
-  content: "\e90e";
+.icon_alfred_integrations1:before {
+  content: "\e980";
 }
-.icon_alfred_sendmsg:before {
-  content: "\e903";
+.icon_alfred_apple:before {
+  content: "\e981";
+}
+.icon_alfred_google:before {
+  content: "\e982";
+}
+.icon_alfred_menu_dashboard1:before {
+  content: "\e983";
+}
+.icon_alfred_eyeclose2:before {
+  content: "\e984";
+}
+.icon_alfred_menu_settings1:before {
+  content: "\e985";
+}
+.icon_alfred_back-arrow1:before {
+  content: "\e986";
+}
+.icon_alfred_upl_arrow1:before {
+  content: "\e987";
+}
+.icon_alfred_downl_arrow1:before {
+  content: "\e988";
+}
+.icon_alfred_run1:before {
+  content: "\e989";
+}
+.icon_alfred_processing1:before {
+  content: "\e98a";
+}
+.icon_alfred_dashboard1:before {
+  content: "\e98b";
+}
+.icon_alfred_eyeopen1:before {
+  content: "\e98c";
+}
+.icon_alfred_useraccess1:before {
+  content: "\e98d";
+}
+.icon_alfred_minus1:before {
+  content: "\e98e";
+}
+.icon_alfred_delaynode1:before {
+  content: "\e98f";
+}
+.icon_alfred_copy1:before {
+  content: "\e990";
+}
+.icon_alfred_tick1:before {
+  content: "\e991";
+}
+.icon_alfred_wmainmenu1:before {
+  content: "\e992";
+}
+.icon_alfred_down_arrow1:before {
+  content: "\e993";
+}
+.icon_alfred_up_arrow1:before {
+  content: "\e994";
+}
+.icon_alfred_tablesortup1:before {
+  content: "\e995";
+}
+.icon_alfred_tablesortdown1:before {
+  content: "\e996";
+}
+.icon_alfred_tablesort1:before {
+  content: "\e997";
+}
+.icon_alfred_reports1:before {
+  content: "\e998";
+}
+.icon_alfred_agentnode1:before {
+  content: "\e999";
+}
+.icon_alfred_dragdrop1:before {
+  content: "\e99a";
+}
+.icon_alfred_vmore1:before {
+  content: "\e99b";
+}
+.icon_alfred_circle_xmark_solid1:before {
+  content: "\e99c";
+}
+.icon_alfred_circle_check_solid1:before {
+  content: "\e99d";
+}
+.icon_alfred_info1:before {
+  content: "\e99e";
+}
+.icon_alfred_cards1:before {
+  content: "\e99f";
+}
+.icon_alfred_password1:before {
+  content: "\e9a0";
+}
+.icon_alfred_user1:before {
+  content: "\e9a1";
+}
+.icon_alfred_close1:before {
+  content: "\e9a2";
+}
+.icon_alfred_more-horizontal1:before {
+  content: "\e9a3";
+}
+.icon_alfred_search1:before {
+  content: "\e9a4";
+}
+.icon_alfred_document1:before {
+  content: "\e9a5";
+}
+.icon_alfred_edit2:before {
+  content: "\e9a6";
+}
+.icon_alfred_key1:before {
+  content: "\e9a7";
+}
+.icon_alfred_plus1:before {
+  content: "\e9a8";
+}
+.icon_alfred_trashbin1:before {
+  content: "\e9a9";
+}
+.icon_alfred_right_arrow1:before {
+  content: "\e9aa";
+}
+.icon_alfred_left_arrow1:before {
+  content: "\e9ab";
+}
+.icon_alfred_notification1:before {
+  content: "\e9ac";
+}
+.icon_alfred_menu_graph1:before {
+  content: "\e9ad";
+}
+.icon_alfred_menu_alerts1:before {
+  content: "\e9ae";
+}
+.icon_alfred_menu_sms1:before {
+  content: "\e9af";
 }
 .icon_alfred_help:before {
   content: "\e975";
@@ -49,11 +208,35 @@
 .icon_alfred_eyeclose:before {
   content: "\e974";
 }
+.icon_alfred_chatbot:before {
+  content: "\e934";
+}
+.icon_alfred_liveagent:before {
+  content: "\e973";
+}
+.icon_alfred_downloadvideo:before {
+  content: "\e971";
+}
+.icon_alfred_downloaddoc:before {
+  content: "\e972";
+}
+.icon_alfred_dbalert:before {
+  content: "\e90e";
+}
+.icon_alfred_disconnect:before {
+  content: "\e958";
+}
 .icon_alfred_sync:before {
   content: "\e970";
 }
 .icon_alfred_campaignreport:before {
   content: "\e95b";
+}
+.icon_alfred_integrations:before {
+  content: "\e96f";
+}
+.icon_alfred_botconfigalert:before {
+  content: "\e96e";
 }
 .icon_alfred_menu_settings:before {
   content: "\e96d";
@@ -66,6 +249,18 @@
 }
 .icon_alfred_downl_arrow:before {
   content: "\e96c";
+}
+.icon_alfred_play:before {
+  content: "\e96a";
+}
+.icon_alfred_marketing:before {
+  content: "\e969";
+}
+.icon_alfred_footer:before {
+  content: "\e968";
+}
+.icon_alfred_webhook:before {
+  content: "\e967";
 }
 .icon_alfred_wvisit:before {
   content: "\e966";
@@ -100,11 +295,29 @@
 .icon_alfred_rule:before {
   content: "\e95e";
 }
+.icon_alfred_whatsappcampaign:before {
+  content: "\e95d";
+}
+.icon_alfred_dbprofile:before {
+  content: "\e95a";
+}
 .icon_alfred_moreport:before {
   content: "\e95c";
 }
+.icon_alfred_useraccess:before {
+  content: "\e959";
+}
 .icon_alfred_minus:before {
   content: "\e955";
+}
+.icon_alfred_reset:before {
+  content: "\e956";
+}
+.icon_alfred_zoomin:before {
+  content: "\e957";
+}
+.icon_alfred_inputnode:before {
+  content: "\e952";
 }
 .icon_alfred_delaynode:before {
   content: "\e953";
@@ -112,8 +325,17 @@
 .icon_alfred_copy:before {
   content: "\e951";
 }
+.icon_alfred_media1:before {
+  content: "\e94f";
+}
+.icon_alfred_link:before {
+  content: "\e950";
+}
 .icon_alfred_templatemanager:before {
   content: "\e94c";
+}
+.icon_alfred_phonenumbers:before {
+  content: "\e94d";
 }
 .icon_alfred_tick:before {
   content: "\e94b";
@@ -145,14 +367,44 @@
 .icon_alfred_agentnode:before {
   content: "\e92c";
 }
+.icon_alfred_webhooknode:before {
+  content: "\e941";
+}
+.icon_alfred_endnode:before {
+  content: "\e932";
+}
+.icon_alfred_startnode:before {
+  content: "\e93f";
+}
+.icon_alfred_buttonnode:before {
+  content: "\e92e";
+}
+.icon_alfred_custom_node:before {
+  content: "\e92f";
+}
 .icon_alfred_dragcanvas:before {
   content: "\e92a";
+}
+.icon_alfred_botManager:before {
+  content: "\e929";
 }
 .icon_alfred_dragdrop:before {
   content: "\e928";
 }
+.icon_alfred_wabaconfig:before {
+  content: "\e926";
+}
 .icon_alfred_getarrow:before {
   content: "\e927";
+}
+.icon_alfred_whatsappconfig:before {
+  content: "\e925";
+}
+.icon_alfred_location:before {
+  content: "\e924";
+}
+.icon_alfred_updphone:before {
+  content: "\e923";
 }
 .icon_alfred_vmore:before {
   content: "\e922";
@@ -199,8 +451,17 @@
 .icon_alfred_search:before {
   content: "\e913";
 }
+.icon_alfred_media:before {
+  content: "\e915";
+}
 .icon_alfred_document:before {
   content: "\e916";
+}
+.icon_alfred_menu_address:before {
+  content: "\e911";
+}
+.icon_alfred_briefcase:before {
+  content: "\e903";
 }
 .icon_alfred_edit:before {
   content: "\e905";
@@ -241,8 +502,17 @@
 .icon_alfred_left_arrow:before {
   content: "\e902";
 }
+.icon_alfred_edit1:before {
+  content: "\e92b";
+}
+.icon_alfred_contact_book:before {
+  content: "\e92d";
+}
 .icon_alfred_notification:before {
   content: "\e931";
+}
+.icon_alfred_notification_alert:before {
+  content: "\e933";
 }
 .icon_alfred_calling:before {
   content: "\e935";
@@ -250,14 +520,23 @@
 .icon_alfred_bot:before {
   content: "\e936";
 }
+.icon_alfred_contact:before {
+  content: "\e937";
+}
 .icon_alfred_user_calling:before {
   content: "\e938";
+}
+.icon_alfred_web:before {
+  content: "\e939";
 }
 .icon_alfred_whatsapp:before {
   content: "\e93a";
 }
 .icon_alfred_email:before {
   content: "\e93b";
+}
+.icon_alfred_menu_configuration:before {
+  content: "\e93c";
 }
 .icon_alfred_menu_graph:before {
   content: "\e93d";

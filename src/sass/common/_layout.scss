@@ -1,10 +1,6 @@
 #al_main_landing {
-    overflow-y: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     width: 100%;
+    overflow-y: auto;
 }
 
 .w-80 {
@@ -14,127 +10,32 @@
 .al_note {
     color: #727F90;
     font-size: 13px;
-    line-height: normal;
 }
 
-.al_chatbot {
-    position: absolute;
-    top: 110px;
-    left: 80px;
-    z-index: 9;
-    font-size: 14px;
-
-    .card {
-        border: none;
-        border-radius: 20px;
-        min-width: 27vw;
-        max-width: 27vw;
-        min-height: 55vh;
-        box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.5);
-
-        .card-body {
-            padding: 0;
-
-            .scrolldiv {
-                height: 55vh;
-                margin-top: 20px;
-                padding: 0 20px 20px;
-                overflow-y: auto;
-            }
-        }
-    }
-}
-
-.al_chatbotauth {
-    z-index: 9;
-    display: flex;
-    flex-direction: column;
-
-    img {
-        width: 55px;
-        cursor: pointer;
+.cs_mainsearch {
+    form {
         position: relative;
-    }
 
-    button#chatpopover {
-        background-color: transparent;
-        width: max-content;
-        padding: 0;
-        border: none;
-        position: absolute;
-        bottom: 30px;
-        right: 35px;
-        outline: none;
-        box-shadow: none;
-    }
+        span {
+            line-height: 0;
+        }
 
-    .card {
-        border: none;
-        border-radius: 20px;
-        min-width: 27vw;
-        max-width: 27vw;
-        box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.3);
-        margin-bottom: 5px;
-        position: absolute;
-        bottom: 85px;
-        right: 35px;
-
-        .scrolldiv {
+        input {
+            padding: 8px 15px;
+            border-radius: 25px;
+            max-width: 250px;
+            outline: none;
             transition: all 0.3s ease;
+            border: 1px solid rgba(48, 123, 196, 0.5);
         }
 
-        &.al_chatopen {
-            .scrolldiv {
-                height: 53vh;
-            }
-        }
-
-        &.al_chatclose {
-            .scrolldiv {
-                height: 0;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-
-            .al_chatfooter {
-                display: none;
-            }
-        }
-
-        .card-body {
-            padding: 0;
-            height: 100%;
-
-            .scrolldiv {
-                margin-top: 20px;
-                padding: 0 20px 20px;
-                overflow-y: auto;
-            }
-        }
-    }
-}
-
-.cs_homepage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    h3 {
-        font-weight: normal;
-        font-size: 36px;
-        width: 50%;
-        text-align: center;
-    }
-
-    .cs_mainsearch {
-        form {
-            position: relative;
-
-            span {
-                line-height: 0;
-            }
+        button.cs_btn {
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            padding: 12px;
+            width: 43px;
+            height: 43px;
         }
     }
 }
@@ -818,8 +719,6 @@
             .modelFooter {
                 button {
                     margin-right: 15px;
-                    min-width: 100px;
-                    font-weight: 500;
 
                     &:last-child {
                         margin-right: 0;

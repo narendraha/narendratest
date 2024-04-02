@@ -32,6 +32,7 @@ export default function Signin({ setIsAuthenticated }) {
           toast(res.data?.message, {
               position: "top-right",
               type: "success",
+              
           });
           setIsAuthenticated(true);
           navigate('/dashboard')

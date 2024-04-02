@@ -228,12 +228,41 @@
       line-height: 0;
     }
 
+    .icon_alfred_search {
+      position: absolute;
+      font-size: 1.3vw;
+      left: 20px;
+      top: 33%;
+      font-weight: 600;
+    }
+
     input {
-      padding: 8px 15px;
+      padding: 1.5vh 55px;
       border-radius: 25px;
+      min-width: 38vw;
+      max-width: 38vw;
       outline: none;
       transition: all 0.3s ease;
-      border: 1px solid rgba(48, 123, 196, 0.5);
+      border: 1px solid #D0D5DD;
+      font-size: 1em;
+
+      &::placeholder {
+        font-size: 1em;
+      }
+
+      &:focus {
+        border: 1px solid #a8cbdf;
+        box-shadow: 0 4px 8px rgba(0, 98, 153, 0.2) !important;
+      }
+    }
+
+    .icon_alfred_speech, .icon_alfred_sendmsg {
+      position: absolute !important;
+      top: 28%;
+      right: 25px;
+      color: #004B75;
+      font-size: 1.5vw;
+      cursor: pointer;
     }
 
     button.cs_btn {
@@ -241,6 +270,32 @@
       top: 0;
       right: 0;
       padding: 12px;
+    }
+
+    .icon_alfred_close {
+      padding: 0 10px;
+      position: absolute;
+      right: 55px;
+      top: 38%;
+      font-size: 1vw;
+      cursor: pointer;
+    }
+  }
+
+  &.al_chatfooter {
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+
+    .icon_alfred_sendmsg {
+      border-left: 1px solid #D2D2D2;
+      padding-left: 10px;
+      right: 20px;
+    }
+
+    input {
+      min-width: 100%;
+      max-width: 100%;
+      padding-right: 100px;
     }
   }
 }

@@ -22,9 +22,9 @@ export default function Register() {
   const inputRefs = useRef(Array(4).fill(null));
 
   const genderoptions = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Other", label: "Other" },
+    { value: "M", label: "Male" },
+    { value: "F", label: "Female" },
+    { value: "O", label: "Other" },
   ];
 
   const residenceoptions = [
@@ -64,8 +64,7 @@ export default function Register() {
         dob: Yup.string().required("This field is required"),
         gender: Yup.string().required("This field is required"),
         rtype: Yup.string().required("This field is required"),
-        education: Yup.string().required("This field is required"),
-        ssn: Yup.string().required("This field is required"),
+        education: Yup.string().required("This field is required")
       })}
       onSubmit={(values) => onSubmit({ ...values })}
     >
@@ -264,7 +263,6 @@ export default function Register() {
                       </FormGroup>
                     </div>
                     <div className="al_login_footer mt-3">
-                      {" "}
                       <button type="submit" className="al_login_button">
                         Continue
                       </button>
@@ -455,7 +453,7 @@ export default function Register() {
     <Formik
       initialValues={{
         password: "",
-        reenterpassword: "",
+       // reenterpassword: "",
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Password form fields
@@ -911,6 +909,8 @@ export default function Register() {
       ...formData,
       dob: moment(formData.dob).format("YYYY-MM-DD"),
     };
+    delete data.reenterpassword
+    delete data.otp
     console.log("Final form submitted with values:", formData);
 
     AxiosInstance("application/json")
@@ -921,13 +921,13 @@ export default function Register() {
           console.log("datassss", res.data);
           if(res.data?.statuscode === 200){
             toast(res.data?.message, {
-                position: "top-right",
+                position: "top-center",
                 type: "success",
             });
             navigate('/signin')
           }else{
             toast(res.data?.message, {
-                position: "top-right",
+                position: "top-center",
                 type: "error",
             });
             navigate('/signin')

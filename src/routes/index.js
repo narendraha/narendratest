@@ -42,7 +42,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
 
   return (
     <>
-      <ToastContainer theme="dark" />
+      <ToastContainer theme="light" />
       <Routes>
         {authenticated ? (
           <>
@@ -95,10 +95,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
                 <Route path="timetable" element={<Timetable />} />
                 <Route path="contact" element={<Contact />} /> */}
             </Route>
-            <Route
-              path="signin"
-              element={<Signin setIsAuthenticated={setIsAuthenticated} />}
-            />
+            <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="registration" element={<Register />} />
             <Route path="*" element={<ErrorPage />} />
           </>

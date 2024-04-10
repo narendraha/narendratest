@@ -11,7 +11,7 @@ export default function Topbar(props) {
     navigate('profile')
   }
   const handleLogOut = () => {
-    navigate('/')
+    navigate('signin')
   }
 
   return (

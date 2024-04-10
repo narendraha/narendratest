@@ -4,8 +4,16 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
+
+    // width: 100%;
+    &.al_homechatopen {
+        .cs_site_header {
+            width: 75%;
+        }
+    }
 }
+
+
 
 .w-80 {
     width: 80%;
@@ -13,36 +21,124 @@
 
 .al_note {
     color: #727F90;
-    font-size: 13px;
+    font-size: 12px;
     line-height: normal;
 }
 
+.al_chatcontent {
+    display: flex;
+    font-size: 13px;
+    line-height: normal;
+    color: #2C2C37;
+
+    >div:first-child {
+        width: auto;
+        padding-right: 0;
+    }
+
+    img {
+        width: 30px !important;
+    }
+
+    h6 {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 3px !important;
+    }
+}
+
+.al_chatloading {
+    margin-top: 10px;
+    width: 30px;
+    aspect-ratio: 2;
+    --_g: no-repeat radial-gradient(circle closest-side, #ff9800 90%, #0000);
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100%/3) 50%;
+    animation: loadingAni 1s infinite linear;
+
+    @keyframes loadingAni {
+        20% {
+            background-position: 0% 0%, 50% 50%, 100% 50%
+        }
+
+        40% {
+            background-position: 0% 100%, 50% 0%, 100% 50%
+        }
+
+        60% {
+            background-position: 0% 50%, 50% 100%, 100% 0%
+        }
+
+        80% {
+            background-position: 0% 50%, 50% 50%, 100% 100%
+        }
+    }
+}
+
 .al_chatbot {
-    position: absolute;
-    top: 110px;
-    left: 80px;
-    z-index: 9;
+    height: 100%;
     font-size: 14px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid #f6f6f6;
+
+    h6 {
+        font-size: 14px;
+    }
 
     .card {
         border: none;
-        border-radius: 20px;
-        min-width: 27vw;
-        max-width: 27vw;
-        min-height: 55vh;
-        box-shadow: 5px 5px 15px 0 rgba(112, 173, 232, 0.5);
+        height: 100%;
+        border-radius: 0;
+        background: url('../../images/chatbg.jpg') repeat;
 
         .card-body {
             padding: 0;
+            height: 100vh;
 
-            .scrolldiv {
-                height: 55vh;
-                margin-top: 20px;
-                padding: 0 20px 20px;
+            .flex-grow-1 {
                 overflow-y: auto;
+
+                .scrolldiv {
+                    // height: 55vh;
+                    margin-top: 20px;
+                    padding: 0 20px 20px;
+                    // overflow-y: auto;
+                }
             }
         }
     }
+}
+
+.scrolldiv>div:last-child {
+    margin-bottom: 0 !important;
+}
+
+button#homechatpopover,
+button#homechatclose {
+    background-color: transparent;
+    width: max-content;
+    padding: 15px 15px 0 !important;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: #2C2C37;
+    margin-left: auto;
+    min-width: auto;
+}
+
+button#chatpopover {
+    background-color: transparent;
+    width: max-content;
+    padding: 0;
+    border: none;
+    position: absolute;
+    bottom: 30px;
+    right: 35px;
+    outline: none;
+    box-shadow: none;
 }
 
 .al_chatbotauth {
@@ -54,18 +150,6 @@
         width: 55px;
         cursor: pointer;
         position: relative;
-    }
-
-    button#chatpopover {
-        background-color: transparent;
-        width: max-content;
-        padding: 0;
-        border: none;
-        position: absolute;
-        bottom: 30px;
-        right: 35px;
-        outline: none;
-        box-shadow: none;
     }
 
     .card {
@@ -119,7 +203,32 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: calc(100% - 67px);
+
+    .al_chatbotauth {
+        padding-top: 80px;
+        height: 100%;
+
+        >div {
+            height: 100%;
+        }
+
+        input {
+            min-width: 100%;
+        }
+
+        .flex-grow-1 {
+            overflow-y: auto;
+        }
+    }
+
+    .al_chatfooter {
+        background-color: transparent !important;
+    }
+
+    .scrolldiv {
+        padding: 0 20px 20px;
+    }
 
     h3 {
         font-weight: normal;
@@ -139,6 +248,36 @@
     }
 }
 
+ul.standardPlans {
+    padding-left: 10px;
+
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 300;
+        margin-bottom: 9px;
+        position: relative !important;
+
+        &::before {
+            content: '';
+            height: 5px;
+            width: 5px;
+            border-radius: 50%;
+            background-color: #2C2C37;
+            position: absolute;
+            left: -10px;
+            top: 8px;
+        }
+
+        i {
+            margin-left: 5px;
+            position: unset !important;
+        }
+    }
+}
+
 .al_site_container {
     display: flex;
     width: 100%;
@@ -148,34 +287,8 @@
     word-break: break-word;
     font-size: $font_13;
 
-    ul.standardPlans {
-        padding-left: 10px;
-
-        li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 300;
-            margin-bottom: 9px;
-            position: relative;
-
-            &::before {
-                content: '';
-                height: 5px;
-                width: 5px;
-                border-radius: 50%;
-                background-color: #2C2C37;
-                position: absolute;
-                left: -10px;
-                top: 8px;
-            }
-
-            i {
-                margin-left: 5px;
-                position: unset !important;
-            }
-        }
+    .al_chatbot {
+        width: 30%;
     }
 
     .al_top_navigation {
@@ -542,7 +655,7 @@
         height: 100%;
         overflow-y: auto;
         margin-left: 75px;
-        transition: margin-left 0.3s ease-out;
+        transition: all 0.3s ease-out;
 
         .al_main_container {
             display: flex;

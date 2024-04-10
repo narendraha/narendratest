@@ -4,17 +4,18 @@ import Topbar from './Topbar';
 import SideNav from './SideNav';
 import LayoutAlertMessage from './LayoutAlertMessage';
 import ConfirmationAction from './ConfirmationAction';
-import ChatBotAuth from '../ChatBotAuth';
+import ChatBot from '../../ChatBot';
+import { Popover, PopoverBody, Button } from 'reactstrap';
+import chatBot from '../../../images/chatboticon.svg';
 
 export default function MainLayout() {
-    
+    const [botisOpen, setBotIsOpen] = useState(true);
     const [isShowmenu, setIsShowmenu] = useState(true);
 
     return <React.Fragment>
         <div className='al_site_container'>
             {/* <LayoutAlertMessage /> */}
             {/* <ConfirmationAction /> */}
-            <ChatBotAuth />
             <div className='wflexLayout flex-row position-relative'>
                 <SideNav isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
                 <div className='al_right_container'>
@@ -23,7 +24,24 @@ export default function MainLayout() {
                         <Outlet />
                     </main>
                 </div>
+                {botisOpen && <ChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
             </div>
+            <Button id="homechatpopover" type="button" className='p-0 al_chat'>
+                {!botisOpen && <img src={chatBot} alt="bot" id="homechatpopover" onClick={() => setBotIsOpen(!botisOpen)} />
+                }</Button>
+
+            {!botisOpen && <Popover
+                placement="left"
+                target="homechatpopover"
+                trigger="legacy"
+                isOpen={!botisOpen}
+                modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+            >
+                <PopoverBody>
+                    Hello, I am Alfred! How can i Assist you today?
+                </PopoverBody>
+            </Popover>
+            }
         </div>
     </React.Fragment >
 }

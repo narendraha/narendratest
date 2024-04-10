@@ -453,7 +453,7 @@ export default function Register() {
     <Formik
       initialValues={{
         password: "",
-       // reenterpassword: "",
+        // reenterpassword: "",
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Password form fields

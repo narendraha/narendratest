@@ -32,9 +32,22 @@ a {
   cursor: pointer;
 }
 
+.al_chat {
+  position: absolute;
+  right: 35px;
+  bottom: 35px;
+  padding: 0;
+  z-index: 9;
+  cursor: pointer;
+
+  img {
+    width: 55px;
+  }
+}
+
 .popover {
   --bs-popover-zindex: 1070;
-  --bs-popover-max-width: 200px;
+  --bs-popover-max-width: 210px;
   --bs-popover-font-size: 0.875rem;
   --bs-popover-bg: #fff;
   --bs-popover-border-width: 1px;
@@ -75,7 +88,6 @@ a {
   background-color: var(--bs-popover-bg);
   background-clip: padding-box;
   border: none;
-  left: -11px !important;
   border-radius: var(--bs-popover-border-radius);
 }
 
@@ -108,15 +120,16 @@ a {
   border: none !important;
   border-radius: 15px !important;
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+
   &::before {
     content: "";
-        position: absolute;
-        right: -20px;
-        top: 35%;
-        border-width: 10px;
-        border-style: solid;
-        border-color: transparent transparent #fff transparent;
-        transform: rotate(90deg);
+    position: absolute;
+    right: -20px;
+    top: 35%;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+    transform: rotate(90deg);
   }
 }
 

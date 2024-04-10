@@ -27,15 +27,14 @@ export default function Signin({ setIsAuthenticated }) {
         localStorage.setItem('token', res.data?.data?.token)
         if(res.data?.statuscode === 200){
           toast(res.data?.message, {
-              position: "top-right",
+              position: "top-center",
               type: "success",
-              
           });
           setIsAuthenticated(true);
           navigate('/dashboard')
         }else{
           toast(res.data?.message, {
-              position: "top-right",
+              position: "top-center",
               type: "error",
           });
         }
@@ -44,7 +43,7 @@ export default function Signin({ setIsAuthenticated }) {
     .catch((er) => {
       console.log(er);
       toast(er?.response?.data?.message, {
-          position: 'top-right',
+          position: 'top-center',
           type: 'error',
       })
     });
@@ -86,7 +85,7 @@ export default function Signin({ setIsAuthenticated }) {
                     <div className="wflex-items-center wflexLayout">
                       <h5>Sign in</h5>
 
-                      <div className="wflexScroll">
+                      <div className="al_login-form wflexScroll">
                         <FormGroup>
                           <Label>Mobile Number / Email ID</Label>
                           <Field

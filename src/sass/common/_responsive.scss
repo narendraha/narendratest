@@ -24,6 +24,23 @@
 
 @media screen and (min-width: 601px) and (max-width: 820px) {
 
+    .cs_site_header {
+        width: 100% !important;
+    }
+
+    .al_chatbot {
+        position: absolute;
+        bottom: 0;
+        right: 20px;
+        height: 80vh;
+        z-index: 999;
+        width: 50%;
+
+        .card-body {
+            height: 80vh;
+        }
+    }
+
     body,
     .al_login_container {
         font-size: 13px !important;

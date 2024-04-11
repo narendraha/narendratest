@@ -16,37 +16,37 @@ export default function Signin({ setIsAuthenticated }) {
 
   const handleSubmit = (values) => {
     // navigate("/home");
-    let data={
-        username : values.username,
-        password : values.password
+    let data = {
+      username: values.username,
+      password: values.password
     }
     AxiosInstance("application/json")
-    .post(`/login_account`, data)
-    .then((res) => {
-      if (res && res.data && res.status == "200") {
-        localStorage.setItem('token', res.data?.data?.token)
-        if(res.data?.statuscode === 200){
-          toast(res.data?.message, {
+      .post(`/login_account`, data)
+      .then((res) => {
+        if (res && res.data && res.status == "200") {
+          localStorage.setItem('token', res.data?.data?.token)
+          if (res.data?.statuscode === 200) {
+            toast(res.data?.message, {
               position: "top-center",
               type: "success",
-          });
-          setIsAuthenticated(true);
-          navigate('/dashboard')
-        }else{
-          toast(res.data?.message, {
+            });
+            setIsAuthenticated(true);
+            navigate('/home')
+          } else {
+            toast(res.data?.message, {
               position: "top-center",
               type: "error",
-          });
+            });
+          }
         }
-      }
-    })
-    .catch((er) => {
-      console.log(er);
-      toast(er?.response?.data?.message, {
+      })
+      .catch((er) => {
+        console.log(er);
+        toast(er?.response?.data?.message, {
           position: 'top-center',
           type: 'error',
-      })
-    });
+        })
+      });
   };
 
   return (
@@ -58,12 +58,16 @@ export default function Signin({ setIsAuthenticated }) {
         }}
         validationSchema={Yup.object().shape({
           // Define validation rules for Password form fields
-          username : Yup.string()
-          .email("Invalid email")
-          .required("This field is required"),
+          username: Yup.string()
+            .required('This field is required')
+            .matches(
+              // Regular expression for email or phone number validation
+              /^(?:[0-9]{10}|\w+[.-]*\w+@\w+\.[A-Za-z]{2,3})$/,
+              'Invalid email or phone number'
+            ),
           password: Yup.string().required("Password is required")
         })}
-        onSubmit={(values) =>{handleSubmit(values)}}
+        onSubmit={(values) => { handleSubmit(values) }}
       >
         {({
           values,
@@ -101,19 +105,19 @@ export default function Signin({ setIsAuthenticated }) {
                           />
                         </FormGroup>
                         <FormGroup>
-                        <Label>Password</Label>
-                        <Field
-                          type="password"
-                          name="password"
-                          placeholder="Enter password"
-                          className="form-control"
-                        />
-                        <ErrorMessage
-                          name="password"
-                          component={"div"}
-                          className="text-danger"
-                        />
-                      </FormGroup>
+                          <Label>Password</Label>
+                          <Field
+                            type="password"
+                            name="password"
+                            placeholder="Enter password"
+                            className="form-control"
+                          />
+                          <ErrorMessage
+                            name="password"
+                            component={"div"}
+                            className="text-danger"
+                          />
+                        </FormGroup>
                       </div>
                       <div className="al_login_footer">
                         {/* <Link to="/forgot-password" className="al_forgot_pw al_text_link">Forgot password?</Link> */}

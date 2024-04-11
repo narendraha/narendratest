@@ -11,7 +11,9 @@ export default function Topbar(props) {
     navigate('profile')
   }
   const handleLogOut = () => {
-    navigate('signin')
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate('/signin')
   }
 
   return (

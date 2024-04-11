@@ -937,7 +937,7 @@ export default function Register() {
       .catch((er) => {
         console.log(er);
         toast(er?.response?.data?.message, {
-            position: 'top-right',
+            position: 'top-center',
             type: 'error',
         })
       });

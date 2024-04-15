@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import user from '../../../images/userprofileImg.png';
+import { jwtDecode } from "jwt-decode";
 
 export default function Topbar(props) {
   const [menu, setMenu] = useState();
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
   const navigate = useNavigate();
 
   const handleProfile = () => {
@@ -35,7 +38,7 @@ export default function Topbar(props) {
                   <DropdownToggle className="nav-link" tag="a">
                     <img src={user} alt="user" className='al_useravatar al_avatar' />
                     <div className='d-flex flex-column ms-2'>
-                      <span className='al_uName'>Alfred user</span>
+                      <span className='al_uName'>{decoded?.username}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">

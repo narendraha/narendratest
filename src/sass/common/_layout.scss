@@ -13,10 +13,43 @@
     }
 }
 
-
-
 .w-80 {
     width: 80%;
+}
+
+.al_menu_navigator:not(.al_slide_out)+.al_right_container,
+.al_right_container:not(:last-child) {
+    .al_symptoms {
+
+        .col-lg-4 {
+            max-width: 50%;
+            flex: 0 0 50%;
+        }
+    }
+
+    .al_card_diff,
+    .al_knowldgebank {
+        .col-lg-2 {
+            max-width: 25%;
+            flex: 0 0 25%;
+        }
+    }
+
+    .al_profile_manage {
+        .col-xl-7 {
+            max-width: 75%;
+            flex: 0 0 75%;
+        }
+    }
+
+    // .col-lg-3 {
+    //     max-width: 33.3%;
+    //     flex: 0 0 33.3%;
+    // }
+
+    .w-80 {
+        width: 100%;
+    }
 }
 
 .al_note {
@@ -994,13 +1027,38 @@ ul.standardPlans {
 }
 
 .al_symptoms {
-    .col-md-6 {
-        &:nth-of-type(odd) {
-            padding-right: 20px !important;
-        }
+    strong {
+        display: block;
+        font-weight: 500;
+        color: #2C2C37;
+    }
 
-        &:nth-of-type(even) {
-            padding-left: 20px !important;
+    .al_frequencylist {
+        margin: 15px 0;
+
+        label.btn {
+            margin-right: 10px;
+            border: 1px solid #BABABA;
+            border-radius: 10px !important;
+            padding: 8px 16px !important;
+            color: #959CA7;
+            font-size: 11px !important;
+
+            &:hover {
+                border: 1px solid #666565;
+                color: #666565;
+            }
+
+            &.active {
+                border: 1px solid #3977C4;
+                font-weight: 500;
+                color: #3977C4;
+            }
+
+            input {
+                display: none;
+                visibility: hidden;
+            }
         }
     }
 }
@@ -1008,12 +1066,13 @@ ul.standardPlans {
 .rangeslider {
     background: linear-gradient(to right, #DBDBDB, #74E0B5, #EECD59, #E89799, #F54A68);
     box-shadow: none;
+    height: 4px;
 
     .rangeslider__handle {
         border: 3px solid #626569;
         box-shadow: none;
-        width: 25px;
-        height: 25px;
+        width: 15px;
+        height: 18px;
 
         &::after {
             display: none;
@@ -1030,6 +1089,7 @@ ul.standardPlans {
             font-size: 10px;
             line-height: normal;
             color: #959CA7;
+            font-weight: 300;
         }
     }
 }
@@ -1149,6 +1209,9 @@ button.al_upgrade_btn {
 }
 
 .al_profilebtns {
+    display: flex;
+    flex-wrap: wrap;
+
     button {
         padding: 10px 20px;
         background-color: #ffffff;

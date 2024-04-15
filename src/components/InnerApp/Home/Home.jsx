@@ -383,150 +383,655 @@ export default function Home() {
                                 </TabPane>
                                 <TabPane tabId="3">
                                     <p>Select the symptoms range listed below</p>
-                                    <div className='w-80 al_symptoms'>
+                                    <div className='al_symptoms'>
                                         <Row>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Breathlessness during activity</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={labelValues}
-                                                        labels={horizontalLabels}
-                                                        onChange={handleValueChange}
-                                                        onChangeComplete={() => handleValueChangeEnd(labelValues)}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Breathlessness even at rest</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Dizziness</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Cold sweat</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Pronounced tiredness</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Chest pain</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Weakness</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Infirmity</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Near syncope</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Syncope</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
-                                            <Col md="6" sm="12">
-                                                <div className='mb-5'>
+                                            <Col lg="4" md="6" sm="12">
+                                                <div className='mb-4'>
                                                     <h6>Tiredness afterwards</h6>
-                                                    <Slider
-                                                        min={0}
-                                                        max={100}
-                                                        tooltip={false}
-                                                        value={0}
-                                                        labels={horizontalLabels}
-                                                        onChange={() => { }}
-                                                    />
+                                                    <Card className="mb-0 al_cardnoborder">
+                                                        <CardBody>
+                                                            <strong>Frequency</strong>
+                                                            <div className="btn-group btn-group-toggle al_frequencylist" data-toggle="buttons">
+                                                                <label className="btn active">
+                                                                    <input type="radio" name="frequency" id="never" /> Never
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="occasionally" /> Occasionally
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="often" /> Often
+                                                                </label>
+                                                                <label className="btn">
+                                                                    <input type="radio" name="frequency" id="always" /> Always
+                                                                </label>
+                                                            </div>
+                                                            <strong>Severity</strong>
+                                                            <Slider
+                                                                min={0}
+                                                                max={100}
+                                                                tooltip={false}
+                                                                value={labelValues}
+                                                                labels={horizontalLabels}
+                                                                onChange={handleValueChange}
+                                                                onChangeComplete={() => handleValueChangeEnd(labelValues)}
+                                                            />
+                                                            <br />
+                                                            <strong className='mb-2'>Effecting quality of life (limiting them to do stuff)</strong>
+
+                                                            <FormGroup
+                                                                check
+                                                                inline
+                                                                className="d-flex me-0 ps-0 flex-wrap"
+                                                            >
+                                                                <Label check className="d-flex align-center me-3">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="yes"
+                                                                    />
+                                                                    &nbsp;Yes
+                                                                </Label>
+                                                                <Label check className="d-flex align-center">
+                                                                    <input
+                                                                        type="radio"
+                                                                        name="effectingquality"
+                                                                        value="no"
+                                                                    />
+                                                                    &nbsp;No
+                                                                </Label>
+                                                            </FormGroup>
+                                                        </CardBody>
+                                                    </Card>
                                                 </div>
                                             </Col>
                                         </Row>

@@ -20,7 +20,8 @@ export default function App1() {
                         }
                     })
                     .then((res) => {
-                        { window.location.href = 'https://' + window.location.hostname + '/#/home'; }
+                        //localStorage.setItem('token', res.data?.data?.token)
+                        { window.location.href = 'https://' + window.location.hostname + '/#/profile'; }
                     })
                     .catch((err) => console.log(err));
             }

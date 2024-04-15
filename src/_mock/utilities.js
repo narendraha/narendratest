@@ -10,9 +10,10 @@ export const AxiosInstance = (contentType) => {
   // const Axios = axios.create({
   //   baseURL: `${apiservices.BaseURL}`,
   // });
-  const token = JSON.parse(localStorage.getItem("auth"));
-  Axios.defaults.headers.common["token"] =
-    typeof window !== "undefined" && token?.token ? token?.token : null;
+
+  const token = localStorage.getItem("token");
+  Axios.defaults.headers.common["Authorization"] =
+    typeof window !== "undefined" && token ? `Bearer ${token}` : null;
   Axios.defaults.headers.common["Content-Type"] = contentType;
   Axios.interceptors.request.use(
     (request) => {

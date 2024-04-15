@@ -8,9 +8,19 @@ import { Button, Modal, ModalBody } from 'reactstrap';
 //     { name: 'cancel', className: ' al_button_cancel' },
 // ];
 
-export default function ConfirmationAction() {
-
+export default function ConfirmationAction(props) {
     const [closeconfirmModal, setCloseconfirmModal] = useState(true);
+
+    const newFunction=(item)=>{
+        setCloseconfirmModal(item)
+        props?.newFun(item);
+    }
+
+    const handleCancel=(item)=>{
+        setCloseconfirmModal(item)
+        props?.newFun(item);
+    }
+
     return (
         <>
             {<Modal isOpen={closeconfirmModal ? true : false} className='al_confirm_modal' wrapClassName='al_outerparentwp'>
@@ -20,8 +30,8 @@ export default function ConfirmationAction() {
                 </ModalBody>
 
                 <div className="modelFooter text-center mb-3">
-                    <Button type="button" className="text-capitalize btn al_button_add" onClick={() => setCloseconfirmModal(!closeconfirmModal)}>OK</Button>
-                    <Button type="button" className="text-capitalize btn al_button_cancel" onClick={() => setCloseconfirmModal(!closeconfirmModal)}>Cancel</Button>
+                    <Button type="button" className="text-capitalize btn al_button_add" onClick={()=>newFunction(true)}>OK</Button>
+                    <Button type="button" className="text-capitalize btn al_button_cancel" onClick={() => handleCancel(false)}>Cancel</Button>
                 </div>
             </Modal>}
         </>

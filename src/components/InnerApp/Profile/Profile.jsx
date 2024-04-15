@@ -44,7 +44,7 @@ export default function Profile() {
                                 </>}
                             </div>
                         </Col>
-                        <Col xl="6" lg="8" md="8" sm="8" className='px-5'>
+                        <Col xl="7" lg="8" md="8" sm="8" className='px-5'>
                             {!isEdit && <>
                                 <h2 className='cs_semibold mb-1'>{usersDetails.name}</h2>
                                 <h6 className='al_profile_role mb-2'>{usersDetails.email}</h6>

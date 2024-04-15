@@ -553,7 +553,7 @@ export default function Register() {
   const FourthForm = ({ onSubmit }) => (
     <Formik
       initialValues={{
-        scheduletype: '',
+        scheduletype: '1',
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Subscription form fields

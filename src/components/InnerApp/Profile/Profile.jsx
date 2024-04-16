@@ -61,14 +61,6 @@ export default function Profile() {
   ];
 
   const gender = getProfileDetails?.gender;
-  const simplifiedGender =
-    gender === "M"
-      ? "Male"
-      : gender === "F"
-      ? "Female"
-      : gender === "O"
-      ? "Other"
-      : "N/A";
 
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
@@ -135,7 +127,7 @@ export default function Profile() {
                 )}
               </div>
             </Col>
-            <Col xl="6" lg="8" md="8" sm="8" className="px-5">
+            <Col xl="7" lg="8" md="8" sm="8" className="px-5">
               {!isEdit && (
                 <>
                   <h2 className="cs_semibold mb-1">
@@ -210,7 +202,7 @@ export default function Profile() {
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{simplifiedGender}</div>
+                        <div>{getProfileDetails?.gender || "N/A"}</div>
                         <Label>Gender</Label>
                       </div>
                     </Col>

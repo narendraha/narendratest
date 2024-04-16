@@ -5,10 +5,11 @@ import * as Yup from "yup";
 import { Row, Col, Alert, Label, FormGroup } from "reactstrap";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import { useState } from "react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import App1 from "./temp";
 import { AxiosInstance } from "../../_mock/utilities";
 import { toast } from "react-toastify";
+import { auth, provider } from "../Firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -18,20 +19,20 @@ export default function Signin({ setIsAuthenticated }) {
     // navigate("/home");
     let data = {
       username: values.username,
-      password: values.password
-    }
+      password: values.password,
+    };
     AxiosInstance("application/json")
       .post(`/login_account`, data)
       .then((res) => {
         if (res && res.data && res.status == "200") {
-          localStorage.setItem('token', res.data?.data?.token)
+          localStorage.setItem("token", res.data?.data?.token);
           if (res.data?.statuscode === 200) {
             toast(res.data?.message, {
               position: "top-center",
               type: "success",
             });
             setIsAuthenticated(true);
-            navigate('/home')
+            navigate("/home");
           } else {
             toast(res.data?.message, {
               position: "top-center",
@@ -43,10 +44,52 @@ export default function Signin({ setIsAuthenticated }) {
       .catch((er) => {
         console.log(er);
         toast(er?.response?.data?.message, {
-          position: 'top-center',
-          type: 'error',
-        })
+          position: "top-center",
+          type: "error",
+        });
       });
+  };
+
+  const handleClick = async () => {
+    await signInWithPopup(auth, provider)
+      .then((data) => {
+        console.log(data?.user, "data");
+        let userData = {
+          email: data?.user?.email ?? "",
+          username: data?.user?.displayName ?? "",
+        };
+        AxiosInstance("application/json")
+          .post(`/googleauth`, userData)
+          .then((res) => {
+            if (
+              (res && res.data && res.status == "200") ||
+              res.status == "201"
+            ) {
+              localStorage.setItem("token", res.data?.data?.token);
+              if (res.data?.statuscode === 200) {
+                toast(res.data?.message, {
+                  position: "top-center",
+                  type: "success",
+                });
+                setIsAuthenticated(true);
+                navigate("/profile");
+              } else {
+                toast(res.data?.message, {
+                  position: "top-center",
+                  type: "error",
+                });
+              }
+            }
+          })
+          .catch((er) => {
+            console.log(er);
+            toast(er?.response?.data?.message, {
+              position: "top-center",
+              type: "error",
+            });
+          });
+      })
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -59,21 +102,19 @@ export default function Signin({ setIsAuthenticated }) {
         validationSchema={Yup.object().shape({
           // Define validation rules for Password form fields
           username: Yup.string()
-            .required('This field is required')
+            .required("This field is required")
             .matches(
               // Regular expression for email or phone number validation
               /^(?:[0-9]{10}|\w+[.-]*\w+@\w+\.[A-Za-z]{2,3})$/,
-              'Invalid email or phone number'
+              "Invalid email or phone number"
             ),
-          password: Yup.string().required("Password is required")
+          password: Yup.string().required("Password is required"),
         })}
-        onSubmit={(values) => { handleSubmit(values) }}
+        onSubmit={(values) => {
+          handleSubmit(values);
+        }}
       >
-        {({
-          values,
-          errors,
-          handleSubmit,
-        }) => {
+        {({ values, errors, handleSubmit }) => {
           return (
             <Form className="wflexLayout">
               <Row className="al_login_section">
@@ -142,9 +183,13 @@ export default function Signin({ setIsAuthenticated }) {
                                         <i className='icon_alfred_google'></i>
                                         <span>Sign in with Google</span>
                                     </button> */}
-                        <GoogleOAuthProvider clientId="127686704222-9h7eguj5fq0ibo9e9tib7d155s9tsjft.apps.googleusercontent.com">
-                          <App1 />
-                        </GoogleOAuthProvider>
+                        <span
+                          onClick={handleClick}
+                          className="al_signinbuttons"
+                        >
+                          <i className="icon_alfred_google"></i>Sign in with
+                          Google
+                        </span>
                         <button type="button" className="al_signinbuttons">
                           <i className="icon_alfred_apple"></i>
                           <span>Continue With Apple</span>

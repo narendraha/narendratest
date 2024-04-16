@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardBody, Button } from 'reactstrap';
+import React, { useState } from "react";
+import { Card, CardBody, Button } from "reactstrap";
 import { AxiosInstance } from "../../_mock/utilities";
 import Chatuser from "../../images/usericon.svg";
 import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col } from 'reactstrap';
+import { Row, Col } from "reactstrap";
 
 export default function ChatBot(props) {
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
@@ -48,25 +48,38 @@ export default function ChatBot(props) {
     value !== ""
       ? setIsShowSendBtn(true)
       : setIsShowSendBtn(
-        false
-      ); /* Show send button when user enter something */
+          false
+        ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
 
   return (
     <>
-      <div className='al_chatbot'>
+      <div className="al_chatbot">
         <Card>
-          <CardBody className='d-flex flex-column'>
-            <Button id="homechatclose" type="button" onClick={() => props.setBotIsOpen(!props.botisOpen)}>
+          <CardBody className="d-flex flex-column">
+            <Button
+              id="homechatclose"
+              type="button"
+              onClick={() => props.setBotIsOpen(!props.botisOpen)}
+            >
               <i className="icon_alfred_close"></i>
             </Button>
-            <div className='flex-grow-1'>
-              <div className='scrolldiv'>
+            <div className="flex-grow-1">
+              <div className="scrolldiv">
+                <Row className="mb-4 al_chatcontent">
+                  <div>
+                    <img src={Chatbot} alt="Bot" />
+                  </div>
+                  <Col>
+                    <h6 className="mb-0">Alfred</h6>
+                    <div>Hello, I am Alfred! How can i Assist you today?</div>
+                  </Col>
+                </Row>
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
                     {Object.entries(message).map(([key, value]) => (
-                      <Row className='mb-4 al_chatcontent' key={key}>
+                      <Row className="mb-4 al_chatcontent" key={key}>
                         <div>
                           {key === "User" ? (
                             <img src={Chatuser} alt="chat user" />
@@ -75,19 +88,27 @@ export default function ChatBot(props) {
                           ) : null}
                         </div>
                         <Col>
-                          <h6 className='mb-0'>{key}</h6>
+                          <h6 className="mb-0">{key}</h6>
                           <div>{value}</div>
                         </Col>
                       </Row>
                     ))}
                   </React.Fragment>
                 ))}
-                {(isLoading || (isLoading && !isShow)) && <div className="al_chatloading"></div>}
+                {(isLoading || (isLoading && !isShow)) && (
+                  <div className="al_chatloading"></div>
+                )}
               </div>
             </div>
-            <div className='cs_mainsearch al_chatfooter p-3' style={{ backgroundColor: "#E2E5ED" }}>
+            <div
+              className="cs_mainsearch al_chatfooter p-3"
+              style={{ backgroundColor: "#E2E5ED" }}
+            >
               <form action="#">
-                <i className="icon_alfred_search" style={{ height: "auto" }}></i>
+                <i
+                  className="icon_alfred_search"
+                  style={{ height: "auto" }}
+                ></i>
                 <input
                   type="text"
                   placeholder="Ask a question"
@@ -118,10 +139,15 @@ export default function ChatBot(props) {
                     ></i>
                   </>
                 ) : (
-                  <i className="icon_alfred_speech" style={{ height: "auto" }}></i>
+                  <i
+                    className="icon_alfred_speech"
+                    style={{ height: "auto" }}
+                  ></i>
                 )}
               </form>
-              <div className='al_note pt-1'>Disclaimer: Not a medical advice</div>
+              <div className="al_note pt-1">
+                Disclaimer: Not a medical advice
+              </div>
             </div>
           </CardBody>
         </Card>

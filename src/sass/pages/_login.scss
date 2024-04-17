@@ -56,7 +56,7 @@ ul {
             }
 
             .al_login-right {
-                padding: 3% 8%;
+                padding: 2% 8%;
                 background-color: #ffffff;
 
                 .al_65 {
@@ -76,7 +76,7 @@ ul {
                         i {
                             position: absolute;
                             top: 12px;
-                            font-size: 20px;
+                            font-size: 14px;
                             color: #78889B;
                             left: 15px;
                         }
@@ -223,7 +223,7 @@ ul {
                 }
 
                 h5 {
-                    font-size: 20px;
+                    font-size: 18px;
                     color: #1C2C3C;
                     font-weight: 600;
                 }
@@ -234,7 +234,7 @@ ul {
 
                     .card {
                         border: none !important;
-                        margin-bottom: 15px;
+                        margin-bottom: 5px;
                     }
 
                     h6 {
@@ -243,7 +243,8 @@ ul {
                     }
 
                     span {
-                        font-size: 11px;
+                        font-size: 10px;
+                        display: block;
                     }
 
                     .form-check-label {

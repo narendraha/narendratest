@@ -585,7 +585,7 @@ export default function Register() {
                   <div className="wflex-items-center wflexLayout">
                     <h5 className={"mb-0"}>Type of subscription</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
-                      <Row className="planscard mt-3">
+                      <Row className="planscard mt-2">
                         <Col sm="10">
                           <Card>
                             <CardBody>
@@ -609,7 +609,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration
@@ -698,7 +698,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration
@@ -787,7 +787,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration

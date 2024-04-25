@@ -140,7 +140,7 @@ export default function Profile() {
                   <Row>
                     <Col>
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.plan || "N/A"}</div>
+                        <div>{getProfileDetails?.plan || "NA"}</div>
                         <Label>Your Subscription Plan</Label>
                       </div>
                     </Col>
@@ -154,19 +154,19 @@ export default function Profile() {
                   <Row>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.height || "N/A"}</div>
+                        <div>{getProfileDetails?.height || "NA"}</div>
                         <Label>Height</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.weight || "N/A"}</div>
+                        <div>{getProfileDetails?.weight || "NA"}</div>
                         <Label>Weight</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.bloodtype || "N/A"}</div>
+                        <div>{getProfileDetails?.bloodtype || "NA"}</div>
                         <Label>Blood Type</Label>
                       </div>
                     </Col>
@@ -175,19 +175,19 @@ export default function Profile() {
                   <Row>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.rtype || "N/A"}</div>
+                        <div>{getProfileDetails?.rtype || "NA"}</div>
                         <Label>Residence Type</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.education || "N/A"}</div>
+                        <div>{getProfileDetails?.education || "NA"}</div>
                         <Label>Education</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.dob || "N/A"}</div>
+                        <div>{getProfileDetails?.dob ? "NA" : getProfileDetails?.dob == 'NA' ? '' : new Date()}</div>
                         <Label>Date of Birth</Label>
                       </div>
                     </Col>
@@ -196,19 +196,19 @@ export default function Profile() {
                   <Row>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.age || "N/A"}</div>
+                        <div>{getProfileDetails?.age || "NA"}</div>
                         <Label>Age</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.gender || "N/A"}</div>
+                        <div>{getProfileDetails?.gender || "NA"}</div>
                         <Label>Gender</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.ssn || "N/A"}</div>
+                        <div>{getProfileDetails?.ssn || "NA"}</div>
                         <Label>SSN</Label>
                       </div>
                     </Col>
@@ -217,13 +217,13 @@ export default function Profile() {
                   <Row>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.mobile || "N/A"}</div>
+                        <div>{getProfileDetails?.mobile || "NA"}</div>
                         <Label>Mobile</Label>
                       </div>
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.nationality || "N/A"}</div>
+                        <div>{getProfileDetails?.nationality || "NA"}</div>
                         <Label>Nationality</Label>
                       </div>
                     </Col>
@@ -263,7 +263,7 @@ export default function Profile() {
                     <Col md="6" sm="12">
                       <div className="al_profiledata">
                         <div>
-                          {getProfileDetails?.insurance_provider || "N/A"}
+                          {getProfileDetails?.insurance_provider || "NA"}
                         </div>
                         <Label>Name of Insurance Provider</Label>
                       </div>
@@ -271,7 +271,7 @@ export default function Profile() {
                     <Col md="6" sm="12">
                       <div className="al_profiledata">
                         <div>
-                          {getProfileDetails?.insurance_policy_no || "N/A"}
+                          {getProfileDetails?.insurance_policy_no || "NA"}
                         </div>
                         <Label>Insurance Policy / Card Number</Label>
                       </div>
@@ -297,7 +297,7 @@ export default function Profile() {
                     initialValues={{
                       username: getProfileDetails?.username || "",
                       email: getProfileDetails?.email || "",
-                      dob: getProfileDetails?.dob || "",
+                      dob: getProfileDetails?.dob ? "" : new Date,
                       gender: getProfileDetails?.gender || "",
                       mobile: getProfileDetails?.mobile || "",
                       rtype: getProfileDetails?.rtype || "",
@@ -491,7 +491,7 @@ export default function Profile() {
                                   selected={
                                     values?.dob
                                       ? new Date(values?.dob)
-                                      : new Date()
+                                      : values?.dob == 'NA' ? new Date() : new Date()
                                   }
                                   onChange={(e) => {
                                     setFieldValue("dob", e);

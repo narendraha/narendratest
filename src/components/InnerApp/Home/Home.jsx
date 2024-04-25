@@ -384,36 +384,9 @@ export default function Home() {
     setShow2(data);
     if(data){
         delete healthDetails?.isCheckMedicalRecords
-        console.log("health details", healthDetails);
         // direct redirect to next tab without api call
         setTab("3");
         setShow2(!data);
-        // AxiosInstance("application/json")
-        // .post(`/`, data)
-        // .then((res) => {
-        //   if (res && res.data && res.status == "200") {
-        //     if (res.data?.statuscode === 200) {
-        //       toast(res.data?.message, {
-        //         position: "top-center",
-        //         type: "success",
-        //       });
-        //       setTab("3");
-        //       setShow2(!data);
-        //     } else {
-        //       toast(res.data?.message, {
-        //         position: "top-center",
-        //         type: "error",
-        //       });
-        //     }
-        //   }
-        // })
-        // .catch((er) => {
-        //   console.log(er);
-        //   toast(er?.response?.data?.message, {
-        //     position: "top-center",
-        //     type: "error",
-        //   });
-        // });
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { pageTitle } from "../../helpers/PageTitle";
 import { AxiosInstance } from "../../_mock/utilities";
 import Chatuser from "../../images/usericon.svg";
@@ -13,11 +13,12 @@ export default function HomeStyle3() {
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
-  const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
   const [isInputShow, setIsInputShow] = useState(false);
   const [questions, setQuestions] = useState([]); // stored the chat history get from API response
   const [newques, setnewqus] = useState("");
   const [newNumber, setNewNumber] = useState(1); //  initial index value of questins
+  const messagesEndRef = useRef(null);
+
   let jsonData = {
     1: [
       "I strictly follow my doctor's recommendations and treatment plans.",
@@ -309,8 +310,10 @@ export default function HomeStyle3() {
       "I am committed to reaching out to a healthcare provider about my condition.",
     ],
   };
-
-  var index = newNumber;
+  // Scroll to the bottom of the chat container
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   let randomNumber = Math.floor(Math.random() * 15);
   const newfuc = (index) => {
     setnewqus(jsonData[index][randomNumber]);
@@ -326,13 +329,19 @@ export default function HomeStyle3() {
     }
   }, [newNumber]); // Empty dependency array ensures this effect runs only once on mount
 
-  useEffect(() => {}, [newNumber]);
+  useEffect(() => {
+    scrollToBottom(); // Scroll to bottom whenever messages change
+  }, [newNumber, questions]);
+
   const handleFormSubmit = async (e) => {
     setIsInputShow(true);
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
+    // show the user entered input value
+    setQuestions((prevHistory) => [...prevHistory, { User: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
+    // request data
     let data = {
       alfred: newques,
       user: inputValue,
@@ -341,13 +350,14 @@ export default function HomeStyle3() {
     // api integration
     await AxiosInstance("application/json")
       .post(
-        `https://6f7b-202-65-141-34.ngrok-free.app/categorizeresponse`,
+        `https://helloalfredtest.azurewebsites.net/categorizeresponse`,
         data
       )
       .then((res) => {
-        console.log("response from server ", res);
         if (res && res.data && res.status === 200) {
-          setIsShow(true);
+          // hide the send and remove icon 
+          setIsShow(false);
+          //  hide the input
           setIsInputShow(false);
           const responseData = res.data;
           setIsLoading(false);
@@ -361,7 +371,6 @@ export default function HomeStyle3() {
             setQuestions((prevHistory) => [
               ...prevHistory,
               {
-                User: inputValue,
                 Alfred: responseData?.message,
               },
             ]);
@@ -370,12 +379,6 @@ export default function HomeStyle3() {
               setNewNumber((prev) => prev + 1);
             }
           } else {
-            setQuestions((prevHistory) => [
-              ...prevHistory,
-              {
-                User: inputValue,
-              },
-            ]);
             setNewNumber((prev) => prev + 1);
           }
         }
@@ -392,11 +395,8 @@ export default function HomeStyle3() {
 
   const handleInputChange = (e) => {
     let { value } = e.target;
-    value !== ""
-      ? setIsShowSendBtn(true)
-      : setIsShowSendBtn(
-          false
-        ); /* Show send button when user enter something */
+    value !== "" &&
+      setIsShow(true); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
   return (
@@ -425,7 +425,7 @@ export default function HomeStyle3() {
                   </div>
                 </Col>
               </Row>
-              {questions.map((message, index) => (
+              {questions?.map((message, index) => (
                 <React.Fragment key={index}>
                   {Object.entries(message).map(([key, value]) => (
                     <Row className="mb-4 al_chatcontent" key={key}>
@@ -445,6 +445,7 @@ export default function HomeStyle3() {
                 </React.Fragment>
               ))}
               {isLoading && <div className="al_chatloading"></div>}
+              <div ref={messagesEndRef} />
             </div>
           </div>
           <div className="cs_mainsearch mb-2">
@@ -478,16 +479,14 @@ export default function HomeStyle3() {
                     }
                   }}
                 />
-                {isShowSendBtn ? (
+                {isShow ? (
                   <>
-                    {isShow && (
-                      <i
-                        className="icon_alfred_close"
-                        onClick={(e) => {
-                          setInputValue("");
-                        }}
-                      ></i>
-                    )}
+                    <i
+                      className="icon_alfred_close"
+                      onClick={(e) => {
+                        setInputValue("");
+                      }}
+                    ></i>
                     <i
                       className="icon_alfred_sendmsg"
                       style={{

@@ -26,9 +26,9 @@ export default function Profile() {
       .then((res) => {
         const responseData = res.data?.data;
 
-        if (responseData && responseData.dob) {
+        if (responseData && responseData?.dob && responseData?.dob !== "NA") {
           // Transform the date format from "YYYY-MM-DD" to "MM/dd/yyyy"
-          const formattedDate = new Date(responseData.dob);
+          const formattedDate = new Date(responseData?.dob);
           const formattedDateString = formattedDate.toLocaleDateString(
             "en-US",
             {
@@ -59,8 +59,6 @@ export default function Profile() {
     { value: "Cohabitant", label: "Cohabitant" },
     { value: "Non-Resident", label: "Non-Resident" },
   ];
-
-  const gender = getProfileDetails?.gender;
 
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
@@ -99,7 +97,7 @@ export default function Profile() {
 
   return (
     <>
-      {isShowconfirm && <ConfirmationAction newFun={handleSubmit} />}
+      <ConfirmationAction newFun={handleSubmit} open={isShowconfirm}/>
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-3">Profile</h3>
@@ -187,7 +185,7 @@ export default function Profile() {
                     </Col>
                     <Col md="4" sm="12">
                       <div className="al_profiledata">
-                        <div>{getProfileDetails?.dob ? "NA" : getProfileDetails?.dob == 'NA' ? '' : new Date()}</div>
+                        <div>{getProfileDetails?.dob || "NA"}</div>
                         <Label>Date of Birth</Label>
                       </div>
                     </Col>
@@ -297,7 +295,7 @@ export default function Profile() {
                     initialValues={{
                       username: getProfileDetails?.username || "",
                       email: getProfileDetails?.email || "",
-                      dob: getProfileDetails?.dob ? "" : new Date,
+                      dob: getProfileDetails?.dob == 'NA' ? new Date : getProfileDetails?.dob,
                       gender: getProfileDetails?.gender || "",
                       mobile: getProfileDetails?.mobile || "",
                       rtype: getProfileDetails?.rtype || "",

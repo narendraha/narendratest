@@ -32,6 +32,7 @@ import Symptoms from "../components/Pages/Symptoms";
 import Affaq from "../components/Pages/Affaq";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Chat from "../components/Pages/Chat"
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -50,6 +51,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="chat" element={<Chat />} />
+
             </Route>
           </>
         ) : (

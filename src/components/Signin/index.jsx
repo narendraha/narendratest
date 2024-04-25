@@ -60,28 +60,26 @@ export default function Signin({ setIsAuthenticated }) {
           .post(`/googleauth`, userData)
           .then((res) => {
             if (
-              (res && res.data && res.status == "200") ||
-              res.status == "201"
+              res && res.data && (res.status == 200 ||
+              res.status == 201)
             ) {
               localStorage.setItem("token", res.data?.data?.token);
-              if (res.data?.statuscode === 200) {
                 toast(res.data?.message, {
                   position: "top-center",
                   type: "success",
                 });
                 setIsAuthenticated(true);
                 navigate("/profile");
-              } else {
+            } else {
                 toast(res.data?.message, {
                   position: "top-center",
                   type: "error",
                 });
               }
-            }
           })
           .catch((er) => {
             console.log(er);
-            toast(er?.response?.data?.message, {
+            toast(er?.response?.data?.message || er?.message, {
               position: "top-center",
               type: "error",
             });

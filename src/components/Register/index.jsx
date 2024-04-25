@@ -61,7 +61,9 @@ export default function Register() {
         mobile: Yup.string()
           .matches(phoneNumberReg, "Invalid phone number")
           .required("This field is required"),
-        dob: Yup.string().required("This field is required"),
+        dob: Yup.date()
+        .max(new Date(Date.now() - 567648000000), "You must be at least 18 years")
+        .required("Required"),
         gender: Yup.string().required("This field is required"),
         rtype: Yup.string().required("This field is required"),
         education: Yup.string().required("This field is required")

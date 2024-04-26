@@ -1,3 +1,3 @@
 export const pageTitle = title => {
-  return (document.title = 'Hello Alfred Web App');
+  return (document.title = 'HelloAlfred Web App');
 };

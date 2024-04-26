@@ -106,8 +106,7 @@ export default function ChatBot(props) {
             >
               <form action="#">
                 <i
-                  className="icon_alfred_search"
-                  style={{ height: "auto" }}
+                  className="icon_alfred_search h-auto"
                 ></i>
                 <input
                   type="text"
@@ -133,15 +132,13 @@ export default function ChatBot(props) {
                       ></i>
                     )}
                     <i
-                      className="icon_alfred_sendmsg"
-                      style={{ height: "auto" }}
+                      className="icon_alfred_sendmsg h-auto"
                       onClick={(e) => handleFormSubmit(e)}
                     ></i>
                   </>
                 ) : (
                   <i
-                    className="icon_alfred_speech"
-                    style={{ height: "auto" }}
+                    className="icon_alfred_speech h-auto"
                   ></i>
                 )}
               </form>

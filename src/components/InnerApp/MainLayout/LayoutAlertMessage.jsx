@@ -29,7 +29,7 @@ export default function LayoutAlertMessage() {
                             }
                             <div className='al_alert-msg'>
                                 <div>
-                                    <span style={{ fontSize: '20px'}}>Your goal created</span>
+                                    <span style={{ fontSize: "20px"}}>Your goal created</span>
                                     <span className='al_alerttextmsg'>Succesfully</span>
                                     <div className='al_alterttextpara'>Based on your given symptom details we have created a goal for you</div>
                                 </div>

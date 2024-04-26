@@ -1,6 +1,6 @@
 {
-  "short_name": "Hello Alfred",
-  "name": "Hello Alfred App",
+  "short_name": "HelloAlfred",
+  "name": "HelloAlfred App",
   "icons": [
     {
       "src": "favicon.ico",

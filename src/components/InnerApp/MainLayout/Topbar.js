@@ -3,6 +3,8 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { useNavigate } from 'react-router-dom';
 import user from '../../../images/userprofileImg.png';
 import { jwtDecode } from "jwt-decode";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function Topbar(props) {
   const [menu, setMenu] = useState();
@@ -36,7 +38,22 @@ export default function Topbar(props) {
               <div className="pointer">
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
-                    <img src={user} alt="user" className='al_useravatar al_avatar' />
+                    <div className="al_progresscontainer">
+                      <img src={user} alt="user" className='al_useravatar al_avatar' />
+                      <div className='al_progressbar'>
+                        <CircularProgressbar
+                          value={45}
+                          styles={buildStyles({
+                            strokeLinecap: 'round',
+                            trailColor: '#dddddd',
+                            backgroundColor: '#3bc0c3',
+                          })}
+                        />
+                      </div>
+                      <div className='al_profilepercent'>45%</div>
+                    </div>
+
+                    {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
                       <span className='al_uName'>{decoded?.username}</span>
                     </div>

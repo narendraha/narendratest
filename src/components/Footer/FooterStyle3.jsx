@@ -17,7 +17,7 @@ export default function FooterStyle3() {
             </Col>
             <Col>
               <div className="cs_copyright">
-                Copyright © {new Date().getFullYear()} Hello Alfred. All rights reserved.
+                Copyright © {new Date().getFullYear()} HelloAlfred. All rights reserved.
               </div>
             </Col>
           </Row>

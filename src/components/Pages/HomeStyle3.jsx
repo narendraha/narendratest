@@ -94,10 +94,7 @@ export default function HomeStyle3() {
             </div>
             <div className="cs_mainsearch mb-2">
               <form action="#">
-                <i
-                  className="icon_alfred_search"
-                  style={{ height: "auto" }}
-                ></i>
+                <i className="icon_alfred_search h-auto"></i>
                 <input
                   type="text"
                   placeholder="Ask a question"
@@ -122,16 +119,12 @@ export default function HomeStyle3() {
                       ></i>
                     )}
                     <i
-                      className="icon_alfred_sendmsg"
-                      style={{ height: "auto" }}
+                      className="icon_alfred_sendmsg h-auto"
                       onClick={(e) => handleFormSubmit(e)}
                     ></i>
                   </>
                 ) : (
-                  <i
-                    className="icon_alfred_speech"
-                    style={{ height: "auto" }}
-                  ></i>
+                  <i className="icon_alfred_speech h-auto"></i>
                 )}
               </form>
             </div>
@@ -147,7 +140,7 @@ export default function HomeStyle3() {
           <p>What do you want to accomplish?</p>{" "}
           <div className="cs_mainsearch">
             <form action="#">
-              <i className="icon_alfred_search" style={{ height: "auto" }}></i>
+              <i className="icon_alfred_search h-auto"></i>
               <input
                 type="text"
                 placeholder="Ask a question"
@@ -172,20 +165,17 @@ export default function HomeStyle3() {
                     ></i>
                   )}
                   <i
-                    className="icon_alfred_sendmsg"
-                    style={{ height: "auto" }}
+                    className="icon_alfred_sendmsg h-auto"
                     onClick={(e) => handleFormSubmit(e)}
                   ></i>
                 </>
               ) : (
-                <i
-                  className="icon_alfred_speech"
-                  style={{ height: "auto" }}
-                ></i>
+                <i className="icon_alfred_speech h-auto"></i>
               )}
             </form>
           </div>
-          <div className="al_note pt-1">
+
+          <div className="al_note pt-3">
             Disclaimer: Not a medical advice <br />
             {isShow && (
               <p>

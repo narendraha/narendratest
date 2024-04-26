@@ -462,8 +462,7 @@ export default function HomeStyle3() {
             ) : (
               <form action="#">
                 <i
-                  className="icon_alfred_search"
-                  style={{ height: "auto" }}
+                  className="icon_alfred_search h-auto"
                 ></i>
                 <input
                   type="text"
@@ -498,8 +497,7 @@ export default function HomeStyle3() {
                   </>
                 ) : (
                   <i
-                    className="icon_alfred_speech"
-                    style={{ height: "auto" }}
+                    className="icon_alfred_speech h-auto"
                   ></i>
                 )}
               </form>

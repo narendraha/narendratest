@@ -47,7 +47,7 @@ export default function Register() {
         rtype: "",
         education: "",
         ssn: "",
-        insuranceurl:""
+        insuranceurl: ""
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
@@ -324,7 +324,7 @@ export default function Register() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <h5 className={"mb-0" + " text-center"}>
+                    <h5 className={"mb-0 text-center"}>
                       OTP Verification
                     </h5>
                     <div className="al_login-form al_registrationform wflexScroll">
@@ -369,13 +369,13 @@ export default function Register() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                      0,
-                                                      index
-                                                    ) +
-                                                    updatedValue +
-                                                    values.otp.substring(
-                                                      index + 1
-                                                    ),
+                                                    0,
+                                                    index
+                                                  ) +
+                                                  updatedValue +
+                                                  values.otp.substring(
+                                                    index + 1
+                                                  ),
                                             },
                                           });
                                           if (
@@ -858,10 +858,10 @@ export default function Register() {
                       </Row>
                     </div>
                     <ErrorMessage
-                        name="scheduletype"
-                        component={"div"}
-                        className="text-danger"
-                      />
+                      name="scheduletype"
+                      component={"div"}
+                      className="text-danger"
+                    />
                     <div className="al_login_footer mt-3">
                       <button type="submit" className="al_login_button">
                         Continue
@@ -921,16 +921,16 @@ export default function Register() {
         console.log("datassss", res.data);
         if (res && res.data && res.status == "200") {
           console.log("datassss", res.data);
-          if(res.data?.statuscode === 200){
+          if (res.data?.statuscode === 200) {
             toast(res.data?.message, {
-                position: "top-center",
-                type: "success",
+              position: "top-center",
+              type: "success",
             });
             navigate('/signin')
-          }else{
+          } else {
             toast(res.data?.message, {
-                position: "top-center",
-                type: "error",
+              position: "top-center",
+              type: "error",
             });
             navigate('/signin')
           }
@@ -939,8 +939,8 @@ export default function Register() {
       .catch((er) => {
         console.log(er);
         toast(er?.response?.data?.message, {
-            position: 'top-center',
-            type: 'error',
+          position: 'top-center',
+          type: 'error',
         })
       });
   };

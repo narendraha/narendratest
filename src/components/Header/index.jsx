@@ -136,13 +136,13 @@ export default function Header({ logoSrc, variant }) {
                                     {!submenu.innerModules && <Link to={submenu.link} className={(location.pathname === '/' + submenu.link ? 'active' : '')}>{submenu.name}</Link>}
                                     {submenu.innerModules?.length > 0 && <>
                                       <div className='cs_nav_innersubmenu'>{submenu.name}</div>
-                                      <div className='px-3'>
+                                      <div className='px-2'>
                                         {submenu.innerModules?.map((innermenu, index) => {
                                           return <React.Fragment key={index}>
                                             {!innermenu.innersubModules && <Link to={innermenu.link} className={(location.pathname === '/' + innermenu.link ? 'active' : '')} key={index}>{innermenu.name}</Link>}
                                             {innermenu.innersubModules?.length > 0 && <>
                                               <div className='cs_nav_innersubmenu'>{innermenu.name}</div>
-                                              <div className='px-3'>
+                                              <div className='px-2'>
                                                 {innermenu.innersubModules?.map((innersubmenu, index) => {
                                                   return <Link to={innersubmenu.link} key={index} className={(location.pathname === '/' + innersubmenu.link ? 'active' : '')}>{innersubmenu.name}</Link>
                                                 })}
@@ -177,20 +177,9 @@ export default function Header({ logoSrc, variant }) {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
-                  {/*  <div className='cs_mainsearch'>
-                    <form action="#">
-                      <input
-                        type="text"
-                        placeholder="Enter Text"
-                      />
-                     <button className="cs_btn cs_style_1">
-                        <span><i className='icon_alfred_speech' style={{ height: "auto" }}></i></span>
-                      </button> 
-                    </form>
-                  </div>*/}
                   <Link to="/signin">Sign In</Link>
 
-                  <button
+                  {/* <button
                     className="cs_toolbox_btn cs_sidebar_toggle_btn"
                     type="button"
                     onClick={() => setSideNav(!sideNav)}
@@ -215,7 +204,7 @@ export default function Header({ logoSrc, variant }) {
                         fill="currentColor"
                       />
                     </svg>
-                  </button>
+                  </button> */}
 
                 </div>
               </div>
@@ -254,7 +243,7 @@ export default function Header({ logoSrc, variant }) {
           <Spacing md="30" lg="30" xl="30" />
           <IconBoxStyle11
             title="Email"
-            subTitle="helloalfred@gmail.com"
+            subTitle="support@helloalfred.ai"
             iconSrc="/images/contact/icon_2.svg"
           />
           <Spacing md="30" lg="30" xl="30" />

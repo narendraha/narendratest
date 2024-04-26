@@ -239,8 +239,8 @@
     input {
       padding: 1.35vh 80px 1.35vh 45px ;
       border-radius: 25px;
-      min-width: 38vw;
-      max-width: 38vw;
+      min-width: 40vw;
+      max-width: 40vw;
       outline: none;
       transition: all 0.3s ease;
       border: 1px solid #D0D5DD;
@@ -488,13 +488,14 @@
         height: inherit;
 
         .cs_nav_innersubmenu {
-          font-size: 12px;
+          font-size: 14px;
           margin-top: 5px;
-          color: #9d9fad;
+          font-weight: 500;
 
           +div {
             a {
-              font-size: 1vw;
+              font-size: 13px;
+              font-weight: 300;
             }
           }
         }
@@ -601,7 +602,7 @@
           line-height: inherit;
           padding: 6px 20px;
           color: #47474C;
-          font-size: 15px;
+          font-size: 13px;
           line-height: normal;
 
           &.active {

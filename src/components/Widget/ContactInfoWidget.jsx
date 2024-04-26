@@ -11,16 +11,12 @@ export default function ContactInfoWidget() {
         123 Anywhere St., Any City 12345
       </li> */}
       <li className='me-4'>
-        <i className="cs_accent_bg">
-          <Icon icon="fluent:call-24-regular" />
-        </i>
+        <Icon icon="fluent:call-24-regular" />
         123-456-7890
       </li>
       <li className='me-4'>
-        <i className="cs_accent_bg">
-          <Icon icon="bi:envelope" />
-        </i>
-        helloalfred@gmail.com
+        <Icon icon="bi:envelope" />
+        support@helloalfred.ai
       </li>
     </ul>
   );

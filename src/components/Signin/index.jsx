@@ -24,24 +24,22 @@ export default function Signin({ setIsAuthenticated }) {
       .then((res) => {
         if (res && res.data && res.status == "200") {
           localStorage.setItem("token", res.data?.data?.token);
-          if (res.data?.statuscode === 200) {
-            toast(res.data?.message, {
-              position: "top-center",
-              type: "success",
-            });
-            setIsAuthenticated(true);
-            navigate("/home");
-          } else {
-            toast(res.data?.message, {
-              position: "top-center",
-              type: "error",
-            });
-          }
+          toast(res.data?.message, {
+            position: "top-center",
+            type: "success",
+          });
+          setIsAuthenticated(true);
+          navigate("/home");
+        } else {
+          toast(res.data?.message, {
+            position: "top-center",
+            type: "error",
+          });
         }
       })
       .catch((er) => {
         console.log(er);
-        toast(er?.response?.data?.message, {
+        toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
         });

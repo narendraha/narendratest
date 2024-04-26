@@ -345,7 +345,7 @@
 }
 
 .cs_copyright {
-  color: #2C2C37;
+  color: #9DA3A6;
   text-align: right;
 }
 
@@ -446,9 +446,12 @@
 
   .cs_footer_bottom {
     text-align: center;
-    border-top: 1px solid rgba($white, 0.2);
-    padding: 15px 0;
+    // border-top: 1px solid rgba($white, 0.2);
+    padding: 10px 0;
     font-size: 13px;
+    font-weight: 300;
+    background-color: #292F32;
+    color: #9DA3A6;
 
     .container {
       max-width: 95%;
@@ -461,8 +464,8 @@
   }
 
   .cs_contact_widget i {
-    background-color: #fff;
-    color: $accent;
+    background-color: #292F32;
+    color: #9DA3A6;
   }
 
   .cs_text_widget {
@@ -514,7 +517,10 @@
 
   li {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    svg {
+      margin-right: 5px;
+    }
     // &:not(:last-child) {
     //   margin-bottom: 13px;
     // }

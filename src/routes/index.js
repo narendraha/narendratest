@@ -30,6 +30,7 @@ import Ablation from "../components/Pages/Ablation";
 import Medications from "../components/Pages/Medications";
 import Symptoms from "../components/Pages/Symptoms";
 import Affaq from "../components/Pages/Affaq";
+import Chat from "../components/Pages/Chat"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Chat from "../components/Pages/Chat"

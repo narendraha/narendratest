@@ -214,7 +214,7 @@ export default function Home() {
           imgUrl="/images/home_1/about.png"
           spiningImgUrl="/images/home_1/about_mini.svg"
           title="About Us"
-          subTitle="Hello Alfred"
+          subTitle="HelloAlfred"
           featureList={[
             {
               featureListTitle:

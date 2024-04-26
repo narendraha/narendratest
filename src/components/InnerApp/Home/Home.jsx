@@ -614,7 +614,7 @@ export default function Home() {
                             setHealthDetails(values)
                         }}
                       >
-                        {({}) => {
+                        {({ }) => {
                           return (
                             <Form>
                               <Row>
@@ -654,7 +654,7 @@ export default function Home() {
                                           },
                                         }}
                                         selected={new Date()}
-                                        onChange={(e) => {}}
+                                        onChange={(e) => { }}
                                         dateFormat={"MM/dd/yyyy"}
                                         minDate={new Date().setMonth(
                                           new Date().getMonth() - 1

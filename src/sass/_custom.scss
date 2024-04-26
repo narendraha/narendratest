@@ -405,11 +405,13 @@ hr {
 
     li {
       font-weight: 400;
+      font-size: 13px;
 
       &::before {
         height: 8px;
         width: 8px;
         left: -13px;
+        top: 8px;
         background-color: #04C1D6;
       }
     }

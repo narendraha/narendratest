@@ -48,8 +48,10 @@ export default function Home() {
   const [labelValues12, setLabelValues12] = useState(0);
   const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
-  const [show2, setShow2] = useState(false);
 
+ // heath details
+  const [show2, setShow2] = useState(false);
+  const [healthDetails, setHealthDetails] = useState();
   const horizontalLabels = {
     0: "None",
     20: "Mild",
@@ -378,9 +380,11 @@ export default function Home() {
     });
   }, []);
 
-  const handleDummy=(data)=>{
+  const handleHeathDetails=(data)=>{
     setShow2(data);
     if(data){
+        delete healthDetails?.isCheckMedicalRecords
+        // direct redirect to next tab without api call
         setTab("3");
         setShow2(!data);
     }
@@ -388,8 +392,7 @@ export default function Home() {
 
   return (
     <>
-      {isShowconfirm && <ConfirmationAction newFun={handleSubmit} />}
-      {show2 && <ConfirmationAction newFun={handleDummy} />}
+      <ConfirmationAction newFun={isShowconfirm ? handleSubmit : show2 && handleHeathDetails} open={isShowconfirm || show2} />
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-3">Hello, Richard!</h3>
@@ -580,8 +583,15 @@ export default function Home() {
                   <h5>Health details</h5>
                   <Row>
                     <Col lg="6" sm="12">
+                    <div className="text-end al_note">Your last entry sucessfully updated on: 12-04-2024 12:00 AM</div>
                       <Formik
-                        initialValues={{}}
+                        initialValues={{
+                            weight: "",
+                            height: "",
+                            bloodP: "",
+                            pulse: "",
+                            isCheckMedicalRecords:false
+                        }}
                         validationSchema={Yup.object().shape({
                           weight: Yup.number()
                             .typeError("Must be a number")
@@ -589,14 +599,20 @@ export default function Home() {
                           height: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
-                          bloodpressure: Yup.number()
+                          bloodP: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
                           pulse: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
+                            isCheckMedicalRecords: Yup.boolean()
+                            .oneOf([true], 'This field is required')
+                            .required('This field is required'),
                         })}
-                        onSubmit={() => {}}
+                        onSubmit={(values) => {
+                            setShow2(true);
+                            setHealthDetails(values)
+                        }}
                       >
                         {({}) => {
                           return (
@@ -673,12 +689,12 @@ export default function Home() {
                                         <Label>Blood Pressure</Label>
                                         <Field
                                           type="text"
-                                          name="bloodpressure"
+                                          name="bloodP"
                                           placeholder="Enter Blood Pressure"
                                           className="form-control"
                                         />
                                         <ErrorMessage
-                                          name="bloodpressure"
+                                          name="bloodP"
                                           component={"div"}
                                           className="text-danger"
                                         />
@@ -713,14 +729,14 @@ export default function Home() {
                                   check
                                   className="me-2 d-flex align-items-center"
                                 >
-                                  <Field type="checkbox" name="consent" />
+                                  <Field type="checkbox" name="isCheckMedicalRecords" />
                                   <span>
                                     Above mentioned details are valid as per the
                                     medical records
                                   </span>
                                 </Label>
                                 <ErrorMessage
-                                  name="consent"
+                                  name="isCheckMedicalRecords"
                                   component={"div"}
                                   className="text-danger"
                                 />
@@ -736,16 +752,12 @@ export default function Home() {
                                   Back
                                 </button>
                                 <button
-                                  type="button"
+                                  type="submit"
                                   className="al_greybgbutton mx-3"
-                                  onClick={() => {
-                                    setShow2(true)
-                                  }}
                                 >
                                   Proceed
                                 </button>
                               </div>
-                              {showconfirm && <ConfirmationAction />}
                             </Form>
                           );
                         }}

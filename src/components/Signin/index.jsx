@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Row, Col, Alert, Label, FormGroup } from "reactstrap";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import { useState } from "react";
-import App1 from "./temp";
 import { AxiosInstance } from "../../_mock/utilities";
 import { toast } from "react-toastify";
 import { auth, provider } from "../Firebase";
@@ -16,7 +15,6 @@ export default function Signin({ setIsAuthenticated }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (values) => {
-    // navigate("/home");
     let data = {
       username: values.username,
       password: values.password,
@@ -62,28 +60,26 @@ export default function Signin({ setIsAuthenticated }) {
           .post(`/googleauth`, userData)
           .then((res) => {
             if (
-              (res && res.data && res.status == "200") ||
-              res.status == "201"
+              res && res.data && (res.status == 200 ||
+              res.status == 201)
             ) {
               localStorage.setItem("token", res.data?.data?.token);
-              if (res.data?.statuscode === 200) {
                 toast(res.data?.message, {
                   position: "top-center",
                   type: "success",
                 });
                 setIsAuthenticated(true);
                 navigate("/profile");
-              } else {
+            } else {
                 toast(res.data?.message, {
                   position: "top-center",
                   type: "error",
                 });
               }
-            }
           })
           .catch((er) => {
             console.log(er);
-            toast(er?.response?.data?.message, {
+            toast(er?.response?.data?.message || er?.message, {
               position: "top-center",
               type: "error",
             });
@@ -183,13 +179,13 @@ export default function Signin({ setIsAuthenticated }) {
                                         <i className='icon_alfred_google'></i>
                                         <span>Sign in with Google</span>
                                     </button> */}
-                        <span
+                        <button type="button"
                           onClick={handleClick}
                           className="al_signinbuttons"
                         >
                           <i className="icon_alfred_google"></i>Sign in with
                           Google
-                        </span>
+                        </button>
                         <button type="button" className="al_signinbuttons">
                           <i className="icon_alfred_apple"></i>
                           <span>Continue With Apple</span>

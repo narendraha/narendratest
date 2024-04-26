@@ -288,9 +288,9 @@ ul.standardPlans {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 300;
-        margin-bottom: 9px;
+        margin-bottom: 4px;
         position: relative !important;
 
         &::before {
@@ -301,7 +301,7 @@ ul.standardPlans {
             background-color: #2C2C37;
             position: absolute;
             left: -10px;
-            top: 8px;
+            top: 6px;
         }
 
         i {
@@ -321,7 +321,7 @@ ul.standardPlans {
     font-size: $font_13;
 
     .al_chatbot {
-        width: 30%;
+        width: 33%;
     }
 
     .al_top_navigation {

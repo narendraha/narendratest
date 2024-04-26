@@ -61,7 +61,9 @@ export default function Register() {
         mobile: Yup.string()
           .matches(phoneNumberReg, "Invalid phone number")
           .required("This field is required"),
-        dob: Yup.string().required("This field is required"),
+        dob: Yup.date()
+        .max(new Date(Date.now() - 567648000000), "You must be at least 18 years")
+        .required("Required"),
         gender: Yup.string().required("This field is required"),
         rtype: Yup.string().required("This field is required"),
         education: Yup.string().required("This field is required")
@@ -585,7 +587,7 @@ export default function Register() {
                   <div className="wflex-items-center wflexLayout">
                     <h5 className={"mb-0"}>Type of subscription</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
-                      <Row className="planscard mt-3">
+                      <Row className="planscard mt-2">
                         <Col sm="10">
                           <Card>
                             <CardBody>
@@ -609,7 +611,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration
@@ -698,7 +700,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration
@@ -787,7 +789,7 @@ export default function Register() {
                                   />
                                 </Label>
                               </FormGroup>
-                              <h6 className="my-3">Features</h6>
+                              <h6 className="my-2">Features</h6>
                               <ul className="standardPlans">
                                 <li>
                                   Patient Registration

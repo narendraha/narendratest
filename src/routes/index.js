@@ -10,6 +10,7 @@ import Register from "../components/Register";
 import Dashboard from "../components/InnerApp/Dashboard/Dashboard";
 import MainLayout from "../components/InnerApp/MainLayout";
 import Profile from "../components/InnerApp/Profile/Profile";
+import HistorySummary from "../components/InnerApp/HistorySummary/HistorySummary";
 import Home from "../components/InnerApp/Home/Home";
 import Personomics from "../components/Pages/Personomics";
 import Dietician from "../components/Pages/Dietician";
@@ -33,7 +34,9 @@ import Affaq from "../components/Pages/Affaq";
 import Chat from "../components/Pages/Chat"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Chat from "../components/Pages/Chat"
+import ForgotPassword from "../components/ForgotPassword";
+import BotQuestionnaire from "../components/Admin/BotQuestionnaire";
+import HealthcareConsultant from "../components/Pages/HealthcareConsultant";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -51,9 +54,10 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             <Route path="/" element={<MainLayout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="home" element={<Home />} />
+              <Route path="transcriptsummary" element={<HistorySummary />} />
+              <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
-
             </Route>
           </>
         ) : (
@@ -84,6 +88,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="aco" element={<ACO />} />
               <Route path="ecopharmacy" element={<EcoPharmacy />} />
               <Route path="dietician" element={<Dietician />} />
+              <Route path="healthcare" element={<HealthcareConsultant />} />
               {/* <Route path="doctors" element={<Doctors />} />
                 <Route path="doctors/:doctorId" element={<DoctorDetails />} />
                 <Route path="blog" element={<Blog />} />
@@ -101,6 +106,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             </Route>
             <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="registration" element={<Register />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<ErrorPage />} />
           </>
         )}

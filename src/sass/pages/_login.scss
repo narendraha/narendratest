@@ -64,14 +64,12 @@ ul {
                     justify-content: center;
                 }
 
+                .wflexScroll {
+                    flex: 0 1 auto;
+                    padding-right: 5px;
+                }
+
                 .al_login-form {
-                    margin-top: 10px;
-
-                    &.wflexScroll {
-                        flex: 0 1 auto;
-                        padding-right: 5px;
-                    }
-
                     div {
                         i {
                             position: absolute;
@@ -90,23 +88,16 @@ ul {
                         margin-bottom: 40px;
                         justify-content: center;
 
-                        // .col {
-                        //     max-width: 65px;
-                        //     height: 55px;
+                        input {
+                            font-size: 26px;
+                            border-radius: 12px !important;
+                            border: 1px solid #B9C4D2;
 
-                            input {
-                                font-size: 20px;
-                                height: 55px;
-                                width: 55px;
-                                border-radius: 12px !important;
-                                border: 1px solid #B9C4D2;
-
-                                &:focus {
-                                    border: 1px solid #429DAD;
-                                    box-shadow: 0 0 20px rgba(186, 254, 246, 0.6) !important;
-                                }
+                            &:focus {
+                                border: 1px solid #429DAD;
+                                box-shadow: 0 0 20px rgba(186, 254, 246, 0.6) !important;
                             }
-                        // }
+                        }
                     }
 
                     textarea.form-control {
@@ -115,15 +106,16 @@ ul {
                     }
                 }
 
+
                 .al_login_button {
                     background-color: #04C1D6;
                     width: 100%;
-                    border-radius: 15px;
-                    padding: 10px 20px;
+                    border-radius: 8px;
+                    padding: 8px 20px;
                     color: #ffffff;
                     border: 1px solid #04C1D6;
                     font-weight: 500;
-                    font-size: 14px;
+                    font-size: 15px;
 
                     &:hover {
                         background: #039fb1;
@@ -133,12 +125,12 @@ ul {
                 .al_signinbuttons {
                     background-color: #FFFFFF;
                     width: 100%;
-                    border-radius: 15px;
-                    padding: 12px 20px;
+                    border-radius: 8px;
+                    padding: 8px 20px;
                     color: #1F1F21;
                     border: 1px solid #B9C4D2;
                     font-weight: 500;
-                    font-size: 14px;
+                    font-size: 13px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -155,13 +147,14 @@ ul {
                 }
 
                 .al_login_button_back {
-                    border: 1px solid #F3F8FC;
-                    background-color: #F3F8FC;
+                    border: 1px solid #c4cfdd;
+                    background-color: #ffffff;
                     color: #566170;
-                    border-radius: 15px;
-                    padding: 10px 20px;
+                    border-radius: 8px;
+                    padding: 8px 20px;
                     width: 100%;
                     font-weight: 400;
+                    font-size: 12px;
 
                     a {
                         color: #566170 !important;
@@ -177,50 +170,52 @@ ul {
                     }
                 }
 
+                .al_login_footer {
+                    text-align: center;
+                    font-size: 14px;
+
+                    .al_forgot_pw {
+                        color: #263238;
+                        text-decoration: underline;
+                        float: right;
+                        font-size: 12px;
+                    }
+
+                    .alhr-or {
+                        position: relative;
+                        max-width: 100%;
+                        margin: 20px auto;
+                        text-align: center;
+                        color: #1F1F21;
+
+                        &:before {
+                            content: " ";
+                            display: block;
+                            height: 1px;
+                            width: 42%;
+                            position: absolute;
+                            top: 50%;
+                            left: 0;
+                            background: #B9C4D2;
+                        }
+
+                        &:after {
+                            content: " ";
+                            height: 1px;
+                            width: 42%;
+                            background: #B9C4D2;
+                            display: block;
+                            position: absolute;
+                            top: 50%;
+                            right: 0;
+                        }
+                    }
+                }
+
                 .wflex-items-center {
                     display: flex;
                     justify-content: center;
 
-                    .al_login_footer {
-                        text-align: center;
-                        font-size: 14px;
-
-                        .al_forgot_pw {
-                            float: right;
-                            margin-bottom: 20px;
-                            font-size: 12px;
-                        }
-
-                        .alhr-or {
-                            position: relative;
-                            max-width: 100%;
-                            margin: 20px auto;
-                            text-align: center;
-                            color: #1F1F21;
-
-                            &:before {
-                                content: " ";
-                                display: block;
-                                height: 1px;
-                                width: 42%;
-                                position: absolute;
-                                top: 50%;
-                                left: 0;
-                                background: #B9C4D2;
-                            }
-
-                            &:after {
-                                content: " ";
-                                height: 1px;
-                                width: 42%;
-                                background: #B9C4D2;
-                                display: block;
-                                position: absolute;
-                                top: 50%;
-                                right: 0;
-                            }
-                        }
-                    }
                 }
 
                 h5 {
@@ -275,5 +270,9 @@ ul {
                 }
             }
         }
+    }
+
+    .login_logomobile {
+        display: none;
     }
 }

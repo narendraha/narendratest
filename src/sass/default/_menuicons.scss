@@ -25,13 +25,49 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon_alfred_apple:before {
-  content: "\e926";
+.icon_alfred_share:before {
+  content: "\e93f";
 }
-.icon_alfred_google:before {
-  content: "\e929";
+.icon_alfred_save:before {
+  content: "\e941";
+}
+.icon_alfred_bp:before {
+  content: "\e937";
+}
+.icon_alfred_weight:before {
+  content: "\e939";
+}
+.icon_alfred_pulse:before {
+  content: "\e93c";
+}
+.icon_alfred_help1:before {
+  content: "\e92f";
 }
 .icon_alfred_bankcard:before {
+  content: "\e932";
+}
+.icon_alfred_apple:before {
+  content: "\e933";
+}
+.icon_alfred_google:before {
+  content: "\e934";
+}
+.icon_alfred_closecircle:before {
+  content: "\e92e";
+}
+.icon_alfred_details:before {
+  content: "\e92d";
+}
+.icon_alfred_filter:before {
+  content: "\e926";
+}
+.icon_alfred_roles:before {
+  content: "\e929";
+}
+.icon_alfred_botquestionnaire:before {
+  content: "\e92b";
+}
+.icon_alfred_uploaddocument:before {
   content: "\e925";
 }
 .icon_alfred_doctor:before {
@@ -184,7 +220,7 @@
 .icon_alfred_smile_emoji:before {
   content: "\e91b";
 }
-.icon_alfred_template:before {
+.icon_alfred_cards:before {
   content: "\e904";
 }
 .icon_alfred_password:before {

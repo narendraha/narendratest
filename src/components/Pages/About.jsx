@@ -1,216 +1,227 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import BannerSectionStyle4 from '../Section/BannerSection/BannerSectionStyle4';
 import Section from '../Section';
-import DepartmentSectionStyle2 from '../Section/DepartmentSection/DepartmentSectionStyle2';
-import FeaturesSectionStyle2 from '../Section/FeaturesSection/FeaturesSectionStyle2';
-import FunFactSection from '../Section/FunFactSection';
-import TeamSection from '../Section/TeamSection';
-import GallerySection from '../Section/GallerySection';
-import AwardSectionStyle2 from '../Section/AwardSection/AwardSectionStyle2';
 import { pageTitle } from '../../helpers/PageTitle';
-const departmentData = [
-  {
-    title: 'Diagnostic testing',
-    subTitle:
-      'Blood tests, imaging studies, and other tests to diagnose health conditions',
-    iconUrl: '/images/icons/calendar_white.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Rehabilitation services',
-    subTitle:
-      'Physical therapy, occupational therapy, and other services to help patients recover from injuries',
-    iconUrl: '/images/icons/calendar_white.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Preventive care',
-    subTitle:
-      'Annual checkups, immunizations, and health screenings care preventive',
-    iconUrl: '/images/icons/calendar_white.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Treatment for acute and chronic conditions',
-    subTitle:
-      'Medication management, disease management, and other treatments to improve health outcomes',
-    iconUrl: '/images/icons/calendar_white.svg',
-    href: '/departments/department-details',
-  },
-  {
-    title: 'Mental health services',
-    subTitle:
-      'Counseling, therapy, and other services to help patients manage mental health conditions',
-    iconUrl: '/images/icons/calendar_white.svg',
-    href: '/departments/department-details',
-  },
-];
-
-const featureListData = [
-  {
-    title: 'Experienced Medical Professionals',
-    subTitle:
-      'Our team includes experienced doctors, nurses, <br />and other healthcare professionals who are <br />dedicated to providing the best possible care to <br />our patients.',
-    iconUrl: 'images/icons/professional.svg',
-  },
-  {
-    title: 'Comprehensive <br />Services',
-    subTitle:
-      'We offer a wide range of healthcare services, <br />from preventive care to specialized treatment <br />for complex conditions.',
-    iconUrl: 'images/icons/comprehensive.svg',
-  },
-  {
-    title: 'Patient-centered <br />Approach',
-    subTitle:
-      'We believe in treating each patient as an <br />individual, and we take the time to understand <br />your unique health needs and concerns.',
-    iconUrl: 'images/icons/patient.svg',
-  },
-  {
-    title: 'State-of-the-art <br />Facilities',
-    subTitle:
-      'Our healthcare center is equipped with the <br />latest technology and equipment to provide our <br />patients with the most advanced care possible.',
-    iconUrl: 'images/icons/facilities.svg',
-  },
-];
-
-const funFactData = [
-  { number: '20+', title: 'Years of experience' },
-  { number: '95%', title: 'Patient satisfaction rating' },
-  { number: '5000+', title: 'Patients served annually' },
-  { number: '10+', title: 'Healthcare providers on staff' },
-  { number: '22+', title: 'Convenient locations in the area' },
-];
-
-const teamData = [
-  {
-    imgUrl: 'images/about/doctor_1.png',
-    name: 'Dr. James Lee, MD',
-    designation: 'Head of Cardiologist',
-    description:
-      'With expertise in managing complex heart conditions and performing advanced cardiac procedures',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-  },
-  {
-    imgUrl: 'images/about/doctor_2.png',
-    name: 'Dr. John Smith, MD',
-    designation: 'Emergency Medicine Physician',
-    description:
-      'With expertise in treating acute illnesses and injuries in medicine physician',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-  },
-  {
-    imgUrl: 'images/about/doctor_3.png',
-    name: 'Dr. Susan Bones, MD',
-    designation: 'Board-certified Pediatrician',
-    description:
-      'With experience in managing complex medical conditions in children',
-    social: [
-      { icon: 'fa6-brands:facebook-f', href: '/about' },
-      { icon: 'fa6-brands:linkedin-in', href: '/about' },
-      { icon: 'fa6-brands:twitter', href: '/about' },
-    ],
-  },
-];
-
-const galleryData = [
-  { imgUrl: '/images/about/portfolio_2_lg.jpeg' },
-  { imgUrl: '/images/about/portfolio_3_lg.jpeg' },
-  { imgUrl: '/images/about/portfolio_1_lg.jpeg' },
-  { imgUrl: '/images/about/portfolio_4_lg.jpeg' },
-  { imgUrl: '/images/about/portfolio_5_lg.jpeg' },
-];
-const awardData = [
-  {
-    iconUrl: '/images/icons/award.svg',
-    title: 'Malcolm Baldrige National Quality Award',
-  },
-  { iconUrl: '/images/icons/award.svg', title: 'HIMSS Davies Award' },
-  {
-    iconUrl: '/images/icons/award.svg',
-    title: 'Healthgrades National’s Best Hospital',
-  },
-  {
-    iconUrl: '/images/icons/award.svg',
-    title: 'Joint Commission Gold Seal of Approval',
-  },
-];
+import whoweare from '../../images/whoweare.jpg';
+import whatwedo from '../../images/whatwedo.png';
+import phistory from '../../images/phistory.svg';
+import peducation from '../../images/peducation.svg';
+import pbehaviour from '../../images/pbehaviour.svg';
+import facebook from '../../images/facebook.svg';
+import twitter from '../../images/twitter.svg';
+import linkedin from '../../images/linkedin.svg';
+import youtube from '../../images/youtube.svg';
+import assesssymptoms from '../../images/costeffective.png';
+import costeffective from '../../images/costeffective.png';
+import accuratehealth from '../../images/costeffective.png';
+import additionalvalue from '../../images/costeffective.png';
+import { Row, Col, Card, CardBody, TabContent, TabPane, NavLink, Nav, NavItem } from 'reactstrap';
+import Spacing from '../Spacing';
 
 export default function About() {
   pageTitle('About');
+  const [tab, setTab] = useState("1");
   return (
     <>
       <BannerSectionStyle3
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/banner_img.png"
-        title="Welcome to <br />Alfred Medical & Healthcare Center"
+        title="Welcome to Hello Alfred<br/>Your AI Health companion"
         subTitle="Your Partner in Health and Wellness"
       />
-      <Section topMd={200} topLg={150} topXl={110}>
-        <DepartmentSectionStyle2
-          sectionTitle="Provides Our Best Services"
-          sectionTitleUp="SERVICES"
-          data={departmentData}
-        />
+      <Section topMd={80} topLg={80} topXl={80}>
+        <div className='w-80 mx-auto abouttop'>
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+            ABOUT US
+          </h3>
+          <Row className='my-5'>
+            <div className='px-3 w-auto'>
+              <img src={whoweare} alt="whoweare" width={400} className="cs_radius_20" />
+            </div>
+            <Col className='ps-5'>
+              <h4>Who We Are?</h4>
+              <h6 className='fw-medium'>HelloAlfred is a smart health care platform that informs and educates patients about atrial fibrillation, and with the help of our emotionally intelligent bot named “Alfred” helps in your atrial fibrillation journey.</h6>
+              <p>Alfred is your companion, health
+                navigator and behavioral coach. It will try to understand your needs and attempts to guide you through your journey.
+                Alfred can take your medical history on atrial fibrillation, get you ready for your health care provider appointment, provides
+                personalized information and education based on your medical history</p>
+              <p>Alfred will assess your willingness to change, barriers
+                to change, access to care, and treatment. Its goal is to be available 24/7 on demand for your information gathering and
+                education</p>
+            </Col>
+          </Row>
+          <Spacing md="40" lg="50" xl="50" />
+          <Row className='my-5'>
+            <Col className='pe-5'>
+              <h4>What We Do?</h4>
+              <h6 className='fw-medium'>HelloAlfred is an AI-driven chatbot that offers round-the-clock availability, ensuring patients can access healthcare information and support whenever needed.</h6>
+              <p>
+                Alfred accepts Vitals, and symptoms from the patient, guides the patient through a process starts recommending appropriate information and education for behavioral changes.</p>
+              <p>
+                By analyzing patient interactions, Alfred can identify the trends, monitor health outcomes, and provide valuable insights into the patient's health.
+              </p>
+            </Col>
+            <div className='px-3 w-auto'>
+              <img src={whatwedo} alt="whatwedo" width={400} />
+            </div>
+          </Row>
+        </div>
       </Section>
-      <Section topMd={175} topLg={125} topXl={85} bottomMd={100} bottomLg={110}>
-        <FeaturesSectionStyle2
-          sectionTitle="Why Choose Us"
-          imgUrl="images/about/why_choose_us.jpeg"
-          data={featureListData}
-        />
+      <Section topMd={85} topLg={85} topXl={85} bottomMd={50} bottomLg={50}>
+        <Row className='w-80 mx-auto aboutsecond'>
+          <Col lg="4" sm="12">
+            <Card>
+              <CardBody>
+                <div className='imghoverbg'>
+                  <img src={phistory} alt="history" />
+                </div>
+                <h6 className='my-4'>Patients' History</h6>
+                <p>Read the complete history of the patient for future analysis and guidance</p>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="4" sm="12">
+            <Card>
+              <CardBody>
+                <div className='imghoverbg'>
+                  <img src={pbehaviour} alt="Behavior" />
+                </div>
+                <h6 className='my-4'>Patients' Behavior</h6>
+                <p>Alfred will assess your willingness to change, barriers to change, access to care, and treatment.</p>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col lg="4" sm="12">
+            <Card>
+              <CardBody>
+                <div className='imghoverbg'>
+                  <img src={peducation} alt="Education" />
+                </div>
+                <h6 className='my-4'>Patient's Education</h6>
+                <p>Provides completed end-to-end awareness on Afib to the patient to avoid in their day-to-day journey</p>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Section>
+      <Section topMd={50} topLg={50} topXl={50} bottomMd={50} bottomLg={50}>
+        <div className='w-80 mx-auto abouttop'>
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+            Overview
+          </h3>
+          <p>Our Alfred chatbot has significantly influenced Afib healthcare Patients in various ways by enhancing patient engagement with round-the-clock availability by answering queries, personalized interactions, and improving the satisfaction levels of the patient.  Alfred assists in triggering the reminders by assessing the vitals, and symptoms and guiding the patients with education and awareness which helps them to move in the right direction.</p>
+
+          <Row className='mt-5'>
+            <Col md="5" sm="6" xs="12">
+              <Nav tabs vertical pills className='al_verticaltabs'>
+                <NavItem>
+                  <NavLink
+                    className={tab === "1" ? "active" : ""}
+                    onClick={() => {
+                      setTab("1");
+                    }}
+                  >
+                    Symptoms Assessment
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={tab === "2" ? "active" : ""}
+                    onClick={() => {
+                      setTab("2");
+                    }}
+                  >
+                    Cost-effective solution
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={tab === "3" ? "active" : ""}
+                    onClick={() => {
+                      setTab("3");
+                    }}
+                  >
+                    AFib Education and Information Awareness
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={tab === "4" ? "active" : ""}
+                    onClick={() => {
+                      setTab("4");
+                    }}
+                  >
+                    Adding value to the Patient Journey
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </Col>
+            <Col md="7" sm="6" xs="12">
+              <TabContent activeTab={tab}>
+                <TabPane tabId="1">
+                  <Row>
+                    <Col className='px-4'>
+                      <h6>Alfred assist in assessing the symptoms.</h6>
+                      <p>Alfred guiding the patients on time through proper analysis based on the given patient's past history. Alfred recommends appropriate actions ensuring timely care to the patient.</p>
+                    </Col>
+                    <div className='w-auto'>
+                      <img src={assesssymptoms} alt="assesssymptoms" width={250} />
+                    </div>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="2">
+                  <Row>
+                    <Col className='px-4'>
+                      <h6>Alfred is a very cost-effective solution for Afib patients.</h6>
+                      <p>Alfred saves the Doctor's case study time by generating valuable patient health reports as and when required</p>
+                    </Col>
+                    <div className='w-auto'>
+                      <img src={costeffective} alt="costeffective" width={250} />
+                    </div>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="3">
+                  <Row>
+                    <Col className='px-4'>
+                      <h6>Alfred provides accurate health information.</h6>
+                      <p>Alfred promotes healthy behavioral habits, and takes preventive measures. Alfred replies promptly, round the clock to the patient's queries on their health.</p>
+                    </Col>
+                    <div className='w-auto'>
+                      <img src={accuratehealth} alt="accuratehealth" width={250} />
+                    </div>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="4">
+                  <Row>
+                    <Col className='px-4'>
+                      <h6>Alfred adds an additional value to the patient.</h6>
+                      <p>Alfred helps in patient's journey day to day - as best AI companion all the time. </p>
+                    </Col>
+                    <div className='w-auto'>
+                      <img src={additionalvalue} alt="additionalvalue" width={250} />
+                    </div>
+                  </Row>
+                </TabPane>
+              </TabContent>
+            </Col>
+          </Row>
+        </div>
       </Section>
       <Section>
-        <FunFactSection
-          bgUrl="images/about/fun_fact_bg.jpeg"
-          data={funFactData}
-        />
+        <div className='w-80 mx-auto'>
+          <div className='alfaq_footer'>
+            Your AI companion, health navigator, coach in your disease journey. Role is to guide you through managing Atrial Fibrillation and help improve your Wellness
+          </div>
+          <p className='mb-2'>Follow Us</p>
+          <div className='al_socallinks'>
+            <a href="#"><img src={facebook} alt="facebook" /></a>
+            <a href="#"><img src={twitter} alt="X" /></a>
+            <a href="#"><img src={linkedin} alt="linkedin" /></a>
+            <a href="#"><img src={youtube} alt="youtube" /></a>
+          </div>
+        </div>
       </Section>
-      <Section topMd={190} topLg={145} topXl={105}>
-        <TeamSection
-          sectionTitle="Experts Doctor"
-          sectionTitleUp="MEET OUR"
-          data={teamData}
-        />
-      </Section>
-      <Section topMd={170} topLg={120} topXl={80}>
-        <GallerySection
-          sectionTitle="Our Facilities and <br />Latest Activities"
-          sectionTitleUp="HAVE A LOOK AT"
-          data={galleryData}
-        />
-      </Section>
-      <Section
-        topMd={190}
-        topLg={145}
-        topXl={105}
-        bottomMd={200}
-        bottomLg={150}
-        bottomXl={110}
-      >
-        <AwardSectionStyle2
-          sectionTitle="Winning Awards and <br />Recognition"
-          sectionTitleUp="AWARDS"
-          sectionSubTitle="We have been recognized for our commitment to <br />excellence in healthcare."
-          data={awardData}
-        />
-      </Section>
-      <Section className="cs_footer_margin_0">
-        <BannerSectionStyle4
-          bgUrl="images/about/banner_bg_2.jpeg"
-          title="Don’t Let Your Health <br />Take a Backseat!"
-          subTitle="Schedule an appointment with one of our experienced <br />medical professionals today!"
-          center
-        />
-      </Section>
+
     </>
   );
 }

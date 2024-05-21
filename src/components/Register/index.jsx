@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Row, Col, Label, FormGroup, Card, CardBody } from "reactstrap";
 import Select from "react-select";
 import alferdlogo from "../../images/alfredlogowhite.svg";
+import alferdlogomobile from "../../images/alfredlogo.svg";
 import successImg from "../../images/sucessimg.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -85,17 +86,18 @@ export default function Register() {
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
                   <Link to="/">
-                    <img src={alferdlogo} alt="logo" width={180} />
+                    <img src={alferdlogo} className="login_logodesktop" alt="logo" width={180} />
+                    <img src={alferdlogomobile} className="login_logomobile" alt="logo_mobile" width={180} />
                   </Link>
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <h5 className={"mb-0"}>Register</h5>
+                    <h5 className="mb-2">Personal Details</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
                       <FormGroup>
-                        <Label>Full Name</Label>
+                        <Label><span className='requiredLabel'>*</span>Full Name</Label>
                         <Field
                           type="text"
                           name="username"
@@ -109,7 +111,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Email ID</Label>
+                        <Label><span className='requiredLabel'>*</span>Email ID</Label>
                         <Field
                           type="text"
                           name="email"
@@ -123,7 +125,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Date of Birth</Label>
+                        <Label><span className='requiredLabel'>*</span>Date of Birth</Label>
                         <DatePicker
                           className="form-control al_calendarIcon"
                           name="dob"
@@ -156,7 +158,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Gender</Label>
+                        <Label><span className='requiredLabel'>*</span>Gender</Label>
                         <Select
                           options={genderoptions}
                           name="gender"
@@ -178,7 +180,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Mobile</Label>
+                        <Label><span className='requiredLabel'>*</span>Mobile</Label>
                         <Field
                           type="text"
                           name="mobile"
@@ -193,7 +195,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Residence Type</Label>
+                        <Label><span className='requiredLabel'>*</span>Residence Type</Label>
                         <Select
                           options={residenceoptions}
                           name="rtype"
@@ -215,7 +217,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Education</Label>
+                        <Label><span className='requiredLabel'>*</span>Education</Label>
                         <Field
                           type="text"
                           name="education"
@@ -345,8 +347,8 @@ export default function Register() {
                                   }}
                                   inputStyle={{
                                     margin: "5px",
-                                    width: "55px",
-                                    height: "55px",
+                                    width: "5vw",
+                                    height: "5vw",
                                     textAlign: "center",
                                     border: "1px solid #B9C4D2",
                                     borderRadius: "12px",
@@ -490,7 +492,7 @@ export default function Register() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <h5 className={"mb-0"}>Set Password</h5>
+                    <h5 className="mb-3">Set Password</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
                       <FormGroup>
                         <Label>New Password</Label>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Row, Col } from 'reactstrap';
 
 function AccordionItem({ title, content, isOpen, onClick }) {
   const accordionContentRef = useRef(null);
@@ -60,26 +61,27 @@ export default function Accordion({ data, variant }) {
   useEffect(() => {
     // Open the first item when the component mounts
     if (firstItemOpen) {
-      setOpenItemIndex(2);
+      setOpenItemIndex();
       setFirstItemOpen(false);
     }
   }, [firstItemOpen]);
 
   return (
     <>
-      <div
-        className={`cs_accordians cs_heading_color ${variant ? variant : ''}`}
+      <Row
+        className={`cs_accordians faqaccordian mx-0 w-100 cs_heading_color ${variant ? variant : ''}`}
       >
         {data?.map((item, index) => (
-          <AccordionItem
-            key={index}
-            title={item.title}
-            content={item.content}
-            isOpen={index === openItemIndex}
-            onClick={() => handleItemClick(index)}
-          />
+          <Col lg="6" sm="12" key={index}>
+            <AccordionItem
+              title={item.title}
+              content={item.content}
+              isOpen={index === openItemIndex}
+              onClick={() => handleItemClick(index)}
+            />
+          </Col>
         ))}
-      </div>
+      </Row>
     </>
   );
 }

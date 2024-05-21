@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import FooterStyle3 from '../Footer/FooterStyle3';
 import Header from '../Header';
 import ChatBot from '../ChatBot';
 import { Row, Col, Popover, PopoverBody, Button } from 'reactstrap';
 import chatBot from '../../images/chatboticon.svg';
+import Loading from '../InnerApp/MainLayout/Loading';
 
 export default function Layout3() {
   const location = useLocation();
@@ -19,11 +20,13 @@ export default function Layout3() {
     // </div>
 
     <Row className='h-100 mx-0'>
-      <Col lg={(location.pathname !== "/" && botisOpen ? "9" : "12")} id='al_main_landing' className={'px-0' + (location.pathname !== "/" && botisOpen ? ' al_homechatopen' : '')}>
-        <Header logoSrc="/images/alfredlogo.svg" variant="cs_heading_color" />
-        <Outlet />
-        <FooterStyle3 />
-      </Col>
+      <Suspense fallback={<Loading />}>
+        <Col lg={(location.pathname !== "/" && botisOpen ? "9" : "12")} id='al_main_landing' className={'px-0' + (location.pathname !== "/" && botisOpen ? ' al_homechatopen' : '')}>
+          <Header logoSrc="/images/alfredlogo.svg" variant="cs_heading_color" />
+          <Outlet />
+          <FooterStyle3 />
+        </Col>
+      </Suspense>
       {location.pathname !== "/" && <>
         {botisOpen && <Col lg="3" className='px-1'>
           <ChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />

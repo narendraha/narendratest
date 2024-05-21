@@ -103,23 +103,23 @@
 }
 
 .cs_fs_72 {
-  font-size: 72px;
+  font-size: 50px;
   line-height: 1.14em;
 
   @media (max-width: 1700px) {
-    font-size: 56px;
+    font-size: 34px;
   }
 
   @media (max-width: 991px) {
-    font-size: 50px;
+    font-size: 28px;
   }
 
   @media (max-width: 575px) {
-    font-size: 48px;
+    font-size: 25px;
   }
 
   @media (max-width: 350px) {
-    font-size: 42px;
+    font-size: 30px;
   }
 }
 
@@ -1087,6 +1087,12 @@ input::-ms-input-placeholder,
     @media (max-width: 991px) {
       display: none;
     }
+  }
+}
+
+.cs_testimonial_carousel {
+  .slick-list {
+    z-index: 2;
   }
 }
 
@@ -3095,6 +3101,50 @@ a.ui-button:active,
       &:last-child {
         display: flex;
       }
+    }
+  }
+}
+
+// Media Queries
+
+@media screen and (min-width: 576px) and (max-width: 1023px) {
+  .pe-5 {
+    padding-right: 1.25rem !important;
+  }
+
+  .me-4 {
+    margin-right: 1rem !important;
+  }
+
+  .w-75 {
+    width: 90% !important;
+  }
+
+  .card.al_cardbg {
+    .row {
+      >div {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #video1 {
+    display: none;
+  }
+
+  .pe-5 {
+    padding-right: 1rem !important;
+  }
+
+  .me-4 {
+    margin-right: 1rem !important;
+  }
+
+  .cs_footer_bottom {
+    .row {
+      flex-direction: column;
     }
   }
 }

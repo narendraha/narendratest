@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
-import user from '../../../images/userprofileImg.png';
+import { useNavigate, useLocation } from 'react-router-dom';
+import user from '../../../images/puser.jpg';
 import { jwtDecode } from "jwt-decode";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 export default function Topbar(props) {
+  const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
-  const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
   const navigate = useNavigate();
 
   const handleProfile = () => {
@@ -20,6 +19,39 @@ export default function Topbar(props) {
     sessionStorage.clear();
     navigate('/signin')
   }
+
+  const menuData = [
+    {
+      moduleId: '1',
+      name: 'Dashboard',
+      link: 'dashboard',
+      icon: 'icon_alfred_dashboard',
+      subModules: [
+        { id: "1", name: "Dashboard", link: 'dashboard', icon: 'icon_alfred_dashboard' }
+      ]
+    },
+    {
+      moduleId: '2',
+      name: 'Home',
+      link: 'home',
+      icon: 'icon_alfred_home',
+      subModules: [
+        { id: "1", name: "Home", link: 'home', icon: 'icon_alfred_home' }
+      ]
+    },
+    {
+      moduleId: '3',
+      name: 'Reports',
+      link: 'transcriptsummary',
+      icon: 'icon_alfred_reports',
+      subModules: [
+        { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
+      ]
+    }
+  ]
+  const lPathName = useLocation().pathname;
+  const sideMenu = menuData.find(s => '/' + s.link === lPathName?.replace('/*', '') || s.subModules.findIndex(y => '/' + y.link === lPathName?.replace('/*', '')) !== -1);
+  const sideSubMenu = sideMenu?.subModules?.find(y => ('/' + y.link === lPathName?.replace('/*', '')))
 
   return (
     <>
@@ -55,7 +87,7 @@ export default function Topbar(props) {
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
-                      <span className='al_uName'>{decoded?.username}</span>
+                      <span className='al_uName'>{decodedToken?.username}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">
@@ -68,9 +100,9 @@ export default function Topbar(props) {
           </div>
         </div>
       </header>
-      <div className='al_submenu_content'>
-        <div className='al_menu_name'>Dashboard<><span><i className='icon_alfred_right_arrow'></i></span><span className='al_header_bc'>Dashboard</span></></div>
-      </div>
+      {sideMenu && <div className='al_submenu_content'>
+        <div className='al_menu_name'>{sideMenu.name}<><span><i className='icon_alfred_right_arrow'></i></span><span className='al_header_bc'>{sideSubMenu.name}</span></></div>
+      </div>}
     </>
   )
 }

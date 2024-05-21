@@ -4,6 +4,9 @@ import { AxiosInstance } from "../../_mock/utilities";
 import Chatuser from "../../images/usericon.svg";
 import Chatbot from "../../images/alfredicon.svg";
 import { Row, Col } from "reactstrap";
+import homebotimg from '../../images/doctorbot.png';
+import homeleftmobile from '../../images/homeleftmobile.gif';
+import homeright from '../../images/homeright.gif';
 
 export default function HomeStyle3() {
   pageTitle("Home");
@@ -12,6 +15,8 @@ export default function HomeStyle3() {
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
+  const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
+
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -19,6 +24,15 @@ export default function HomeStyle3() {
   useEffect(() => {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [chatHistory]);
+
+  const handleAction = (messageId, iconType, alfredValue, userValue) => {
+    setSelectedIcons(prevIcons => ({
+      ...prevIcons,
+      [messageId]: { reaction : iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
+    }));
+    
+  };
+console.log("0000000000", selectedIcons);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
@@ -60,7 +74,7 @@ export default function HomeStyle3() {
         ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
-
+  console.log("9999999999", chatHistory);
   return (
     <div className="cs_homepage">
       {isShow ? (
@@ -83,6 +97,31 @@ export default function HomeStyle3() {
                         <Col>
                           <h6 className="mb-0">{key}</h6>
                           <div>{value}</div>
+                          {key === "Alfred" && (
+                            <>
+                              <Icon
+                                icon="iconamoon:like-light"
+                                width="1.5em"
+                                height="1.5em"
+                                onClick={() => handleAction(index, 'like',value)} // Handle like action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
+                                }}
+                              />
+                              <Icon
+                                icon="iconamoon:dislike-light"
+                                width="1.5em"
+                                height="1.5em"
+                                className="mx-2"
+                                onClick={() => handleAction(index, 'dislike',value)} // Handle dislike action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
+                                }}
+                              />
+                            </>
+                          )}
                         </Col>
                       </Row>
                     ))}
@@ -131,62 +170,70 @@ export default function HomeStyle3() {
           </div>
         </div>
       ) : (
-        <>
-          <h3>
-            Hi, I am <strong>Alfred</strong>
-            <br /> your <strong>navigator</strong> and{" "}
-            <strong>health coach</strong>
-          </h3>
-          <p>What do you want to accomplish?</p>{" "}
-          <div className="cs_mainsearch">
-            <form action="#">
-              <i className="icon_alfred_search h-auto"></i>
-              <input
-                type="text"
-                placeholder="Ask a question"
-                name="message"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault(); // Prevent default form submission behavior
-                    handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                  }
-                }}
-              />
-              {isShowSendBtn ? (
-                <>
-                  {isShow && (
+        <Row className="w-75 align-items-center wflexLayout">
+          <Col sm="4" className="h-100 d-flex align-items-center d-xs-none">
+            <img src={homeleftmobile} alt="chatbot" className="mobileanim" />
+          </Col>
+          <Col sm="8" className="h-100 d-flex flex-column justify-content-center">
+            <Row className="al_hometop">
+              <Col>
+                <img src={homeright} alt="typing" />
+              </Col>
+              <div className="w-auto w-max-40 pe-5">
+                <img src={homebotimg} alt="homebot" />
+              </div>
+            </Row>
+            <div className="cs_mainsearch">
+              <form action="#">
+                <i className="icon_alfred_search h-auto"></i>
+                <input
+                  type="text"
+                  placeholder="Ask a question"
+                  name="message"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault(); // Prevent default form submission behavior
+                      handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                    }
+                  }}
+                />
+                {isShowSendBtn ? (
+                  <>
+                    {isShow && (
+                      <i
+                        className="icon_alfred_close"
+                        onClick={(e) => {
+                          setInputValue("");
+                        }}
+                      ></i>
+                    )}
                     <i
-                      className="icon_alfred_close"
-                      onClick={(e) => {
-                        setInputValue("");
-                      }}
+                      className="icon_alfred_sendmsg h-auto"
+                      onClick={(e) => handleFormSubmit(e)}
                     ></i>
-                  )}
-                  <i
-                    className="icon_alfred_sendmsg h-auto"
-                    onClick={(e) => handleFormSubmit(e)}
-                  ></i>
-                </>
-              ) : (
-                <i className="icon_alfred_speech h-auto"></i>
-              )}
-            </form>
-          </div>
+                  </>
+                ) : (
+                  <i className="icon_alfred_speech h-auto"></i>
+                )}
+              </form>
+            </div>
 
-          <div className="al_note pt-3">
-            Disclaimer: Not a medical advice <br />
-            {isShow && (
-              <p>
-                Your <strong>navigator</strong> and{" "}
-                <strong>health coach</strong>
-              </p>
-            )}
-          </div>
-        </>
+            <div className="al_note text-end pt-3">
+              <strong>Disclaimer</strong>: Not a medical advice <br />
+              {isShow && (
+                <p>
+                  Your <strong>navigator</strong> and{" "}
+                  <strong>health coach</strong>
+                </p>
+              )}
+            </div>
+            {isLoading && !isShow && <div className="al_chatloading"></div>}
+
+          </Col>
+        </Row>
       )}
-      {isLoading && !isShow && <div className="al_chatloading"></div>}
     </div>
   );
 }

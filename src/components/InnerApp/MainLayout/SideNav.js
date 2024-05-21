@@ -18,32 +18,43 @@ export default function SideNav(props) {
       subModules: [
         { id: "1", name: "Dashboard", link: 'dashboard', icon: 'icon_alfred_dashboard' }
       ]
-      },
-      {
-        moduleId: '2',
-        name: 'Home',
-        link: 'home',
-        icon: 'icon_alfred_home',
-        subModules: [
-          { id: "1", name: "Home", link: 'home', icon: 'icon_alfred_home' }
-        ]
+    },
+    {
+      moduleId: '2',
+      name: 'Home',
+      link: 'home',
+      icon: 'icon_alfred_home',
+      subModules: [
+        { id: "1", name: "Home", link: 'home', icon: 'icon_alfred_home' }
+      ]
+    },
+    {
+      moduleId: '3',
+      name: 'Reports',
+      link: 'transcriptsummary',
+      icon: 'icon_alfred_reports',
+      subModules: [
+        { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
+      ]
       // } ,
       // {
       //   moduleId: '3',
-      //   name: 'Expert Monitoring',
-      //   link: 'monitoring',
-      //   icon: 'icon_alfred_E',
+      //   name: 'Bot Manager',
+      //   link: 'uploaddocument',
+      //   icon: 'icon_alfred_uploaddocument',
       //   subModules: [
-      //     { id: "1", name: "Expert Monitoring", link: 'monitoring', icon: 'icon_alfred_E' }
+      //     { id: "1", name: "Upload Document", link: 'uploaddocument', icon: 'icon_alfred_uploaddocument' },
+      //     { id: "2", name: "Bot Questionnaire", link: 'botquestionnaire', icon: 'icon_alfred_botquestionnaire' }
       //   ]
       // },
       // {
       //   moduleId: '4',
-      //   name: 'List your Symptoms',
-      //   link: 'symptoms',
-      //   icon: 'icon_alfred_L',
+      //   name: 'User Management',
+      //   link: 'roles',
+      //   icon: 'icon_alfred_roles',
       //   subModules: [
-      //     { id: "1", name: "List your Symptoms", link: 'symptoms', icon: 'icon_alfred_L' }
+      //     { id: "1", name: "Role Management", link: 'roles', icon: 'icon_alfred_roles' },
+      //     { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' }
       //   ]
       // },
       // {
@@ -118,9 +129,6 @@ export default function SideNav(props) {
                       {menu.subModules.map((subModules, index) =>
                         <div className='al_submenu w-100' key={index}>
                           <div className={'menu-item ' + (location.pathname === '/' + subModules.link ? 'active' : '')}>
-                            {/* <div id={subModules.link + subModules.id} onClick={redirectPath(subModules.link)}>
-                              <i className={subModules.icon}></i><span>{subModules.name}</span>
-                            </div> */}
                             <Link to={"/" + subModules.link}>
                               <div id={subModules.link + subModules.id}>
                                 <i className={subModules.icon}></i><span>{subModules.name}</span>
@@ -130,7 +138,7 @@ export default function SideNav(props) {
                               placementPrefix="al_bs_tooltip"
                               modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
                               placement='top' target={subModules.link + subModules.id}>
-                              {menu.name}
+                              {subModules.name}
                             </UncontrolledTooltip>
                             }
                           </div>

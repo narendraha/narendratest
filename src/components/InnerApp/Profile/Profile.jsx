@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Row, Col, Label, FormGroup } from "reactstrap";
-import userImg from "../../../images/userprofileImg.png";
+import userImg from "../../../images/userprofile.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
@@ -13,14 +13,17 @@ import moment from "moment/moment";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Profile() {
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const profileDetails = async () => {
+    setIsLoading(true);
     await AxiosInstance("application/json")
       .get("/userdetails")
       .then((res) => {
@@ -40,6 +43,7 @@ export default function Profile() {
           responseData.dob = formattedDateString;
         }
         setGetProfileDetails(responseData);
+        setIsLoading(false);
       })
       .catch((er) => console.log(er));
   };
@@ -63,6 +67,8 @@ export default function Profile() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
+      setIsLoading(true);
+
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
@@ -76,6 +82,9 @@ export default function Profile() {
               profileDetails();
               setIsShowconfirm(!data);
               navigate("/profile");
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 1000);
             } else {
               toast(res.data?.message, {
                 position: "top-center",
@@ -97,7 +106,8 @@ export default function Profile() {
 
   return (
     <>
-      <ConfirmationAction newFun={handleSubmit} open={isShowconfirm}/>
+      {isLoading && <Loading />}
+      <ConfirmationAction newFun={handleSubmit} open={isShowconfirm} />
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-3">Profile</h3>
@@ -295,7 +305,10 @@ export default function Profile() {
                     initialValues={{
                       username: getProfileDetails?.username || "",
                       email: getProfileDetails?.email || "",
-                      dob: getProfileDetails?.dob == 'NA' ? new Date : getProfileDetails?.dob,
+                      dob:
+                        getProfileDetails?.dob == "NA"
+                          ? new Date()
+                          : getProfileDetails?.dob,
                       gender: getProfileDetails?.gender || "",
                       mobile: getProfileDetails?.mobile || "",
                       rtype: getProfileDetails?.rtype || "",
@@ -365,7 +378,7 @@ export default function Profile() {
                           <Row>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Height</Label>
+                                <Label><span className='requiredLabel'>*</span>Height</Label>
                                 <Field
                                   type="text"
                                   name="height"
@@ -381,7 +394,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Weight</Label>
+                                <Label><span className='requiredLabel'>*</span>Weight</Label>
                                 <Field
                                   type="text"
                                   name="weight"
@@ -397,7 +410,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Blood Type</Label>
+                                <Label><span className='requiredLabel'>*</span>Blood Type</Label>
                                 <Field
                                   type="text"
                                   name="bloodtype"
@@ -414,7 +427,7 @@ export default function Profile() {
 
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Full Name</Label>
+                                <Label><span className='requiredLabel'>*</span>Full Name</Label>
                                 <Field
                                   type="text"
                                   name="username"
@@ -430,7 +443,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Age</Label>
+                                <Label><span className='requiredLabel'>*</span>Age</Label>
                                 <Field
                                   type="text"
                                   name="age"
@@ -447,7 +460,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Gender</Label>
+                                <Label><span className='requiredLabel'>*</span>Gender</Label>
                                 <Select
                                   options={genderoptions}
                                   name="gender"
@@ -472,7 +485,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Date of Birth</Label>
+                                <Label><span className='requiredLabel'>*</span>Date of Birth</Label>
                                 <DatePicker
                                   className="form-control al_calendarIcon"
                                   name="dob"
@@ -489,7 +502,9 @@ export default function Profile() {
                                   selected={
                                     values?.dob
                                       ? new Date(values?.dob)
-                                      : values?.dob == 'NA' ? new Date() : new Date()
+                                      : values?.dob == "NA"
+                                      ? new Date()
+                                      : new Date()
                                   }
                                   onChange={(e) => {
                                     setFieldValue("dob", e);
@@ -511,7 +526,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Mobile</Label>
+                                <Label><span className='requiredLabel'>*</span>Mobile</Label>
                                 <Field
                                   type="text"
                                   name="mobile"
@@ -528,7 +543,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>SSN</Label>
+                                <Label><span className='requiredLabel'>*</span>SSN</Label>
                                 <Field
                                   type="password"
                                   name="ssn"
@@ -545,7 +560,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Resident Type</Label>
+                                <Label><span className='requiredLabel'>*</span>Resident Type</Label>
                                 <Select
                                   className="inputSelect"
                                   options={residenceoptions}
@@ -570,7 +585,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Education</Label>
+                                <Label><span className='requiredLabel'>*</span>Education</Label>
                                 <Field
                                   type="text"
                                   name="education"
@@ -586,7 +601,7 @@ export default function Profile() {
                             </Col>
                             <Col md="4" sm="12">
                               <FormGroup>
-                                <Label>Email</Label>
+                                <Label><span className='requiredLabel'>*</span>Email</Label>
                                 <Field
                                   type="text"
                                   name="email"
@@ -634,7 +649,7 @@ export default function Profile() {
                             </Col>
                           </Row>
                           <div className="mt-3">
-                            <button type="submit" className="al_greybgbutton">
+                            <button type="submit" className="al_savebtn">
                               Save
                             </button>
                             <button
@@ -655,7 +670,7 @@ export default function Profile() {
                 <div className="mt-3">
                   <button
                     type="submit"
-                    className="al_greybgbutton"
+                    className="al_savebtn"
                     onClick={() => setIsEdit(!isEdit)}
                   >
                     Edit

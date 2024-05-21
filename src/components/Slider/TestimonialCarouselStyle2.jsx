@@ -23,7 +23,13 @@ export default function TestimonialCarouselStyle2({ data }) {
     swipeToSlide: true,
     responsive: [
       {
-        breakpoint: 1700,
+        breakpoint: 4000,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 850,
         settings: {
           slidesToShow: 2,
         },
@@ -36,16 +42,18 @@ export default function TestimonialCarouselStyle2({ data }) {
       },
     ],
   };
+
   return (
     <div className="cs_testimonial_carousel cs_gap_20 position-relative">
       <div className="row">
-        <div className="col-lg-10 offset-lg-2">
+        <div className="col-lg-10 mx-auto">
           <Slider ref={sliderRef} {...settings} className="cs_slider_activate">
             {data?.map((item, index) => (
-              <div key={index}>
-                <TestimonialStyle3 {...item} />
+              <div className="cs_slide" key={index}>
+                <TestimonialStyle3 item={item} />
               </div>
-            ))}
+            ))
+            }
           </Slider>
         </div>
       </div>

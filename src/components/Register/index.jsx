@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Row, Col, Label, FormGroup, Card, CardBody } from "reactstrap";
 import Select from "react-select";
 import alferdlogo from "../../images/alfredlogowhite.svg";
+import alferdlogomobile from "../../images/alfredlogo.svg";
 import successImg from "../../images/sucessimg.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,18 +14,20 @@ import moment from "moment"; // Import moment library
 import { AxiosInstance } from "../../_mock/utilities";
 import OtpInput from "react-otp-input";
 import { toast } from "react-toastify";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [fileName, setFileName] = useState();
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
   const inputRefs = useRef(Array(4).fill(null));
 
   const genderoptions = [
-    { value: "M", label: "Male" },
-    { value: "F", label: "Female" },
-    { value: "O", label: "Other" },
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Other", label: "Other" },
   ];
 
   const residenceoptions = [
@@ -85,17 +88,18 @@ export default function Register() {
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
                   <Link to="/">
-                    <img src={alferdlogo} alt="logo" width={180} />
+                    <img src={alferdlogo} className="login_logodesktop" alt="logo" width={180} />
+                    <img src={alferdlogomobile} className="login_logomobile" alt="logo_mobile" width={180} />
                   </Link>
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <h5 className={"mb-0"}>Register</h5>
+                    <h5 className="mb-2">Personal Details</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
                       <FormGroup>
-                        <Label>Full Name</Label>
+                        <Label><span className='requiredLabel'>*</span>Full Name</Label>
                         <Field
                           type="text"
                           name="username"
@@ -109,7 +113,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Email ID</Label>
+                        <Label><span className='requiredLabel'>*</span>Email ID</Label>
                         <Field
                           type="text"
                           name="email"
@@ -123,7 +127,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Date of Birth</Label>
+                        <Label><span className='requiredLabel'>*</span>Date of Birth</Label>
                         <DatePicker
                           className="form-control al_calendarIcon"
                           name="dob"
@@ -156,7 +160,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Gender</Label>
+                        <Label><span className='requiredLabel'>*</span>Gender</Label>
                         <Select
                           options={genderoptions}
                           name="gender"
@@ -178,7 +182,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Mobile</Label>
+                        <Label><span className='requiredLabel'>*</span>Mobile</Label>
                         <Field
                           type="text"
                           name="mobile"
@@ -193,7 +197,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Residence Type</Label>
+                        <Label><span className='requiredLabel'>*</span>Residence Type</Label>
                         <Select
                           options={residenceoptions}
                           name="rtype"
@@ -215,7 +219,7 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Education</Label>
+                        <Label><span className='requiredLabel'>*</span>Education</Label>
                         <Field
                           type="text"
                           name="education"
@@ -345,8 +349,8 @@ export default function Register() {
                                   }}
                                   inputStyle={{
                                     margin: "5px",
-                                    width: "55px",
-                                    height: "55px",
+                                    width: "5vw",
+                                    height: "5vw",
                                     textAlign: "center",
                                     border: "1px solid #B9C4D2",
                                     borderRadius: "12px",
@@ -490,7 +494,7 @@ export default function Register() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <h5 className={"mb-0"}>Set Password</h5>
+                    <h5 className="mb-3">Set Password</h5>
                     <div className="al_login-form al_registrationform wflexScroll">
                       <FormGroup>
                         <Label>New Password</Label>
@@ -905,6 +909,7 @@ export default function Register() {
   };
   console.log("formdata", formData);
   const handleFinalSubmit = (values) => {
+    setIsLoading(true)
     // Here you can submit formData to your backend or perform other actions
     setFormData({ ...formData, ...values });
     let data = {
@@ -921,7 +926,8 @@ export default function Register() {
         console.log("datassss", res.data);
         if (res && res.data && res.status == "200") {
           console.log("datassss", res.data);
-          if (res.data?.statuscode === 200) {
+          if(res.data?.statuscode === 200){
+            setIsLoading(false);
             toast(res.data?.message, {
               position: "top-center",
               type: "success",
@@ -946,6 +952,8 @@ export default function Register() {
   };
   return (
     <div className="al_login_container">
+      {isLoading && <Loading />}
+
       {activeForm === 1 ? (
         <FirstForm onSubmit={handleFirstFormSubmit} />
       ) : activeForm === 2 ? (

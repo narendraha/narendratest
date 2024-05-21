@@ -2,19 +2,23 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Row, Col, Alert, Label, FormGroup } from "reactstrap";
+import { Row, Col, Label, FormGroup } from "reactstrap";
 import alferdlogo from "../../images/alfredlogowhite.svg";
+import alferdlogomobile from "../../images/alfredlogo.svg";
 import { useState } from "react";
 import { AxiosInstance } from "../../_mock/utilities";
 import { toast } from "react-toastify";
 import { auth, provider } from "../Firebase";
 import { signInWithPopup } from "firebase/auth";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (values) => {
+    setIsLoading(true)
     let data = {
       username: values.username,
       password: values.password,
@@ -24,22 +28,25 @@ export default function Signin({ setIsAuthenticated }) {
       .then((res) => {
         if (res && res.data && res.status == "200") {
           localStorage.setItem("token", res.data?.data?.token);
-          toast(res.data?.message, {
-            position: "top-center",
-            type: "success",
-          });
-          setIsAuthenticated(true);
-          navigate("/home");
-        } else {
-          toast(res.data?.message, {
-            position: "top-center",
-            type: "error",
-          });
+          if (res.data?.statuscode === 200) {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: "success",
+            });
+    setIsLoading(false);
+
+            setIsAuthenticated(true);
+            navigate("/home");
+          } else {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: "error",
+            });
+          }
         }
       })
       .catch((er) => {
-        console.log(er);
-        toast(er?.response?.data?.message || er?.message, {
+        toast(er?.response?.data?.message, {
           position: "top-center",
           type: "error",
         });
@@ -57,23 +64,20 @@ export default function Signin({ setIsAuthenticated }) {
         AxiosInstance("application/json")
           .post(`/googleauth`, userData)
           .then((res) => {
-            if (
-              res && res.data && (res.status == 200 ||
-              res.status == 201)
-            ) {
+            if (res && res.data && (res.status == 200 || res.status == 201)) {
               localStorage.setItem("token", res.data?.data?.token);
-                toast(res.data?.message, {
-                  position: "top-center",
-                  type: "success",
-                });
-                setIsAuthenticated(true);
-                navigate("/profile");
+              toast(res.data?.message, {
+                position: "top-center",
+                type: "success",
+              });
+              setIsAuthenticated(true);
+              navigate("/profile");
             } else {
-                toast(res.data?.message, {
-                  position: "top-center",
-                  type: "error",
-                });
-              }
+              toast(res.data?.message, {
+                position: "top-center",
+                type: "error",
+              });
+            }
           })
           .catch((er) => {
             console.log(er);
@@ -115,88 +119,92 @@ export default function Signin({ setIsAuthenticated }) {
                 <Col lg="7" sm="6" className="al_left_login h-100">
                   <div className="wflexLayout">
                     <Link to="/">
-                      <img src={alferdlogo} alt="logo" width={180} />
+                      <img src={alferdlogo} className="login_logodesktop" alt="logo" width={180} />
+                      <img src={alferdlogomobile} className="login_logomobile" alt="logo_mobile" width={180} />
                     </Link>
                   </div>
                 </Col>
                 <Col lg="5" sm="6" className="al_login-right h-100">
-                  <div className="wflexLayout al_mx-auto">
-                    <div className="wflex-items-center wflexLayout">
-                      <h5>Sign in</h5>
+                  <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
+                    <div className="wflexScroll w-100">
+                      <h5 className="mb-1"><span className="fw-medium">Welcome to</span> <span className="text-info" style={{fontSize: "24px"}}>Hello Alfred !</span></h5>
+                      <p className="text-medium cs_light text-grey text-italic">Lets take your wellness journey to new heights</p>
 
-                      <div className="al_login-form wflexScroll">
-                        <FormGroup>
-                          <Label>Mobile Number / Email ID</Label>
-                          <Field
-                            type="text"
-                            name="username"
-                            placeholder="Enter Mobile Number / Email ID"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="username"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>Password</Label>
-                          <Field
-                            type="password"
-                            name="password"
-                            placeholder="Enter password"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="password"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                      </div>
-                      <div className="al_login_footer">
-                        {/* <Link to="/forgot-password" className="al_forgot_pw al_text_link">Forgot password?</Link> */}
-                        <button
-                          type="submit"
-                          disabled={isSubmitting ? true : false}
-                          className="al_login_button mt-3"
-                        >
-                          Sign in
-                        </button>
-                        <div className="mt-3">
-                          Don’t have an account?{" "}
-                          <Link
-                            to="/registration"
-                            className="al_text_link cs_medium"
-                          >
-                            Signup
-                          </Link>
+                      <div className="al_signinbg">
+                        <div className="al_login-form">
+                          <FormGroup>
+                            <Label>Mobile Number / Email ID</Label>
+                            <Field
+                              type="text"
+                              name="username"
+                              placeholder="Enter Mobile Number / Email ID"
+                              className="form-control"
+                            />
+                            <ErrorMessage
+                              name="username"
+                              component={"div"}
+                              className="text-danger"
+                            />
+                          </FormGroup>
+                          <FormGroup>
+                            <Label>Password</Label>
+                            <Field
+                              type="password"
+                              name="password"
+                              placeholder="Enter password"
+                              className="form-control"
+                            />
+                            <ErrorMessage
+                              name="password"
+                              component={"div"}
+                              className="text-danger"
+                            />
+                          </FormGroup>
                         </div>
-                        <div className="alhr-or">OR</div>
-                        {/* <button type="button" className='al_signinbuttons'>
+                        <div className="al_login_footer">
+                          <Link to="/forgot-password" className="al_forgot_pw">Forgot password?</Link>
+                          <button
+                            type="submit"
+                            disabled={isSubmitting ? true : false}
+                            className="al_login_button mt-3"
+                          >
+                            Sign in
+                          </button>
+                          <div className="mt-3 text-medium">
+                            Don’t have an account?{" "}
+                            <Link
+                              to="/registration"
+                              className="al_text_link cs_medium"
+                            >
+                              Signup
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="alhr-or my-3 text-center fw-medium">OR</div>
+                      {/* <button type="button" className='al_signinbuttons'>
                                         <i className='icon_alfred_google'></i>
                                         <span>Sign in with Google</span>
                                     </button> */}
-                        <button type="button"
-                          onClick={handleClick}
-                          className="al_signinbuttons"
-                        >
-                          <i className="icon_alfred_google"></i>Sign in with
-                          Google
-                        </button>
-                        <button type="button" className="al_signinbuttons">
-                          <i className="icon_alfred_apple"></i>
-                          <span>Continue With Apple</span>
-                        </button>
-                      </div>
+                      <button type="button"
+                        onClick={handleClick}
+                        className="al_signinbuttons"
+                      >
+                        <i className="icon_alfred_google"></i>Sign in / Sign up With Google
+                      </button>
+                      <button type="button" className="al_signinbuttons">
+                        <i className="icon_alfred_apple"></i>
+                        <span>Sign in / Sign up With Apple</span>
+                      </button>
                     </div>
-                  </div>
-                </Col>
-              </Row>
+                </div>
+              </Col>
+            </Row>
             </Form>
-          );
+      );
         }}
-      </Formik>
-    </div>
+    </Formik>
+    </div >
   );
 }

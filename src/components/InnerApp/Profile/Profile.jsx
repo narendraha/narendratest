@@ -13,14 +13,17 @@ import moment from "moment/moment";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Profile() {
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const profileDetails = async () => {
+    setIsLoading(true);
     await AxiosInstance("application/json")
       .get("/userdetails")
       .then((res) => {
@@ -40,6 +43,7 @@ export default function Profile() {
           responseData.dob = formattedDateString;
         }
         setGetProfileDetails(responseData);
+        setIsLoading(false);
       })
       .catch((er) => console.log(er));
   };
@@ -63,6 +67,8 @@ export default function Profile() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
+      setIsLoading(true);
+
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
@@ -76,6 +82,9 @@ export default function Profile() {
               profileDetails();
               setIsShowconfirm(!data);
               navigate("/profile");
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 1000);
             } else {
               toast(res.data?.message, {
                 position: "top-center",
@@ -97,7 +106,8 @@ export default function Profile() {
 
   return (
     <>
-      <ConfirmationAction newFun={handleSubmit} open={isShowconfirm}/>
+      {isLoading && <Loading />}
+      <ConfirmationAction newFun={handleSubmit} open={isShowconfirm} />
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-3">Profile</h3>
@@ -295,7 +305,10 @@ export default function Profile() {
                     initialValues={{
                       username: getProfileDetails?.username || "",
                       email: getProfileDetails?.email || "",
-                      dob: getProfileDetails?.dob == 'NA' ? new Date : getProfileDetails?.dob,
+                      dob:
+                        getProfileDetails?.dob == "NA"
+                          ? new Date()
+                          : getProfileDetails?.dob,
                       gender: getProfileDetails?.gender || "",
                       mobile: getProfileDetails?.mobile || "",
                       rtype: getProfileDetails?.rtype || "",
@@ -489,7 +502,9 @@ export default function Profile() {
                                   selected={
                                     values?.dob
                                       ? new Date(values?.dob)
-                                      : values?.dob == 'NA' ? new Date() : new Date()
+                                      : values?.dob == "NA"
+                                      ? new Date()
+                                      : new Date()
                                   }
                                   onChange={(e) => {
                                     setFieldValue("dob", e);

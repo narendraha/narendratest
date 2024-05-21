@@ -81,9 +81,9 @@ export default function ChatBot(props) {
                     {Object.entries(message).map(([key, value]) => (
                       <Row className="mb-4 al_chatcontent" key={key}>
                         <div>
-                          {key === "User" ? (
+                          {key === "user" ? (
                             <img src={Chatuser} alt="chat user" />
-                          ) : key === "Alfred" ? (
+                          ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>

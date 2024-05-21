@@ -14,18 +14,20 @@ import moment from "moment"; // Import moment library
 import { AxiosInstance } from "../../_mock/utilities";
 import OtpInput from "react-otp-input";
 import { toast } from "react-toastify";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Register() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [fileName, setFileName] = useState();
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
   const inputRefs = useRef(Array(4).fill(null));
 
   const genderoptions = [
-    { value: "M", label: "Male" },
-    { value: "F", label: "Female" },
-    { value: "O", label: "Other" },
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Other", label: "Other" },
   ];
 
   const residenceoptions = [
@@ -907,6 +909,7 @@ export default function Register() {
   };
   console.log("formdata", formData);
   const handleFinalSubmit = (values) => {
+    setIsLoading(true)
     // Here you can submit formData to your backend or perform other actions
     setFormData({ ...formData, ...values });
     let data = {
@@ -923,7 +926,8 @@ export default function Register() {
         console.log("datassss", res.data);
         if (res && res.data && res.status == "200") {
           console.log("datassss", res.data);
-          if (res.data?.statuscode === 200) {
+          if(res.data?.statuscode === 200){
+            setIsLoading(false);
             toast(res.data?.message, {
               position: "top-center",
               type: "success",
@@ -948,6 +952,8 @@ export default function Register() {
   };
   return (
     <div className="al_login_container">
+      {isLoading && <Loading />}
+
       {activeForm === 1 ? (
         <FirstForm onSubmit={handleFirstFormSubmit} />
       ) : activeForm === 2 ? (

@@ -58,6 +58,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
+              <Route path="historychat" element={<HistoryChat />} />
+
             </Route>
           </>
         ) : (

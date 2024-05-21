@@ -29,12 +29,15 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AxiosInstance } from "../../../_mock/utilities";
-import { jwtDecode } from "jwt-decode";
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const decodedToken = getDecodedTokenFromLocalStorage();
+  const [getTabStatus, setGetStatus] = useState({});
   const [tab, setTab] = useState("1");
-  const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -50,6 +53,56 @@ export default function Home() {
   const [labelValues12, setLabelValues12] = useState(0);
   const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
+
+  // symptoms
+  const [breathlessness, setBreathlessness] = useState({
+    breathnessda: { frequency: "" },
+    breathnessea: { frequency: "" },
+    dizziness: { frequency: "" },
+    col_swet: { frequency: "" },
+    p_tiredness: { frequency: "" },
+    chest_pain: { frequency: "" },
+    pressurechest: { frequency: "" },
+    worry: { frequency: "" },
+    weakness: { frequency: "" },
+    infirmity: { frequency: "" },
+    nsynacpe: { frequency: "" },
+    syncope: { frequency: "" },
+    tirednessafterwards: { frequency: "" },
+  });
+
+  const handleFrequencyChange = (category, value) => {
+    setBreathlessness((prevState) => ({
+      ...prevState,
+      [category]: { frequency: value },
+    }));
+  };
+
+  const [qualityOfLife, setQualityOfLife] = useState({
+    breathnessda: { quality_of_life: "" },
+    breathnessea: { quality_of_life: "" },
+    dizziness: { quality_of_life: "" },
+    col_swet: { quality_of_life: "" },
+    p_tiredness: { quality_of_life: "" },
+    chest_pain: { quality_of_life: "" },
+    pressurechest: { quality_of_life: "" },
+    worry: { quality_of_life: "" },
+    weakness: { quality_of_life: "" },
+    infirmity: { quality_of_life: "" },
+    nsynacpe: { quality_of_life: "" },
+    syncope: { quality_of_life: "" },
+    tirednessafterwards: { quality_of_life: "" },
+  });
+
+  const handleQualityOfLifeChange = (category, value) => {
+    setQualityOfLife((prevState) => ({
+      ...prevState,
+      [category]: { quality_of_life: value },
+    }));
+  };
+
+  // health hub
+  const [show1, setShow1] = useState(false);
 
   // heath details
   const [show2, setShow2] = useState(false);
@@ -183,17 +236,23 @@ export default function Home() {
   const handleValueChangeEndSlider12 = (value) => {
     handleValueChangeEnd(value, setLabelValues12);
   };
-  const valueMappings = {
-    0: "1",
-    20: "2",
-    45: "3",
-    70: "4",
-    90: "5",
-  };
 
   const getOutputNumber = (value) => {
-    return valueMappings[value];
+    console.log("value: ", value);
+    return horizontalLabels[value];
   };
+
+  const lifeMappings = {
+    Yes: "true",
+    No: "false",
+  };
+
+  const getLifeValue = (value) => {
+    return lifeMappings[value.quality_of_life] !== undefined
+      ? lifeMappings[value.quality_of_life]
+      : ""; // If value.quality_of_life is not found in lifeMappings, return an empty string
+  };
+
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
@@ -211,16 +270,79 @@ export default function Home() {
         labelValues11
       )}${getOutputNumber(labelValues12)}`;
       console.log("Output:", output, typeof output);
+      console.log("Next Button Clicked!", breathlessness);
 
-      let data = {
-        // weight: 70,
-        // height: 175,
-        // bloodP: 120,
-        // pulse: 80,
-        vitals: output,
+      let newData = {
+        breathnessda: {
+          frequency: breathlessness.breathnessda.frequency,
+          severity: getOutputNumber(labelValues),
+          quality_of_life: getLifeValue(qualityOfLife.breathnessda),
+        },
+        breathnessea: {
+          frequency: breathlessness.breathnessea.frequency,
+          severity: getOutputNumber(labelValues1),
+          quality_of_life: getLifeValue(qualityOfLife.breathnessea),
+        },
+        dizziness: {
+          frequency: breathlessness.dizziness.frequency,
+          severity: getOutputNumber(labelValues2),
+          quality_of_life: getLifeValue(qualityOfLife.dizziness),
+        },
+        col_swet: {
+          frequency: breathlessness.col_swet.frequency,
+          severity: getOutputNumber(labelValues3),
+          quality_of_life: getLifeValue(qualityOfLife.col_swet),
+        },
+        p_tiredness: {
+          frequency: breathlessness.p_tiredness.frequency,
+          severity: getOutputNumber(labelValues4),
+          quality_of_life: getLifeValue(qualityOfLife.p_tiredness),
+        },
+        chest_pain: {
+          frequency: breathlessness.chest_pain.frequency,
+          severity: getOutputNumber(labelValues5),
+          quality_of_life: getLifeValue(qualityOfLife.chest_pain),
+        },
+        pressurechest: {
+          frequency: breathlessness.pressurechest.frequency,
+          severity: getOutputNumber(labelValues6),
+          quality_of_life: getLifeValue(qualityOfLife.pressurechest),
+        },
+        worry: {
+          frequency: breathlessness.worry.frequency,
+          severity: getOutputNumber(labelValues7),
+          quality_of_life: getLifeValue(qualityOfLife.worry),
+        },
+        weakness: {
+          frequency: breathlessness.weakness.frequency,
+          severity: getOutputNumber(labelValues8),
+          quality_of_life: getLifeValue(qualityOfLife.weakness),
+        },
+        infirmity: {
+          frequency: breathlessness.infirmity.frequency,
+          severity: getOutputNumber(labelValues9),
+          quality_of_life: getLifeValue(qualityOfLife.infirmity),
+        },
+        nsynacpe: {
+          frequency: breathlessness.nsynacpe.frequency,
+          severity: getOutputNumber(labelValues10),
+          quality_of_life: getLifeValue(qualityOfLife.nsynacpe),
+        },
+        syncope: {
+          frequency: breathlessness.syncope.frequency,
+          severity: getOutputNumber(labelValues11),
+          quality_of_life: getLifeValue(qualityOfLife.syncope),
+        },
+        tirednessafterwards: {
+          frequency: breathlessness.tirednessafterwards.frequency,
+          severity: getOutputNumber(labelValues12),
+          quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
+        },
       };
+      console.log("newData: ", newData);
+
       AxiosInstance("application/json")
-        .post(`/add_symptoms`, data)
+        .post(`/add_symptoms`, newData)
         .then((res) => {
           if (res && res.data && res.status == "200") {
             if (res.data?.statuscode === 200) {
@@ -229,6 +351,7 @@ export default function Home() {
                 type: "success",
               });
               setIsShowconfirm(!data);
+              changeStatus();
               setTab("4");
             } else {
               toast(res.data?.message, {
@@ -382,28 +505,142 @@ export default function Home() {
     });
   }, []);
 
-  const handleHeathDetails = (data) => {
+  const handleHeathDetails = async (data) => {
     setShow2(data);
     if (data) {
-      delete healthDetails?.isCheckMedicalRecords
-      // direct redirect to next tab without api call
-      setTab("3");
-      setShow2(!data);
-    }
-  }
+      delete healthDetails?.isCheckMedicalRecords;
+      console.log("healthDetails: ", healthDetails);
 
+      await AxiosInstance("application/json")
+        .post("/health_details", healthDetails)
+        .then((res) => {
+          if (res && res.data && res.status == 200) {
+            if (res.data?.statuscode === 200) {
+              toast(res.data?.message, {
+                position: "top-center",
+                type: "success",
+              });
+              setShow2(!data);
+              changeStatus();
+              setTab("3");
+            } else {
+              toast(res.data?.message, {
+                position: "top-center",
+                type: "error",
+              });
+            }
+          }
+        })
+        .catch((er) => {
+          console.log(er);
+          console.log("er?.message: ", er?.message);
+          toast(er?.response?.data?.message || er?.message, {
+            position: "top-center",
+            type: "error",
+          });
+        });
+    }
+  };
+
+  useEffect(() => {
+    getTabListStatus();
+  }, [tab]);
+  const getTabListStatus = async () => {
+    setIsLoading(true);
+    await AxiosInstance("application/json")
+      .get("/getstatus")
+      .then((response) => {
+        if (response && response?.status == 200) {
+          setIsLoading(false);
+          setGetStatus(response.data?.data);
+          console.log("setJsonData: ", response.data?.data);
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+        console.log("er?.message: ", er?.message);
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-center",
+          type: "error",
+        });
+      });
+  };
+
+  const changeStatus = async () => {
+    const tabKeys = {
+      1: "health_hub",
+      2: "expert_monitoring",
+      3: "list_your_symptoms",
+      4: "lifestyle_goals",
+      5: "optimal_risk_management",
+    };
+    let key = tabKeys[tab] || "";
+    let payload = {
+      [key]: 1,
+    };
+    await AxiosInstance("application/json")
+      .post("/setstatus", payload)
+      .then((res) => {
+        if (res && res.data && res.status == 200) {
+          if (res.data?.statuscode === 200) {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: "success",
+            });
+          } else {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: "error",
+            });
+          }
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+        console.log("er?.message: ", er?.message);
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-center",
+          type: "error",
+        });
+      });
+  };
+
+  const handlehealthHub = (data) => {
+    console.log("data: ", data);
+    setShow1(data);
+    if (data) {
+      setShow1(!data);
+      setTimeout(() => {
+        changeStatus();
+        setTab("2");
+      }, 1000);
+    }
+  };
   return (
     <>
-      <ConfirmationAction newFun={isShowconfirm ? handleSubmit : show2 && handleHeathDetails} open={isShowconfirm || show2} />
+      {isLoading && <Loading />}
+
+      <ConfirmationAction
+        newFun={
+          isShowconfirm
+            ? handleSubmit
+            : show1
+            ? handlehealthHub
+            : show2 && handleHeathDetails
+        }
+        open={isShowconfirm || show1 || show2}
+      />
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
-          <h3 className="bc_main_text mb-0">Hello, {decoded?.username}!</h3>
+          <h3 className="bc_main_text mb-3">
+            Hello, {decodedToken?.username}!
+          </h3>
           <Row className="al_hometabs">
             <Col sm="12">
               <Nav tabs className="mb-3">
                 <NavItem>
                   <NavLink
-                    className={tab === "1" ? "active" : ""}
+                    className={getTabStatus?.health_hub === 1 ? "active" : ""}
                     onClick={() => {
                       setTab("1");
                     }}
@@ -417,7 +654,9 @@ export default function Home() {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={tab === "2" ? "active" : ""}
+                    className={
+                      getTabStatus?.expert_monitoring === 1 ? "active" : ""
+                    }
                     onClick={() => {
                       setTab("2");
                     }}
@@ -432,7 +671,9 @@ export default function Home() {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={tab === "3" ? "active" : ""}
+                    className={
+                      getTabStatus?.list_your_symptoms === 1 ? "active" : ""
+                    }
                     onClick={() => {
                       setTab("3");
                     }}
@@ -447,7 +688,9 @@ export default function Home() {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={tab === "4" ? "active" : ""}
+                    className={
+                      getTabStatus?.lifestyle_goals === 1 ? "active" : ""
+                    }
                     onClick={() => {
                       setTab("4");
                     }}
@@ -460,7 +703,11 @@ export default function Home() {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={tab === "5" ? "active" : ""}
+                    className={
+                      getTabStatus?.optimal_risk_managemment === 1
+                        ? "active"
+                        : ""
+                    }
                     onClick={() => {
                       setTab("5");
                     }}
@@ -594,7 +841,7 @@ export default function Home() {
                       type="button"
                       className="al_savebtn"
                       onClick={() => {
-                        setTab("2");
+                        setShow1(true);
                       }}
                     >
                       Proceed
@@ -605,14 +852,17 @@ export default function Home() {
                   <h5>Health details</h5>
                   <Row>
                     <Col lg="6" sm="12">
-                      <div className="text-end al_note">Your last entry sucessfully updated on: 12-04-2024 12:00 AM</div>
+                      <div className="text-end al_note">
+                        Your last entry sucessfully updated on: 12-04-2024 12:00
+                        AM
+                      </div>
                       <Formik
                         initialValues={{
                           weight: "",
                           height: "",
-                          bloodP: "",
+                          bloodp: "",
                           pulse: "",
-                          isCheckMedicalRecords: false
+                          isCheckMedicalRecords: false,
                         }}
                         validationSchema={Yup.object().shape({
                           weight: Yup.number()
@@ -621,19 +871,19 @@ export default function Home() {
                           height: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
-                          bloodP: Yup.number()
+                          bloodp: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
                           pulse: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
                           isCheckMedicalRecords: Yup.boolean()
-                            .oneOf([true], 'This field is required')
-                            .required('This field is required'),
+                            .oneOf([true], "This field is required")
+                            .required("This field is required"),
                         })}
                         onSubmit={(values) => {
                           setShow2(true);
-                          setHealthDetails(values)
+                          setHealthDetails(values);
                         }}
                       >
                         {({ }) => {
@@ -760,7 +1010,10 @@ export default function Home() {
                                   check
                                   className="me-2 d-flex align-items-center"
                                 >
-                                  <Field type="checkbox" name="isCheckMedicalRecords" />
+                                  <Field
+                                    type="checkbox"
+                                    name="isCheckMedicalRecords"
+                                  />
                                   <span>
                                     Above mentioned details are valid as per the
                                     medical records
@@ -816,38 +1069,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.breathnessda.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="breathnessda"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.breathnessda
+                                          .frequency === frequency
+                                      }
+                                      onChange={(e) => {
+                                        handleFrequencyChange(
+                                          "breathnessda",
+                                          e.target.value
+                                        );
+                                      }}
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -872,25 +1127,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="breathnessda"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.breathnessda
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "breathnessda",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -906,38 +1167,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.breathnessea.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="breathnessea"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.breathnessea
+                                          .frequency === frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "breathnessea",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -962,25 +1225,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="breathnessea"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.breathnessea
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "breathnessea",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -996,38 +1265,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.dizziness.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="dizziness"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.dizziness.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "dizziness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1052,25 +1323,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="dizziness"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.dizziness
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "dizziness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1086,38 +1363,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.col_swet.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="col_swet"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.col_swet.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "col_swet",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1142,25 +1421,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="col_swet"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.col_swet
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "col_swet",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1176,38 +1461,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.p_tiredness.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="p_tiredness"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.p_tiredness.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "p_tiredness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1232,25 +1519,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="p_tiredness"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.p_tiredness
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "p_tiredness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1266,38 +1559,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.chest_pain.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="chest_pain"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.chest_pain.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "chest_pain",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1322,25 +1617,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="chest_pain"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.chest_pain
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "chest_pain",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1356,38 +1657,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.pressurechest.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="pressurechest"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.pressurechest
+                                          .frequency === frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "pressurechest",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1412,25 +1715,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="pressurechest"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.pressurechest
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "pressurechest",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1446,38 +1755,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.worry.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="worry"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.worry.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "worry",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1502,25 +1813,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="worry"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.worry.quality_of_life ===
+                                        life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "worry",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1536,38 +1853,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.weakness.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="weakness"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.weakness.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "weakness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1592,25 +1911,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="weakness"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.weakness
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "weakness",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1626,38 +1951,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.infirmity.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="infirmity"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.infirmity.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "infirmity",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1682,25 +2009,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="infirmity"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.infirmity
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "infirmity",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1716,38 +2049,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.nsynacpe.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="nsynacpe"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.nsynacpe.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "nsynacpe",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1772,25 +2107,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="nsynacpe"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.nsynacpe
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "nsynacpe",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1806,38 +2147,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.syncope.frequency ===
+                                      frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="syncope"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.syncope.frequency ===
+                                        frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "syncope",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1862,25 +2205,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="syncope"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.syncope
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "syncope",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>
@@ -1896,38 +2245,40 @@ export default function Home() {
                                 className="btn-group btn-group-toggle al_frequencylist"
                                 data-toggle="buttons"
                               >
-                                <label className="btn active">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="never"
-                                  />{" "}
-                                  Never
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="occasionally"
-                                  />{" "}
-                                  Occasionally
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="often"
-                                  />{" "}
-                                  Often
-                                </label>
-                                <label className="btn">
-                                  <input
-                                    type="radio"
-                                    name="frequency"
-                                    id="always"
-                                  />{" "}
-                                  Always
-                                </label>
+                                {[
+                                  "Never",
+                                  "Occasionally",
+                                  "Often",
+                                  "Always",
+                                ].map((frequency) => (
+                                  <label
+                                    key={frequency}
+                                    className={`btn ${
+                                      breathlessness.tirednessafterwards
+                                        .frequency === frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="tirednessafterwards"
+                                      value={frequency}
+                                      checked={
+                                        breathlessness.tirednessafterwards
+                                          .frequency === frequency
+                                      }
+                                      onChange={(e) =>
+                                        handleFrequencyChange(
+                                          "tirednessafterwards",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    {frequency.charAt(0).toUpperCase() +
+                                      frequency.slice(1)}
+                                  </label>
+                                ))}
                               </div>
                               <strong>Severity</strong>
                               <Slider
@@ -1952,25 +2303,31 @@ export default function Home() {
                                 inline
                                 className="d-flex me-0 ps-0 flex-wrap"
                               >
-                                <Label
-                                  check
-                                  className="d-flex align-center me-3"
-                                >
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="yes"
-                                  />
-                                  &nbsp;Yes
-                                </Label>
-                                <Label check className="d-flex align-center">
-                                  <input
-                                    type="radio"
-                                    name="effectingquality"
-                                    value="no"
-                                  />
-                                  &nbsp;No
-                                </Label>
+                                {["Yes", "No"].map((life) => (
+                                  <Label
+                                    key={life}
+                                    className="d-flex align-center me-3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="tirednessafterwards"
+                                      value={life}
+                                      checked={
+                                        qualityOfLife.tirednessafterwards
+                                          .quality_of_life === life
+                                      }
+                                      onChange={(e) =>
+                                        handleQualityOfLifeChange(
+                                          "tirednessafterwards",
+                                          e.target.value
+                                        )
+                                      }
+                                    />{" "}
+                                    &nbsp;
+                                    {life.charAt(0).toUpperCase() +
+                                      life.slice(1)}
+                                  </Label>
+                                ))}
                               </FormGroup>
                             </CardBody>
                           </Card>

@@ -116,7 +116,7 @@ export default function Dashboard1() {
                                         <CardBody>
                                             <div className='mb-3'>Blood pressure</div>
                                             <img src={bloodpressure} alt="" />
-                                            <div className='d-flex align-items-baseline mt-3'><h3 className='mb-0'>130</h3>80</div>
+                                            <div className='d-flex align-items-baseline mt-3'><h3 className='mb-0'>130/</h3>80</div>
                                         </CardBody>
                                     </Card>
                                 </Col>

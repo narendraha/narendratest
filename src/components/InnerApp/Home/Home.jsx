@@ -29,10 +29,12 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AxiosInstance } from "../../../_mock/utilities";
+import { jwtDecode } from "jwt-decode";
 
 export default function Home() {
   const [tab, setTab] = useState("1");
-  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -49,7 +51,7 @@ export default function Home() {
   const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
 
- // heath details
+  // heath details
   const [show2, setShow2] = useState(false);
   const [healthDetails, setHealthDetails] = useState();
   const horizontalLabels = {
@@ -380,13 +382,13 @@ export default function Home() {
     });
   }, []);
 
-  const handleHeathDetails=(data)=>{
+  const handleHeathDetails = (data) => {
     setShow2(data);
-    if(data){
-        delete healthDetails?.isCheckMedicalRecords
-        // direct redirect to next tab without api call
-        setTab("3");
-        setShow2(!data);
+    if (data) {
+      delete healthDetails?.isCheckMedicalRecords
+      // direct redirect to next tab without api call
+      setTab("3");
+      setShow2(!data);
     }
   }
 
@@ -395,10 +397,10 @@ export default function Home() {
       <ConfirmationAction newFun={isShowconfirm ? handleSubmit : show2 && handleHeathDetails} open={isShowconfirm || show2} />
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
-          <h3 className="bc_main_text mb-3">Hello, Richard!</h3>
+          <h3 className="bc_main_text mb-0">Hello, {decoded?.username}!</h3>
           <Row className="al_hometabs">
             <Col sm="12">
-              <Nav tabs className="al_tabs mb-3">
+              <Nav tabs className="mb-3">
                 <NavItem>
                   <NavLink
                     className={tab === "1" ? "active" : ""}
@@ -407,7 +409,7 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className="d-xs-block d-none">H</span>
+                      <span>H</span>
                       <span className="d-none d-sm-block">Health Hub</span>
                       {/* <i className="icon_alfred_back-arrow"></i> */}
                     </div>
@@ -421,7 +423,7 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className="d-xs-block d-none">E</span>
+                      <span>E</span>
                       <span className="d-none d-sm-block">
                         Expert Monitoring
                       </span>
@@ -436,7 +438,7 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className="d-xs-block d-none">L</span>
+                      <span>L</span>
                       <span className="d-none d-sm-block">
                         List your Symptoms
                       </span>
@@ -451,7 +453,7 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className="d-xs-block d-none">L</span>
+                      <span>L</span>
                       <span className="d-none d-sm-block">Lifestyle Goals</span>
                     </div>
                   </NavLink>
@@ -464,7 +466,7 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className="d-xs-block d-none">O</span>
+                      <span>O</span>
                       <span className="d-none d-sm-block">
                         Optimal Risk Management
                       </span>
@@ -476,91 +478,111 @@ export default function Home() {
                 <TabPane tabId="1">
                   <p>Knowing about AF will reduce the risk</p>
                   <Row>
-                    <Col lg="9" sm="12">
-                      <div className="mb-4">
-                        <h6>Understand Atrial fibrillation(AF)</h6>
-                        <img src={atrialfib} alt="" height={120} />
-                        <p className="mt-3">
-                          Atrial fibrillation (AF) is a type of arrhythmia,
-                          which means that the heart beats fast and irregularly.
-                          The risk of AF increases markedly with age. Some of
-                          the known causes of AF include chronic high blood
-                          pressure, heart valve diseases and hyperthyroidism.
-                        </p>
-                      </div>
-                      <div className="mb-4">
-                        <h6>Why treatment?</h6>
-                        <img src={whytreatment} alt="" height={120} />
-                        <p className="mt-3">
-                          The way the heart beats in atrial fibrillation means
-                          there's a risk of blood clots forming in the heart
-                          chambers. If these enter the bloodstream, they can
-                          cause a stroke. Your doctor will assess and discuss
-                          your risk with you, and try to minimise your chance of
-                          having a stroke.
-                        </p>
-                      </div>
-                      <div className="mb-4">
-                        <h6>Rhythm</h6>
-                        <img src={rhythm} alt="" height={120} />
-                        <p className="mt-3">
-                          Atrial fibrillation (AFib) is an irregular and often
-                          very rapid heart rhythm. An irregular heart rhythm is
-                          called an arrhythmia. AFib can lead to blood clots in
-                          the heart. The condition also increases the risk of
-                          stroke, heart failure and other heart-related
-                          complications.
-                        </p>
-                      </div>
+                    <Col lg="7" sm="12">
+                      <Row>
+                        <Col sm="6">
+                          <div className="mb-4">
+                            <h6>Understand Atrial fibrillation(AF)</h6>
+                            <img src={atrialfib} alt="" style={{ height:"120px", objectFit: "contain" }} />
+                            <p className="mt-3">
+                              Atrial fibrillation (AF) is a type of arrhythmia,
+                              which means that the heart beats fast and irregularly.
+                              The risk of AF increases markedly with age. Some of
+                              the known causes of AF include chronic high blood
+                              pressure, heart valve diseases and hyperthyroidism.
+                            </p>
+                          </div>
+                        </Col>
+                        <Col sm="6">
+                          <div className="mb-4">
+                            <h6>Why treatment?</h6>
+                            <img src={whytreatment} alt="" style={{ height:"120px", objectFit: "contain" }} />
+                            <p className="mt-3">
+                              The way the heart beats in atrial fibrillation means
+                              there's a risk of blood clots forming in the heart
+                              chambers. If these enter the bloodstream, they can
+                              cause a stroke. Your doctor will assess and discuss
+                              your risk with you, and try to minimise your chance of
+                              having a stroke.
+                            </p>
+                          </div>
+                        </Col>
+                        <Col sm="6">
+                          <div className="mb-4">
+                            <h6>Rhythm</h6>
+                            <img src={rhythm} alt="" style={{ height:"120px", objectFit: "contain" }} />
+                            <p className="mt-3">
+                              Atrial fibrillation (AFib) is an irregular and often
+                              very rapid heart rhythm. An irregular heart rhythm is
+                              called an arrhythmia. AFib can lead to blood clots in
+                              the heart. The condition also increases the risk of
+                              stroke, heart failure and other heart-related
+                              complications.
+                            </p>
+                          </div>
+                        </Col>
+                      </Row>
                     </Col>
-                    <Col lg="3" sm="12">
-                      <Card className="al_cardnoborder">
+                    <Col lg="5" sm="12">
+                      <Card className="al_cardnoborder" style={{ backgroundColor: "#F7F7F7", boxShadow: "none" }}>
                         <CardBody>
                           <h6>Videos</h6>
                           <Row className="mt-3 al_knowldgebank">
-                            <Col lg="12" sm="4" className="mb-3">
-                              <iframe
-                                width="100%"
-                                height="130"
-                                src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              ></iframe>
-                              <div className="mt-2">
-                                Text of the printing and typesetting
-                                industry.Text of the printing and typesetting
-                                industry.
-                              </div>
+                            <Col sm="6" className="mb-3">
+                              <Card className="al_cardnoborder h-100">
+                                <CardBody>
+                                  <iframe
+                                    width="100%"
+                                    height="130"
+                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                  ></iframe>
+                                  <div className="mt-2">
+                                    Text of the printing and typesetting
+                                    industry.Text of the printing and typesetting
+                                    industry.
+                                  </div>
+                                </CardBody>
+                              </Card>
                             </Col>
-                            <Col lg="12" sm="4" className="mb-3">
-                              <iframe
-                                width="100%"
-                                height="130"
-                                src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              ></iframe>
-                              <div className="mt-2">
-                                Text of the printing and typesetting industry.
-                              </div>
+                            <Col sm="6" className="mb-3">
+                              <Card className="al_cardnoborder h-100">
+                                <CardBody>
+                                  <iframe
+                                    width="100%"
+                                    height="130"
+                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                  ></iframe>
+                                  <div className="mt-2">
+                                    Text of the printing and typesetting industry.
+                                  </div>
+                                </CardBody>
+                              </Card>
                             </Col>
-                            <Col lg="12" sm="4" className="mb-3">
-                              <iframe
-                                width="100%"
-                                height="130"
-                                src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              ></iframe>
-                              <div className="mt-2">
-                                Text of the printing and typesetting industry.
-                              </div>
+                            <Col sm="6" className="mb-3">
+                              <Card className="al_cardnoborder h-100">
+                                <CardBody>
+                                  <iframe
+                                    width="100%"
+                                    height="130"
+                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                  ></iframe>
+                                  <div className="mt-2">
+                                    Text of the printing and typesetting industry.
+                                  </div>
+                                </CardBody>
+                              </Card>
                             </Col>
                           </Row>
                         </CardBody>
@@ -570,7 +592,7 @@ export default function Home() {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="al_greybgbutton"
+                      className="al_savebtn"
                       onClick={() => {
                         setTab("2");
                       }}
@@ -583,14 +605,14 @@ export default function Home() {
                   <h5>Health details</h5>
                   <Row>
                     <Col lg="6" sm="12">
-                    <div className="text-end al_note">Your last entry sucessfully updated on: 12-04-2024 12:00 AM</div>
+                      <div className="text-end al_note">Your last entry sucessfully updated on: 12-04-2024 12:00 AM</div>
                       <Formik
                         initialValues={{
-                            weight: "",
-                            height: "",
-                            bloodP: "",
-                            pulse: "",
-                            isCheckMedicalRecords:false
+                          weight: "",
+                          height: "",
+                          bloodP: "",
+                          pulse: "",
+                          isCheckMedicalRecords: false
                         }}
                         validationSchema={Yup.object().shape({
                           weight: Yup.number()
@@ -605,19 +627,19 @@ export default function Home() {
                           pulse: Yup.number()
                             .typeError("Must be a number")
                             .required("This field is required"),
-                            isCheckMedicalRecords: Yup.boolean()
+                          isCheckMedicalRecords: Yup.boolean()
                             .oneOf([true], 'This field is required')
                             .required('This field is required'),
                         })}
                         onSubmit={(values) => {
-                            setShow2(true);
-                            setHealthDetails(values)
+                          setShow2(true);
+                          setHealthDetails(values)
                         }}
                       >
                         {({ }) => {
                           return (
                             <Form>
-                              <Row>
+                              {/* <Row>
                                 <Col sm="4">
                                   <FormGroup>
                                     <Label>Height(ft)</Label>
@@ -634,91 +656,100 @@ export default function Home() {
                                     />
                                   </FormGroup>
                                 </Col>
+                              </Row> */}
+
+                              <Row>
+                                <Col sm="6" className="mb-3">
+                                  <Label>Date</Label>
+                                  <DatePicker
+                                    className="form-control al_calendarIcon"
+                                    name="date"
+                                    placeholderText="Select date"
+                                    popperPlacement="auto"
+                                    popperModifiers={{
+                                      flip: {
+                                        behavior: ["bottom"],
+                                      },
+                                      preventOverflow: {
+                                        enabled: false,
+                                      },
+                                    }}
+                                    selected={new Date()}
+                                    onChange={(e) => { }}
+                                    dateFormat={"MM/dd/yyyy"}
+                                    minDate={new Date().setMonth(
+                                      new Date().getMonth() - 1
+                                    )}
+                                    maxDate={new Date()}
+                                    autoComplete="off"
+                                    showMonthDropdown
+                                    showYearDropdown
+                                    dropdownMode="select"
+                                  />
+                                </Col>
                               </Row>
-                              <Card className="mb-4 al_cardnoborder mt-2">
-                                <CardBody>
-                                  <Row>
-                                    <Col sm="4" className="mb-3">
-                                      <Label>Date</Label>
-                                      <DatePicker
-                                        className="form-control al_calendarIcon"
-                                        name="date"
-                                        placeholderText="Select date"
-                                        popperPlacement="auto"
-                                        popperModifiers={{
-                                          flip: {
-                                            behavior: ["bottom"],
-                                          },
-                                          preventOverflow: {
-                                            enabled: false,
-                                          },
-                                        }}
-                                        selected={new Date()}
-                                        onChange={(e) => { }}
-                                        dateFormat={"MM/dd/yyyy"}
-                                        minDate={new Date().setMonth(
-                                          new Date().getMonth() - 1
-                                        )}
-                                        maxDate={new Date()}
-                                        autoComplete="off"
-                                        showMonthDropdown
-                                        showYearDropdown
-                                        dropdownMode="select"
+                              <Row>
+                                <Col xl="4" lg="6" sm="4">
+                                  <div className="al_vitalunits">
+                                    <i className="icon_alfred_weight" style={{ color: "#9086f7" }}></i>
+                                    <FormGroup className="mb-0">
+                                      <Label>Weight</Label>
+                                      <Field
+                                        type="text"
+                                        name="weight"
+                                        placeholder="100"
+                                        className="form-control"
                                       />
-                                    </Col>
-                                  </Row>
-                                  <Row>
-                                    <Col sm="4">
-                                      <FormGroup>
-                                        <Label>Weight(lbs)</Label>
-                                        <Field
-                                          type="text"
-                                          name="weight"
-                                          placeholder="Enter Weight"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="weight"
-                                          component={"div"}
-                                          className="text-danger"
-                                        />
-                                      </FormGroup>
-                                    </Col>
-                                    <Col sm="4">
-                                      <FormGroup>
-                                        <Label>Blood Pressure</Label>
-                                        <Field
-                                          type="text"
-                                          name="bloodP"
-                                          placeholder="Enter Blood Pressure"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="bloodP"
-                                          component={"div"}
-                                          className="text-danger"
-                                        />
-                                      </FormGroup>
-                                    </Col>
-                                    <Col sm="4">
-                                      <FormGroup>
-                                        <Label>Pulse</Label>
-                                        <Field
-                                          type="text"
-                                          name="pulse"
-                                          placeholder="Enter Pulse"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="pulse"
-                                          component={"div"}
-                                          className="text-danger"
-                                        />
-                                      </FormGroup>
-                                    </Col>
-                                  </Row>
-                                </CardBody>
-                              </Card>
+                                      <ErrorMessage
+                                        name="weight"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
+                                    </FormGroup>
+                                    <div className="text-grey mt-1">(lbs)</div>
+                                  </div>
+                                </Col>
+                                <Col xl="4" lg="6" sm="4">
+                                  <div className="al_vitalunits">
+                                    <i className="icon_alfred_bp" style={{ color: "#efbc06" }}></i>
+                                    <FormGroup className="mb-0">
+                                      <Label>Blood Pressure</Label>
+                                      <Field
+                                        type="text"
+                                        name="bloodP"
+                                        placeholder="120/80"
+                                        className="form-control"
+                                      />
+                                      <ErrorMessage
+                                        name="bloodP"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
+                                    </FormGroup>
+                                    <div className="text-grey mt-1">(BPM)</div>
+                                  </div>
+                                </Col>
+                                <Col xl="4" lg="6" sm="4">
+                                  <div className="al_vitalunits">
+                                    <i className="icon_alfred_pulse" style={{ color: "#7ff1e4" }}></i>
+                                    <FormGroup className="mb-0">
+                                      <Label>Pulse</Label>
+                                      <Field
+                                        type="text"
+                                        name="pulse"
+                                        placeholder="70"
+                                        className="form-control"
+                                      />
+                                      <ErrorMessage
+                                        name="pulse"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
+                                    </FormGroup>
+                                    <div className="text-grey mt-1">(mmHg)</div>
+                                  </div>
+                                </Col>
+                              </Row>
 
                               <FormGroup
                                 check
@@ -741,23 +772,6 @@ export default function Home() {
                                   className="text-danger"
                                 />
                               </FormGroup>
-                              <div className="mt-4">
-                                <button
-                                  type="button"
-                                  className="al_grey_borderbtn"
-                                  onClick={() => {
-                                    setTab("1");
-                                  }}
-                                >
-                                  Back
-                                </button>
-                                <button
-                                  type="submit"
-                                  className="al_greybgbutton mx-3"
-                                >
-                                  Proceed
-                                </button>
-                              </div>
                             </Form>
                           );
                         }}
@@ -770,6 +784,23 @@ export default function Home() {
                       ></div>
                     </Col>
                   </Row>
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="al_grey_borderbtn"
+                      onClick={() => {
+                        setTab("1");
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="al_savebtn mx-3"
+                    >
+                      Proceed
+                    </button>
+                  </div>
                 </TabPane>
                 <TabPane tabId="3">
                   <p>Select the symptoms range listed below</p>
@@ -1959,7 +1990,7 @@ export default function Home() {
                     </button>
                     <button
                       type="button"
-                      className="al_greybgbutton mx-3"
+                      className="al_savebtn mx-3"
                       onClick={() => setIsShowconfirm(true)}
                     >
                       Proceed
@@ -2081,7 +2112,7 @@ export default function Home() {
                         provided in this application{" "}
                       </p>
 
-                      <button type="button" className="al_greybgbutton">
+                      <button type="button" className="al_savebtn">
                         OK
                       </button>
                       {/* <LayoutAlertMessage /> */}

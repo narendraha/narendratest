@@ -15,6 +15,8 @@ export default function HomeStyle3() {
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
+  const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
+
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,6 +24,15 @@ export default function HomeStyle3() {
   useEffect(() => {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [chatHistory]);
+
+  const handleAction = (messageId, iconType, alfredValue, userValue) => {
+    setSelectedIcons(prevIcons => ({
+      ...prevIcons,
+      [messageId]: { reaction : iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
+    }));
+    
+  };
+console.log("0000000000", selectedIcons);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
@@ -59,11 +70,11 @@ export default function HomeStyle3() {
     value !== ""
       ? setIsShowSendBtn(true)
       : setIsShowSendBtn(
-        false
-      ); /* Show send button when user enter something */
+          false
+        ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
-
+  console.log("9999999999", chatHistory);
   return (
     <div className="cs_homepage">
       {isShow ? (
@@ -86,6 +97,31 @@ export default function HomeStyle3() {
                         <Col>
                           <h6 className="mb-0">{key}</h6>
                           <div>{value}</div>
+                          {key === "Alfred" && (
+                            <>
+                              <Icon
+                                icon="iconamoon:like-light"
+                                width="1.5em"
+                                height="1.5em"
+                                onClick={() => handleAction(index, 'like',value)} // Handle like action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
+                                }}
+                              />
+                              <Icon
+                                icon="iconamoon:dislike-light"
+                                width="1.5em"
+                                height="1.5em"
+                                className="mx-2"
+                                onClick={() => handleAction(index, 'dislike',value)} // Handle dislike action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
+                                }}
+                              />
+                            </>
+                          )}
                         </Col>
                       </Row>
                     ))}

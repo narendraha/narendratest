@@ -10,12 +10,15 @@ import { AxiosInstance } from "../../_mock/utilities";
 import { toast } from "react-toastify";
 import { auth, provider } from "../Firebase";
 import { signInWithPopup } from "firebase/auth";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (values) => {
+    setIsLoading(true)
     let data = {
       username: values.username,
       password: values.password,
@@ -30,6 +33,8 @@ export default function Signin({ setIsAuthenticated }) {
               position: "top-center",
               type: "success",
             });
+    setIsLoading(false);
+
             setIsAuthenticated(true);
             navigate("/home");
           } else {
@@ -59,10 +64,7 @@ export default function Signin({ setIsAuthenticated }) {
         AxiosInstance("application/json")
           .post(`/googleauth`, userData)
           .then((res) => {
-            if (
-              res && res.data && (res.status == 200 ||
-                res.status == 201)
-            ) {
+            if (res && res.data && (res.status == 200 || res.status == 201)) {
               localStorage.setItem("token", res.data?.data?.token);
               toast(res.data?.message, {
                 position: "top-center",

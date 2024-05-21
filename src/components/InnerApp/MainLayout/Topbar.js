@@ -7,9 +7,8 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 export default function Topbar(props) {
+  const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
-  const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
   const navigate = useNavigate();
 
   const handleProfile = () => {
@@ -88,7 +87,7 @@ export default function Topbar(props) {
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
-                      <span className='al_uName'>{decoded?.username}</span>
+                      <span className='al_uName'>{decodedToken?.username}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">

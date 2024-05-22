@@ -7,14 +7,14 @@ import ConfirmationAction from './ConfirmationAction';
 import ChatBot from '../../ChatBot';
 import { Popover, PopoverBody, Button } from 'reactstrap';
 import chatBot from '../../../images/chatboticon.svg';
-import Loading from './Loading';
+// import Loading from './Loading';
 
 export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
     const [isShowmenu, setIsShowmenu] = useState(true);
 
     return <React.Fragment>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<></>}>
             <div className='al_site_container'>
                 {/* <LayoutAlertMessage /> */}
                 {/* <ConfirmationAction /> */}

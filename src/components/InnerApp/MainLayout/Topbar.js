@@ -5,6 +5,7 @@ import user from '../../../images/puser.jpg';
 import { jwtDecode } from "jwt-decode";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();

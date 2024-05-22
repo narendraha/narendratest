@@ -285,7 +285,7 @@ export default function HistoryChatBot() {
                 {Array?.isArray(questions) && questions?.length > 0 ? (
                   questions?.map((message, index) => (
                     <React.Fragment key={index}>
-                      {Object.entries(message).map(([key, value]) => (
+                      {Object.entries(message)?.map(([key, value]) => (
                         <Row className="mb-4 al_chatcontent" key={key}>
                           <div>
                             {key === "user" ? (
@@ -413,7 +413,7 @@ export default function HistoryChatBot() {
                           </FormGroup>
                         ) : field.type_ === "Radio" ? (
                           <div className="d-flex px-1 gap-3 flex-row">
-                            {field.options.map((option, optionIndex) => (
+                            {field.options?.map((option, optionIndex) => (
                               <FormGroup key={optionIndex}>
                                 <Field
                                   type="radio"

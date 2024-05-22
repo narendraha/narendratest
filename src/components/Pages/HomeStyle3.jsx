@@ -7,6 +7,7 @@ import { Row, Col } from "reactstrap";
 import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
+import { Icon } from "@iconify/react";
 
 export default function HomeStyle3() {
   pageTitle("Home");

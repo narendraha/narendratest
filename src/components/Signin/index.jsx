@@ -26,8 +26,11 @@ export default function Signin({ setIsAuthenticated }) {
     AxiosInstance("application/json")
       .post(`/login_account`, data)
       .then((res) => {
+        console.log('res: ', res);
         if (res && res.data && res.status == "200") {
-          localStorage.setItem("token", res.data?.data?.token);
+          if(res.data.statuscode == '200'){
+            localStorage.setItem("token", res.data?.data?.token);
+          }
           if (res.data?.statuscode === 200) {
             toast(res.data?.message, {
               position: "top-center",

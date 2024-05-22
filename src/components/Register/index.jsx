@@ -27,7 +27,7 @@ export default function Register() {
   const genderoptions = [
     { value: "Male", label: "Male" },
     { value: "Female", label: "Female" },
-    { value: "Other", label: "Other" },
+    { value: "Others", label: "Others" },
   ];
 
   const residenceoptions = [
@@ -36,7 +36,7 @@ export default function Register() {
   ];
 
   const handleFileChange = (event) => {
-    setFileName({ fileName: event.target.files[0].name });
+    setFileName(event.target?.files[0]?.name);
   };
 
   const FirstForm = ({ onSubmit }) => (

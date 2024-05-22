@@ -37,7 +37,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "../components/ForgotPassword";
 import BotQuestionnaire from "../components/Admin/BotQuestionnaire";
 import HealthcareConsultant from "../components/Pages/HealthcareConsultant";
-
+import HistoryChat from "../components/Pages/HistoryChat"
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
 

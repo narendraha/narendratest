@@ -19,10 +19,10 @@ import Loading from "../InnerApp/LoadingComponent";
 export default function Register() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [fileName, setFileName] = useState();
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
   const inputRefs = useRef(Array(4).fill(null));
+  const [isFormLoading, setIsFormLoading]= useState(false)
 
   const genderoptions = [
     { value: "Male", label: "Male" },
@@ -35,10 +35,6 @@ export default function Register() {
     { value: "Non-Resident", label: "Non-Resident" },
   ];
 
-  const handleFileChange = (event) => {
-    setFileName(event.target?.files[0]?.name);
-  };
-
   const FirstForm = ({ onSubmit }) => (
     <Formik
       initialValues={{
@@ -50,7 +46,8 @@ export default function Register() {
         rtype: "",
         education: "",
         ssn: "",
-        insuranceurl: ""
+        insuranceurl: "",
+        file: null
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
@@ -84,6 +81,7 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
+             {isFormLoading && <Loading/>}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -247,23 +245,27 @@ export default function Register() {
                         />
                       </FormGroup>
                       <FormGroup>
-                        <Label>Upload Insurance</Label>
+                        <Label htmlFor="file">Upload Insurance</Label>
                         <input
                           type="file"
-                          id="insurance"
+                          id="file"
+                          name="file"
                           hidden
-                          onChange={(e) => handleFileChange(e)}
+                          onChange={(event) => {
+                            setFieldValue("file", event.currentTarget.files[0]);
+                          }}
                         />
-                        <div>{fileName}</div>
+                        <div>
+                          {values.file ? values.file.name : "No file selected"}
+                        </div>
                         <div id="al_blockele">
-                          <label htmlFor="insurance" className="al_choose">
+                          <label htmlFor="file" className="al_choose">
                             Upload File
                           </label>
                         </div>
-                        {/* <div className="al_fileuplod-note">* jpg, jpeg, png File only</div> */}
                         <ErrorMessage
-                          name="insurance"
-                          component={"div"}
+                          name="file"
+                          component="div"
                           className="text-danger"
                         />
                       </FormGroup>
@@ -317,6 +319,7 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
+             {isFormLoading && <Loading/>}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -334,7 +337,7 @@ export default function Register() {
                     <div className="al_login-form al_registrationform wflexScroll">
                       <div className="text-center">
                         <FormGroup className="mt-3">
-                          <Label>Enter otp sent to ******2987</Label>
+                          {/* <Label>Enter otp sent to {formData?.email}</Label> */}
                           <Row className="mx-0 al_otpfields">
                             <Field name="otp">
                               {({ field }) => (
@@ -888,36 +891,126 @@ export default function Register() {
       }}
     </Formik>
   );
+
+  const PasswordSuccessForm =()=>(
+    <form className="wflexLayout">
+      <Row className="al_login_section">
+        <Col lg="7" sm="6" className="al_left_login h-100">
+          <div className="wflexLayout">
+            <Link to="/">
+              <img src={alferdlogo} alt="logo" width={180} />
+            </Link>
+          </div>
+        </Col>
+        <Col lg="5" sm="6" className="al_login-right h-100">
+          <div className="wflexLayout al_mx-auto">
+            <div className="wflex-items-center wflexLayout">
+              <div className="al_login-form al_registrationform wflexScroll">
+                
+                <div className="text-center mb-4">
+                  <img src={successImg} alt="success" height={85} />
+                  <div className="mt-4">Password set</div>
+                  <h4 className="text-success">successfully</h4>
+                  <p className="mb-0 textLight">
+                    Login to your account with new password
+                  </p>
+                </div>
+              </div>
+              <div className="al_login_footer mt-3">
+                <button type="submit" className="al_login_button" onClick={()=>{
+                  setActiveForm(5); // Switch back to the first form after submitting the second form
+                }}>
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </form>
+)
   const [activeForm, setActiveForm] = useState(1);
   const [formData, setFormData] = useState(null);
 
   const handleFirstFormSubmit = (values) => {
     console.log("First form submitted with values:", values);
-    setActiveForm(2); // Switch to the second form after submitting the first form
     setFormData({ ...formData, ...values });
+    setIsFormLoading(true)
+    let data={
+      email:values?.email,
+      username:values?.username,
+    }
+    AxiosInstance("application/json")
+    .post(`/generate_otp`, data)
+    .then((res)=>{
+      if(res && res.data && res.status == '200'){
+        setIsFormLoading(false)
+        if(res.data.statuscode === 200){
+          toast(res.data?.message,{
+            position: "top-center",
+            type:'success'
+          });
+          setActiveForm(2); // Switch to the second form after submitting the first form
+        }else {
+          toast(res.data?.message, {
+            position: 'top-center',
+            type: 'error',
+          })
+        }
+      }
+    }).catch((er)=>{
+      console.log(er);
+      toast(er?.response?.data?.message, {
+        position: 'top-center',
+        type: 'error',
+      })
+    })
   };
 
   const handleSecondFormSubmit = (values) => {
     console.log("Second form submitted with values:", values);
-    setActiveForm(3); // Switch back to the first form after submitting the second form
     setFormData({ ...formData, ...values });
+    let data={
+      email:formData?.email,
+      otp:values?.otp,
+    }
+    setIsFormLoading(true)
+    AxiosInstance("application/json")
+    .post(`/verify_otp`, data)
+    .then((res)=>{
+      if(res && res.data && res.status == '200'){
+        setIsFormLoading(false)
+        if(res.data.statuscode === 200){
+          toast(res.data?.message,{
+            position: "top-center",
+            type:'success'
+          });
+          setActiveForm(3); // Switch back to the first form after submitting the second form
+        }else {
+          toast(res.data?.message, {
+            position: 'top-center',
+            type: 'error',
+          })
+        }
+      }
+    }).catch((er)=>{
+      console.log(er);
+      toast(er?.response?.data?.message, {
+        position: 'top-center',
+        type: 'error',
+      })
+    })
   };
   const handleThirdFormSubmit = (values) => {
     console.log("Third form submitted with values:", values);
-    setActiveForm(4); // Switch back to the first form after submitting the third form
-    setFormData({ ...formData, ...values });
-  };
-  console.log("formdata", formData);
-  const handleFinalSubmit = (values) => {
-    setIsLoading(true)
-    // Here you can submit formData to your backend or perform other actions
     setFormData({ ...formData, ...values });
     let data = {
       ...formData,
       dob: moment(formData.dob).format("YYYY-MM-DD"),
+      password: values?.password
     };
-    delete data.reenterpassword
     delete data.otp
+    delete data.file
     console.log("Final form submitted with values:", formData);
 
     AxiosInstance("application/json")
@@ -932,13 +1025,12 @@ export default function Register() {
               position: "top-center",
               type: "success",
             });
-            navigate('/signin')
+            setActiveForm(4); // Switch back to the first form after submitting the third form
           } else {
             toast(res.data?.message, {
               position: "top-center",
               type: "error",
             });
-            navigate('/signin')
           }
         }
       })
@@ -950,6 +1042,14 @@ export default function Register() {
         })
       });
   };
+  console.log("formdata", formData);
+  const handleFinalSubmit = (values) => {
+    setIsLoading(true)
+    // Here you can submit formData to your backend or perform other actions
+    setFormData({ ...formData, ...values });
+    navigate('/signin')
+
+  };
   return (
     <div className="al_login_container">
       {isLoading && <Loading />}
@@ -958,9 +1058,9 @@ export default function Register() {
         <FirstForm onSubmit={handleFirstFormSubmit} />
       ) : activeForm === 2 ? (
         <SecondForm onSubmit={handleSecondFormSubmit} />
-      ) : activeForm === 3 ? (
+      ) :activeForm === 3 ? (
         <ThirdForm onSubmit={handleThirdFormSubmit} />
-      ) : (
+      ) :activeForm === 4 ? <PasswordSuccessForm/>  : (
         <FourthForm onSubmit={handleFinalSubmit} />
       )}
     </div>

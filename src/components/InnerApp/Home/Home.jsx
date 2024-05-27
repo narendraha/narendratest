@@ -391,122 +391,128 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    setResource(createResource(getTabListStatus()));
+  }, [tab]);
+
+  useEffect(() => {
     setTimeout(() => {
-      Highcharts.chart("expertmonitoringgraph", {
-        chart: {
-          type: "area",
-          style: {
-            fontFamily: "Poppins",
-          },
-          panning: true,
-        },
-        title: {
-          text: "",
-        },
-        xAxis: {
-          type: "datetime",
-          min: Math.min.apply(
-            null,
-            sorteddata.slice(-7).map(function (point) {
-              return point[0];
-            })
-          ),
-          max: Math.max.apply(
-            null,
-            sorteddata.slice(-7).map(function (point) {
-              return point[0];
-            })
-          ),
-          labels: {
-            distance: 5,
-            padding: 5,
-            overflow: "justify",
+    if (document.getElementById("expertmonitoringgraph")) {
+        Highcharts.chart("expertmonitoringgraph", {
+          chart: {
+            type: "area",
             style: {
-              fontSize: "11px",
+              fontFamily: "Poppins",
             },
-            formatter: function () {
-              return Highcharts.dateFormat("%d-%m-%Y", new Date(this.value));
-            },
-            rotation: -45,
+            panning: true,
           },
           title: {
-            text: null,
+            text: "",
           },
-          scrollbar: {
-            enabled: true,
-          },
-          tickLength: 0,
-          gridLineWidth: 0,
-          lineWidth: 0,
-          showLastLabel: true,
-          showEmpty: false,
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: "Pulse",
-          },
-          labels: {
-            distance: 5,
-            padding: 5,
-            style: {
-              fontSize: "11px",
+          xAxis: {
+            type: "datetime",
+            min: Math.min.apply(
+              null,
+              sorteddata.slice(-7).map(function (point) {
+                return point[0];
+              })
+            ),
+            max: Math.max.apply(
+              null,
+              sorteddata.slice(-7).map(function (point) {
+                return point[0];
+              })
+            ),
+            labels: {
+              distance: 5,
+              padding: 5,
+              overflow: "justify",
+              style: {
+                fontSize: "11px",
+              },
+              formatter: function () {
+                return Highcharts.dateFormat("%d-%m-%Y", new Date(this.value));
+              },
+              rotation: -45,
             },
+            title: {
+              text: null,
+            },
+            scrollbar: {
+              enabled: true,
+            },
+            tickLength: 0,
+            gridLineWidth: 0,
+            lineWidth: 0,
+            showLastLabel: true,
+            showEmpty: false,
           },
-          endOnTick: false,
-          gridLineWidth: 1,
-          showEmpty: false,
-        },
-        tooltip: {
-          valueSuffix: " bpm",
-        },
-        responsive: {
-          rules: [
-            {
-              condition: {
-                maxWidth: 500,
+          yAxis: {
+            min: 0,
+            title: {
+              text: "Pulse",
+            },
+            labels: {
+              distance: 5,
+              padding: 5,
+              style: {
+                fontSize: "11px",
               },
             },
-          ],
-        },
-        plotOptions: {
-          area: {
-            marker: {
-              enabled: false,
-              symbol: "circle",
-              radius: 2,
-              states: {
-                hover: {
-                  enabled: true,
+            endOnTick: false,
+            gridLineWidth: 1,
+            showEmpty: false,
+          },
+          tooltip: {
+            valueSuffix: " bpm",
+          },
+          responsive: {
+            rules: [
+              {
+                condition: {
+                  maxWidth: 500,
                 },
               },
+            ],
+          },
+          plotOptions: {
+            area: {
+              marker: {
+                enabled: false,
+                symbol: "circle",
+                radius: 2,
+                states: {
+                  hover: {
+                    enabled: true,
+                  },
+                },
+              },
+              color: "#0079ca",
             },
-            color: "#0079ca",
+            series: {
+              groupPadding: 1,
+              pointPadding: 1,
+              pointPlacement: "on",
+              borderWidth: 0,
+              pointWidth: 50,
+            },
           },
-          series: {
-            groupPadding: 1,
-            pointPadding: 1,
-            pointPlacement: "on",
-            borderWidth: 0,
-            pointWidth: 50,
+          navigator: {
+            enabled: true,
           },
-        },
-        navigator: {
-          enabled: true,
-        },
-        credits: {
-          enabled: false,
-        },
-        legend: { enabled: false },
-        series: [
-          {
-            name: "Pulse",
-            data: sorteddata,
+          credits: {
+            enabled: false,
           },
-        ],
-      });
-    }, 2000);
-  }, []);
+          legend: { enabled: false },
+          series: [
+            {
+              name: "Pulse",
+              data: sorteddata,
+            },
+          ],
+        });
+    }
+  }, 4000);
+  }, [tab]);
 
   const handleHeathDetails = async (data) => {
     setShow2(data);
@@ -545,16 +551,12 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    setResource(createResource(getTabListStatus()));
-  }, [tab]);
   const getTabListStatus = async () => {
     await AxiosInstance("application/json")
       .get("/getstatus")
       .then((response) => {
         if (response && response?.status == 200) {
           setGetStatus(response.data?.data);
-          console.log("setJsonData: ", response.data?.data);
         }
       })
       .catch((er) => {
@@ -620,7 +622,7 @@ export default function Home() {
 
   if (resource) {
     return (
-      <Suspense fallback={<Loading/>}>
+      <Suspense fallback={<Loading />}>
         <ResourceLoader resource={resource} />
       </Suspense>
     );

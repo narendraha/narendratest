@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import user from '../../../images/userprofile.jpg';
@@ -6,11 +6,27 @@ import { jwtDecode } from "jwt-decode";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
+import { AxiosInstance } from '../../../_mock/utilities';
 
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
+  const [getProfileDetails, setGetProfileDetails] = useState([]);
+
+  const profileDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((res) => {
+        const responseData = res.data?.data;
+        setGetProfileDetails(responseData);
+      })
+      .catch((er) => console.log(er));
+  };
+
+  useEffect(() => {
+    profileDetails(); //Suspense loading with actual component
+  }, []);
 
   const handleProfile = () => {
     navigate('profile')
@@ -75,7 +91,7 @@ export default function Topbar(props) {
                       <img src={user} alt="user" className='al_useravatar al_avatar' />
                       <div className='al_progressbar'>
                         <CircularProgressbar
-                          value={45}
+                          value={getProfileDetails?.profile_percentage >=0 ? getProfileDetails?.profile_percentage : 0}
                           styles={buildStyles({
                             strokeLinecap: 'round',
                             trailColor: '#dddddd',
@@ -83,7 +99,7 @@ export default function Topbar(props) {
                           })}
                         />
                       </div>
-                      <div className='al_profilepercent'>45%</div>
+                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >=0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
                     </div>
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}

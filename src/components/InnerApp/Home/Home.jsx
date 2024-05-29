@@ -3,6 +3,7 @@ import { Row, Col, Label, FormGroup, TabContent, TabPane, NavLink, Nav, NavItem,
 import atrialfib from "../../../images/atrialfib.png";
 import whytreatment from "../../../images/whytreatment.png";
 import rhythm from "../../../images/rhythm.png";
+import bulp from "../../../images/idea.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
@@ -19,6 +20,10 @@ import { AxiosInstance } from "../../../_mock/utilities";
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource";
+import {
+  allowsOnlyNumeric,
+  allowsOnlyNumericOnly3Digit,
+} from "../../../_mock/RegularExp";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -41,6 +46,7 @@ export default function Home() {
   const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
+  const [getLastUpdated, setgetLastUpdated] = useState("");
 
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
@@ -374,6 +380,7 @@ export default function Home() {
 
   useEffect(() => {
     setResource(createResource(getTabListStatus()));
+    getLastUpdatedHealthDetails();
   }, [tab]);
 
   useEffect(() => {
@@ -494,14 +501,22 @@ export default function Home() {
         });
       }
     }, 4000);
-  }, []);
+  }, [tab, getLastUpdated]);
 
   const handleHeathDetails = async (data) => {
     setShow2(data);
     if (data) {
-      delete healthDetails?.isCheckMedicalRecords;
+      let finalData = {
+        ...healthDetails,
+        bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`
+      };
+      delete finalData?.isCheckMedicalRecords;
+      delete finalData?.systolic;
+      delete finalData?.diastolic;
+      console.log("healthDetails: ", finalData);
+
       await AxiosInstance("application/json")
-        .post("/health_details", healthDetails)
+        .post("/health_details", finalData)
         .then((res) => {
           if (res && res.data && res.status == 200) {
             if (res.data?.statuscode === 200) {
@@ -538,6 +553,24 @@ export default function Home() {
         }
       })
       .catch((er) => {
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-center",
+          type: "error",
+        });
+      });
+  };
+
+  const getLastUpdatedHealthDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/healthdetails_lastupdate")
+      .then((response) => {
+        if (response && response?.status == 200) {
+          setgetLastUpdated(response.data?.data);
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -824,33 +857,52 @@ export default function Home() {
                     </div>
                   </TabPane>
                   <TabPane tabId="2">
-                    <h5>Health details</h5>
+                    <div className="d-flex justify-content-between">
+                      <h5>Health details </h5>
+                      {getLastUpdated?.difference >= 0 ? (
+                        <div className="d-flex align-items-center justify-content-center gap-1 text-end al_note al_note_content">
+                          <img
+                          className="mb-1"
+                                src={bulp}
+                                alt=""
+                                style={{
+                                  height: "20px",
+                                }}
+                              />You, Last gave your symptoms{" "}
+                          <span style={{color:'#3bc0c3'}}> {getLastUpdated?.difference}</span> days ago on<span style={{color:'#3bc0c3'}}>
+                          {getLastUpdated?.date}</span>
+                        </div>
+                      ) : null}
+                    </div>
+
                     <Row>
                       <Col lg="6" sm="12">
-                        <div className="text-end al_note">
-                          Your last entry sucessfully updated on: 12-04-2024 12:00
-                          AM
-                        </div>
                         <Formik
                           initialValues={{
                             weight: "",
-                            height: "",
-                            bloodp: "",
+                            // height: "",
+                            systolic: "",
+                            diastolic: "",
                             pulse: "",
                             isCheckMedicalRecords: false,
                           }}
                           validationSchema={Yup.object().shape({
                             weight: Yup.number()
-                              .typeError("Must be a number")
+                              .min(10, "Weight must be at least 10")
+                              .max(650, "Weight is too high!")
                               .required("This field is required"),
-                            height: Yup.number()
-                              .typeError("Must be a number")
+                            // height: Yup.number()
+                            //   .typeError("Must be a number")
+                            //   .required("This field is required"),
+                            systolic: Yup.number()
+                              .max(200, "Systolic is too high!")
                               .required("This field is required"),
-                            bloodp: Yup.number()
-                              .typeError("Must be a number")
+                            diastolic: Yup.number()
+                              .max(120, "Diastolic is Too high!")
                               .required("This field is required"),
                             pulse: Yup.number()
-                              .typeError("Must be a number")
+                              .min(10, "Pulse must be at least 10")
+                              .max(220, "Too high!")
                               .required("This field is required"),
                             isCheckMedicalRecords: Yup.boolean()
                               .oneOf([true], "This field is required")
@@ -903,7 +955,7 @@ export default function Home() {
                                       onChange={(e) => { }}
                                       dateFormat={"MM/dd/yyyy"}
                                       minDate={new Date().setMonth(
-                                        new Date().getMonth() - 1
+                                        new Date().getMonth() - 3
                                       )}
                                       maxDate={new Date()}
                                       autoComplete="off"
@@ -924,6 +976,9 @@ export default function Home() {
                                           name="weight"
                                           placeholder="100"
                                           className="form-control"
+                                          onKeyPress={(e) =>
+                                            allowsOnlyNumericOnly3Digit(e)
+                                          }
                                         />
                                         <ErrorMessage
                                           name="weight"
@@ -939,17 +994,40 @@ export default function Home() {
                                       <i className="icon_alfred_bp" style={{ color: "#efbc06" }}></i>
                                       <FormGroup className="mb-0">
                                         <Label>Blood Pressure</Label>
-                                        <Field
-                                          type="text"
-                                          name="bloodP"
-                                          placeholder="120/80"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="bloodP"
-                                          component={"div"}
-                                          className="text-danger"
-                                        />
+                                        <div className="d-flex gap-2">
+                                          <div>
+                                            <Field
+                                              type="text"
+                                              name="systolic"
+                                              placeholder="120"
+                                              className="form-control"
+                                              onKeyPress={(e) =>
+                                                allowsOnlyNumericOnly3Digit(e)
+                                              }
+                                            />
+                                            <ErrorMessage
+                                              name="systolic"
+                                              component={"div"}
+                                              className="text-danger"
+                                            />
+                                          </div>
+                                          <div>
+                                            <Field
+                                              type="text"
+                                              name="diastolic"
+                                              placeholder="80"
+                                              className="form-control"
+                                              onKeyPress={(e) =>
+                                                allowsOnlyNumericOnly3Digit(e)
+                                              }
+                                            />
+                                            <ErrorMessage
+                                              name="diastolic"
+                                              component={"div"}
+                                              className="text-danger"
+                                            />
+                                          </div>
+                                        </div>
                                       </FormGroup>
                                       <div className="text-grey mt-1">(BPM)</div>
                                     </div>
@@ -964,6 +1042,9 @@ export default function Home() {
                                           name="pulse"
                                           placeholder="70"
                                           className="form-control"
+                                          onKeyPress={(e) =>
+                                            allowsOnlyNumericOnly3Digit(e)
+                                          }
                                         />
                                         <ErrorMessage
                                           name="pulse"
@@ -1000,6 +1081,23 @@ export default function Home() {
                                     className="text-danger"
                                   />
                                 </FormGroup>
+                                <div className="mt-4">
+                                  <button
+                                    type="button"
+                                    className="al_grey_borderbtn"
+                                    onClick={() => {
+                                      setTab("1");
+                                    }}
+                                  >
+                                    Back
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    className="al_savebtn mx-3"
+                                  >
+                                    Proceed
+                                  </button>
+                                </div>
                               </Form>
                             );
                           }}
@@ -1012,23 +1110,6 @@ export default function Home() {
                         ></div>
                       </Col>
                     </Row>
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        className="al_grey_borderbtn"
-                        onClick={() => {
-                          setTab("1");
-                        }}
-                      >
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        className="al_savebtn mx-3"
-                      >
-                        Proceed
-                      </button>
-                    </div>
                   </TabPane>
                   <TabPane tabId="3">
                     <p>Select the symptoms range listed below</p>

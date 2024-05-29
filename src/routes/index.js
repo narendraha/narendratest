@@ -37,7 +37,10 @@ import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "../components/ForgotPassword";
 import BotQuestionnaire from "../components/Admin/BotQuestionnaire";
 import HealthcareConsultant from "../components/Pages/HealthcareConsultant";
-import HistoryChat from "../components/Pages/HistoryChat"
+import HistoryChat from "../components/Pages/HistoryChat";
+import HeartValves from "../components/Pages/HeartValves";
+import Congestive from "../components/Pages/Congestive";
+
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
 
@@ -79,6 +82,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="smoking" element={<Smoking />} />
               <Route path="exercise" element={<Exercise />} />
               <Route path="coronary" element={<Coronary />} />
+              <Route path="heartvalves" element={<HeartValves />} />
+              <Route path="congestive" element={<Congestive />} />
               <Route path="vascular" element={<Vascular />} />
               <Route path="appointments" element={<Appointments />} />
               <Route path="pharmacy" element={<Pharmacy />} />

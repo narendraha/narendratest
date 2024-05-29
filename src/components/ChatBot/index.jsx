@@ -39,7 +39,6 @@ export default function ChatBot(props) {
         }
       })
       .catch((er) => {
-        console.log(er);
       });
   };
 

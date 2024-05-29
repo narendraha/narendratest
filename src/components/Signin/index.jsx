@@ -10,7 +10,6 @@ import { AxiosInstance } from "../../_mock/utilities";
 import { toast } from "react-toastify";
 import { auth, provider } from "../Firebase";
 import { signInWithPopup } from "firebase/auth";
-import Loading from "../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ export default function Signin({ setIsAuthenticated }) {
     AxiosInstance("application/json")
       .post(`/login_account`, data)
       .then((res) => {
-        console.log('res: ', res);
         if (res && res.data && res.status == "200") {
           if(res.data.statuscode == '200'){
             localStorage.setItem("token", res.data?.data?.token);
@@ -59,7 +57,6 @@ export default function Signin({ setIsAuthenticated }) {
   const handleClick = async () => {
     await signInWithPopup(auth, provider)
       .then((data) => {
-        console.log(data?.user, "data");
         let userData = {
           email: data?.user?.email ?? "",
           username: data?.user?.displayName ?? "",
@@ -83,14 +80,13 @@ export default function Signin({ setIsAuthenticated }) {
             }
           })
           .catch((er) => {
-            console.log(er);
             toast(er?.response?.data?.message || er?.message, {
               position: "top-center",
               type: "error",
             });
           });
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {});
   };
 
   return (
@@ -133,81 +129,81 @@ export default function Signin({ setIsAuthenticated }) {
                       <h5 className="mb-1"><span className="fw-medium">Welcome to</span> <span className="text-info" style={{fontSize: "24px"}}>Hello Alfred !</span></h5>
                       <p className="text-medium cs_light text-grey text-italic">Lets take your wellness journey to new heights</p>
 
-                      <div className="al_signinbg">
-                        <div className="al_login-form">
-                          <FormGroup>
-                            <Label>Mobile Number / Email ID</Label>
-                            <Field
-                              type="text"
-                              name="username"
-                              placeholder="Enter Mobile Number / Email ID"
-                              className="form-control"
-                            />
-                            <ErrorMessage
-                              name="username"
-                              component={"div"}
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                          <FormGroup>
-                            <Label>Password</Label>
-                            <Field
-                              type="password"
-                              name="password"
-                              placeholder="Enter password"
-                              className="form-control"
-                            />
-                            <ErrorMessage
-                              name="password"
-                              component={"div"}
-                              className="text-danger"
-                            />
-                          </FormGroup>
-                        </div>
-                        <div className="al_login_footer">
-                          <Link to="/forgot-password" className="al_forgot_pw">Forgot password?</Link>
-                          <button
-                            type="submit"
-                            disabled={isSubmitting ? true : false}
-                            className="al_login_button mt-3"
-                          >
-                            Sign in
-                          </button>
-                          <div className="mt-3 text-medium">
-                            Don’t have an account?{" "}
-                            <Link
-                              to="/registration"
-                              className="al_text_link cs_medium"
+                        <div className="al_signinbg">
+                          <div className="al_login-form">
+                            <FormGroup>
+                              <Label>Mobile Number / Email ID</Label>
+                              <Field
+                                type="text"
+                                name="username"
+                                placeholder="Enter Mobile Number / Email ID"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="username"
+                                component={"div"}
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label>Password</Label>
+                              <Field
+                                type="password"
+                                name="password"
+                                placeholder="Enter password"
+                                className="form-control"
+                              />
+                              <ErrorMessage
+                                name="password"
+                                component={"div"}
+                                className="text-danger"
+                              />
+                            </FormGroup>
+                          </div>
+                          <div className="al_login_footer">
+                            <Link to="/forgot-password" className="al_forgot_pw">Forgot password?</Link>
+                            <button
+                              type="submit"
+                              disabled={isSubmitting ? true : false}
+                              className="al_login_button mt-3"
                             >
-                              Signup
-                            </Link>
+                              Sign in
+                            </button>
+                            <div className="mt-3 text-medium">
+                              Don’t have an account?{" "}
+                              <Link
+                                to="/registration"
+                                className="al_text_link cs_medium"
+                              >
+                                Signup
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="alhr-or my-3 text-center fw-medium">OR</div>
-                      {/* <button type="button" className='al_signinbuttons'>
+                        <div className="alhr-or my-3 text-center fw-medium">OR</div>
+                        {/* <button type="button" className='al_signinbuttons'>
                                         <i className='icon_alfred_google'></i>
                                         <span>Sign in with Google</span>
                                     </button> */}
-                      <button type="button"
-                        onClick={handleClick}
-                        className="al_signinbuttons"
-                      >
-                        <i className="icon_alfred_google"></i>Sign in / Sign up With Google
-                      </button>
-                      <button type="button" className="al_signinbuttons">
-                        <i className="icon_alfred_apple"></i>
-                        <span>Sign in / Sign up With Apple</span>
-                      </button>
+                        <button type="button"
+                          onClick={handleClick}
+                          className="al_signinbuttons"
+                        >
+                          <i className="icon_alfred_google"></i>Sign in / Sign up With Google
+                        </button>
+                        <button type="button" className="al_signinbuttons">
+                          <i className="icon_alfred_apple"></i>
+                          <span>Sign in / Sign up With Apple</span>
+                        </button>
+                      </div>
                     </div>
-                </div>
-              </Col>
-            </Row>
-            </Form>
-      );
-        }}
-    </Formik>
-    </div >
+                  </Col>
+                </Row>
+              </Form>
+            );
+          }}
+        </Formik>
+      </div>
   );
 }

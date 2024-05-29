@@ -4,7 +4,6 @@ import TopBarProgress from "react-topbar-progress-indicator";
 
 function Loading() {
     const layoutloading = useSelector(state => state.Layout?.loading);
-    console.log("layoutloading=>", layoutloading);
 
     TopBarProgress.config({
         barColors: {

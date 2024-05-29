@@ -240,7 +240,7 @@
     }
 
     input {
-      padding: 1.5vh 80px 1.5vh 45px ;
+      padding: 1.5vh 80px 1.5vh 45px;
       border-radius: 25px;
       min-width: 100%;
       max-width: 100%;
@@ -261,7 +261,8 @@
       }
     }
 
-    .icon_alfred_speech, .icon_alfred_sendmsg {
+    .icon_alfred_speech,
+    .icon_alfred_sendmsg {
       position: absolute !important;
       top: 0;
       bottom: 0;
@@ -507,6 +508,10 @@
             a {
               font-size: 13px;
               font-weight: 300;
+
+              &.active {
+                font-weight: 400;
+              }
             }
           }
         }

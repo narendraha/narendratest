@@ -186,7 +186,6 @@ export default function ForgotPassword() {
                                                                                     }
                                                                                 }}
                                                                                 onKeyDown={(e) => {
-                                                                                    console.log("ememe", e.key);
                                                                                     if (
                                                                                         e.key === "Backspace" ||
                                                                                         values.otp[index] === ""
@@ -202,7 +201,6 @@ export default function ForgotPassword() {
                                                                                                 name: "otp",
                                                                                                 value: updatedValue,
                                                                                             },
-                                                                                            // console.log("index", index)
                                                                                         });
                                                                                         if (index > 0) {
                                                                                             const newRefs = [
@@ -351,19 +349,16 @@ export default function ForgotPassword() {
     );
 
     const handleFirstFormSubmit = (values) => {
-        console.log("First form submitted with values:", values);
         setActiveForm(2); // Switch to the second form after submitting the first form
         setFormData({ ...formData, ...values });
     };
 
     const handleSecondFormSubmit = (values) => {
-        console.log("Second form submitted with values:", values);
         setActiveForm(3); // Switch back to the first form after submitting the second form
         setFormData({ ...formData, ...values });
     };
 
     const handleThirdFormSubmit = (values) => {
-        console.log("Second form submitted with values:", values);
         navigate('/signin');
         setFormData({ ...formData, ...values });
     };

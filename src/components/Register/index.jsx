@@ -62,8 +62,8 @@ export default function Register() {
           .matches(phoneNumberReg, "Invalid phone number")
           .required("This field is required"),
         dob: Yup.date()
-        .max(new Date(Date.now() - 567648000000), "You must be at least 18 years")
-        .required("Required"),
+          .max(new Date(Date.now() - 567648000000), "You must be at least 18 years")
+          .required("Required"),
         gender: Yup.string().required("This field is required"),
         rtype: Yup.string().required("This field is required"),
         education: Yup.string().required("This field is required")
@@ -81,10 +81,10 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
-             {isFormLoading && <Loading/>}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
+                  {isFormLoading && <Loading />}
                   <Link to="/">
                     <img src={alferdlogo} className="login_logodesktop" alt="logo" width={180} />
                     <img src={alferdlogomobile} className="login_logomobile" alt="logo_mobile" width={180} />
@@ -263,6 +263,7 @@ export default function Register() {
                             Upload File
                           </label>
                         </div>
+                        {/* <div className="al_fileuplod-note">* jpg, jpeg, png File only</div> */}
                         <ErrorMessage
                           name="file"
                           component="div"
@@ -319,7 +320,7 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
-             {isFormLoading && <Loading/>}
+            {isFormLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -337,7 +338,7 @@ export default function Register() {
                     <div className="al_login-form al_registrationform wflexScroll">
                       <div className="text-center">
                         <FormGroup className="mt-3">
-                          {/* <Label>Enter otp sent to {formData?.email}</Label> */}
+                          {/* <Label>Enter otp sent to ******2987</Label> */}
                           <Row className="mx-0 al_otpfields">
                             <Field name="otp">
                               {({ field }) => (
@@ -395,7 +396,6 @@ export default function Register() {
                                           }
                                         }}
                                         onKeyDown={(e) => {
-                                          console.log("ememe", e.key);
                                           if (
                                             e.key === "Backspace" ||
                                             values.otp[index] === ""
@@ -411,7 +411,6 @@ export default function Register() {
                                                 name: "otp",
                                                 value: updatedValue,
                                               },
-                                              // console.log("index", index)
                                             });
                                             if (index > 0) {
                                               const newRefs = [
@@ -892,7 +891,7 @@ export default function Register() {
     </Formik>
   );
 
-  const PasswordSuccessForm =()=>(
+  const PasswordSuccessForm = () => (
     <form className="wflexLayout">
       <Row className="al_login_section">
         <Col lg="7" sm="6" className="al_left_login h-100">
@@ -906,7 +905,7 @@ export default function Register() {
           <div className="wflexLayout al_mx-auto">
             <div className="wflex-items-center wflexLayout">
               <div className="al_login-form al_registrationform wflexScroll">
-                
+
                 <div className="text-center mb-4">
                   <img src={successImg} alt="success" height={85} />
                   <div className="mt-4">Password set</div>
@@ -917,7 +916,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="al_login_footer mt-3">
-                <button type="submit" className="al_login_button" onClick={()=>{
+                <button type="submit" className="al_login_button" onClick={() => {
                   setActiveForm(5); // Switch back to the first form after submitting the second form
                 }}>
                   Continue
@@ -928,81 +927,77 @@ export default function Register() {
         </Col>
       </Row>
     </form>
-)
+  )
+
   const [activeForm, setActiveForm] = useState(1);
   const [formData, setFormData] = useState(null);
 
   const handleFirstFormSubmit = (values) => {
-    console.log("First form submitted with values:", values);
     setFormData({ ...formData, ...values });
     setIsFormLoading(true)
-    let data={
-      email:values?.email,
-      username:values?.username,
+    let data = {
+      email: values?.email,
+      username: values?.username,
     }
     AxiosInstance("application/json")
-    .post(`/generate_otp`, data)
-    .then((res)=>{
-      if(res && res.data && res.status == '200'){
-        setIsFormLoading(false)
-        if(res.data.statuscode === 200){
-          toast(res.data?.message,{
-            position: "top-center",
-            type:'success'
-          });
-          setActiveForm(2); // Switch to the second form after submitting the first form
-        }else {
-          toast(res.data?.message, {
-            position: 'top-center',
-            type: 'error',
-          })
+      .post(`/generate_otp`, data)
+      .then((res) => {
+        if (res && res.data && res.status == '200') {
+          setIsFormLoading(false)
+          if (res.data.statuscode === 200) {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: 'success'
+            });
+            setActiveForm(2); // Switch to the second form after submitting the first form
+          } else {
+            toast(res.data?.message, {
+              position: 'top-center',
+              type: 'error',
+            })
+          }
         }
-      }
-    }).catch((er)=>{
-      console.log(er);
-      toast(er?.response?.data?.message, {
-        position: 'top-center',
-        type: 'error',
+      }).catch((er) => {
+        toast(er?.response?.data?.message, {
+          position: 'top-center',
+          type: 'error',
+        })
       })
-    })
   };
 
   const handleSecondFormSubmit = (values) => {
-    console.log("Second form submitted with values:", values);
     setFormData({ ...formData, ...values });
-    let data={
-      email:formData?.email,
-      otp:values?.otp,
+    let data = {
+      email: formData?.email,
+      otp: values?.otp,
     }
     setIsFormLoading(true)
     AxiosInstance("application/json")
-    .post(`/verify_otp`, data)
-    .then((res)=>{
-      if(res && res.data && res.status == '200'){
-        setIsFormLoading(false)
-        if(res.data.statuscode === 200){
-          toast(res.data?.message,{
-            position: "top-center",
-            type:'success'
-          });
-          setActiveForm(3); // Switch back to the first form after submitting the second form
-        }else {
-          toast(res.data?.message, {
-            position: 'top-center',
-            type: 'error',
-          })
+      .post(`/verify_otp`, data)
+      .then((res) => {
+        if (res && res.data && res.status == '200') {
+          setIsFormLoading(false)
+          if (res.data.statuscode === 200) {
+            toast(res.data?.message, {
+              position: "top-center",
+              type: 'success'
+            });
+            setActiveForm(3); // Switch back to the first form after submitting the second form
+          } else {
+            toast(res.data?.message, {
+              position: 'top-center',
+              type: 'error',
+            })
+          }
         }
-      }
-    }).catch((er)=>{
-      console.log(er);
-      toast(er?.response?.data?.message, {
-        position: 'top-center',
-        type: 'error',
+      }).catch((er) => {
+        toast(er?.response?.data?.message, {
+          position: 'top-center',
+          type: 'error',
+        })
       })
-    })
   };
   const handleThirdFormSubmit = (values) => {
-    console.log("Third form submitted with values:", values);
     setFormData({ ...formData, ...values });
     let data = {
       ...formData,
@@ -1011,15 +1006,12 @@ export default function Register() {
     };
     delete data.otp
     delete data.file
-    console.log("Final form submitted with values:", formData);
 
     AxiosInstance("application/json")
       .post(`/create_account`, data)
       .then((res) => {
-        console.log("datassss", res.data);
         if (res && res.data && res.status == "200") {
-          console.log("datassss", res.data);
-          if(res.data?.statuscode === 200){
+          if (res.data?.statuscode === 200) {
             setIsLoading(false);
             toast(res.data?.message, {
               position: "top-center",
@@ -1035,14 +1027,12 @@ export default function Register() {
         }
       })
       .catch((er) => {
-        console.log(er);
         toast(er?.response?.data?.message, {
           position: 'top-center',
           type: 'error',
         })
       });
   };
-  console.log("formdata", formData);
   const handleFinalSubmit = (values) => {
     setIsLoading(true)
     // Here you can submit formData to your backend or perform other actions
@@ -1058,9 +1048,9 @@ export default function Register() {
         <FirstForm onSubmit={handleFirstFormSubmit} />
       ) : activeForm === 2 ? (
         <SecondForm onSubmit={handleSecondFormSubmit} />
-      ) :activeForm === 3 ? (
+      ) : activeForm === 3 ? (
         <ThirdForm onSubmit={handleThirdFormSubmit} />
-      ) :activeForm === 4 ? <PasswordSuccessForm/>  : (
+      ) : activeForm === 4 ? <PasswordSuccessForm /> : (
         <FourthForm onSubmit={handleFinalSubmit} />
       )}
     </div>

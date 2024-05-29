@@ -7,7 +7,7 @@ export default function App1() {
     const [profile, setProfile] = useState([]);
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => {}
     });
     useEffect(
         () => {
@@ -23,7 +23,7 @@ export default function App1() {
                         //localStorage.setItem('token', res.data?.data?.token)
                         { window.location.href = 'https://' + window.location.hostname + '/#/profile'; }
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => {});
             }
         },
         [user]

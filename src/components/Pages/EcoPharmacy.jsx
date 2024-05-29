@@ -1,13 +1,17 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
+import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
 
 export default function EcoPharmacy() {
   pageTitle('Eco Pharmacy');
   return (
     <>
-    <section className="cs_banner cs_style_3 cs_bg_filed"></section>
-    <Section className="cs_footer_margin_0"></Section>
+    <BannerSectionStyle3
+        bgUrl="/images/appointments/banner_bg.svg"
+        imgUrl="/images/comingsoon.png"
+        title="We are coming soon"
+        subTitle="Work in Progress"
+      />
     </>
   );
 }

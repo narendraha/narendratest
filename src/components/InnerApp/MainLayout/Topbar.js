@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import user from '../../../images/puser.jpg';
+import user from '../../../images/userprofile.jpg';
 import { jwtDecode } from "jwt-decode";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';

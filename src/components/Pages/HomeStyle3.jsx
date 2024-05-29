@@ -33,7 +33,6 @@ export default function HomeStyle3() {
     }));
     
   };
-console.log("0000000000", selectedIcons);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
@@ -62,7 +61,6 @@ console.log("0000000000", selectedIcons);
         }
       })
       .catch((er) => {
-        console.log(er);
       });
   };
 
@@ -75,7 +73,6 @@ console.log("0000000000", selectedIcons);
         ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
-  console.log("9999999999", chatHistory);
   return (
     <div className="cs_homepage">
       {isShow ? (

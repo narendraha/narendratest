@@ -54,8 +54,6 @@ export default function HistoryChatBot() {
   let randomNumber = Math.floor(Math.random() * 15);
 
   const newfuc = (index) => {
-    console.log("index: ", index);
-    console.log("randomNumber: ", randomNumber);
     if (getChatQus?.length > 0) {
       const newQuestion = getChatQus[index]["description"];
 
@@ -83,7 +81,6 @@ export default function HistoryChatBot() {
   useEffect(() => {}, [incrementRef, responseStatus]);
 
   const handleFormSubmit = async (e) => {
-    console.log(questions);
     console.log(
       "outside if responseStatus:",
       responseStatus,
@@ -93,7 +90,6 @@ export default function HistoryChatBot() {
     //   responseStatus === 0 ||
     //   (responseStatus !== -1 && responseStatus !== 99)
     // ) {
-    //   console.log("responseStatus if:", responseStatus);
     //   incrementRef.current += 1;
     // }
     setIsInputShow(true);
@@ -103,7 +99,6 @@ export default function HistoryChatBot() {
     setQuestions((prevHistory) => [...prevHistory, { user: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
-    console.log("newIncreNumber: ", incrementRef.current);
 
     // request data
     let data = {
@@ -144,8 +139,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -170,8 +163,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -203,7 +194,6 @@ export default function HistoryChatBot() {
       });
       return;
     }
-    console.log(formattedData);
 
     await AxiosInstance("application/json")
       .post("/history_answer", formattedData)
@@ -219,8 +209,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -231,11 +219,10 @@ export default function HistoryChatBot() {
     "newNumber",
     newNumber > Object.keys(questions).length ? "above" : "below"
   );
-  console.log("questions", Object.keys(questions).length);
   return (
     <div className="cs_homepage">
       <div className="w-50 al_chatbotauth p-1">
-        <div className="d-flex justify-content-center h-auto pb-1">
+        <div className="d-flex justify-content-center h-auto pb-3">
           <div className="d-flex chatbtn">
             <div
               className={`chat_item ${isChatOneActive ? "chat_active" : ""}`}

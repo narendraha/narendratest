@@ -680,6 +680,13 @@ section:not(.cs_banner) {
     line-height: normal;
 }
 
+.al_note_content{
+    border: 0.1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
+}
+
 .al_chatcontent {
     display: flex;
     font-size: 13px;

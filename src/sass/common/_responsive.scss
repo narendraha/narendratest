@@ -183,7 +183,7 @@
 
     .w-80,
     .w-50 {
-        width: 100% !important;
+        width: 95% !important;
     }
 
     .w-30 {
@@ -198,7 +198,53 @@
     }
 }
 
+@media screen and (max-width: 575px) {
+
+    .cs_banner.cs_style_3 .cs_banner_title,
+    .cs_banner.cs_style_5 .cs_banner_title {
+        font-size: 40px !important;
+        line-height: normal;
+    }
+
+    h3 {
+        font-size: 26px;
+    }
+}
+
 @media screen and (max-width: 767px) {
+    .w-auto.ps-5 {
+        padding-left: 15px !important;
+    }
+
+    .arialLetter span {
+        font-size: 60px;
+        line-height: 50px;
+    }
+
+    .abouttop {
+        .col-lg-5 {
+            margin-bottom: 40px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .cs_slider_navigation.cs_style_2 {
+        top: inherit;
+        bottom: -30px;
+        justify-content: center;
+    }
+
+    section .w-80 img {
+        width: 100%;
+    }
+
+    .videobanner>div:last-child>div {
+        width: 100% !important;
+    }
+
     .al_symptoms {
         .col-md-6 {
             &:nth-of-type(odd) {

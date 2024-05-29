@@ -1,5 +1,4 @@
-import React, { useEffect, Suspense } from "react";
-import { useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Row, Col, Label, FormGroup } from "reactstrap";
 import userImg from "../../../images/userprofile.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -44,7 +43,7 @@ export default function Profile() {
         }
         setGetProfileDetails(responseData);
       })
-      .catch((er) => console.log(er));
+      .catch((er) => {});
   };
 
   useEffect(() => {
@@ -89,7 +88,6 @@ export default function Profile() {
           }
         })
         .catch((er) => {
-          console.log(er);
           toast(er?.response?.data?.message, {
             position: "top-center",
             type: "error",

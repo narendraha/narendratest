@@ -1601,12 +1601,6 @@ input::-ms-input-placeholder,
     @media (max-width: 767px) {
       padding: 30px;
     }
-
-    @media (max-width: 480px) {
-      br {
-        display: none;
-      }
-    }
   }
 
   .cs_doctor_meta {
@@ -3025,16 +3019,6 @@ a.ui-button:active,
   top: 0;
   pointer-events: none;
   transition: 0.2s;
-}
-
-.cs_section_heading.cs_style_1 {
-  @media (max-width: 991px) {
-    .cs_section_title {
-      br {
-        display: none;
-      }
-    }
-  }
 }
 
 .cs_section_wrap_1 {

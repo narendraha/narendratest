@@ -11,7 +11,7 @@ export default function LayoutAlertMessage() {
                 <SweetAlert closeOnClickOutside
                     onCancel={() => { }}
                     customClass={'al_msgAlert ' + (true ? 'al_alrtSuccess' : 'al_alrtFailed')}
-                    onConfirm={() => console.log('')}
+                    onConfirm={() => {}}
                     title={
                         <div className='al_alert-card d-flex flex-column'>
                             {true && <div className='al_alrtSuccess'>

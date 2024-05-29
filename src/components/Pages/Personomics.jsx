@@ -40,9 +40,12 @@ export default function Personomics() {
   pageTitle('Personomics');
   return (
     <>
-      <section className="cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
+      <section className="videobanner cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
         <div className="cs_banner_img">
-          <img src={personomics} alt="chatbot" />
+          {/* <img src={personomics} alt="chatbot" /> */}
+          <video width="auto" height="430" autoPlay="autoplay" controls>
+            <source src="https://web-staging.in/havideo/animation.mp4" type="video/mp4" />
+          </video>
         </div>
         <div className="container">
           <div className="cs_banner_text">
@@ -54,7 +57,7 @@ export default function Personomics() {
         </div>
       </section>
       <div className='text-center w-80 mx-auto'>
-        <Spacing md="90" lg="150" xl="110" />
+        <Spacing md="70" lg="80" xl="110" />
         <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
           PERSONIMICS
         </h3>

@@ -1,13 +1,36 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
+import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
 import Section from '../Section';
+import { Row, Col } from 'reactstrap';
+import coronary from '../../images/coronary.png';
 
 export default function Coronary() {
   pageTitle('Coronary');
   return (
     <>
-    <section className="cs_banner cs_style_3 cs_bg_filed"></section>
-    <Section className="cs_footer_margin_0"></Section>
+      <BannerSectionStyle3
+        bgUrl="/images/appointments/banner_bg.svg"
+        imgUrl="/images/coronarybg.png"
+        title="Don’t Let Your Health<br/>Take a Backseat!"
+        subTitle="Consider appropriate testing and evaluations"
+      />
+      <Section topMd={80} topLg={80} topXl={80}>
+        <div className='w-80 mx-auto abouttop'>
+          <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+            Coronary Artery Disease (Heart artery blockages)
+          </h3>
+          <Row className='my-5'>
+            <Col>
+              <p>If you have heart disease, such as heart artery blockages can lead to atrial fibrillation.</p>
+              <p>Your health care provider will assess these risks, and consider appropriate testing and evaluations.</p>
+            </Col>
+            <div className='w-auto ps-5'>
+              <img src={coronary} alt="coronary" width={330} />
+            </div>
+          </Row>
+        </div>
+      </Section>
     </>
   );
 }

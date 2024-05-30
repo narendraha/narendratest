@@ -39,6 +39,50 @@ em {
     font-weight: 300 !important;
 }
 
+.symptomssec {
+    >div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 30px;
+
+        h6 {
+            text-align: center;
+        }
+    }
+}
+
+.greycardbg.card {
+    background-color: #f2f2f2;
+    border: none;
+    height: 100%;
+    border-radius: 12px;
+
+    .card-body {
+        padding: 25px;
+
+        p {
+            font-size: 13px;
+        }
+
+        .row {
+            align-items: center;
+            height: 100%;
+        }
+    }
+}
+
+.arialLetter {
+    line-height: 0;
+
+    span {
+        font-size: 160px;
+        color: #DBDBDB;
+        line-height: 100px;
+        font-family: 'Arial' !important;
+    }
+}
+
 .al_mainLoading {
     height: 100%;
     width: 100%;
@@ -52,9 +96,33 @@ em {
     left: 0;
     right: 0;
     cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.6);
 
     img {
         width: 100px;
+    }
+}
+
+.videobanner {
+
+    >div:first-child {
+        width: 60% !important;
+    }
+
+    >div:last-child>div {
+        width: 38% !important;
+    }
+
+    .cs_banner_img {
+        padding: 0 50px !important;
+
+        video {
+            border: 5px solid #ffffff;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            max-width: 100%;
+            clip-path: inset(0px 0px) !important;
+        }
     }
 }
 
@@ -83,6 +151,21 @@ button.al_add_dashed_button {
 
 .abouttop p {
     font-size: 14px;
+}
+
+a.w_signin {
+    margin-top: 20px;
+    background-color: #3977C4;
+    padding: 10px 40px;
+    border-radius: 20px;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.abouttop {
+    img {
+        border-radius: 20px;
+    }
 }
 
 .aboutsecond {
@@ -482,6 +565,7 @@ section:not(.cs_banner) {
     font-size: 20px;
     padding: 35px;
     text-align: center;
+    line-height: normal;
 }
 
 .al_socallinks {
@@ -528,6 +612,10 @@ section:not(.cs_banner) {
             max-width: 50%;
             flex: 0 0 50%;
         }
+    }
+
+    .w-50.al_chatbotauth {
+        width: 70% !important;
     }
 
     .al_card_diff,
@@ -594,6 +682,13 @@ section:not(.cs_banner) {
     color: #828282;
     font-size: 12px;
     line-height: normal;
+}
+
+.al_note_content{
+    border: 0.1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
 }
 
 .al_chatcontent {
@@ -792,28 +887,29 @@ button#chatpopover {
         height: 100%;
 
         .chatbtn {
-            gap: 20px;
-            background: #202123;
-            color: #fff;
-            padding: 5px 10px;
+            gap: 10px;
+            background: #f3f3f3;
+            color: #3f414f;
+            padding: 6px;
             border-radius: 10px;
-          }
-          
-          .chat_item {
+        }
+
+        .chat_item {
             cursor: pointer;
             padding: 5px 10px;
             border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-          }
-          
-          .chat_active {
-            background: #40414f;
-          }
-          
-          .chat_item:hover {
-            transform: scale(1.07);
-          }
-          
+            //transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .chat_active {
+            background: #3bc0c3;
+            color: #ffffff;
+        }
+
+        .chat_item:hover {
+            // transform: scale(1.07);
+        }
+
         >div {
             height: 100%;
         }
@@ -826,14 +922,10 @@ button#chatpopover {
             overflow-y: auto;
         }
 
-        .form_chat{
-            height: calc(100vh - 200px);
-            overflow-y: scroll;
-
+        .form_chat {
             label {
                 color: #202123;
-                font-size: 15px !important;
-                font-weight: 500;
+                font-size: 13px;
             }
         }
     }
@@ -1326,6 +1418,7 @@ ul.standardPlans {
             flex: 1;
             overflow-y: auto;
             height: 100%;
+            position: relative;
         }
     }
 
@@ -1908,43 +2001,3 @@ button.al_upgrade_btn {
         }
     }
 }
-
-/* Loader */
-.loader_container{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-  backdrop-filter: blur(2px); /* Apply blur effect */
-  z-index: 1000;
-}
-.loader {
-    width: 60px;
-    aspect-ratio: 1;
-    display: grid;
-    border: 4px solid #0000;
-    border-radius: 50%;
-    border-right-color: #3bc0c3;
-    animation: l15 1s infinite linear;
-  }
-  .loader::before,
-  .loader::after {    
-    content: "";
-    grid-area: 1/1;
-    margin: 2px;
-    border: inherit;
-    border-radius: 50%;
-    animation: l15 2s infinite;
-  }
-  .loader::after {
-    margin: 8px;
-    animation-duration: 3s;
-  }
-  @keyframes l15{ 
-    100%{transform: rotate(1turn)}
-  }

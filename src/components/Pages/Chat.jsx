@@ -34,8 +34,6 @@ export default function Chat() {
   let randomNumber = Math.floor(Math.random() * 15);
 
   const newfuc = (index) => {
-    console.log("index: ", index);
-    console.log("randomNumber: ", randomNumber);
     if (jsonData.length > 0) {
       setnewqus(jsonData[index][randomNumber]);
       setQuestions((prevHistory) => [
@@ -54,8 +52,6 @@ export default function Chat() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -83,7 +79,6 @@ export default function Chat() {
       responseStatus === 0 ||
       (responseStatus !== -1 && responseStatus !== 99)
     ) {
-      console.log("responseStatus if:", responseStatus);
       incrementRef.current += 1;
     }
     setIsInputShow(true);
@@ -93,7 +88,6 @@ export default function Chat() {
     setQuestions((prevHistory) => [...prevHistory, { user: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
-    console.log("newIncreNumber: ", incrementRef.current);
 
     // request data
     let data = {
@@ -138,8 +132,6 @@ export default function Chat() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",

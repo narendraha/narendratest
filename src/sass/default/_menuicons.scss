@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_history-chat:before {
+  content: "\e94d";
+}
+.icon_alfred_chat:before {
+  content: "\e94f";
+}
 .icon_alfred_share:before {
   content: "\e93f";
 }

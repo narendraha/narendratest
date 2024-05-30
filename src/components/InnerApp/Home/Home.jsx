@@ -1,21 +1,9 @@
 import React, { useState, Suspense } from "react";
-import {
-  Row,
-  Col,
-  Label,
-  FormGroup,
-  TabContent,
-  TabPane,
-  NavLink,
-  Nav,
-  NavItem,
-  Card,
-  CardBody,
-  Table,
-} from "reactstrap";
+import { Row, Col, Label, FormGroup, TabContent, TabPane, NavLink, Nav, NavItem, Card, CardBody, Table } from "reactstrap";
 import atrialfib from "../../../images/atrialfib.png";
 import whytreatment from "../../../images/whytreatment.png";
 import rhythm from "../../../images/rhythm.png";
+import bulp from "../../../images/idea.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
@@ -32,6 +20,10 @@ import { AxiosInstance } from "../../../_mock/utilities";
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource";
+import {
+  allowsOnlyNumeric,
+  allowsOnlyNumericOnly3Digit,
+} from "../../../_mock/RegularExp";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -54,6 +46,7 @@ export default function Home() {
   const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
+  const [getLastUpdated, setgetLastUpdated] = useState("");
 
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
@@ -239,7 +232,6 @@ export default function Home() {
   };
 
   const getOutputNumber = (value) => {
-    console.log("value: ", value);
     return horizontalLabels[value];
   };
 
@@ -270,8 +262,6 @@ export default function Home() {
       )}${getOutputNumber(labelValues10)}${getOutputNumber(
         labelValues11
       )}${getOutputNumber(labelValues12)}`;
-      console.log("Output:", output, typeof output);
-      console.log("Next Button Clicked!", breathlessness);
 
       let newData = {
         breathnessda: {
@@ -340,7 +330,6 @@ export default function Home() {
           quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
         },
       };
-      console.log("newData: ", newData);
 
       AxiosInstance("application/json")
         .post(`/add_symptoms`, newData)
@@ -363,7 +352,6 @@ export default function Home() {
           }
         })
         .catch((er) => {
-          console.log(er);
           toast(er?.response?.data?.message, {
             position: "top-center",
             type: "error",
@@ -391,131 +379,144 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    setResource(createResource(getTabListStatus()));
+    getLastUpdatedHealthDetails();
+  }, [tab]);
+
+  useEffect(() => {
     setTimeout(() => {
-      Highcharts.chart("expertmonitoringgraph", {
-        chart: {
-          type: "area",
-          style: {
-            fontFamily: "Poppins",
-          },
-          panning: true,
-        },
-        title: {
-          text: "",
-        },
-        xAxis: {
-          type: "datetime",
-          min: Math.min.apply(
-            null,
-            sorteddata.slice(-7).map(function (point) {
-              return point[0];
-            })
-          ),
-          max: Math.max.apply(
-            null,
-            sorteddata.slice(-7).map(function (point) {
-              return point[0];
-            })
-          ),
-          labels: {
-            distance: 5,
-            padding: 5,
-            overflow: "justify",
+      if (document.getElementById("expertmonitoringgraph")) {
+        Highcharts.chart("expertmonitoringgraph", {
+          chart: {
+            type: "area",
             style: {
-              fontSize: "11px",
+              fontFamily: "Poppins",
             },
-            formatter: function () {
-              return Highcharts.dateFormat("%d-%m-%Y", new Date(this.value));
-            },
-            rotation: -45,
+            panning: true,
           },
           title: {
-            text: null,
+            text: "",
           },
-          scrollbar: {
-            enabled: true,
-          },
-          tickLength: 0,
-          gridLineWidth: 0,
-          lineWidth: 0,
-          showLastLabel: true,
-          showEmpty: false,
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: "Pulse",
-          },
-          labels: {
-            distance: 5,
-            padding: 5,
-            style: {
-              fontSize: "11px",
+          xAxis: {
+            type: "datetime",
+            min: Math.min.apply(
+              null,
+              sorteddata.slice(-7).map(function (point) {
+                return point[0];
+              })
+            ),
+            max: Math.max.apply(
+              null,
+              sorteddata.slice(-7).map(function (point) {
+                return point[0];
+              })
+            ),
+            labels: {
+              distance: 5,
+              padding: 5,
+              overflow: "justify",
+              style: {
+                fontSize: "11px",
+              },
+              formatter: function () {
+                return Highcharts.dateFormat("%d-%m-%Y", new Date(this.value));
+              },
+              rotation: -45,
             },
+            title: {
+              text: null,
+            },
+            scrollbar: {
+              enabled: true,
+            },
+            tickLength: 0,
+            gridLineWidth: 0,
+            lineWidth: 0,
+            showLastLabel: true,
+            showEmpty: false,
           },
-          endOnTick: false,
-          gridLineWidth: 1,
-          showEmpty: false,
-        },
-        tooltip: {
-          valueSuffix: " bpm",
-        },
-        responsive: {
-          rules: [
-            {
-              condition: {
-                maxWidth: 500,
+          yAxis: {
+            min: 0,
+            title: {
+              text: "Pulse",
+            },
+            labels: {
+              distance: 5,
+              padding: 5,
+              style: {
+                fontSize: "11px",
               },
             },
-          ],
-        },
-        plotOptions: {
-          area: {
-            marker: {
-              enabled: false,
-              symbol: "circle",
-              radius: 2,
-              states: {
-                hover: {
-                  enabled: true,
+            endOnTick: false,
+            gridLineWidth: 1,
+            showEmpty: false,
+          },
+          tooltip: {
+            valueSuffix: " bpm",
+          },
+          responsive: {
+            rules: [
+              {
+                condition: {
+                  maxWidth: 500,
                 },
               },
+            ],
+          },
+          plotOptions: {
+            area: {
+              marker: {
+                enabled: false,
+                symbol: "circle",
+                radius: 2,
+                states: {
+                  hover: {
+                    enabled: true,
+                  },
+                },
+              },
+              color: "#0079ca",
             },
-            color: "#0079ca",
+            series: {
+              groupPadding: 1,
+              pointPadding: 1,
+              pointPlacement: "on",
+              borderWidth: 0,
+              pointWidth: 50,
+            },
           },
-          series: {
-            groupPadding: 1,
-            pointPadding: 1,
-            pointPlacement: "on",
-            borderWidth: 0,
-            pointWidth: 50,
+          navigator: {
+            enabled: true,
           },
-        },
-        navigator: {
-          enabled: true,
-        },
-        credits: {
-          enabled: false,
-        },
-        legend: { enabled: false },
-        series: [
-          {
-            name: "Pulse",
-            data: sorteddata,
+          credits: {
+            enabled: false,
           },
-        ],
-      });
-    }, 2000);
-  }, []);
+          legend: { enabled: false },
+          series: [
+            {
+              name: "Pulse",
+              data: sorteddata,
+            },
+          ],
+        });
+      }
+    }, 4000);
+  }, [tab, getLastUpdated]);
 
   const handleHeathDetails = async (data) => {
     setShow2(data);
     if (data) {
-      delete healthDetails?.isCheckMedicalRecords;
-      console.log("healthDetails: ", healthDetails);
+      let finalData = {
+        ...healthDetails,
+        bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`
+      };
+      delete finalData?.isCheckMedicalRecords;
+      delete finalData?.systolic;
+      delete finalData?.diastolic;
+      console.log("healthDetails: ", finalData);
 
       await AxiosInstance("application/json")
-        .post("/health_details", healthDetails)
+        .post("/health_details", finalData)
         .then((res) => {
           if (res && res.data && res.status == 200) {
             if (res.data?.statuscode === 200) {
@@ -535,8 +536,6 @@ export default function Home() {
           }
         })
         .catch((er) => {
-          console.log(er);
-          console.log("er?.message: ", er?.message);
           toast(er?.response?.data?.message || er?.message, {
             position: "top-center",
             type: "error",
@@ -545,16 +544,28 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    setResource(createResource(getTabListStatus()));
-  }, [tab]);
   const getTabListStatus = async () => {
     await AxiosInstance("application/json")
       .get("/getstatus")
       .then((response) => {
         if (response && response?.status == 200) {
           setGetStatus(response.data?.data);
-          console.log("setJsonData: ", response.data?.data);
+        }
+      })
+      .catch((er) => {
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-center",
+          type: "error",
+        });
+      });
+  };
+
+  const getLastUpdatedHealthDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/healthdetails_lastupdate")
+      .then((response) => {
+        if (response && response?.status == 200) {
+          setgetLastUpdated(response.data?.data);
         }
       })
       .catch((er) => {
@@ -597,8 +608,6 @@ export default function Home() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -607,7 +616,6 @@ export default function Home() {
   };
 
   const handlehealthHub = (data) => {
-    console.log("data: ", data);
     setShow1(data);
     if (data) {
       setShow1(!data);
@@ -620,7 +628,7 @@ export default function Home() {
 
   if (resource) {
     return (
-      <Suspense fallback={<Loading/>}>
+      <Suspense fallback={<Loading />}>
         <ResourceLoader resource={resource} />
       </Suspense>
     );
@@ -630,21 +638,19 @@ export default function Home() {
 
     return (
       <>
-        {/* {isLoading && <Loading />} */}
-
         <ConfirmationAction
           newFun={
             isShowconfirm
               ? handleSubmit
               : show1
-              ? handlehealthHub
-              : show2 && handleHeathDetails
+                ? handlehealthHub
+                : show2 && handleHeathDetails
           }
           open={isShowconfirm || show1 || show2}
         />
         <div className="wflexLayout">
           <div className="wflexScroll al-pad">
-            <h3 className="bc_main_text mb-3">
+            <h3 className="bc_main_text mb-1">
               Hello, {decodedToken?.username}!
             </h3>
             <Row className="al_hometabs">
@@ -652,13 +658,13 @@ export default function Home() {
                 <Nav tabs className="mb-3">
                   <NavItem>
                     <NavLink
-                      className={getTabStatus?.health_hub === 1 ? "active" : ""}
+                      className={tab === "1" ? "active" : ""}
                       onClick={() => {
                         setTab("1");
                       }}
                     >
                       <div>
-                        <span>H</span>
+                        <span className={getTabStatus?.health_hub === 1 ? "active" : ""}>H</span>
                         <span className="d-none d-sm-block">Health Hub</span>
                         {/* <i className="icon_alfred_back-arrow"></i> */}
                       </div>
@@ -666,15 +672,13 @@ export default function Home() {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={
-                        getTabStatus?.expert_monitoring === 1 ? "active" : ""
-                      }
+                      className={tab === "2" ? "active" : ""}
                       onClick={() => {
                         setTab("2");
                       }}
                     >
                       <div>
-                        <span>E</span>
+                        <span className={getTabStatus?.expert_monitoring === 1 ? "active" : ""}>E</span>
                         <span className="d-none d-sm-block">
                           Expert Monitoring
                         </span>
@@ -683,15 +687,13 @@ export default function Home() {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={
-                        getTabStatus?.list_your_symptoms === 1 ? "active" : ""
-                      }
+                      className={tab === "3" ? "active" : ""}
                       onClick={() => {
                         setTab("3");
                       }}
                     >
                       <div>
-                        <span>L</span>
+                        <span className={getTabStatus?.list_your_symptoms === 1 ? "active" : ""}>L</span>
                         <span className="d-none d-sm-block">
                           List your Symptoms
                         </span>
@@ -700,34 +702,26 @@ export default function Home() {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={
-                        getTabStatus?.lifestyle_goals === 1 ? "active" : ""
-                      }
+                      className={tab === "4" ? "active" : ""}
                       onClick={() => {
                         setTab("4");
                       }}
                     >
                       <div>
-                        <span>L</span>
-                        <span className="d-none d-sm-block">
-                          Lifestyle Goals
-                        </span>
+                        <span className={getTabStatus?.lifestyle_goals === 1 ? "active" : ""}>L</span>
+                        <span className="d-none d-sm-block">Lifestyle Goals</span>
                       </div>
                     </NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      className={
-                        getTabStatus?.optimal_risk_managemment === 1
-                          ? "active"
-                          : ""
-                      }
+                      className={tab === "5" ? "active" : ""}
                       onClick={() => {
                         setTab("5");
                       }}
                     >
                       <div>
-                        <span>O</span>
+                        <span className={getTabStatus?.optimal_risk_managemment === 1 ? "active" : ""}>O</span>
                         <span className="d-none d-sm-block">
                           Optimal Risk Management
                         </span>
@@ -744,77 +738,48 @@ export default function Home() {
                           <Col sm="6">
                             <div className="mb-4">
                               <h6>Understand Atrial fibrillation(AF)</h6>
-                              <img
-                                src={atrialfib}
-                                alt=""
-                                style={{
-                                  height: "120px",
-                                  objectFit: "contain",
-                                }}
-                              />
+                              <img src={atrialfib} alt="" style={{ height: "120px", objectFit: "contain" }} />
                               <p className="mt-3">
-                                Atrial fibrillation (AF) is a type of
-                                arrhythmia, which means that the heart beats
-                                fast and irregularly. The risk of AF increases
-                                markedly with age. Some of the known causes of
-                                AF include chronic high blood pressure, heart
-                                valve diseases and hyperthyroidism.
+                                Atrial fibrillation (AF) is a type of arrhythmia,
+                                which means that the heart beats fast and irregularly.
+                                The risk of AF increases markedly with age. Some of
+                                the known causes of AF include chronic high blood
+                                pressure, heart valve diseases and hyperthyroidism.
                               </p>
                             </div>
                           </Col>
                           <Col sm="6">
                             <div className="mb-4">
                               <h6>Why treatment?</h6>
-                              <img
-                                src={whytreatment}
-                                alt=""
-                                style={{
-                                  height: "120px",
-                                  objectFit: "contain",
-                                }}
-                              />
+                              <img src={whytreatment} alt="" style={{ height: "120px", objectFit: "contain" }} />
                               <p className="mt-3">
-                                The way the heart beats in atrial fibrillation
-                                means there's a risk of blood clots forming in
-                                the heart chambers. If these enter the
-                                bloodstream, they can cause a stroke. Your
-                                doctor will assess and discuss your risk with
-                                you, and try to minimise your chance of having a
-                                stroke.
+                                The way the heart beats in atrial fibrillation means
+                                there's a risk of blood clots forming in the heart
+                                chambers. If these enter the bloodstream, they can
+                                cause a stroke. Your doctor will assess and discuss
+                                your risk with you, and try to minimise your chance of
+                                having a stroke.
                               </p>
                             </div>
                           </Col>
                           <Col sm="6">
                             <div className="mb-4">
                               <h6>Rhythm</h6>
-                              <img
-                                src={rhythm}
-                                alt=""
-                                style={{
-                                  height: "120px",
-                                  objectFit: "contain",
-                                }}
-                              />
+                              <img src={rhythm} alt="" style={{ height: "120px", objectFit: "contain" }} />
                               <p className="mt-3">
-                                Atrial fibrillation (AFib) is an irregular and
-                                often very rapid heart rhythm. An irregular
-                                heart rhythm is called an arrhythmia. AFib can
-                                lead to blood clots in the heart. The condition
-                                also increases the risk of stroke, heart failure
-                                and other heart-related complications.
+                                Atrial fibrillation (AFib) is an irregular and often
+                                very rapid heart rhythm. An irregular heart rhythm is
+                                called an arrhythmia. AFib can lead to blood clots in
+                                the heart. The condition also increases the risk of
+                                stroke, heart failure and other heart-related
+                                complications.
                               </p>
                             </div>
                           </Col>
                         </Row>
                       </Col>
                       <Col lg="5" sm="12">
-                        <Card
-                          className="al_cardnoborder"
-                          style={{
-                            backgroundColor: "#F7F7F7",
-                            boxShadow: "none",
-                          }}
-                        >
+                        <Card className="al_cardnoborder" style={{ backgroundColor: "#F7F7F7", boxShadow: "none" }}>
                           <CardBody>
                             <h6>Videos</h6>
                             <Row className="mt-3 al_knowldgebank">
@@ -832,26 +797,7 @@ export default function Home() {
                                     ></iframe>
                                     <div className="mt-2">
                                       Text of the printing and typesetting
-                                      industry.Text of the printing and
-                                      typesetting industry.
-                                    </div>
-                                  </CardBody>
-                                </Card>
-                              </Col>
-                              <Col sm="6" className="mb-3">
-                                <Card className="al_cardnoborder h-100">
-                                  <CardBody>
-                                    <iframe
-                                      width="100%"
-                                      height="130"
-                                      src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                      title="YouTube video player"
-                                      frameBorder="0"
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                      allowFullScreen
-                                    ></iframe>
-                                    <div className="mt-2">
-                                      Text of the printing and typesetting
+                                      industry.Text of the printing and typesetting
                                       industry.
                                     </div>
                                   </CardBody>
@@ -870,8 +816,25 @@ export default function Home() {
                                       allowFullScreen
                                     ></iframe>
                                     <div className="mt-2">
-                                      Text of the printing and typesetting
-                                      industry.
+                                      Text of the printing and typesetting industry.
+                                    </div>
+                                  </CardBody>
+                                </Card>
+                              </Col>
+                              <Col sm="6" className="mb-3">
+                                <Card className="al_cardnoborder h-100">
+                                  <CardBody>
+                                    <iframe
+                                      width="100%"
+                                      height="130"
+                                      src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
+                                      title="YouTube video player"
+                                      frameBorder="0"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                      allowFullScreen
+                                    ></iframe>
+                                    <div className="mt-2">
+                                      Text of the printing and typesetting industry.
                                     </div>
                                   </CardBody>
                                 </Card>
@@ -894,33 +857,52 @@ export default function Home() {
                     </div>
                   </TabPane>
                   <TabPane tabId="2">
-                    <h5>Health details</h5>
+                    <div className="d-flex justify-content-between">
+                      <h5>Health details </h5>
+                      {getLastUpdated?.difference >= 0 ? (
+                        <div className="d-flex align-items-center justify-content-center gap-1 text-end al_note al_note_content">
+                          <img
+                          className="mb-1"
+                                src={bulp}
+                                alt=""
+                                style={{
+                                  height: "20px",
+                                }}
+                              />You, Last gave your symptoms{" "}
+                          <span style={{color:'#3bc0c3'}}> {getLastUpdated?.difference}</span> days ago on<span style={{color:'#3bc0c3'}}>
+                          {getLastUpdated?.date}</span>
+                        </div>
+                      ) : null}
+                    </div>
+
                     <Row>
                       <Col lg="6" sm="12">
-                        <div className="text-end al_note">
-                          Your last entry sucessfully updated on: 12-04-2024
-                          12:00 AM
-                        </div>
                         <Formik
                           initialValues={{
                             weight: "",
-                            height: "",
-                            bloodp: "",
+                            // height: "",
+                            systolic: "",
+                            diastolic: "",
                             pulse: "",
                             isCheckMedicalRecords: false,
                           }}
                           validationSchema={Yup.object().shape({
                             weight: Yup.number()
-                              .typeError("Must be a number")
+                              .min(10, "Weight must be at least 10")
+                              .max(650, "Weight is too high!")
                               .required("This field is required"),
-                            height: Yup.number()
-                              .typeError("Must be a number")
+                            // height: Yup.number()
+                            //   .typeError("Must be a number")
+                            //   .required("This field is required"),
+                            systolic: Yup.number()
+                              .max(200, "Systolic is too high!")
                               .required("This field is required"),
-                            bloodp: Yup.number()
-                              .typeError("Must be a number")
+                            diastolic: Yup.number()
+                              .max(120, "Diastolic is Too high!")
                               .required("This field is required"),
                             pulse: Yup.number()
-                              .typeError("Must be a number")
+                              .min(10, "Pulse must be at least 10")
+                              .max(220, "Too high!")
                               .required("This field is required"),
                             isCheckMedicalRecords: Yup.boolean()
                               .oneOf([true], "This field is required")
@@ -931,7 +913,7 @@ export default function Home() {
                             setHealthDetails(values);
                           }}
                         >
-                          {({}) => {
+                          {({ }) => {
                             return (
                               <Form>
                                 {/* <Row>
@@ -970,10 +952,10 @@ export default function Home() {
                                         },
                                       }}
                                       selected={new Date()}
-                                      onChange={(e) => {}}
+                                      onChange={(e) => { }}
                                       dateFormat={"MM/dd/yyyy"}
                                       minDate={new Date().setMonth(
-                                        new Date().getMonth() - 1
+                                        new Date().getMonth() - 3
                                       )}
                                       maxDate={new Date()}
                                       autoComplete="off"
@@ -986,10 +968,7 @@ export default function Home() {
                                 <Row>
                                   <Col xl="4" lg="6" sm="4">
                                     <div className="al_vitalunits">
-                                      <i
-                                        className="icon_alfred_weight"
-                                        style={{ color: "#9086f7" }}
-                                      ></i>
+                                      <i className="icon_alfred_weight" style={{ color: "#9086f7" }}></i>
                                       <FormGroup className="mb-0">
                                         <Label>Weight</Label>
                                         <Field
@@ -997,6 +976,9 @@ export default function Home() {
                                           name="weight"
                                           placeholder="100"
                                           className="form-control"
+                                          onKeyPress={(e) =>
+                                            allowsOnlyNumericOnly3Digit(e)
+                                          }
                                         />
                                         <ErrorMessage
                                           name="weight"
@@ -1004,42 +986,55 @@ export default function Home() {
                                           className="text-danger"
                                         />
                                       </FormGroup>
-                                      <div className="text-grey mt-1">
-                                        (lbs)
-                                      </div>
+                                      <div className="text-grey mt-1">(lbs)</div>
                                     </div>
                                   </Col>
                                   <Col xl="4" lg="6" sm="4">
                                     <div className="al_vitalunits">
-                                      <i
-                                        className="icon_alfred_bp"
-                                        style={{ color: "#efbc06" }}
-                                      ></i>
+                                      <i className="icon_alfred_bp" style={{ color: "#efbc06" }}></i>
                                       <FormGroup className="mb-0">
                                         <Label>Blood Pressure</Label>
-                                        <Field
-                                          type="text"
-                                          name="bloodP"
-                                          placeholder="120/80"
-                                          className="form-control"
-                                        />
-                                        <ErrorMessage
-                                          name="bloodP"
-                                          component={"div"}
-                                          className="text-danger"
-                                        />
+                                        <div className="d-flex gap-2">
+                                          <div>
+                                            <Field
+                                              type="text"
+                                              name="systolic"
+                                              placeholder="120"
+                                              className="form-control"
+                                              onKeyPress={(e) =>
+                                                allowsOnlyNumericOnly3Digit(e)
+                                              }
+                                            />
+                                            <ErrorMessage
+                                              name="systolic"
+                                              component={"div"}
+                                              className="text-danger"
+                                            />
+                                          </div>
+                                          <div>
+                                            <Field
+                                              type="text"
+                                              name="diastolic"
+                                              placeholder="80"
+                                              className="form-control"
+                                              onKeyPress={(e) =>
+                                                allowsOnlyNumericOnly3Digit(e)
+                                              }
+                                            />
+                                            <ErrorMessage
+                                              name="diastolic"
+                                              component={"div"}
+                                              className="text-danger"
+                                            />
+                                          </div>
+                                        </div>
                                       </FormGroup>
-                                      <div className="text-grey mt-1">
-                                        (BPM)
-                                      </div>
+                                      <div className="text-grey mt-1">(BPM)</div>
                                     </div>
                                   </Col>
                                   <Col xl="4" lg="6" sm="4">
                                     <div className="al_vitalunits">
-                                      <i
-                                        className="icon_alfred_pulse"
-                                        style={{ color: "#7ff1e4" }}
-                                      ></i>
+                                      <i className="icon_alfred_pulse" style={{ color: "#7ff1e4" }}></i>
                                       <FormGroup className="mb-0">
                                         <Label>Pulse</Label>
                                         <Field
@@ -1047,6 +1042,9 @@ export default function Home() {
                                           name="pulse"
                                           placeholder="70"
                                           className="form-control"
+                                          onKeyPress={(e) =>
+                                            allowsOnlyNumericOnly3Digit(e)
+                                          }
                                         />
                                         <ErrorMessage
                                           name="pulse"
@@ -1054,9 +1052,7 @@ export default function Home() {
                                           className="text-danger"
                                         />
                                       </FormGroup>
-                                      <div className="text-grey mt-1">
-                                        (mmHg)
-                                      </div>
+                                      <div className="text-grey mt-1">(mmHg)</div>
                                     </div>
                                   </Col>
                                 </Row>
@@ -1075,8 +1071,8 @@ export default function Home() {
                                       name="isCheckMedicalRecords"
                                     />
                                     <span>
-                                      Above mentioned details are valid as per
-                                      the medical records
+                                      Above mentioned details are valid as per the
+                                      medical records
                                     </span>
                                   </Label>
                                   <ErrorMessage
@@ -1085,6 +1081,23 @@ export default function Home() {
                                     className="text-danger"
                                   />
                                 </FormGroup>
+                                <div className="mt-4">
+                                  <button
+                                    type="button"
+                                    className="al_grey_borderbtn"
+                                    onClick={() => {
+                                      setTab("1");
+                                    }}
+                                  >
+                                    Back
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    className="al_savebtn mx-3"
+                                  >
+                                    Proceed
+                                  </button>
+                                </div>
                               </Form>
                             );
                           }}
@@ -1097,20 +1110,6 @@ export default function Home() {
                         ></div>
                       </Col>
                     </Row>
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        className="al_grey_borderbtn"
-                        onClick={() => {
-                          setTab("1");
-                        }}
-                      >
-                        Back
-                      </button>
-                      <button type="submit" className="al_savebtn mx-3">
-                        Proceed
-                      </button>
-                    </div>
                   </TabPane>
                   <TabPane tabId="3">
                     <p>Select the symptoms range listed below</p>
@@ -1134,12 +1133,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.breathnessda
-                                          .frequency === frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`btn ${breathlessness.breathnessda.frequency ===
+                                        frequency
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1232,12 +1230,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.breathnessea
-                                          .frequency === frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`btn ${breathlessness.breathnessea.frequency ===
+                                        frequency
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1330,12 +1327,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.dizziness.frequency ===
+                                      className={`btn ${breathlessness.dizziness.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1428,12 +1424,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.col_swet.frequency ===
+                                      className={`btn ${breathlessness.col_swet.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1526,20 +1521,19 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.p_tiredness.frequency ===
+                                      className={`btn ${breathlessness.p_tiredness.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
                                         name="p_tiredness"
                                         value={frequency}
                                         checked={
-                                          breathlessness.p_tiredness
-                                            .frequency === frequency
+                                          breathlessness.p_tiredness.frequency ===
+                                          frequency
                                         }
                                         onChange={(e) =>
                                           handleFrequencyChange(
@@ -1624,20 +1618,19 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.chest_pain.frequency ===
+                                      className={`btn ${breathlessness.chest_pain.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
                                         name="chest_pain"
                                         value={frequency}
                                         checked={
-                                          breathlessness.chest_pain
-                                            .frequency === frequency
+                                          breathlessness.chest_pain.frequency ===
+                                          frequency
                                         }
                                         onChange={(e) =>
                                           handleFrequencyChange(
@@ -1722,12 +1715,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.pressurechest
-                                          .frequency === frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`btn ${breathlessness.pressurechest.frequency ===
+                                        frequency
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1820,12 +1812,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.worry.frequency ===
+                                      className={`btn ${breathlessness.worry.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -1880,8 +1871,8 @@ export default function Home() {
                                         name="worry"
                                         value={life}
                                         checked={
-                                          qualityOfLife.worry
-                                            .quality_of_life === life
+                                          qualityOfLife.worry.quality_of_life ===
+                                          life
                                         }
                                         onChange={(e) =>
                                           handleQualityOfLifeChange(
@@ -1918,12 +1909,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.weakness.frequency ===
+                                      className={`btn ${breathlessness.weakness.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -2016,12 +2006,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.infirmity.frequency ===
+                                      className={`btn ${breathlessness.infirmity.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -2114,12 +2103,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.nsynacpe.frequency ===
+                                      className={`btn ${breathlessness.nsynacpe.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -2212,12 +2200,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.syncope.frequency ===
+                                      className={`btn ${breathlessness.syncope.frequency ===
                                         frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -2310,12 +2297,11 @@ export default function Home() {
                                   ].map((frequency) => (
                                     <label
                                       key={frequency}
-                                      className={`btn ${
-                                        breathlessness.tirednessafterwards
-                                          .frequency === frequency
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`btn ${breathlessness.tirednessafterwards
+                                        .frequency === frequency
+                                        ? "active"
+                                        : ""
+                                        }`}
                                     >
                                       <input
                                         type="radio"
@@ -2457,7 +2443,7 @@ export default function Home() {
                         <Row className="mb-3">
                           <Col lg="6" sm="12">
                             <p className="al_note">Your Details</p>
-                            <h5 className="mb-2">Hello, Richard!</h5>
+                            <h5 className="mb-2">Hello, {decodedToken?.username}!</h5>
                             <div>
                               <strong>Age: </strong>
                               <span>40</span>
@@ -2545,24 +2531,24 @@ export default function Home() {
                         using
                       </li>
                       <li>
-                        Take your AF medications the way doctor tells you, and
-                        do not run out of medication
+                        Take your AF medications the way doctor tells you, and do
+                        not run out of medication
                       </li>
                       <li>
                         If you take Warfarin, make sure that you have regular
                         blood tests and keep a record of your results{" "}
                       </li>
                       <li>
-                        Visit your doctors regularly and ask questions if you
-                        have any concerns
+                        Visit your doctors regularly and ask questions if you have
+                        any concerns
                       </li>
                       <li>
                         Know your stroke risk factors and keep a record of your
                         CHADS score in this booklet
                       </li>
                       <li>
-                        Reduce your risk of more frequent or severe AF and risk
-                        of stroke by choosing a healthy lifestyle
+                        Reduce your risk of more frequent or severe AF and risk of
+                        stroke by choosing a healthy lifestyle
                       </li>
                       <li>Feel your pulse every morning and evening</li>
                     </ul>

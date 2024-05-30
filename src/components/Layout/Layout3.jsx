@@ -5,7 +5,7 @@ import Header from '../Header';
 import ChatBot from '../ChatBot';
 import { Row, Col, Popover, PopoverBody, Button } from 'reactstrap';
 import chatBot from '../../images/chatboticon.svg';
-import Loading from '../InnerApp/MainLayout/Loading';
+import Loading from '../InnerApp/LoadingComponent';
 
 export default function Layout3() {
   const location = useLocation();
@@ -21,13 +21,13 @@ export default function Layout3() {
 
     <Row className='h-100 mx-0'>
       <Suspense fallback={<Loading />}>
-        <Col lg={(location.pathname !== "/" && botisOpen ? "9" : "12")} id='al_main_landing' className={'px-0' + (location.pathname !== "/" && botisOpen ? ' al_homechatopen' : '')}>
+        <Col lg="12" id='al_main_landing' className='px-0'>
           <Header logoSrc="/images/alfredlogo.svg" variant="cs_heading_color" />
           <Outlet />
           <FooterStyle3 />
         </Col>
       </Suspense>
-      {location.pathname !== "/" && <>
+      {/* {location.pathname !== "/" && <>
         {botisOpen && <Col lg="3" className='px-1'>
           <ChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />
         </Col>}
@@ -49,7 +49,7 @@ export default function Layout3() {
         </Popover>
         }
       </>
-      }
+      } */}
 
     </Row>
   );

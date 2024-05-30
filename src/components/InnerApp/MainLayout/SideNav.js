@@ -36,16 +36,15 @@ export default function SideNav(props) {
       subModules: [
         { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
       ]
-      // } ,
-      // {
-      //   moduleId: '3',
-      //   name: 'Bot Manager',
-      //   link: 'uploaddocument',
-      //   icon: 'icon_alfred_uploaddocument',
-      //   subModules: [
-      //     { id: "1", name: "Upload Document", link: 'uploaddocument', icon: 'icon_alfred_uploaddocument' },
-      //     { id: "2", name: "Bot Questionnaire", link: 'botquestionnaire', icon: 'icon_alfred_botquestionnaire' }
-      //   ]
+      } ,
+      {
+        moduleId: '3',
+        name: 'Bot Manager',
+        link: 'uploaddocument',
+        icon: 'icon_alfred_botquestionnaire',
+        subModules: [
+          { id: "2", name: "History Bot", link: 'historychat', icon: 'icon_alfred_botquestionnaire' }
+        ]
       // },
       // {
       //   moduleId: '4',

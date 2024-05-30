@@ -54,8 +54,6 @@ export default function HistoryChatBot() {
   let randomNumber = Math.floor(Math.random() * 15);
 
   const newfuc = (index) => {
-    console.log("index: ", index);
-    console.log("randomNumber: ", randomNumber);
     if (getChatQus?.length > 0) {
       const newQuestion = getChatQus[index]["description"];
 
@@ -80,10 +78,9 @@ export default function HistoryChatBot() {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [incrementRef, questions]);
 
-  useEffect(() => {}, [incrementRef, responseStatus]);
+  useEffect(() => { }, [incrementRef, responseStatus]);
 
   const handleFormSubmit = async (e) => {
-    console.log(questions);
     console.log(
       "outside if responseStatus:",
       responseStatus,
@@ -93,7 +90,6 @@ export default function HistoryChatBot() {
     //   responseStatus === 0 ||
     //   (responseStatus !== -1 && responseStatus !== 99)
     // ) {
-    //   console.log("responseStatus if:", responseStatus);
     //   incrementRef.current += 1;
     // }
     setIsInputShow(true);
@@ -103,7 +99,6 @@ export default function HistoryChatBot() {
     setQuestions((prevHistory) => [...prevHistory, { user: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
-    console.log("newIncreNumber: ", incrementRef.current);
 
     // request data
     let data = {
@@ -144,8 +139,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -170,8 +163,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -203,7 +194,6 @@ export default function HistoryChatBot() {
       });
       return;
     }
-    console.log(formattedData);
 
     await AxiosInstance("application/json")
       .post("/history_answer", formattedData)
@@ -219,8 +209,6 @@ export default function HistoryChatBot() {
         }
       })
       .catch((er) => {
-        console.log(er);
-        console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
           position: "top-center",
           type: "error",
@@ -231,11 +219,10 @@ export default function HistoryChatBot() {
     "newNumber",
     newNumber > Object.keys(questions).length ? "above" : "below"
   );
-  console.log("questions", Object.keys(questions).length);
   return (
-    <div className="cs_homepage">
-      <div className="w-50 al_chatbotauth p-1">
-        <div className="d-flex justify-content-center h-auto pb-1">
+    <div className="cs_homepage mt-0 h-100">
+      <div className="w-50 al_chatbotauth wflexLayout p-0">
+        <div className="d-flex justify-content-center mt-3 h-auto pb-1">
           <div className="d-flex chatbtn">
             <div
               className={`chat_item ${isChatOneActive ? "chat_active" : ""}`}
@@ -252,12 +239,11 @@ export default function HistoryChatBot() {
           </div>
         </div>
         {isChatOneActive ? (
-          <div className="d-flex flex-column">
-            <div className="flex-grow-1">
-              <div className="scrolldiv">
-                {/* Chat need to be rendered here */}
-                {/* Welcome message */}
-                {/* <Row className="mb-4 al_chatcontent">
+          <div className="wflexLayout">
+            <div className="flex-grow-1 mt-3">
+              {/* Chat need to be rendered here */}
+              {/* Welcome message */}
+              {/* <Row className="mb-4 al_chatcontent">
                   <div>
                     <img src={Chatbot} alt="Bot" />
                   </div>
@@ -276,54 +262,53 @@ export default function HistoryChatBot() {
                     </div>
                   </Col>
                 </Row> */}
-                {/*
+              {/*
                  * Loop the question it's stored in array[] and split the based on response
                  * again split the structure into "key and value" using Object method called entries
                  * it convert into array so here split the param as ([key, value])
                  */}
 
-                {Array?.isArray(questions) && questions?.length > 0 ? (
-                  questions?.map((message, index) => (
-                    <React.Fragment key={index}>
-                      {Object.entries(message)?.map(([key, value]) => (
-                        <Row className="mb-4 al_chatcontent" key={key}>
-                          <div>
-                            {key === "user" ? (
-                              <img src={Chatuser} alt="chat user" />
-                            ) : key === "alfred" ? (
-                              <img src={Chatbot} alt="Bot" />
-                            ) : null}
-                          </div>
-                          <Col>
-                            <h6 className="mb-0">{key}</h6>
-                            <div>{value}</div>
-                          </Col>
-                        </Row>
-                      ))}
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <div className="d-flex align-items-center justify-content-center">
-                    No question available
-                  </div>
-                )}
-                {isLoading && <div className="al_chatloading"></div>}
-                <div ref={messagesEndRef} />
-              </div>
-            </div>
-            <div className="cs_mainsearch mb-2">
-              {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
-              {Object.keys(questions).length === 0 ? (
-                <div className="mt-3 d-flex align-items-center justify-content-center">
-                  <button
-                    type="submit"
-                    className="al_greybgbutton"
-                    onClick={() => navigate("/dashboard")}
-                  >
-                    Go to Dashboard
-                  </button>
+              {Array?.isArray(questions) && questions?.length > 0 ? (
+                <div className="scrolldiv ps-0">
+                  {questions?.map((message, index) => (
+                    Object.entries(message)?.map(([key, value]) => (
+                      <Row className="mb-4 al_chatcontent" key={key}>
+                        <div>
+                          {key === "user" ? (
+                            <img src={Chatuser} alt="chat user" />
+                          ) : key === "alfred" ? (
+                            <img src={Chatbot} alt="Bot" />
+                          ) : null}
+                        </div>
+                        <Col>
+                          <h6 className="mb-0">{key}</h6>
+                          <div>{value}</div>
+                        </Col>
+                      </Row>
+                    ))
+                  )
+                  )}
                 </div>
               ) : (
+                <div className="d-flex flex-column h-100 align-items-center justify-content-center">
+                  No question available
+                  <div className="my-3">
+                    <button
+                      type="submit"
+                      className="al_greybgbutton"
+                      onClick={() => navigate("/dashboard")}
+                    >
+                      Go to Dashboard
+                    </button>
+                  </div>
+                </div>
+              )}
+              {isLoading && <div className="al_chatloading"></div>}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="cs_mainsearch mb-3">
+              {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
+              {Object.keys(questions).length === 0 ? '' : (
                 <form action="#">
                   <i
                     className="icon_alfred_search"
@@ -372,129 +357,124 @@ export default function HistoryChatBot() {
             </div>
           </div>
         ) : (
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            {({ values, setFieldValue }) => (
-              <Form>
-                <div className="form_chat">
-                  {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
-                    getChatQus?.map((field, index) => (
-                      <FormGroup key={index}>
-                        <Label
-                          htmlFor={field.description}
-                          className="form-label"
-                        >
-                          {index + 1}. {field.description}
-                        </Label>
-                        {field.type_ === "Dropdown" ? (
-                          <FormGroup>
-                            <Select
-                              id={field.question_key}
-                              className="inputSelect"
-                              name={field.question_key}
-                              value={
-                                values[field.question_key]
-                                  ? {
+          <div className="wflexLayout">
+            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+              {({ values, setFieldValue }) => (
+                <Form className="wflexScroll d-flex flex-column">
+                  <div className="form_chat flex-grow-1 pe-2 mt-3">
+                    {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
+                      getChatQus?.map((field, index) => (
+                        <FormGroup key={index}>
+                          <Label
+                            htmlFor={field.description}
+                            className="form-label"
+                          >
+                            {index + 1}. {field.description}
+                          </Label>
+                          {field.type_ === "Dropdown" ? (
+                            <FormGroup>
+                              <Select
+                                id={field.question_key}
+                                className="inputSelect"
+                                name={field.question_key}
+                                value={
+                                  values[field.question_key]
+                                    ? {
                                       value: values[field.question_key],
                                       label: values[field.question_key],
                                     }
-                                  : null
-                              }
-                              options={field.options?.map((option) => ({
-                                value: option,
-                                label: option,
-                              }))}
-                              onChange={(selectedOption) =>
-                                setFieldValue(
-                                  field.question_key,
-                                  selectedOption ? selectedOption.value : ""
-                                )
-                              }
-                            />
-                          </FormGroup>
-                        ) : field.type_ === "Radio" ? (
-                          <div className="d-flex px-1 gap-3 flex-row">
-                            {field.options?.map((option, optionIndex) => (
-                              <FormGroup key={optionIndex}>
-                                <Field
-                                  type="radio"
-                                  id={`${field.question_key}-${option}`}
-                                  name={field.question_key}
-                                  value={option}
-                                  className="form-check-input"
-                                  style={{ minWidth: "auto" }}
-                                />
-                                <label
-                                  htmlFor={`${field.question_key}-${option}`}
-                                  className="form-check-label px-2"
-                                >
-                                  {option}
-                                </label>
-                              </FormGroup>
-                            ))}
+                                    : null
+                                }
+                                options={field.options?.map((option) => ({
+                                  value: option,
+                                  label: option,
+                                }))}
+                                onChange={(selectedOption) =>
+                                  setFieldValue(
+                                    field.question_key,
+                                    selectedOption ? selectedOption.value : ""
+                                  )
+                                }
+                              />
+                            </FormGroup>
+                          ) : field.type_ === "Radio" ? (
+                            <div className="d-flex px-1 gap-3 flex-row">
+                              {field.options?.map((option, optionIndex) => (
+                                <FormGroup key={optionIndex}>
+                                  <Field
+                                    type="radio"
+                                    id={`${field.question_key}-${option}`}
+                                    name={field.question_key}
+                                    value={option}
+                                    className="form-check-input"
+                                    style={{ minWidth: "auto" }}
+                                  />
+                                  <label
+                                    htmlFor={`${field.question_key}-${option}`}
+                                    className="form-check-label px-2"
+                                  >
+                                    {option}
+                                  </label>
+                                </FormGroup>
+                              ))}
+                            </div>
+                          ) : field.type_ === "integer" ? (
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                id={field.question_key}
+                                name={field.question_key}
+                                className="form-control"
+                                onKeyDown={allowsOnlyNumeric}
+                              />
+                            </FormGroup>
+                          ) : (
+                            <FormGroup>
+                              <Field
+                                type="text"
+                                //   as="textarea"
+                                id={field.question_key}
+                                name={field.question_key}
+                                className="form-control"
+                              />
+                            </FormGroup>
+                          )}
+                        </FormGroup>
+                      ))
+                    ) : (
+                      <>
+                        <div className="d-flex flex-column h-100 align-items-center justify-content-center">
+                          No question available
+                          <div className="my-3">
+                            <button
+                              type="submit"
+                              className="al_greybgbutton"
+                              onClick={() => navigate("/dashboard")}
+                            >
+                              Go to Dashboard
+                            </button>
                           </div>
-                        ) : field.type_ === "integer" ? (
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              id={field.question_key}
-                              name={field.question_key}
-                              className="form-control"
-                              onKeyDown={allowsOnlyNumeric}
-                            />
-                          </FormGroup>
-                        ) : (
-                          <FormGroup>
-                            <Field
-                              type="text"
-                              //   as="textarea"
-                              id={field.question_key}
-                              name={field.question_key}
-                              className="form-control"
-                            />
-                          </FormGroup>
-                        )}
-                      </FormGroup>
-                    ))
-                  ) : (
-                    <div className="d-flex align-items-center justify-content-center">
-                      No question available
-                    </div>
-                  )}
-                </div>
-                {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
-                  <div>
-                    <div className="cs_mainsearch mb-2">
-                      <div className="mt-3 d-flex align-items-center justify-content-center">
-                        <button
-                          type="submit"
-                          className="al_greybgbutton"
-                          // onClick={() => navigate("/dashboard")}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </div>
+                        </div>
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <div>
-                    <div className="cs_mainsearch mb-2">
-                      <div className="mt-3 d-flex align-items-center justify-content-center">
-                        <button
-                          type="submit"
-                          className="al_greybgbutton"
-                          onClick={() => navigate("/dashboard")}
-                        >
-                          Go to Dashboard
-                        </button>
-                      </div>
+                  {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
+                    <div className="my-3">
+                      <button
+                        type="submit"
+                        className="al_greybgbutton"
+                      // onClick={() => navigate("/dashboard")}
+                      >
+                        Submit
+                      </button>
                     </div>
-                  </div>
-                )}
-              </Form>
-            )}
-          </Formik>
+                  ) : ''}
+                </Form>
+              )}
+            </Formik>
+          </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }

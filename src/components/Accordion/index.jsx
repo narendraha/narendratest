@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Row, Col } from 'reactstrap';
+import parser from 'html-react-parser';
 
 function AccordionItem({ title, content, isOpen, onClick }) {
   const accordionContentRef = useRef(null);
@@ -36,10 +37,10 @@ function AccordionItem({ title, content, isOpen, onClick }) {
         </h2>
         <div
           className="cs_accordian_body_wrap"
-          style={{ height: isOpen ? `${contentHeight}px` : '0' }}
+          style={{ height: isOpen ? `${contentHeight}px` : '0', maxHeight: contentHeight > 300 ? "300px" : "", overflowY: contentHeight > 300 ? "auto" : "" }}
         >
           <div className="cs_accordian_body" ref={accordionContentRef}>
-            <p>{content}</p>
+            <p>{parser(content)}</p>
           </div>
         </div>
       </div>

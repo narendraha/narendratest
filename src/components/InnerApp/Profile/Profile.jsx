@@ -1,5 +1,4 @@
-import React, { useEffect, Suspense } from "react";
-import { useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Row, Col, Label, FormGroup } from "reactstrap";
 import userImg from "../../../images/userprofile.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -44,7 +43,7 @@ export default function Profile() {
         }
         setGetProfileDetails(responseData);
       })
-      .catch((er) => console.log(er));
+      .catch((er) => {});
   };
 
   useEffect(() => {
@@ -89,7 +88,6 @@ export default function Profile() {
           }
         })
         .catch((er) => {
-          console.log(er);
           toast(er?.response?.data?.message, {
             position: "top-center",
             type: "error",
@@ -246,6 +244,12 @@ export default function Profile() {
                           <Label>Nationality</Label>
                         </div>
                       </Col>
+                      <Col md="4" sm="12">
+                        <div className="al_profiledata">
+                          <div>{getProfileDetails?.bmi || "NA"}</div>
+                          <Label>BMI</Label>
+                        </div>
+                      </Col>
                     </Row>
                     <hr />
                     <h6>KYC Information</h6>
@@ -335,13 +339,16 @@ export default function Profile() {
                           .min(2, "Too Short!")
                           .max(50, "Too Long!")
                           .required("This field is required"),
-                        email: Yup.string()
-                          .email("Invalid email")
-                          .required("This field is required"),
+                        // email: Yup.string()
+                        //   .email("Invalid email")
+                        //   .required("This field is required"),
                         mobile: Yup.string()
                           .matches(phoneNumberReg, "Invalid phone number")
                           .required("This field is required"),
-                        dob: Yup.string().required("This field is required"),
+                        dob: Yup.date()
+                          .max(new Date(Date.now() - 567648000000), "You must be at least 18 years old")
+                          .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000), "You must be below 120 years old")
+                          .required("Required"),
                         gender: Yup.string().required("This field is required"),
                         bloodtype: Yup.string().required(
                           "This field is required"
@@ -358,14 +365,14 @@ export default function Profile() {
                           .min(1, "Too Short!")
                           .max(3, "Too Long!")
                           .required("This field is required"),
-                        weight: Yup.string()
-                          .min(1, "Too Short!")
-                          .max(3, "Too Long!")
+                        weight: Yup.number()
+                          .min(10, "Weight must be at least 10")
+                          .max(650, "Weight is too high!")
                           .required("This field is required"),
-                        age: Yup.string()
-                          .min(1, "Too Short!")
-                          .max(3, "Too Long!")
-                          .required("This field is required"),
+                        // age: Yup.string()
+                        //   .min(1, "Too Short!")
+                        //   .max(3, "Too Long!")
+                        //   .required("This field is required"),
                       })}
                       onSubmit={(values) => {
                         // Handle form submission here
@@ -391,7 +398,7 @@ export default function Profile() {
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
-                                    Height
+                                    Height (ft)
                                   </Label>
                                   <Field
                                     type="text"
@@ -410,7 +417,7 @@ export default function Profile() {
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
-                                    Weight
+                                    Weight (kg's)
                                   </Label>
                                   <Field
                                     type="text"
@@ -464,7 +471,7 @@ export default function Profile() {
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col md="4" sm="12">
+                              {/* <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>Age
@@ -482,7 +489,7 @@ export default function Profile() {
                                     className="text-danger"
                                   />
                                 </FormGroup>
-                              </Col>
+                              </Col> */}
                               <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
@@ -646,7 +653,7 @@ export default function Profile() {
                                   />
                                 </FormGroup>
                               </Col>
-                              <Col md="4" sm="12">
+                              {/* <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
@@ -664,8 +671,8 @@ export default function Profile() {
                                     className="text-danger"
                                   />
                                 </FormGroup>
-                              </Col>
-                              <Col md="6" sm="12">
+                              </Col> */}
+                              <Col md="8" sm="12">
                                 <FormGroup>
                                   <Label>Name of Insurance Provider</Label>
                                   <Field

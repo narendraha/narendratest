@@ -72,8 +72,10 @@ export default function Header({ logoSrc, variant }) {
         {
           id: "5", name: "Heart Disease", link: '',
           innerModules: [
-            { id: "51", name: "Coronary", link: 'coronary' },
-            { id: "52", name: "Vascular", link: 'vascular' }
+            { id: "51", name: "Coronary Artery", link: 'coronary' },
+            { id: "52", name: "Heart Valves", link: 'heartvalves' },
+            { id: "53", name: "Congestive Heart Failure", link: 'congestive' },
+            { id: "54", name: "Vascular", link: 'vascular' }
           ]
         }
       ]

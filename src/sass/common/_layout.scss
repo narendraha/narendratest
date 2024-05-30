@@ -614,6 +614,10 @@ section:not(.cs_banner) {
         }
     }
 
+    .w-50.al_chatbotauth {
+        width: 70% !important;
+    }
+
     .al_card_diff,
     .al_knowldgebank {
         .col-lg-2 {
@@ -903,7 +907,7 @@ button#chatpopover {
         }
 
         .chat_item:hover {
-           // transform: scale(1.07);
+            // transform: scale(1.07);
         }
 
         >div {
@@ -919,13 +923,9 @@ button#chatpopover {
         }
 
         .form_chat {
-            height: calc(100vh - 200px);
-            overflow-y: scroll;
-
             label {
                 color: #202123;
                 font-size: 13px;
-                font-weight: 500;
             }
         }
     }

@@ -32,6 +32,7 @@ export default function Signin({ setIsAuthenticated }) {
       .post(`/login_account`, data)
       .then((res) => {
         if (res && res.data && res.status == "200") {
+          setIsLoading(false);
           if (res.data.statuscode == "200") {
             localStorage.setItem("token", res.data?.data?.token);
           }
@@ -40,7 +41,6 @@ export default function Signin({ setIsAuthenticated }) {
               position: "top-center",
               type: "success",
             });
-            setIsLoading(false);
 
             setIsAuthenticated(true);
             navigate("/home");
@@ -223,14 +223,6 @@ export default function Signin({ setIsAuthenticated }) {
                           >
                             Sign in
                           </button>
-                          <div className="mt-3 text-medium">
-                            Don’t have an account?{" "}
-                            <Link
-                              to="/registration"
-                              className="al_text_link cs_medium"
-                            >
-                              Sign in
-                            </button>
                             <div className="mt-3 text-medium">
                               Don’t have an account?{" "}
                               <Link

@@ -6,17 +6,33 @@
     margin-bottom: 1rem;
 }
 
+.al_forgot_pw,
+a.al_forgot_pw {
+    color: #263238;
+    text-decoration: underline;
+    float: right;
+    font-size: 13px;
+}
+
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-.password_icon{
+.password_icon {
     cursor: pointer;
     position: absolute;
-    top: 10px;
+    top: 8px;
     right: 15px;
+}
+
+.al_login-form {
+    .position-relative {
+        input {
+            padding-right: 30px;
+        }
+    }
 }
 
 .al_login_container {
@@ -158,13 +174,15 @@ ul {
                     background-color: #ffffff;
                     color: #566170;
                     border-radius: 8px;
-                    padding: 8px 20px;
+                    padding: 0;
                     width: 100%;
                     font-weight: 400;
                     font-size: 12px;
 
                     a {
                         color: #566170 !important;
+                        display: block;
+                        padding: 8px 20px;
                     }
 
                     strong {
@@ -180,13 +198,6 @@ ul {
                 .al_login_footer {
                     text-align: center;
                     font-size: 14px;
-
-                    .al_forgot_pw {
-                        color: #263238;
-                        text-decoration: underline;
-                        float: right;
-                        font-size: 12px;
-                    }
 
                     .alhr-or {
                         position: relative;

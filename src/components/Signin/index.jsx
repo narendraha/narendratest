@@ -38,7 +38,7 @@ export default function Signin({ setIsAuthenticated }) {
           }
           if (res.data?.statuscode === 200) {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
 
@@ -46,7 +46,7 @@ export default function Signin({ setIsAuthenticated }) {
             navigate("/home");
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -54,7 +54,7 @@ export default function Signin({ setIsAuthenticated }) {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -73,21 +73,21 @@ export default function Signin({ setIsAuthenticated }) {
             if (res && res.data && (res.status == 200 || res.status == 201)) {
               localStorage.setItem("token", res.data?.data?.token);
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setIsAuthenticated(true);
               navigate("/profile");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
             }
           })
           .catch((er) => {
             toast(er?.response?.data?.message || er?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           });

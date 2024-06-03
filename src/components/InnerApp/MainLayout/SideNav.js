@@ -10,15 +10,15 @@ export default function SideNav(props) {
   const location = useLocation();
 
   const menuData = [
-    {
-      moduleId: '1',
-      name: 'Dashboard',
-      link: 'dashboard',
-      icon: 'icon_alfred_dashboard',
-      subModules: [
-        { id: "1", name: "Dashboard", link: 'dashboard', icon: 'icon_alfred_dashboard' }
-      ]
-    },
+    // {
+    //   moduleId: '1',
+    //   name: 'Dashboard',
+    //   link: 'dashboard',
+    //   icon: 'icon_alfred_dashboard',
+    //   subModules: [
+    //     { id: "1", name: "Dashboard", link: 'dashboard', icon: 'icon_alfred_dashboard' }
+    //   ]
+    // },
     {
       moduleId: '2',
       name: 'Home',

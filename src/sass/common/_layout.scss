@@ -680,15 +680,16 @@ section:not(.cs_banner) {
 
 .al_note {
     color: #828282;
-    font-size: 12px;
+    font-size: 11px;
     line-height: normal;
 }
 
 .al_note_content{
-    border: 0.1px solid black;
-    padding: 10px;
-    border-radius: 10px;
-    color: #000;
+    border: 0.1px solid #dfdfdf;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: #444444;
+    font-size: 11px;
 }
 
 .al_chatcontent {

@@ -59,7 +59,7 @@ export default function Personomics() {
       <div className='text-center w-80 mx-auto'>
         <Spacing md="70" lg="80" xl="110" />
         <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
-          PERSONIMICS
+          PERSONOMICS
         </h3>
         <Spacing md="25" lg="25" xl="25" />
         <h2 className="cs_section_title cs_fs_72 m-0"> Evaluates willingness to change, barriers to their access to care, medications, treatment, takes history for individualized information and education</h2>

@@ -337,7 +337,7 @@ export default function Home() {
           if (res && res.data && res.status == "200") {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setIsShowconfirm(!data);
@@ -345,7 +345,7 @@ export default function Home() {
               setTab("4");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
             }
@@ -353,7 +353,7 @@ export default function Home() {
         })
         .catch((er) => {
           toast(er?.response?.data?.message, {
-            position: "top-center",
+            position: "top-right",
             type: "error",
           });
         });
@@ -521,7 +521,7 @@ export default function Home() {
           if (res && res.data && res.status == 200) {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setShow2(!data);
@@ -529,7 +529,7 @@ export default function Home() {
               setTab("3");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
             }
@@ -537,7 +537,7 @@ export default function Home() {
         })
         .catch((er) => {
           toast(er?.response?.data?.message || er?.message, {
-            position: "top-center",
+            position: "top-right",
             type: "error",
           });
         });
@@ -554,7 +554,7 @@ export default function Home() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -572,7 +572,7 @@ export default function Home() {
         console.log(er);
         console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -596,12 +596,12 @@ export default function Home() {
         if (res && res.data && res.status == 200) {
           if (res.data?.statuscode === 200) {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -609,7 +609,7 @@ export default function Home() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -857,20 +857,13 @@ export default function Home() {
                     </div>
                   </TabPane>
                   <TabPane tabId="2">
-                    <div className="d-flex justify-content-between">
-                      <h5>Health details </h5>
+                    <div className="d-flex justify-content-between mb-2">
+                      <h5 className="mb-0">Health details </h5>
                       {getLastUpdated?.difference >= 0 ? (
-                        <div className="d-flex align-items-center justify-content-center gap-1 text-end al_note al_note_content">
-                          <img
-                          className="mb-1"
-                                src={bulp}
-                                alt=""
-                                style={{
-                                  height: "20px",
-                                }}
-                              />You, Last gave your symptoms{" "}
-                          <span style={{color:'#3bc0c3'}}> {getLastUpdated?.difference}</span> days ago on<span style={{color:'#3bc0c3'}}>
-                          {getLastUpdated?.date}</span>
+                        <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
+                          <img src={bulp} alt="" width={20} />You, Last gave your symptoms{" "}
+                          <span style={{ color: '#3bc0c3' }}> {getLastUpdated?.difference}</span> days ago on<span style={{ color: '#3bc0c3' }}>
+                            {getLastUpdated?.date}</span>
                         </div>
                       ) : null}
                     </div>
@@ -1011,6 +1004,7 @@ export default function Home() {
                                               className="text-danger"
                                             />
                                           </div>
+                                          <div className="mt-2 text-muted">/</div>
                                           <div>
                                             <Field
                                               type="text"

@@ -71,7 +71,7 @@ export default function Profile() {
           if (res && res.data && res.status == "200") {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setIsEdit(false);
@@ -80,7 +80,7 @@ export default function Profile() {
               navigate("/profile");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
               navigate("/profile");
@@ -89,7 +89,7 @@ export default function Profile() {
         })
         .catch((er) => {
           toast(er?.response?.data?.message, {
-            position: "top-center",
+            position: "top-right",
             type: "error",
           });
         });

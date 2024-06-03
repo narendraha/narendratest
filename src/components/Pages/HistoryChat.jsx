@@ -140,7 +140,7 @@ export default function HistoryChatBot() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -164,7 +164,7 @@ export default function HistoryChatBot() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -189,7 +189,7 @@ export default function HistoryChatBot() {
 
     if (!hasValue) {
       toast("Please provide at least one answer.", {
-        position: "top-center",
+        position: "top-right",
         type: "error",
       });
       return;
@@ -201,7 +201,7 @@ export default function HistoryChatBot() {
         if (response && response?.status == 200) {
           if (response.data?.statuscode === 200) {
             toast(response.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             getHistoryBotQues();
@@ -210,7 +210,7 @@ export default function HistoryChatBot() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });

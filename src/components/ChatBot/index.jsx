@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Card, CardBody, Button } from "reactstrap";
 import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/usericon.svg";
+import Chatuser from "../../images/userprofile.jpg";
 import Chatbot from "../../images/alfredicon.svg";
 import { Row, Col } from "reactstrap";
+import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 
 export default function ChatBot(props) {
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
@@ -11,10 +12,12 @@ export default function ChatBot(props) {
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
+  const decodedToken = getDecodedTokenFromLocalStorage();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
+    setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
     let data = {
@@ -32,14 +35,13 @@ export default function ChatBot(props) {
             setIsLoading(false);
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              responseData,
+              { Alfred: responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
           }
         }
       })
-      .catch((er) => {
-      });
+      .catch((er) => {});
   };
 
   const handleInputChange = (e) => {
@@ -80,14 +82,20 @@ export default function ChatBot(props) {
                     {Object.entries(message).map(([key, value]) => (
                       <Row className="mb-4 al_chatcontent" key={key}>
                         <div>
-                          {key === "user" ? (
-                            <img src={Chatuser} alt="chat user" />
-                          ) : key === "alfred" ? (
+                          {key === "User" ? (
+                            <img
+                              src={Chatuser}
+                              alt="chat user"
+                              className="al_chatimg"
+                            />
+                          ) : key === "Alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
-                          <h6 className="mb-0">{key}</h6>
+                          <h6 className="mb-0">
+                            {key === "User" ? decodedToken?.username : key}
+                          </h6>
                           <div>{value}</div>
                         </Col>
                       </Row>
@@ -104,9 +112,7 @@ export default function ChatBot(props) {
               style={{ backgroundColor: "#E2E5ED" }}
             >
               <form action="#">
-                <i
-                  className="icon_alfred_search h-auto"
-                ></i>
+                <i className="icon_alfred_search h-auto"></i>
                 <input
                   type="text"
                   placeholder="Ask a question"
@@ -136,9 +142,7 @@ export default function ChatBot(props) {
                     ></i>
                   </>
                 ) : (
-                  <i
-                    className="icon_alfred_speech h-auto"
-                  ></i>
+                  <i className="icon_alfred_speech h-auto"></i>
                 )}
               </form>
               <div className="al_note pt-1">

@@ -712,6 +712,9 @@ section:not(.cs_banner) {
         font-weight: 500;
         margin-bottom: 3px !important;
     }
+    .al_chatimg{
+        border-radius: 50%;
+    }
 }
 
 .al_chatloading {
@@ -1239,7 +1242,7 @@ ul.standardPlans {
                     align-items: center;
                     padding: 18px 0;
 
-                    >a {
+                    div {
                         font-size: 14px;
                         color: #70809a;
                         text-decoration: none;
@@ -1276,6 +1279,16 @@ ul.standardPlans {
                             i {
                                 color: $text-primary;
                             }
+                        }
+
+                        div {
+                            font-weight: $font_w500;
+                            color: $text-primary;
+
+                            
+                        }
+                        i {
+                            color: $text-primary;
                         }
                     }
                 }

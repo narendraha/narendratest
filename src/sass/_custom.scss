@@ -49,6 +49,26 @@ a {
   }
 }
 
+.input-group {
+  .input-group-prepend {
+    .input-group-text {
+      background-color: #f2f6fb;
+      border: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      height: 40px;
+      padding-right: 0 !important;
+      font-size: 14px;
+      color: #212529;
+    }
+  }
+ 
+  input.form-control {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+}
+
 .w-max-40 {
   max-width: 40% !important;
 }

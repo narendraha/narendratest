@@ -43,7 +43,7 @@ export default function Profile() {
         }
         setGetProfileDetails(responseData);
       })
-      .catch((er) => {});
+      .catch((er) => { });
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function Profile() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
-    setIsShowconfirm(!data);
+      setIsShowconfirm(!data);
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
@@ -145,7 +145,7 @@ export default function Profile() {
                         type="file"
                         id="uploadPicture"
                         name="uploadProfilePic"
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                         hidden
                         accept=".jpg,.jpeg,.png"
                       />
@@ -287,7 +287,7 @@ export default function Profile() {
                             PIV-idfrontside.jpg
                           </span>
                         </div>
-                        <a href="#">View</a>
+                        <a href="/#">View</a>
                       </div>
 
                       <div className="d-flex wrap my-2">
@@ -300,7 +300,7 @@ export default function Profile() {
                             PIV-idbackside.jpg
                           </span>
                         </div>
-                        <a href="#">View</a>
+                        <a href="/#">View</a>
                       </div>
                     </div>
                     <hr />
@@ -412,6 +412,7 @@ export default function Profile() {
                           dob: moment(values.dob).format("YYYY-MM-DD"),
                         };
                         setFormData(data);
+                        setGetProfileDetails(data)
                       }}
                     >
                       {({
@@ -586,8 +587,8 @@ export default function Profile() {
                                       values?.dob
                                         ? new Date(values?.dob)
                                         : values?.dob == "NA"
-                                        ? new Date()
-                                        : new Date()
+                                          ? new Date()
+                                          : new Date()
                                     }
                                     onChange={(e) => {
                                       setFieldValue("dob", e);

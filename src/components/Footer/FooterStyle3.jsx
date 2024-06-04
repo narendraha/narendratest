@@ -1,8 +1,6 @@
 import React from 'react';
-import SocialWidget from '../Widget/SocialWidget';
-import TextWidget from '../Widget/TextWidget';
+import { Col, Row } from 'reactstrap';
 import ContactInfoWidget from '../Widget/ContactInfoWidget';
-import { Row, Col } from 'reactstrap';
 
 export default function FooterStyle3() {
   return (

@@ -8,6 +8,7 @@ import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
 import { Icon } from "@iconify/react";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function HomeStyle3() {
   pageTitle("Home");
@@ -17,6 +18,7 @@ export default function HomeStyle3() {
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
   const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
+  const [randomId, setRandomId] = useState(null);
 
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
@@ -26,13 +28,18 @@ export default function HomeStyle3() {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [chatHistory]);
 
+  useEffect(() => {
+    setRandomId(uuidv4().slice(0, 5))
+  }, [randomId === null])
+
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
     setSelectedIcons(prevIcons => ({
       ...prevIcons,
-      [messageId]: { reaction : iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
+      [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
     }));
-    
+
   };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
@@ -40,12 +47,14 @@ export default function HomeStyle3() {
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
     let data = {
+      id: randomId,
       message: inputValue,
     };
     // api integration
     await AxiosInstance("application/json")
-      .post(`/ask_gpt`, data)
+      .post(`/history`, data)
       .then((res) => {
+        console.log("ask_gpt====>", { data, res })
         if (res && res.data && res.status === 200) {
           setIsShow(true);
           if (res.data.statuscode === 200) {
@@ -54,7 +63,7 @@ export default function HomeStyle3() {
             setIsLoading(false);
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              { Alfred: responseData?.Alfred },
+              { Alfred: responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
           }
@@ -69,10 +78,12 @@ export default function HomeStyle3() {
     value !== ""
       ? setIsShowSendBtn(true)
       : setIsShowSendBtn(
-          false
-        ); /* Show send button when user enter something */
+        false
+      ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
+
+  console.log("chatHistory", chatHistory)
   return (
     <div className="cs_homepage">
       {isShow ? (
@@ -101,7 +112,7 @@ export default function HomeStyle3() {
                                 icon="iconamoon:like-light"
                                 width="1.5em"
                                 height="1.5em"
-                                onClick={() => handleAction(index, 'like',value)} // Handle like action
+                                onClick={() => handleAction(index, 'like', value)} // Handle like action
                                 style={{
                                   cursor: 'pointer',
                                   color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
@@ -112,7 +123,7 @@ export default function HomeStyle3() {
                                 width="1.5em"
                                 height="1.5em"
                                 className="mx-2"
-                                onClick={() => handleAction(index, 'dislike',value)} // Handle dislike action
+                                onClick={() => handleAction(index, 'dislike', value)} // Handle dislike action
                                 style={{
                                   cursor: 'pointer',
                                   color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected

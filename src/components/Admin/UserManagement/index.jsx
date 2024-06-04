@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Card, CardBody, Row, Col, DropdownItem, DropdownMenu, DropdownToggle, Label, UncontrolledDropdown, FormGroup, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import Switch from "react-switch";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
 import Select from "react-select";
+import Switch from "react-switch";
+import { Card, CardBody, Col, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Label, Row, UncontrolledDropdown } from 'reactstrap';
 
 export default function UserManagement() {
     const [view, setView] = useState("view");

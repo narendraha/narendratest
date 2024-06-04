@@ -1,18 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Row, Col, Label, FormGroup } from "reactstrap";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import successImg from "../../images/sucessimg.svg";
 import OtpInput from "react-otp-input";
-import { AxiosInstance } from "../../_mock/utilities";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Col, FormGroup, Label, Row } from "reactstrap";
+import * as Yup from "yup";
+import { passwordReg } from "../../_mock/RegularExp";
+import { AxiosInstance } from "../../_mock/utilities";
+import alferdlogomobile from "../../images/alfredlogo.svg";
+import alferdlogo from "../../images/alfredlogowhite.svg";
+import successImg from "../../images/sucessimg.svg";
 import Loading from "../InnerApp/LoadingComponent";
 import OTPComponent from "./OTP";
-import { passwordReg } from "../../_mock/RegularExp";
-import { Icon } from "@iconify/react";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function ForgotPassword() {
     AxiosInstance("application/json")
       .post(`/generate_otp`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && res.status === "200") {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             setOtpResponse(res.data?.message);
@@ -373,7 +373,7 @@ export default function ForgotPassword() {
     AxiosInstance("application/json")
       .post(`/verify_otp`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && (res.status == "200" || res.status === 200)) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
@@ -407,7 +407,7 @@ export default function ForgotPassword() {
     AxiosInstance("application/json")
       .put(`/update_password`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && (res.status == "200" || res.status === 200)) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {

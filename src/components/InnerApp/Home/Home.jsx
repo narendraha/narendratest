@@ -1,32 +1,27 @@
-import React, { useState, Suspense } from "react";
-import { Row, Col, Label, FormGroup, TabContent, TabPane, NavLink, Nav, NavItem, Card, CardBody, Table } from "reactstrap";
-import atrialfib from "../../../images/atrialfib.png";
-import whytreatment from "../../../images/whytreatment.png";
-import rhythm from "../../../images/rhythm.png";
-import bulp from "../../../images/idea.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
+import Highcharts from "highcharts";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Slider from "react-rangeslider";
 import "react-rangeslider/lib/index.css";
-import LayoutAlertMessage from "../MainLayout/LayoutAlertMessage";
-import ConfirmationAction from "../MainLayout/ConfirmationAction";
-import Highcharts from "highcharts";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
-import { AxiosInstance } from "../../../_mock/utilities";
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
-import Loading from "../../InnerApp/LoadingComponent";
-import { createResource } from "../createResource";
+import { Card, CardBody, Col, FormGroup, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane, Table } from "reactstrap";
+import * as Yup from "yup";
 import {
-  allowsOnlyNumeric,
-  allowsOnlyNumericOnly3Digit,
+  allowsOnlyNumericOnly3Digit
 } from "../../../_mock/RegularExp";
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
+import { AxiosInstance } from "../../../_mock/utilities";
+import atrialfib from "../../../images/atrialfib.png";
+import bulp from "../../../images/idea.png";
+import rhythm from "../../../images/rhythm.png";
+import whytreatment from "../../../images/whytreatment.png";
+import Loading from "../../InnerApp/LoadingComponent";
+import ConfirmationAction from "../MainLayout/ConfirmationAction";
 
 export default function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [getTabStatus, setGetStatus] = useState({});
   const [tab, setTab] = useState("1");
@@ -43,9 +38,9 @@ export default function Home() {
   const [labelValues10, setLabelValues10] = useState(0);
   const [labelValues11, setLabelValues11] = useState(0);
   const [labelValues12, setLabelValues12] = useState(0);
-  const [showconfirm, setShowconfirm] = useState(false);
+  // const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
-  const [resource, setResource] = useState(null);
+  // const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
   const [isLoading, setIsLoading] = useState(false)
   // symptoms
@@ -359,12 +354,12 @@ export default function Home() {
         });
     }
   };
-  const shownextStep = () => {
-    setShowconfirm(!showconfirm);
-    if (showconfirm) {
-      setTab("3");
-    }
-  };
+  // const shownextStep = () => {
+  //   setShowconfirm(!showconfirm);
+  //   if (showconfirm) {
+  //     setTab("3");
+  //   }
+  // };
 
   const sorteddata = [
     [Date.UTC(2024, 2, 21), 81],
@@ -379,7 +374,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    setResource(createResource(getTabListStatus()));
+    // setResource(createResource(getTabListStatus()));
     getLastUpdatedHealthDetails();
   }, [tab]);
 
@@ -544,23 +539,23 @@ export default function Home() {
     }
   };
 
-  const getTabListStatus = async () => {
-    setIsLoading(true)
-    await AxiosInstance("application/json")
-      .get("/getstatus")
-      .then((response) => {
-        if (response && response?.status == 200) {
-          setGetStatus(response.data?.data);
-          setIsLoading(false)
-        }
-      })
-      .catch((er) => {
-        toast(er?.response?.data?.message || er?.message, {
-          position: "top-right",
-          type: "error",
-        });
-      });
-  };
+  // const getTabListStatus = async () => {
+  //   setIsLoading(true)
+  //   await AxiosInstance("application/json")
+  //     .get("/getstatus")
+  //     .then((response) => {
+  //       if (response && response?.status == 200) {
+  //         setGetStatus(response.data?.data);
+  //         setIsLoading(false)
+  //       }
+  //     })
+  //     .catch((er) => {
+  //       toast(er?.response?.data?.message || er?.message, {
+  //         position: "top-right",
+  //         type: "error",
+  //       });
+  //     });
+  // };
 
   const getLastUpdatedHealthDetails = async () => {
     await AxiosInstance("application/json")
@@ -899,10 +894,10 @@ export default function Home() {
                             setHealthDetails(values);
                           }}
                         >
-                          {({ }) => {
-                            return (
-                              <Form>
-                                {/* <Row>
+                        {({ values }) => {
+                          return (
+                            <Form>
+                              {/* <Row>
                                 <Col sm="4">
                                   <FormGroup>
                                     <Label>Height(ft)</Label>

@@ -174,7 +174,7 @@ export default function HomeStyle3() {
           </Col>
           <Col sm="8" className="h-100 d-flex flex-column justify-content-center">
             <Row className="al_hometop">
-              <Col>
+              <Col className="d-flex justify-content-end">
                 <img src={homeright} alt="typing" />
               </Col>
               <div className="w-auto w-max-40 pe-5">

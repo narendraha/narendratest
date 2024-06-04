@@ -42,13 +42,13 @@ export default function ForgotPassword() {
           if (res.data.statuscode === 200) {
             setOtpResponse(res.data?.message);
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(2); // Switch to the second form after submitting the first form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -56,7 +56,7 @@ export default function ForgotPassword() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -228,13 +228,13 @@ export default function ForgotPassword() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                      0,
-                                                      index
-                                                    ) +
-                                                    updatedValue +
-                                                    values.otp.substring(
-                                                      index + 1
-                                                    ),
+                                                    0,
+                                                    index
+                                                  ) +
+                                                  updatedValue +
+                                                  values.otp.substring(
+                                                    index + 1
+                                                  ),
                                             },
                                           });
                                           if (
@@ -377,13 +377,13 @@ export default function ForgotPassword() {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(3); // Switch back to the first form after submitting the second form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -391,7 +391,7 @@ export default function ForgotPassword() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -411,13 +411,13 @@ export default function ForgotPassword() {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(4); // Switch back to the first form after submitting the second form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -425,7 +425,7 @@ export default function ForgotPassword() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -508,9 +508,7 @@ export default function ForgotPassword() {
                                 )}
                               </div>
                             </div>
-                            <span
-                              style={{ color: "#9ba8b9", fontSize: "11px" }}
-                            >
+                            <span className="al_note mt-2 fw-light">
                               Password must contain 8 characters, one uppercase,
                               one lowercase, one number and one special
                               character

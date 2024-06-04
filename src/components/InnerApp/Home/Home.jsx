@@ -47,7 +47,7 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false)
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -337,7 +337,7 @@ export default function Home() {
           if (res && res.data && res.status == "200") {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setIsShowconfirm(!data);
@@ -345,7 +345,7 @@ export default function Home() {
               setTab("4");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
             }
@@ -353,7 +353,7 @@ export default function Home() {
         })
         .catch((er) => {
           toast(er?.response?.data?.message, {
-            position: "top-center",
+            position: "top-right",
             type: "error",
           });
         });
@@ -521,7 +521,7 @@ export default function Home() {
           if (res && res.data && res.status == 200) {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "success",
               });
               setShow2(!data);
@@ -529,7 +529,7 @@ export default function Home() {
               setTab("3");
             } else {
               toast(res.data?.message, {
-                position: "top-center",
+                position: "top-right",
                 type: "error",
               });
             }
@@ -537,7 +537,7 @@ export default function Home() {
         })
         .catch((er) => {
           toast(er?.response?.data?.message || er?.message, {
-            position: "top-center",
+            position: "top-right",
             type: "error",
           });
         });
@@ -545,16 +545,18 @@ export default function Home() {
   };
 
   const getTabListStatus = async () => {
+    setIsLoading(true)
     await AxiosInstance("application/json")
       .get("/getstatus")
       .then((response) => {
         if (response && response?.status == 200) {
           setGetStatus(response.data?.data);
+          setIsLoading(false)
         }
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -572,7 +574,7 @@ export default function Home() {
         console.log(er);
         console.log("er?.message: ", er?.message);
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -595,21 +597,21 @@ export default function Home() {
       .then((res) => {
         if (res && res.data && res.status == 200) {
           if (res.data?.statuscode === 200) {
-            toast(res.data?.message, {
-              position: "top-center",
-              type: "success",
-            });
+            // toast(res.data?.message, {
+            //   position: "top-center",
+            //   type: "success",
+            // });
           } else {
-            toast(res.data?.message, {
-              position: "top-center",
-              type: "error",
-            });
+            // toast(res.data?.message, {
+            //   position: "top-center",
+            //   type: "error",
+            // });
           }
         }
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -626,16 +628,6 @@ export default function Home() {
     }
   };
 
-  if (resource) {
-    return (
-      <Suspense fallback={<Loading />}>
-        <ResourceLoader resource={resource} />
-      </Suspense>
-    );
-  }
-  function ResourceLoader({ resource }) {
-    resource.read(); // This will throw a promise that Suspense will catch
-
     return (
       <>
         <ConfirmationAction
@@ -648,6 +640,7 @@ export default function Home() {
           }
           open={isShowconfirm || show1 || show2}
         />
+        {isLoading && <Loading/>}
         <div className="wflexLayout">
           <div className="wflexScroll al-pad">
             <h3 className="bc_main_text mb-1">
@@ -857,20 +850,13 @@ export default function Home() {
                     </div>
                   </TabPane>
                   <TabPane tabId="2">
-                    <div className="d-flex justify-content-between">
-                      <h5>Health details </h5>
+                    <div className="d-flex justify-content-between mb-2">
+                      <h5 className="mb-0">Health details </h5>
                       {getLastUpdated?.difference >= 0 ? (
-                        <div className="d-flex align-items-center justify-content-center gap-1 text-end al_note al_note_content">
-                          <img
-                          className="mb-1"
-                                src={bulp}
-                                alt=""
-                                style={{
-                                  height: "20px",
-                                }}
-                              />You, Last gave your symptoms{" "}
-                          <span style={{color:'#3bc0c3'}}> {getLastUpdated?.difference}</span> days ago on<span style={{color:'#3bc0c3'}}>
-                          {getLastUpdated?.date}</span>
+                        <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
+                          <img src={bulp} alt="" width={20} />You, Last gave your symptoms{" "}
+                          <span style={{ color: '#3bc0c3' }}> {getLastUpdated?.difference}</span> days ago on<span style={{ color: '#3bc0c3' }}>
+                            {getLastUpdated?.date}</span>
                         </div>
                       ) : null}
                     </div>
@@ -1011,6 +997,7 @@ export default function Home() {
                                               className="text-danger"
                                             />
                                           </div>
+                                          <div className="mt-2 text-muted">/</div>
                                           <div>
                                             <Field
                                               type="text"
@@ -2512,7 +2499,7 @@ export default function Home() {
                           provided in this application{" "}
                         </p>
 
-                        <button type="button" className="al_savebtn">
+                        <button type="button" className="al_savebtn" onClick={()=>setTab("5")}>
                           OK
                         </button>
                         {/* <LayoutAlertMessage /> */}
@@ -2560,5 +2547,4 @@ export default function Home() {
         </div>
       </>
     );
-  }
 }

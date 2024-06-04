@@ -31,11 +31,10 @@ const ResendOTP = (props) => {
   return (
     <div className="text-end">
       <p
-        className={`mb-0 ${isDisabled ? "disabled" : ""}`}
+        className={`mb-0 mt-2 al_forgot_pw ${isDisabled ? "disabled" : ""}`}
         onClick={!isDisabled ? handleResendClick : null}
         style={{
-          cursor: isDisabled ? "default" : "pointer",
-          color: isDisabled ? "grey" : "inherit",
+          cursor: isDisabled ? "default" : "pointer"
         }}
       >
         Resend OTP {isDisabled ? `(${seconds}s)` : ""}

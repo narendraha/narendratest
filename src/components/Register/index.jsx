@@ -59,13 +59,13 @@ export default function Register() {
           if (res.data.statuscode === 200) {
             setOtpResponse(res.data?.message);
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(2); // Switch to the second form after submitting the first form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -73,7 +73,7 @@ export default function Register() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -133,11 +133,9 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
-            {isFormLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                  {isFormLoading && <Loading />}
                   <Link to="/">
                     <img
                       src={alferdlogo}
@@ -258,13 +256,24 @@ export default function Register() {
                         <Label>
                           <span className="requiredLabel">*</span>Mobile
                         </Label>
-                        <Field
-                          type="text"
-                          name="mobile"
-                          placeholder="Enter Mobile Number"
-                          className="form-control"
-                          onKeyPress={(e) => allowsOnlyNumeric(e)}
-                        />
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text"
+                              id="basic-addon1"
+                            >
+                              +1
+                            </span>
+                          </div>
+                          <Field
+                            type="text"
+                            className="form-control"
+                            name="mobile"
+                            placeholder="Enter Mobile Number"
+                            onKeyPress={(e) => allowsOnlyNumeric(e)}
+                            aria-describedby="basic-addon1"
+                          />
+                        </div>
                         <ErrorMessage
                           name="mobile"
                           component={"div"}
@@ -941,13 +950,13 @@ export default function Register() {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(3); // Switch back to the first form after submitting the second form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -955,7 +964,7 @@ export default function Register() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });
@@ -977,13 +986,13 @@ export default function Register() {
           if (res.data?.statuscode === 200) {
             setIsLoading(false);
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
             setActiveForm(4); // Switch back to the first form after submitting the third form
           } else {
             toast(res.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -991,7 +1000,7 @@ export default function Register() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });

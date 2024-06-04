@@ -40,6 +40,7 @@ import HealthcareConsultant from "../components/Pages/HealthcareConsultant";
 import HistoryChat from "../components/Pages/HistoryChat";
 import HeartValves from "../components/Pages/HeartValves";
 import Congestive from "../components/Pages/Congestive";
+import HistoryChatNew from "../components/Pages/HistoryChatNew";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -61,7 +62,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
-              <Route path="historychat" element={<HistoryChat />} />
+              {/* <Route path="historychat" element={<HistoryChat />} /> */}
+              <Route path="historychat" element={<HistoryChatNew />} />
 
             </Route>
           </>

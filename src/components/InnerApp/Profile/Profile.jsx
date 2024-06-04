@@ -61,10 +61,33 @@ export default function Profile() {
     { value: "Cohabitant", label: "Cohabitant" },
     { value: "Non-Resident", label: "Non-Resident" },
   ];
-
+  const bloodTypes = [
+    { value: "A +", label: "A +" },
+    { value: "A -", label: "A -" },
+    { value: "A Unknown", label: "A Unknown" },
+    { value: "B +", label: "B +" },
+    { value: "B -", label: "B -" },
+    { value: "B Unknown", label: "B Unknown" },
+    { value: "AB +", label: "AB +" },
+    { value: "AB -", label: "AB -" },
+    { value: "AB Unknown", label: "AB Unknown" },
+    { value: "O +", label: "O +" },
+    { value: "O -", label: "O -" },
+    { value: "O Unknown", label: "O Unknown" },
+    { value: "Unknown", label: "Unknown" },
+  ];
+  function maskssn(input) {
+    if (input.length < 2) {
+      return input;
+    }
+    const lastTwoChars = input.slice(-2);
+    const maskedPart = "*".repeat(input.length - 2);
+    return `${maskedPart}${lastTwoChars}`;
+  }
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
+    setIsShowconfirm(!data);
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
@@ -76,7 +99,6 @@ export default function Profile() {
               });
               setIsEdit(false);
               profileDetails();
-              setIsShowconfirm(!data);
               navigate("/profile");
             } else {
               toast(res.data?.message, {
@@ -225,7 +247,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.ssn || "NA"}</div>
+                          <div>{maskssn(getProfileDetails?.ssn || "NA")}</div>
                           <Label>SSN</Label>
                         </div>
                       </Col>
@@ -331,7 +353,7 @@ export default function Profile() {
                         ssn: getProfileDetails?.ssn || "",
                         height: getProfileDetails?.height || "",
                         weight: getProfileDetails?.weight || "",
-                        age: getProfileDetails?.age || "",
+                        // age: getProfileDetails?.age || "",
                         bloodtype: getProfileDetails?.bloodtype || "",
                       }}
                       validationSchema={Yup.object().shape({
@@ -346,8 +368,16 @@ export default function Profile() {
                           .matches(phoneNumberReg, "Invalid phone number")
                           .required("This field is required"),
                         dob: Yup.date()
-                          .max(new Date(Date.now() - 567648000000), "You must be at least 18 years old")
-                          .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000), "You must be below 120 years old")
+                          .max(
+                            new Date(Date.now() - 567648000000),
+                            "You must be at least 18 years old"
+                          )
+                          .min(
+                            new Date(
+                              Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000
+                            ),
+                            "You must be below 120 years old"
+                          )
                           .required("Required"),
                         gender: Yup.string().required("This field is required"),
                         bloodtype: Yup.string().required(
@@ -438,11 +468,23 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Blood Type
                                   </Label>
-                                  <Field
-                                    type="text"
+                                  <Select
+                                    className="inputSelect"
+                                    options={bloodTypes}
                                     name="bloodtype"
-                                    placeholder="Enter Blood Type"
-                                    className="form-control"
+                                    value={bloodTypes?.find(
+                                      (option) =>
+                                        option.value === values?.bloodtype
+                                    )}
+                                    onChange={(selectedOption) =>
+                                      setFieldValue(
+                                        "bloodtype",
+                                        selectedOption?.value
+                                      )
+                                    }
+                                    onBlur={() =>
+                                      setFieldTouched("bloodtype", true)
+                                    }
                                   />
                                   <ErrorMessage
                                     name="bloodtype"
@@ -571,13 +613,31 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Mobile
                                   </Label>
-                                  <Field
+                                  {/* <Field
                                     type="text"
                                     name="mobile"
                                     placeholder="Enter Mobile"
                                     className="form-control"
                                     onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                  />
+                                  /> */}
+                                  <div className="input-group">
+                                    <div className="input-group-prepend">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        +1
+                                      </span>
+                                    </div>
+                                    <Field
+                                      type="text"
+                                      className="form-control"
+                                      name="mobile"
+                                      placeholder="Enter Mobile Number"
+                                      onKeyPress={(e) => allowsOnlyNumeric(e)}
+                                      aria-describedby="basic-addon1"
+                                    />
+                                  </div>
                                   <ErrorMessage
                                     name="mobile"
                                     component={"div"}

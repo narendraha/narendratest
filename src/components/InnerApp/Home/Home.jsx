@@ -47,7 +47,7 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false)
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -545,11 +545,13 @@ export default function Home() {
   };
 
   const getTabListStatus = async () => {
+    setIsLoading(true)
     await AxiosInstance("application/json")
       .get("/getstatus")
       .then((response) => {
         if (response && response?.status == 200) {
           setGetStatus(response.data?.data);
+          setIsLoading(false)
         }
       })
       .catch((er) => {
@@ -595,15 +597,15 @@ export default function Home() {
       .then((res) => {
         if (res && res.data && res.status == 200) {
           if (res.data?.statuscode === 200) {
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "success",
-            });
+            // toast(res.data?.message, {
+            //   position: "top-center",
+            //   type: "success",
+            // });
           } else {
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "error",
-            });
+            // toast(res.data?.message, {
+            //   position: "top-center",
+            //   type: "error",
+            // });
           }
         }
       })
@@ -626,16 +628,6 @@ export default function Home() {
     }
   };
 
-  if (resource) {
-    return (
-      <Suspense fallback={<Loading />}>
-        <ResourceLoader resource={resource} />
-      </Suspense>
-    );
-  }
-  function ResourceLoader({ resource }) {
-    resource.read(); // This will throw a promise that Suspense will catch
-
     return (
       <>
         <ConfirmationAction
@@ -648,6 +640,7 @@ export default function Home() {
           }
           open={isShowconfirm || show1 || show2}
         />
+        {isLoading && <Loading/>}
         <div className="wflexLayout">
           <div className="wflexScroll al-pad">
             <h3 className="bc_main_text mb-1">
@@ -2506,7 +2499,7 @@ export default function Home() {
                           provided in this application{" "}
                         </p>
 
-                        <button type="button" className="al_savebtn">
+                        <button type="button" className="al_savebtn" onClick={()=>setTab("5")}>
                           OK
                         </button>
                         {/* <LayoutAlertMessage /> */}
@@ -2554,5 +2547,4 @@ export default function Home() {
         </div>
       </>
     );
-  }
 }

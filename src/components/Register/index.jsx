@@ -136,7 +136,6 @@ export default function Register() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                  {isFormLoading && <Loading />}
                   <Link to="/">
                     <img
                       src={alferdlogo}
@@ -257,13 +256,24 @@ export default function Register() {
                         <Label>
                           <span className="requiredLabel">*</span>Mobile
                         </Label>
-                        <Field
-                          type="text"
-                          name="mobile"
-                          placeholder="Enter Mobile Number"
-                          className="form-control"
-                          onKeyPress={(e) => allowsOnlyNumeric(e)}
-                        />
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text"
+                              id="basic-addon1"
+                            >
+                              +1
+                            </span>
+                          </div>
+                          <Field
+                            type="text"
+                            className="form-control"
+                            name="mobile"
+                            placeholder="Enter Mobile Number"
+                            onKeyPress={(e) => allowsOnlyNumeric(e)}
+                            aria-describedby="basic-addon1"
+                          />
+                        </div>
                         <ErrorMessage
                           name="mobile"
                           component={"div"}

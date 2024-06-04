@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UncontrolledTooltip } from 'reactstrap';
 import logo from '../../../images/alfredlogowhite.svg';
 import smalllogo from '../../../images/alfredlogoicon.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AxiosInstance } from '../../../_mock/utilities';
+import { toast } from 'react-toastify';
 
 export default function SideNav(props) {
   const location = useLocation();
-
+const [isProfileCompleted,setIsProfileCompleted]= useState();
+const navigate = useNavigate()
   const menuData = [
     // {
     //   moduleId: '1',
@@ -107,7 +110,35 @@ export default function SideNav(props) {
   useEffect(() => {
 
   }, [props.isShowmenu])
-
+  
+  const getHistoryBotQues = async () => {
+    try {
+      const response = await AxiosInstance("application/json").get("/profile_completion");
+      if (response && response.status === 200 && response.data.statuscode === 200) {
+        return response.data?.data?.reached_75_percent;
+      }
+    } catch (error) {
+      console.error("Error fetching profile completion status:", error);
+      return false;
+    }
+  };
+  const handleMenuClick = async (link) => {
+    console.log('link: ', link);
+    if (link === 'transcriptsummary' ) {
+      const isCompleted = await getHistoryBotQues();
+      if (isCompleted) {
+        navigate('/transcriptsummary');
+      } else {
+        toast("Profile is not complete. You cannot access this page.", {
+          position: "top-center",
+          type: "error",
+        });
+        toast.error();
+      }
+    } else {
+      navigate(`/${link}`);
+    }
+  };
   return (
     <>
       <nav className={'al_menu_navigator ' + (props.isShowmenu ? 'al_slide_out ' : '')}>
@@ -128,11 +159,11 @@ export default function SideNav(props) {
                       {menu.subModules.map((subModules, index) =>
                         <div className='al_submenu w-100' key={index}>
                           <div className={'menu-item ' + (location.pathname === '/' + subModules.link ? 'active' : '')}>
-                            <Link to={"/" + subModules.link}>
+                          <div onClick={() => handleMenuClick(subModules.link)} style={{ cursor: 'pointer' }}>
                               <div id={subModules.link + subModules.id}>
                                 <i className={subModules.icon}></i><span>{subModules.name}</span>
                               </div>
-                            </Link>
+                            </div>
                             {props.isShowmenu && <UncontrolledTooltip
                               placementPrefix="al_bs_tooltip"
                               modifiers={{ preventOverflow: { boundariesElement: 'window' } }}

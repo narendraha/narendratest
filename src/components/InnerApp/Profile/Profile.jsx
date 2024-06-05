@@ -43,7 +43,7 @@ export default function Profile() {
         }
         setGetProfileDetails(responseData);
       })
-      .catch((er) => {});
+      .catch((er) => { });
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function Profile() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
-    setIsShowconfirm(!data);
+      setIsShowconfirm(!data);
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
@@ -145,7 +145,7 @@ export default function Profile() {
                         type="file"
                         id="uploadPicture"
                         name="uploadProfilePic"
-                        onChange={(e) => {}}
+                        onChange={(e) => { }}
                         hidden
                         accept=".jpg,.jpeg,.png"
                       />
@@ -194,13 +194,13 @@ export default function Profile() {
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.height || "NA"}</div>
-                          <Label>Height</Label>
+                          <Label>Height(ft)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.weight || "NA"}</div>
-                          <Label>Weight</Label>
+                          <Label>Weight(lbs)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
@@ -287,7 +287,7 @@ export default function Profile() {
                             PIV-idfrontside.jpg
                           </span>
                         </div>
-                        <a href="#">View</a>
+                        <a href="/#">View</a>
                       </div>
 
                       <div className="d-flex wrap my-2">
@@ -300,7 +300,7 @@ export default function Profile() {
                             PIV-idbackside.jpg
                           </span>
                         </div>
-                        <a href="#">View</a>
+                        <a href="/#">View</a>
                       </div>
                     </div>
                     <hr />
@@ -412,6 +412,7 @@ export default function Profile() {
                           dob: moment(values.dob).format("YYYY-MM-DD"),
                         };
                         setFormData(data);
+                        setGetProfileDetails(data)
                       }}
                     >
                       {({
@@ -447,7 +448,7 @@ export default function Profile() {
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
-                                    Weight (kg's)
+                                    Weight (lbs)
                                   </Label>
                                   <Field
                                     type="text"
@@ -586,8 +587,8 @@ export default function Profile() {
                                       values?.dob
                                         ? new Date(values?.dob)
                                         : values?.dob == "NA"
-                                        ? new Date()
-                                        : new Date()
+                                          ? new Date()
+                                          : new Date()
                                     }
                                     onChange={(e) => {
                                       setFieldValue("dob", e);
@@ -648,7 +649,7 @@ export default function Profile() {
                               <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
-                                    <span className="requiredLabel">*</span>SSN
+                                    SSN
                                   </Label>
                                   <Field
                                     type="password"

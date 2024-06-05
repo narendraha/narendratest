@@ -103,6 +103,16 @@ em {
     }
 }
 
+.Toastify__toast-container {
+    z-index: 1001 !important;
+}
+
+.Toastify__toast-body {
+    font-size: 14px !important;
+    color: #202123;
+    line-height: 1.5;
+}
+
 .videobanner {
 
     >div:first-child {
@@ -604,77 +614,81 @@ section:not(.cs_banner) {
     }
 }
 
-.al_menu_navigator:not(.al_slide_out)+.al_right_container,
-.al_right_container:not(:last-child) {
-    .al_symptoms {
 
-        .col-lg-4 {
-            max-width: 50%;
-            flex: 0 0 50%;
-        }
-    }
+@media (min-width: 1025px) and (max-width: 1600px) {
 
-    .w-50.al_chatbotauth {
-        width: 70% !important;
-    }
+    .al_menu_navigator:not(.al_slide_out)+.al_right_container,
+    .al_right_container:not(:last-child) {
+        .al_symptoms {
 
-    .al_card_diff,
-    .al_knowldgebank {
-        .col-lg-2 {
-            max-width: 25%;
-            flex: 0 0 25%;
+            .col-lg-4 {
+                max-width: 50%;
+                flex: 0 0 50%;
+            }
         }
 
-        .col-sm-6 {
-            max-width: 100%;
-            flex: 0 0 100%;
+        .w-50.al_chatbotauth {
+            width: 70% !important;
         }
-    }
 
-    .w-30 {
-        width: 50%;
-    }
-
-    .al_profile_manage {
-        .col-xl-7 {
-            max-width: 75%;
-            flex: 0 0 75%;
-        }
-    }
-
-    .al_hometabs {
-        .nav-item {
-            &:last-child {
-                .nav-link {
-                    margin-right: 0;
-                }
+        .al_card_diff,
+        .al_knowldgebank {
+            .col-lg-2 {
+                max-width: 25%;
+                flex: 0 0 25%;
             }
 
-            a.nav-link {
-                margin-right: 6px;
+            .col-sm-6 {
+                max-width: 100%;
+                flex: 0 0 100%;
+            }
+        }
 
-                div span {
-                    font-size: 12px;
-                    padding-left: 5px;
+        .w-30 {
+            width: 50%;
+        }
 
-                    &:first-child {
-                        font-size: 18px;
-                        width: 30px;
-                        height: 30px;
-                        border-radius: 8px;
-                        padding-left: 0;
+        .al_profile_manage {
+            .col-xl-7 {
+                max-width: 75%;
+                flex: 0 0 75%;
+            }
+        }
+
+        .al_hometabs {
+            .nav-item {
+                &:last-child {
+                    .nav-link {
+                        margin-right: 0;
+                    }
+                }
+
+                a.nav-link {
+                    margin-right: 6px;
+
+                    div span {
+                        font-size: 12px;
+                        padding-left: 5px;
+
+                        &:first-child {
+                            font-size: 18px;
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 8px;
+                            padding-left: 0;
+                        }
                     }
                 }
             }
+
+            .col-xl-4 {
+                width: 50%;
+            }
         }
 
-        .col-xl-4 {
-            width: 50%;
+        .w-80 {
+            width: 100%;
         }
-    }
-
-    .w-80 {
-        width: 100%;
     }
 }
 
@@ -684,7 +698,7 @@ section:not(.cs_banner) {
     line-height: normal;
 }
 
-.al_note_content{
+.al_note_content {
     border: 0.1px solid #dfdfdf;
     padding: 6px 10px;
     border-radius: 8px;
@@ -712,7 +726,8 @@ section:not(.cs_banner) {
         font-weight: 500;
         margin-bottom: 3px !important;
     }
-    .al_chatimg{
+
+    .al_chatimg {
         border-radius: 50%;
     }
 }
@@ -900,7 +915,7 @@ button#chatpopover {
 
         .chat_item {
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 5px 20px;
             border-radius: 10px;
             //transition: background-color 0.3s ease, transform 0.1s ease;
         }
@@ -1249,11 +1264,9 @@ ul.standardPlans {
                         font-weight: normal;
                         margin: 0 9px;
                         cursor: pointer;
-
-                        >div {
-                            display: flex;
-                            align-items: center;
-                        }
+                        line-height: normal;
+                        display: flex;
+                        align-items: center;
 
                         span {
                             padding-left: 8px;
@@ -1272,23 +1285,13 @@ ul.standardPlans {
 
 
                     &.active {
-                        >a {
+                        >div {
                             font-weight: $font_w500;
                             color: $text-primary;
 
                             i {
                                 color: $text-primary;
                             }
-                        }
-
-                        div {
-                            font-weight: $font_w500;
-                            color: $text-primary;
-
-                            
-                        }
-                        i {
-                            color: $text-primary;
                         }
                     }
                 }
@@ -1806,7 +1809,7 @@ ul.standardPlans {
             margin-right: 10px;
             border: 1px solid #BABABA;
             border-radius: 10px !important;
-            padding: 8px 16px !important;
+            padding: 8px 12px !important;
             color: #959CA7;
             font-size: 11px !important;
 

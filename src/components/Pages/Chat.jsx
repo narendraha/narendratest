@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { pageTitle } from "../../helpers/PageTitle";
-import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/usericon.svg";
-import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col } from "reactstrap";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { Col, Row } from "reactstrap";
+import { AxiosInstance } from "../../_mock/utilities";
+import { pageTitle } from "../../helpers/PageTitle";
+import Chatbot from "../../images/alfredicon.svg";
+import Chatuser from "../../images/usericon.svg";
 
 export default function Chat() {
   pageTitle("Behavioural chat");
@@ -209,7 +209,7 @@ export default function Chat() {
                 <button
                   type="submit"
                   className="al_greybgbutton"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/home")}
                 >
                   Go to Dashboard
                 </button>

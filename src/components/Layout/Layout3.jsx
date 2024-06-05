@@ -1,15 +1,13 @@
-import React, { useState, Suspense } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import FooterStyle3 from '../Footer/FooterStyle3';
 import Header from '../Header';
-import ChatBot from '../ChatBot';
-import { Row, Col, Popover, PopoverBody, Button } from 'reactstrap';
-import chatBot from '../../images/chatboticon.svg';
 import Loading from '../InnerApp/LoadingComponent';
 
 export default function Layout3() {
-  const location = useLocation();
-  const [botisOpen, setBotIsOpen] = useState(true);
+  // const location = useLocation();
+  // const [botisOpen, setBotIsOpen] = useState(true);
 
   return (
     // <div id='al_main_landing'>

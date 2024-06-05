@@ -1,5 +1,4 @@
 import React from 'react';
-import Rating from '../Rating';
 import IconBoxStyle7 from '../IconBox/IconBoxStyle7';
 
 export default function TestimonialStyle3({ item }) {

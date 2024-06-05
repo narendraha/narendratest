@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody } from "reactstrap";
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { toast } from "react-toastify";
+import { Card, CardBody } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import Loading from "../LoadingComponent";
 
 export default function HistorySummary() {
-  const decodedToken = getDecodedTokenFromLocalStorage();
+  // const decodedToken = getDecodedTokenFromLocalStorage();
   const [transcript, setTranscript] = useState();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -23,12 +22,12 @@ export default function HistorySummary() {
           if (response.data.statuscode === 200) {
             setTranscript(response.data?.data?.patient_info);
             toast(response.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
           } else {
             toast(response.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -36,7 +35,7 @@ export default function HistorySummary() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });

@@ -782,6 +782,12 @@ span {
   transition: all 0.4s ease;
 }
 
+.cs_accordian_body {
+  ol {
+    margin-bottom: 0 !important;
+  }
+}
+
 .cs_tabs.cs_style1 .cs_tab_links .cs_tab_link_in {
   cursor: pointer;
 }

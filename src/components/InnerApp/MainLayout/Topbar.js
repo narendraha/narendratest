@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
-import user from '../../../images/userprofile.jpg';
-import { jwtDecode } from "jwt-decode";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
+import user from '../../../images/userprofile.jpg';
 
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();

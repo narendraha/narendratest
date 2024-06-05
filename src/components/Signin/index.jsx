@@ -15,7 +15,7 @@ import { Icon } from "@iconify/react";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -218,7 +218,7 @@ export default function Signin({ setIsAuthenticated }) {
                           </Link>
                           <button
                             type="submit"
-                            disabled={isSubmitting ? true : false}
+                            // disabled={isSubmitting ? true : false}
                             className="al_login_button mt-3"
                           >
                             Sign in

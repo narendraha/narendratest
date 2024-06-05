@@ -7,7 +7,7 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AxiosInstance } from "../../../_mock/utilities";
-import { allowsOnlyNumeric, phoneNumberReg } from "../../../_mock/RegularExp";
+import { allowsOnlyNumeric, allowsOnlyNumericOnly3Digit, phoneNumberReg } from "../../../_mock/RegularExp";
 import moment from "moment/moment";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -80,8 +80,8 @@ export default function Profile() {
     if (input.length < 2) {
       return input;
     }
-    const lastTwoChars = input.slice(-2);
-    const maskedPart = "*".repeat(input.length - 2);
+    const lastTwoChars = input.slice(-3);
+    const maskedPart = "*".repeat(input.length - 3);
     return `${maskedPart}${lastTwoChars}`;
   }
   const handleSubmit = (data) => {
@@ -193,14 +193,14 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.height || "NA"}</div>
-                          <Label>Height(ft)</Label>
+                          <div>{getProfileDetails?.feet || "NA"}{getProfileDetails?.inch >= 0 ? `.${getProfileDetails?.inch}` : ""}</div>
+                          <Label>Height (ft)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.weight || "NA"}</div>
-                          <Label>Weight(lbs)</Label>
+                          <Label>Weight (lbs)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
@@ -351,7 +351,8 @@ export default function Profile() {
                         rtype: getProfileDetails?.rtype || "",
                         education: getProfileDetails?.education || "",
                         ssn: getProfileDetails?.ssn || "",
-                        height: getProfileDetails?.height || "",
+                        feet: getProfileDetails?.feet !== "NA" ? getProfileDetails?.feet : '',
+                        inch: getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : '',
                         weight: getProfileDetails?.weight || "",
                         // age: getProfileDetails?.age || "",
                         bloodtype: getProfileDetails?.bloodtype || "",
@@ -391,7 +392,7 @@ export default function Profile() {
                           .min(2, "Too Short!")
                           .max(50, "Too Long!")
                           .required("This field is required"),
-                        height: Yup.string()
+                        feet: Yup.string()
                           .min(1, "Too Short!")
                           .max(3, "Too Long!")
                           .required("This field is required"),
@@ -431,17 +432,41 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Height (ft)
                                   </Label>
-                                  <Field
-                                    type="text"
-                                    name="height"
-                                    placeholder="Enter Height"
-                                    className="form-control"
-                                  />
-                                  <ErrorMessage
-                                    name="height"
-                                    component={"div"}
-                                    className="text-danger"
-                                  />
+                                  <div className="d-flex gap-2">
+                                    <div>
+                                      <Field
+                                       type="text"
+                                       name="feet"
+                                       placeholder="Feet"
+                                       className="form-control"
+                                       onKeyPress={(e) =>
+                                         allowsOnlyNumericOnly3Digit(e)
+                                        }
+                                     />
+                                    <ErrorMessage
+                                      name="feet"
+                                      component={"div"}
+                                      className="text-danger"
+                                    />
+                                    </div>
+                                    <div className="mt-2"></div>
+                                    <div>
+                                      <Field
+                                        type="text"
+                                        name="inch"
+                                        placeholder="Inch"
+                                        className="form-control"
+                                        onKeyPress={(e) =>
+                                          allowsOnlyNumericOnly3Digit(e)
+                                        }
+                                      />
+                                      <ErrorMessage
+                                        name="inch"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
+                                    </div>
+                                  </div>
                                 </FormGroup>
                               </Col>
                               <Col md="4" sm="12">

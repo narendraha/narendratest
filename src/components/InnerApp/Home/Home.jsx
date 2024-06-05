@@ -19,6 +19,8 @@ import rhythm from "../../../images/rhythm.png";
 import whytreatment from "../../../images/whytreatment.png";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
+import { createResource } from "../createResource";
+import moment from "moment";
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -40,7 +42,7 @@ export default function Home() {
   const [labelValues12, setLabelValues12] = useState(0);
   // const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
-  // const [resource, setResource] = useState(null);
+  const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
   const [isLoading, setIsLoading] = useState(false)
   // symptoms
@@ -325,7 +327,7 @@ export default function Home() {
           quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
         },
       };
-
+      setIsShowconfirm(!data);
       AxiosInstance("application/json")
         .post(`/add_symptoms`, newData)
         .then((res) => {
@@ -335,7 +337,6 @@ export default function Home() {
                 position: "top-right",
                 type: "success",
               });
-              setIsShowconfirm(!data);
               changeStatus();
               setTab("4");
             } else {
@@ -374,7 +375,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    // setResource(createResource(getTabListStatus()));
+    setResource(createResource(getTabListStatus()));
     getLastUpdatedHealthDetails();
   }, [tab]);
 
@@ -503,13 +504,13 @@ export default function Home() {
     if (data) {
       let finalData = {
         ...healthDetails,
+        tdate: moment(healthDetails?.tdate).format("YYYY-MM-DD"),
         bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`
       };
       delete finalData?.isCheckMedicalRecords;
       delete finalData?.systolic;
       delete finalData?.diastolic;
-      console.log("healthDetails: ", finalData);
-
+      setShow2(!data);
       await AxiosInstance("application/json")
         .post("/health_details", finalData)
         .then((res) => {
@@ -519,7 +520,6 @@ export default function Home() {
                 position: "top-right",
                 type: "success",
               });
-              setShow2(!data);
               changeStatus();
               setTab("3");
             } else {
@@ -539,23 +539,23 @@ export default function Home() {
     }
   };
 
-  // const getTabListStatus = async () => {
-  //   setIsLoading(true)
-  //   await AxiosInstance("application/json")
-  //     .get("/getstatus")
-  //     .then((response) => {
-  //       if (response && response?.status == 200) {
-  //         setGetStatus(response.data?.data);
-  //         setIsLoading(false)
-  //       }
-  //     })
-  //     .catch((er) => {
-  //       toast(er?.response?.data?.message || er?.message, {
-  //         position: "top-right",
-  //         type: "error",
-  //       });
-  //     });
-  // };
+  const getTabListStatus = async () => {
+    setIsLoading(true)
+    await AxiosInstance("application/json")
+      .get("/getstatus")
+      .then((response) => {
+        if (response && response?.status == 200) {
+          setGetStatus(response.data?.data);
+          setIsLoading(false)
+        }
+      })
+      .catch((er) => {
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-right",
+          type: "error",
+        });
+      });
+  };
 
   const getLastUpdatedHealthDetails = async () => {
     await AxiosInstance("application/json")
@@ -596,6 +596,7 @@ export default function Home() {
             //   position: "top-right",
             //   type: "success",
             // });
+            getTabListStatus()
           } else {
             // toast(res.data?.message, {
             //   position: "top-right",
@@ -860,6 +861,7 @@ export default function Home() {
                       <Col lg="6" sm="12">
                         <Formik
                           initialValues={{
+                            tdate: "",
                             weight: "",
                             // height: "",
                             systolic: "",
@@ -894,10 +896,10 @@ export default function Home() {
                             setHealthDetails(values);
                           }}
                         >
-                        {({ values }) => {
-                          return (
-                            <Form>
-                              {/* <Row>
+                          {({setFieldValue,values,setFieldTouched }) => {
+                            return (
+                              <Form>
+                                {/* <Row>
                                 <Col sm="4">
                                   <FormGroup>
                                     <Label>Height(ft)</Label>
@@ -921,7 +923,7 @@ export default function Home() {
                                     <Label>Date</Label>
                                     <DatePicker
                                       className="form-control al_calendarIcon"
-                                      name="date"
+                                      name="tdate"
                                       placeholderText="Select date"
                                       popperPlacement="auto"
                                       popperModifiers={{
@@ -932,13 +934,16 @@ export default function Home() {
                                           enabled: false,
                                         },
                                       }}
-                                      selected={new Date()}
-                                      onChange={(e) => { }}
-                                      dateFormat={"MM/dd/yyyy"}
+                                      selected={values?.tdate}
+                                      onChange={(e) => {
+                                        setFieldValue("tdate", e);
+                                      }}
                                       minDate={new Date().setMonth(
                                         new Date().getMonth() - 3
                                       )}
+                                      dateFormat={"MM/dd/yyyy"}
                                       maxDate={new Date()}
+                                      onBlur={() => setFieldTouched("tdate", true)}
                                       autoComplete="off"
                                       showMonthDropdown
                                       showYearDropdown

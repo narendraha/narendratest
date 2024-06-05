@@ -8,8 +8,7 @@ import logo from '../../../images/alfredlogowhite.svg';
 
 export default function SideNav(props) {
   const location = useLocation();
-// const [isProfileCompleted,setIsProfileCompleted]= useState();
-const navigate = useNavigate()
+  const navigate = useNavigate()
   const menuData = [
     // {
     //   moduleId: '1',
@@ -31,22 +30,31 @@ const navigate = useNavigate()
     },
     {
       moduleId: '3',
-      name: 'Reports',
-      link: 'transcriptsummary',
-      icon: 'icon_alfred_reports',
-      subModules: [
-        { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
-      ]
-    },
-    {
-      moduleId: '3',
-      name: 'Bot Manager',
-      link: 'uploaddocument',
+      name: 'Behavioural',
+      link: 'chat',
       icon: 'icon_alfred_botquestionnaire',
       subModules: [
-        { id: "2", name: "History Bot", link: 'historychat', icon: 'icon_alfred_botquestionnaire' }
+        { id: "1", name: "Behavioural Chat", link: 'chat', icon: 'icon_alfred_botquestionnaire' }
       ]
-      // },
+      } ,
+      {
+        moduleId: '4',
+        name: 'Bot Manager',
+        link: 'historychat',
+        icon: 'icon_alfred_botquestionnaire',
+        subModules: [
+          { id: "2", name: "History Bot", link: 'historychat', icon: 'icon_alfred_botquestionnaire' }
+        ]
+      },
+      {
+        moduleId: '5',
+        name: 'Reports',
+        link: 'transcriptsummary',
+        icon: 'icon_alfred_reports',
+        subModules: [
+          { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
+        ]
+        } ,
       // {
       //   moduleId: '4',
       //   name: 'User Management',
@@ -102,7 +110,7 @@ const navigate = useNavigate()
       //   subModules: [
       //     { id: "1", name: "Knowledge Bank", link: 'knowledgebank', icon: 'icon_alfred_knowledgebank' },
       //   ]
-    }
+    // }
   ]
 
   useEffect(() => {
@@ -113,7 +121,7 @@ const navigate = useNavigate()
     try {
       const response = await AxiosInstance("application/json").get("/profile_completion");
       if (response && response.status === 200 && response.data.statuscode === 200) {
-        return response.data?.data?.reached_75_percent;
+        return response.data?.data;
       }
     } catch (error) {
       console.error("Error fetching profile completion status:", error);
@@ -121,11 +129,10 @@ const navigate = useNavigate()
     }
   };
   const handleMenuClick = async (link) => {
-    console.log('link: ', link);
-    if (link === 'transcriptsummary') {
+    if (link === 'historychat' ) {
       const isCompleted = await getHistoryBotQues();
-      if (isCompleted) {
-        navigate('/transcriptsummary');
+      if (isCompleted?.reached_75_percent) {
+        navigate('/historychat');
       } else {
         toast("Profile is not complete. You cannot access this page.", {
           position: "top-right",

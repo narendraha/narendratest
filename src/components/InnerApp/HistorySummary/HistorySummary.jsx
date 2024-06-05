@@ -22,12 +22,12 @@ export default function HistorySummary() {
           if (response.data.statuscode === 200) {
             setTranscript(response.data?.data?.patient_info);
             toast(response.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "success",
             });
           } else {
             toast(response.data?.message, {
-              position: "top-center",
+              position: "top-right",
               type: "error",
             });
           }
@@ -35,7 +35,7 @@ export default function HistorySummary() {
       })
       .catch((er) => {
         toast(er?.response?.data?.message || er?.message, {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
       });

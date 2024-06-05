@@ -295,7 +295,7 @@ export default function HistoryChatBot() {
                     <button
                       type="submit"
                       className="al_greybgbutton"
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => navigate("/home")}
                     >
                       Go to Dashboard
                     </button>
@@ -448,7 +448,7 @@ export default function HistoryChatBot() {
                             <button
                               type="submit"
                               className="al_greybgbutton"
-                              onClick={() => navigate("/dashboard")}
+                              onClick={() => navigate("/home")}
                             >
                               Go to Dashboard
                             </button>

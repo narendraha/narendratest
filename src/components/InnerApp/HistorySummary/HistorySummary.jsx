@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody } from "reactstrap";
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { toast } from "react-toastify";
+import { Card, CardBody } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import Loading from "../LoadingComponent";
 
 export default function HistorySummary() {
-  const decodedToken = getDecodedTokenFromLocalStorage();
+  // const decodedToken = getDecodedTokenFromLocalStorage();
   const [transcript, setTranscript] = useState();
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {

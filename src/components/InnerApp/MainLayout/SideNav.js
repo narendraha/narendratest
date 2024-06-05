@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { UncontrolledTooltip } from 'reactstrap';
-import logo from '../../../images/alfredlogowhite.svg';
-import smalllogo from '../../../images/alfredlogoicon.svg';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { AxiosInstance } from '../../../_mock/utilities';
 import { toast } from 'react-toastify';
+import { UncontrolledTooltip } from 'reactstrap';
+import { AxiosInstance } from '../../../_mock/utilities';
+import smalllogo from '../../../images/alfredlogoicon.svg';
+import logo from '../../../images/alfredlogowhite.svg';
 
 export default function SideNav(props) {
   const location = useLocation();
-const [isProfileCompleted,setIsProfileCompleted]= useState();
+// const [isProfileCompleted,setIsProfileCompleted]= useState();
 const navigate = useNavigate()
   const menuData = [
     // {

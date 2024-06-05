@@ -1,15 +1,14 @@
+import { Field, Form, Formik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
-import { pageTitle } from "../../helpers/PageTitle";
-import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/usericon.svg";
-import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col, Label, FormGroup } from "reactstrap";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import Select from "react-select";
-import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { Col, FormGroup, Label, Row } from "reactstrap";
 import { allowsOnlyNumeric } from "../../_mock/RegularExp";
+import { AxiosInstance } from "../../_mock/utilities";
+import { pageTitle } from "../../helpers/PageTitle";
+import Chatbot from "../../images/alfredicon.svg";
+import Chatuser from "../../images/usericon.svg";
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
   const navigate = useNavigate();

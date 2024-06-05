@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { pageTitle } from "../../helpers/PageTitle";
+import { AxiosInstance } from "../../_mock/utilities";
+import Chatuser from "../../images/userprofile.jpg";
+import Chatbot from "../../images/alfredicon.svg";
+import { Row, Col } from "reactstrap";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { Col, Row } from "reactstrap";
-import { AxiosInstance } from "../../_mock/utilities";
-import { pageTitle } from "../../helpers/PageTitle";
-import Chatbot from "../../images/alfredicon.svg";
-import Chatuser from "../../images/usericon.svg";
+import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 
 export default function Chat() {
   pageTitle("Behavioural chat");
@@ -20,6 +21,7 @@ export default function Chat() {
   const messagesEndRef = useRef(null);
   const [jsonData, setJsonData] = useState([]);
   const [responseStatus, setResponseStatus] = useState(0);
+  const decodedToken = getDecodedTokenFromLocalStorage();
   const incrementRef = useRef(0);
   // get questions using useeffect
   useEffect(() => {
@@ -147,7 +149,7 @@ export default function Chat() {
   };
   return (
     <div className="cs_homepage">
-      <div className="w-50 al_chatbotauth">
+      <div className="w-50 al_chatbotauth p-0">
         <div className="d-flex flex-column">
           <div className="flex-grow-1">
             <div className="scrolldiv">
@@ -185,13 +187,13 @@ export default function Chat() {
                       <Row className="mb-4 al_chatcontent" key={key}>
                         <div>
                           {key === "user" ? (
-                            <img src={Chatuser} alt="chat user" />
+                            <img src={Chatuser} alt="chat user" className='al_chatimg'/>
                           ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
-                          <h6 className="mb-0">{key}</h6>
+                          <h6 className="mb-0">{key === "user" ? decodedToken?.username : key}</h6>
                           <div>{value}</div>
                         </Col>
                       </Row>

@@ -17,7 +17,7 @@ export default function ChatBot(props) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
-    setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
+    setChatHistory((prevHistory) => [...prevHistory, { user: inputValue }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
     let data = {
@@ -35,7 +35,7 @@ export default function ChatBot(props) {
             setIsLoading(false);
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              { Alfred: responseData?.alfred },
+              { alfred: responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
           }
@@ -82,19 +82,19 @@ export default function ChatBot(props) {
                     {Object.entries(message).map(([key, value]) => (
                       <Row className="mb-4 al_chatcontent" key={key}>
                         <div>
-                          {key === "User" ? (
+                          {key === "user" ? (
                             <img
                               src={Chatuser}
                               alt="chat user"
                               className="al_chatimg"
                             />
-                          ) : key === "Alfred" ? (
+                          ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">
-                            {key === "User" ? decodedToken?.username : key}
+                            {key === "user" ? decodedToken?.username : key}
                           </h6>
                           <div>{value}</div>
                         </Col>

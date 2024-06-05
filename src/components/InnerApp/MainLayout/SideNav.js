@@ -37,15 +37,15 @@ const navigate = useNavigate()
       subModules: [
         { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
       ]
-      } ,
-      {
-        moduleId: '3',
-        name: 'Bot Manager',
-        link: 'uploaddocument',
-        icon: 'icon_alfred_botquestionnaire',
-        subModules: [
-          { id: "2", name: "History Bot", link: 'historychat', icon: 'icon_alfred_botquestionnaire' }
-        ]
+    },
+    {
+      moduleId: '3',
+      name: 'Bot Manager',
+      link: 'uploaddocument',
+      icon: 'icon_alfred_botquestionnaire',
+      subModules: [
+        { id: "2", name: "History Bot", link: 'historychat', icon: 'icon_alfred_botquestionnaire' }
+      ]
       // },
       // {
       //   moduleId: '4',
@@ -108,7 +108,7 @@ const navigate = useNavigate()
   useEffect(() => {
 
   }, [props.isShowmenu])
-  
+
   const getHistoryBotQues = async () => {
     try {
       const response = await AxiosInstance("application/json").get("/profile_completion");
@@ -122,13 +122,13 @@ const navigate = useNavigate()
   };
   const handleMenuClick = async (link) => {
     console.log('link: ', link);
-    if (link === 'transcriptsummary' ) {
+    if (link === 'transcriptsummary') {
       const isCompleted = await getHistoryBotQues();
       if (isCompleted) {
         navigate('/transcriptsummary');
       } else {
         toast("Profile is not complete. You cannot access this page.", {
-          position: "top-center",
+          position: "top-right",
           type: "error",
         });
         toast.error();
@@ -157,10 +157,8 @@ const navigate = useNavigate()
                       {menu.subModules.map((subModules, index) =>
                         <div className='al_submenu w-100' key={index}>
                           <div className={'menu-item ' + (location.pathname === '/' + subModules.link ? 'active' : '')}>
-                          <div onClick={() => handleMenuClick(subModules.link)} style={{ cursor: 'pointer' }}>
-                              <div id={subModules.link + subModules.id}>
-                                <i className={subModules.icon}></i><span>{subModules.name}</span>
-                              </div>
+                            <div id={subModules.link + subModules.id} onClick={() => handleMenuClick(subModules.link)}>
+                              <i className={subModules.icon}></i><span>{subModules.name}</span>
                             </div>
                             {props.isShowmenu && <UncontrolledTooltip
                               placementPrefix="al_bs_tooltip"

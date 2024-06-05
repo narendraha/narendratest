@@ -593,12 +593,12 @@ export default function Home() {
         if (res && res.data && res.status == 200) {
           if (res.data?.statuscode === 200) {
             // toast(res.data?.message, {
-            //   position: "top-center",
+            //   position: "top-right",
             //   type: "success",
             // });
           } else {
             // toast(res.data?.message, {
-            //   position: "top-center",
+            //   position: "top-right",
             //   type: "error",
             // });
           }
@@ -1034,7 +1034,7 @@ export default function Home() {
                                           className="text-danger"
                                         />
                                       </FormGroup>
-                                      <div className="text-grey mt-1">(mmHg)</div>
+                                      <div className="text-grey mt-1">(BPM)</div>
                                     </div>
                                   </Col>
                                 </Row>

@@ -209,7 +209,7 @@ export default function Chat() {
                 <button
                   type="submit"
                   className="al_greybgbutton"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/home")}
                 >
                   Go to Dashboard
                 </button>

@@ -194,13 +194,13 @@ export default function Profile() {
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.height || "NA"}</div>
-                          <Label>Height</Label>
+                          <Label>Height(ft)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.weight || "NA"}</div>
-                          <Label>Weight</Label>
+                          <Label>Weight(lbs)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
@@ -448,7 +448,7 @@ export default function Profile() {
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
-                                    Weight (kg's)
+                                    Weight (lbs)
                                   </Label>
                                   <Field
                                     type="text"
@@ -649,7 +649,7 @@ export default function Profile() {
                               <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
-                                    <span className="requiredLabel">*</span>SSN
+                                    SSN
                                   </Label>
                                   <Field
                                     type="password"

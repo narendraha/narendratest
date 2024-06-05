@@ -13,7 +13,7 @@ const faqData = [
   {
     title: 'Is it dangerous?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      '<ol type="a"><li>It can effect the quality of life</li><li>Some studies have shown that it can cause frequent hospital admission, congestive heart failure</li><li>It can increase the risk of a stroke</li></ol>',
   },
   {
     title: 'What are the symptoms?',
@@ -23,7 +23,7 @@ const faqData = [
   {
     title: 'Is there a cure for it?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'Once you have atrial fibrillation there is no cure for it,  but you can slow the progression but controlling the risk factors.',
   },
   {
     title: 'What are the types of Atrial Fibrillation?',
@@ -33,7 +33,7 @@ const faqData = [
   {
     title: 'How do you diagnose Atrial Fibrillation?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti <br /> atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'A healthcare provider will recommend a 12 lead ECG, look at the strips from your smart wearables, or consider a heart monitor to establish the diagnosis of atrial fibrillation.',
   },
   {
     title: 'What are the treatment choices and risks associated with it, is one better over the other?',
@@ -43,12 +43,12 @@ const faqData = [
   {
     title: 'Why does it recur after an ablation or treatment plan?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'The exact cause of atrial fibrillation is unknown and there are different areas in the left upper chamber of the heart that can lead to atrial fibrillation. Though we treat the primary trigger near the pulmonary veins ( veins that bring blood from your lungs back into the left upper chamber of the heart), there are other areas that can cause atrial fibrillation known as non-pulmonary vein triggers.',
   },
   {
     title: 'Is there a way one can prevent it?',
     content:
-      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesent voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui.',
+      'One can prevent from atrial fibrillation happening by working on risk factors<ol type="1"><li>Habits<ol type="a"><li>Minimize alcohol intake</li><li>No recreational drugs</li><li>No smoking</li></ol></li><li>Healthy weight by eating an appropriate diet</li><li>If having the below risks optimizing their control<ol type="a"><li>Blood pressure control</li><li>Lose weight if overweight or obese</li><li>Be evaluated for and get treated for sleepapnea</li><li>Diabetes control</li></ol></li></ol>',
   }
 ];
 export default function Affaq() {

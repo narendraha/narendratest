@@ -113,6 +113,25 @@ em {
     line-height: 1.5;
 }
 
+.al_homemenu {
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 22px;
+    line-height: 0;
+    background-color: #00c4d8;
+    color: #ffffff;
+    border: 1px solid #e6fdff;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #444444;
+    }
+}
+
 .videobanner {
 
     >div:first-child {

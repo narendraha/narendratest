@@ -148,11 +148,11 @@ export default function Chat() {
     setInputValue(value); // update the value of input field with user's typing text
   };
   return (
-    <div className="cs_homepage">
+    <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth p-0">
         <div className="d-flex flex-column">
           <div className="flex-grow-1">
-            <div className="scrolldiv">
+            <div className="scrolldiv mt-3">
               {/* Chat need to be rendered here */}
               {/* Welcome message */}
               <Row className="mb-4 al_chatcontent">
@@ -204,7 +204,7 @@ export default function Chat() {
               <div ref={messagesEndRef} />
             </div>
           </div>
-          <div className="cs_mainsearch mb-2">
+          <div className="cs_mainsearch my-3">
             {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
             {newNumber > Object.keys(jsonData).length ? (
               <div className="mt-3 d-flex align-items-center justify-content-center">

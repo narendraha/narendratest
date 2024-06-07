@@ -11,15 +11,15 @@ export default function Medications() {
       <BannerSectionStyle3
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/medicationbg.png"
-        title="Don’t Let Your Health<br/> Take a Backseat!"
-        subTitle="Rhythm control may be used when afib symptoms get worse."
+        title="Rhythm control is considered<br/> to treat atrial fibrillation"
+        subTitle="If you have symptoms and effecting your quality of life"
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>
           <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
             Medications
           </h3>
-          <h6 className='w-80'>If you have symptoms and effecting quality of life or if you don’t have symptoms but have risk factors, then we recommend rhythm control</h6>
+          <h6 className='w-80'>Studies also have shown that if you do not have symptoms but have risk factors such as age older than 65, high blood pressure, diabetes, congestive heart failure, prior stroke can still benefit from rhythm control.</h6>
           <p className='mb-5'>Anti-arrhythmic medications that suppress the atrial fibrillation from happening</p>
           <Row className='mb-5'>
             <Col lg="5" md="6">

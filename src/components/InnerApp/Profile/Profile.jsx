@@ -14,8 +14,10 @@ import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource"; //Suspense loading
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 
 export default function Profile() {
+  const decodedToken = getDecodedTokenFromLocalStorage();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
@@ -77,11 +79,11 @@ export default function Profile() {
     { value: "Unknown", label: "Unknown" },
   ];
   function maskssn(input) {
-    if (input.length < 2) {
+    if (input !== "NA" && input?.length < 2) {
       return input;
     }
-    const lastTwoChars = input.slice(-3);
-    const maskedPart = "*".repeat(input.length - 3);
+    const lastTwoChars = input?.slice(-3);
+    const maskedPart = "*".repeat(input?.length - 3);
     return `${maskedPart}${lastTwoChars}`;
   }
   const handleSubmit = (data) => {
@@ -165,10 +167,10 @@ export default function Profile() {
                 {!isEdit && (
                   <>
                     <h2 className="cs_semibold mb-1">
-                      {getProfileDetails?.username}
+                      {getProfileDetails?.username ? getProfileDetails?.username : decodedToken?.username}
                     </h2>
                     <h6 className="al_profile_role mb-2">
-                      {getProfileDetails?.email}
+                      {getProfileDetails?.email ? getProfileDetails?.email : decodedToken?.email}
                     </h6>
                     <div className="al_pointsearned mb-4">
                       Points Earned: 89
@@ -247,7 +249,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{maskssn(getProfileDetails?.ssn || "NA")}</div>
+                          <div>{getProfileDetails?.ssn !== "NA" ? maskssn(getProfileDetails?.ssn) : "NA"}</div>
                           <Label>SSN</Label>
                         </div>
                       </Col>
@@ -435,19 +437,19 @@ export default function Profile() {
                                   <div className="d-flex gap-2">
                                     <div>
                                       <Field
-                                       type="text"
-                                       name="feet"
-                                       placeholder="Feet"
-                                       className="form-control"
-                                       onKeyPress={(e) =>
-                                         allowsOnlyNumericOnly3Digit(e)
+                                        type="text"
+                                        name="feet"
+                                        placeholder="Feet"
+                                        className="form-control"
+                                        onKeyPress={(e) =>
+                                          allowsOnlyNumericOnly3Digit(e)
                                         }
-                                     />
-                                    <ErrorMessage
-                                      name="feet"
-                                      component={"div"}
-                                      className="text-danger"
-                                    />
+                                      />
+                                      <ErrorMessage
+                                        name="feet"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
                                     </div>
                                     <div className="mt-2"></div>
                                     <div>

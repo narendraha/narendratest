@@ -25,7 +25,6 @@ export default function Obesity() {
             <Row className='my-5'>
               <Col>
                 <p>We don’t know what causes atrial fibrillation and most of the time we do not know why an individual person has atrial fibrillation. Several risk factors have been identified including : <strong>age, high blood pressure, heart disease, thyroid disease, previous heart surgery, obstructive sleep apnea, family history of atrial fibrillation, excess body weight, lack of exercise, smoking, regular alcohol intake.</strong></p>
-                <p>We can have them login for taking questionnaire for their risk factors and information on it.</p>
                 <p>We may encourage you to stop smoking, decrease or stop alcohol consumption, maintain a healthy diet and weight, manage stress and sleep well.</p>
                 <h6 className='mb-0'>Please log in here to access alfred knowledge base on obesity-related questionnaires linked to atrial fibrillation</h6>
                 <Link to="/signin" className="w_signin">Sign in</Link>

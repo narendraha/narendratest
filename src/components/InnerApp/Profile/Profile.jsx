@@ -14,12 +14,26 @@ import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource"; //Suspense loading
+import { ChangeProfilePassword } from "./changeProfilePassword";
+import { BankDetails } from "./bankDetails";
+import { ProfileSettings } from "./ProfileSettings";
+
+export const EProfileButton = {
+  CHANGEPASSWORD: 1,
+  BANKDETAILS: 2,
+  SETTINGS: 3
+}
 
 export default function Profile() {
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null); //Suspense loading
+  const [isOpenModel, setOpenModel] = useState({ profileButton: 0, isOpen: false }); // To handle Modals
+
+  const closeProfileButtonModal = (data) => {
+    setOpenModel({ profileButton: 0, isOpen: data })
+  }
 
   const navigate = useNavigate();
   const profileDetails = async () => {
@@ -117,6 +131,10 @@ export default function Profile() {
         });
     }
   };
+
+  const openModelHandle = (activeProfileButton) => {
+    setOpenModel({ profileButton: activeProfileButton, isOpen: true })
+  }
 
   // Suspense loading with fallback icon
   if (resource) {
@@ -324,13 +342,13 @@ export default function Profile() {
                     </Row>
                     <hr />
                     <div className="al_profilebtns">
-                      <button type="button" className="mb-3">
+                      <button type="button" className="mb-3" onClick={() => openModelHandle(EProfileButton.CHANGEPASSWORD)}>
                         <i className="icon_alfred_password"></i>Change Password
                       </button>
-                      <button type="button" className="mb-3">
+                      <button type="button" className="mb-3" onClick={() => openModelHandle(EProfileButton.BANKDETAILS)}>
                         <i className="icon_alfred_bankcard"></i>Bank Card
                       </button>
-                      <button type="button" className="mb-3">
+                      <button type="button" className="mb-3" onClick={() => openModelHandle(EProfileButton.SETTINGS)}>
                         <i className="icon_alfred_menu_settings"></i>Settings
                       </button>
                     </div>
@@ -435,19 +453,19 @@ export default function Profile() {
                                   <div className="d-flex gap-2">
                                     <div>
                                       <Field
-                                       type="text"
-                                       name="feet"
-                                       placeholder="Feet"
-                                       className="form-control"
-                                       onKeyPress={(e) =>
-                                         allowsOnlyNumericOnly3Digit(e)
+                                        type="text"
+                                        name="feet"
+                                        placeholder="Feet"
+                                        className="form-control"
+                                        onKeyPress={(e) =>
+                                          allowsOnlyNumericOnly3Digit(e)
                                         }
-                                     />
-                                    <ErrorMessage
-                                      name="feet"
-                                      component={"div"}
-                                      className="text-danger"
-                                    />
+                                      />
+                                      <ErrorMessage
+                                        name="feet"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
                                     </div>
                                     <div className="mt-2"></div>
                                     <div>
@@ -823,6 +841,11 @@ export default function Profile() {
               </Col>
             </Row>
           </div>
+        </div>
+        <div>
+          {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
+          {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
+          {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
         </div>
       </>
     );

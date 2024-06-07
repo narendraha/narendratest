@@ -121,6 +121,8 @@ em {
     right: 30px;
     top: 20px;
     font-size: 22px;
+    width: 55px;
+    height: 55px;
     line-height: 0;
     background-color: #00c4d8;
     color: #ffffff;
@@ -130,6 +132,10 @@ em {
     &:hover {
         background-color: #444444;
     }
+}
+
+::-ms-reveal {
+    display: none;
 }
 
 .videobanner {

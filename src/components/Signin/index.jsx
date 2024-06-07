@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Row, Col, Label, FormGroup } from "reactstrap";
+import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import alferdlogomobile from "../../images/alfredlogo.svg";
 import { useState } from "react";
@@ -92,7 +92,7 @@ export default function Signin({ setIsAuthenticated }) {
             });
           });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   return (
@@ -121,7 +121,7 @@ export default function Signin({ setIsAuthenticated }) {
         {({ values, errors, handleSubmit, setFieldValue }) => {
           return (
             <Form className="wflexLayout">
-              {isLoading && <Loading/>}
+              {isLoading && <Loading />}
               <Row className="al_login_section">
                 <Col lg="7" sm="6" className="al_left_login h-100">
                   <div className="wflexLayout">
@@ -142,6 +142,17 @@ export default function Signin({ setIsAuthenticated }) {
                   </div>
                 </Col>
                 <Col lg="5" sm="6" className="al_login-right h-100">
+                  <Link to="/">
+                    <div className="al_homemenu" id="backtohome">
+                      <i className="icon_alfred_home"></i>
+                      <UncontrolledTooltip
+                        placementPrefix="al_bs_tooltip"
+                        modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                        placement='left' target="backtohome">
+                        Back to Home
+                      </UncontrolledTooltip>
+                    </div>
+                  </Link>
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
@@ -223,17 +234,17 @@ export default function Signin({ setIsAuthenticated }) {
                           >
                             Sign in
                           </button>
-                            <div className="mt-3 text-medium">
-                              Don’t have an account?{" "}
-                              <Link
-                                to="/registration"
-                                className="al_text_link cs_medium"
-                              >
-                                Signup
-                              </Link>
-                            </div>
+                          <div className="mt-3 text-medium">
+                            Don’t have an account?{" "}
+                            <Link
+                              to="/registration"
+                              className="al_text_link cs_medium"
+                            >
+                              Signup
+                            </Link>
                           </div>
                         </div>
+                      </div>
 
                       <div className="alhr-or my-3 text-center fw-medium">
                         OR

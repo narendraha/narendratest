@@ -14,6 +14,7 @@ import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource"; //Suspense loading
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { ChangeProfilePassword } from "./changeProfilePassword";
 import { BankDetails } from "./bankDetails";
 import { ProfileSettings } from "./ProfileSettings";
@@ -25,6 +26,7 @@ export const EProfileButton = {
 }
 
 export default function Profile() {
+  const decodedToken = getDecodedTokenFromLocalStorage();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
@@ -91,11 +93,11 @@ export default function Profile() {
     { value: "Unknown", label: "Unknown" },
   ];
   function maskssn(input) {
-    if (input.length < 2) {
+    if (input !== "NA" && input?.length < 2) {
       return input;
     }
-    const lastTwoChars = input.slice(-3);
-    const maskedPart = "*".repeat(input.length - 3);
+    const lastTwoChars = input?.slice(-3);
+    const maskedPart = "*".repeat(input?.length - 3);
     return `${maskedPart}${lastTwoChars}`;
   }
   const handleSubmit = (data) => {
@@ -183,10 +185,10 @@ export default function Profile() {
                 {!isEdit && (
                   <>
                     <h2 className="cs_semibold mb-1">
-                      {getProfileDetails?.username}
+                      {getProfileDetails?.username ? getProfileDetails?.username : decodedToken?.username}
                     </h2>
                     <h6 className="al_profile_role mb-2">
-                      {getProfileDetails?.email}
+                      {getProfileDetails?.email ? getProfileDetails?.email : decodedToken?.email}
                     </h6>
                     <div className="al_pointsearned mb-4">
                       Points Earned: 89
@@ -265,7 +267,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{maskssn(getProfileDetails?.ssn || "NA")}</div>
+                          <div>{getProfileDetails?.ssn !== "NA" ? maskssn(getProfileDetails?.ssn) : "NA"}</div>
                           <Label>SSN</Label>
                         </div>
                       </Col>
@@ -842,11 +844,9 @@ export default function Profile() {
             </Row>
           </div>
         </div>
-        <div>
-          {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
-          {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
-          {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
-        </div>
+        {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
+        {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
+        {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
       </>
     );
   }

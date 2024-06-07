@@ -71,7 +71,7 @@ export default function Personomics() {
         </Section>
         <Section>
           <div className='alfaq_footer'>
-            Your AI companion, health navigator, coach in your disease journey. Role is to guide you through managing Atrial Fibrillation and help improve your Wellness
+            Your AI companion, health journey navigator, and coach for self-better care in managing a patient's atrial fibrillation journey
           </div>
         </Section>
       </div>

@@ -113,6 +113,31 @@ em {
     line-height: 1.5;
 }
 
+.al_homemenu {
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 22px;
+    width: 55px;
+    height: 55px;
+    line-height: 0;
+    background-color: #00c4d8;
+    color: #ffffff;
+    border: 1px solid #e6fdff;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #444444;
+    }
+}
+
+::-ms-reveal {
+    display: none;
+}
+
 .videobanner {
 
     >div:first-child {
@@ -1692,7 +1717,7 @@ ul.standardPlans {
                 padding: 8px 25px;
                 border-radius: 5px;
                 color: #FAB12B;
-                font-weight: 600;
+                font-weight: 500;
                 border: 1px solid #FAB12B;
 
                 &:hover {
@@ -1707,7 +1732,7 @@ ul.standardPlans {
                 border: 1px solid #2C2C37;
                 border-radius: 5px;
                 color: $white;
-                font-weight: 600;
+                font-weight: 500;
 
                 &:hover {
                     background: #1AC9DD;
@@ -1720,7 +1745,7 @@ ul.standardPlans {
                 padding: 8px 25px;
                 border-radius: 5px;
                 color: #F85E5E;
-                font-weight: 600;
+                font-weight: 500;
                 border: 1px solid #F85E5E;
 
                 &:hover {

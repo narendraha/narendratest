@@ -32,9 +32,9 @@ export default function SideNav(props) {
       moduleId: '3',
       name: 'Behavioural',
       link: 'chat',
-      icon: 'icon_alfred_botquestionnaire',
+      icon: 'icon_alfred_bot',
       subModules: [
-        { id: "1", name: "Behavioural Chat", link: 'chat', icon: 'icon_alfred_botquestionnaire' }
+        { id: "1", name: "Behavioural Chat", link: 'chat', icon: 'icon_alfred_bot' }
       ]
       } ,
       {

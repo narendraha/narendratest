@@ -14,6 +14,7 @@ import { useNavigate } from "react-router";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import Loading from "../../InnerApp/LoadingComponent";
 import { createResource } from "../createResource"; //Suspense loading
+import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { ChangeProfilePassword } from "./changeProfilePassword";
 import { BankDetails } from "./bankDetails";
 import { ProfileSettings } from "./ProfileSettings";
@@ -843,11 +844,9 @@ export default function Profile() {
             </Row>
           </div>
         </div>
-        <div>
-          {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
-          {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
-          {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
-        </div>
+        {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
+        {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
+        {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
       </>
     );
   }

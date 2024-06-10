@@ -107,7 +107,7 @@ export default function Profile() {
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
-          if (res && res.data && res.status == "200") {
+          if (res && res.data && res.status === 200) {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
                 position: "top-right",
@@ -408,10 +408,10 @@ export default function Profile() {
                         education: Yup.string().required(
                           "This field is required"
                         ),
-                        ssn: Yup.string()
-                          .min(2, "Too Short!")
-                          .max(50, "Too Long!")
-                          .required("This field is required"),
+                        // ssn: Yup.string()
+                        //   .min(2, "Too Short!")
+                        //   .max(50, "Too Long!")
+                        //   .required("This field is required"),
                         feet: Yup.string()
                           .min(1, "Too Short!")
                           .max(3, "Too Long!")

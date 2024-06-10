@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Layout3 from "../components/Layout/Layout3";
 import HomeStyle3 from "../components/Pages/HomeStyle3";
 import About from "../components/Pages/About";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ErrorPage from "../components/Pages/ErrorPage";
 import Appointments from "../components/Pages/Appointments";
 import Signin from "../components/Signin";
@@ -41,13 +41,22 @@ import HistoryChat from "../components/Pages/HistoryChat";
 import HeartValves from "../components/Pages/HeartValves";
 import Congestive from "../components/Pages/Congestive";
 import HistoryChatNew from "../components/Pages/HistoryChatNew";
+import Loading from "../components/InnerApp/LoadingComponent"
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Adjust the timeout as needed
   }, [pathname]);
+
+  if (loading) {
+    return <Loading/>; 
+  }
 
   return (
     <>

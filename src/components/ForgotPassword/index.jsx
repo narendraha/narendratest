@@ -373,7 +373,7 @@ export default function ForgotPassword() {
     AxiosInstance("application/json")
       .post(`/verify_otp`, data)
       .then((res) => {
-        if (res && res.data && (res.status == "200" || res.status === 200)) {
+        if (res && res.data && res.status === 200) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
@@ -407,7 +407,7 @@ export default function ForgotPassword() {
     AxiosInstance("application/json")
       .put(`/update_password`, data)
       .then((res) => {
-        if (res && res.data && (res.status == "200" || res.status === 200)) {
+        if (res && res.data && res.status === 200) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {

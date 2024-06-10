@@ -331,7 +331,7 @@ export default function Home() {
       AxiosInstance("application/json")
         .post(`/add_symptoms`, newData)
         .then((res) => {
-          if (res && res.data && res.status == "200") {
+          if (res && res.data && res.status === 200) {
             if (res.data?.statuscode === 200) {
               toast(res.data?.message, {
                 position: "top-right",

@@ -2043,3 +2043,24 @@ button.al_upgrade_btn {
         }
     }
 }
+
+.alnotification_panel {
+    .popover {
+        max-width: 25vw;
+        min-width: 25vw;
+    }
+
+    .popover-inner {
+        &::before {
+            top: -20px;
+            right: 50%;
+            left: 50%;
+            transform: rotate(0deg);
+        }
+        .popover-body {
+            min-height: 60vh;
+            max-height: 65vh;
+            overflow: auto;
+        }
+    }
+}

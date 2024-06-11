@@ -58,7 +58,7 @@ export default function Affaq() {
       <BannerSectionStyle3
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/faq.png"
-        title="Welcome to Hello Alfred<br/>Your AI Health companion"
+        title="Welcome to HelloAlfred<br/>Your AI Health companion"
         subTitle="Your Partner in Health and Wellness"
       />
 

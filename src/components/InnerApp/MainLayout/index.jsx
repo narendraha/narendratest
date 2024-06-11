@@ -44,7 +44,7 @@ export default function MainLayout() {
                     modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
                 >
                     <PopoverBody>
-                        Hello, I am Alfred! How can i Assist you today?
+                        Hello, I am Alfred! How can i assist you today?
                     </PopoverBody>
                 </Popover>
             }

@@ -161,7 +161,7 @@ export default function Signin({ setIsAuthenticated }) {
                           className="text-info"
                           style={{ fontSize: "24px" }}
                         >
-                          Hello Alfred !
+                          HelloAlfred !
                         </span>
                       </h5>
                       <p className="text-medium cs_light text-grey text-italic">

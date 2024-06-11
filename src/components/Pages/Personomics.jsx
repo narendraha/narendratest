@@ -42,7 +42,7 @@ export default function Personomics() {
       <section className="videobanner cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
         <div className="cs_banner_img">
           {/* <img src={personomics} alt="chatbot" /> */}
-          <video width="auto" height="430" autoPlay="autoplay" controls>
+          <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
             <source src="https://web-staging.in/havideo/animation.mp4" type="video/mp4" />
           </video>
         </div>

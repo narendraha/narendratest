@@ -16,7 +16,7 @@ export const ChangeProfilePassword = ({ props }) => {
             new_password: formData?.newPassword
         }
         AxiosInstance("application/json")
-            .put(`/update_details`, reqObj)
+            .put(`/change-password`, reqObj)
             .then((res) => {
                 if (res && res.data && res.status === 200) {
                     setOpenModel(false)

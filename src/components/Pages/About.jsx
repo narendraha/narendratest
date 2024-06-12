@@ -26,7 +26,7 @@ export default function About() {
       <BannerSectionStyle3
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/banner_img.png"
-        title="Welcome to Hello Alfred<br/>Your AI Health companion"
+        title="Welcome to HelloAlfred<br/>Your AI Health companion"
         subTitle="Your Partner in Health and Wellness"
       />
       <Section topMd={80} topLg={80} topXl={80}>

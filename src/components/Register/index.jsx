@@ -54,7 +54,7 @@ export default function Register() {
     AxiosInstance("application/json")
       .post(`/generate_otp`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && res.status === 200) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             setOtpResponse(res.data?.message);
@@ -946,7 +946,7 @@ export default function Register() {
     AxiosInstance("application/json")
       .post(`/verify_otp`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && res.status === 200) {
           setIsFormLoading(false);
           if (res.data.statuscode === 200) {
             toast(res.data?.message, {
@@ -982,7 +982,7 @@ export default function Register() {
     AxiosInstance("application/json")
       .post(`/create_account`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && res.status === 200) {
           if (res.data?.statuscode === 200) {
             setIsLoading(false);
             toast(res.data?.message, {

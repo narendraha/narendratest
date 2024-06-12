@@ -31,7 +31,7 @@ export default function Signin({ setIsAuthenticated }) {
     AxiosInstance("application/json")
       .post(`/login_account`, data)
       .then((res) => {
-        if (res && res.data && res.status == "200") {
+        if (res && res.data && res.status === 200) {
           setIsLoading(false);
           if (res.data.statuscode == "200") {
             localStorage.setItem("token", res.data?.data?.token);
@@ -161,7 +161,7 @@ export default function Signin({ setIsAuthenticated }) {
                           className="text-info"
                           style={{ fontSize: "24px" }}
                         >
-                          Hello Alfred !
+                          HelloAlfred !
                         </span>
                       </h5>
                       <p className="text-medium cs_light text-grey text-italic">

@@ -21,6 +21,8 @@ import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
 import moment from "moment";
+import riskmanagement from '../../../images/riskmanagement.png';
+import riskmanagement2 from '../../../images/riskmanagement2.png';
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -2508,10 +2510,17 @@ export default function Home() {
                 </TabPane>
                 <TabPane tabId="5">
                   <Row className="w-80 mt-4">
-                    <Col md="6" sm="12" className="mb-3">
-                      <div className="card h-100 al_cardnoborder ">
-                        <div className="card-body pt-4">
-                          <ul className="standardPlans">
+                    <Col xl="6" md="6" sm="12">
+                      <div className="flip-card card al_cardnoborder">
+                        <div className="flip-card-inner">
+                          <div className="flip-card-front">
+                            <img src={riskmanagement} alt=""/>
+                            <div className="p-3">
+                              <p>Refer to your managing my AF and risk of stroke guide if you get an episode of AF</p>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                            </div>
+                          </div>
+                          <ul className="standardPlans p-4 ps-5 flip-card-back">
                             <li>
                               Refer to your managing my AF and risk of stroke guide if
                               you get an episode of AF
@@ -2530,10 +2539,17 @@ export default function Home() {
                         </div>
                       </div>
                     </Col>
-                    <Col md="6" sm="12" className="mb-3">
-                      <div className="card h-100 al_cardnoborder">
-                        <div className="card-body pt-4">
-                          <ul className="standardPlans">
+                    <Col xl="6" md="6" sm="12">
+                      <div className="flip-card card al_cardnoborder">
+                        <div className="flip-card-inner">
+                          <div className="flip-card-front">
+                            <img src={riskmanagement2} alt="" />
+                            <div className="p-3">
+                              <p>Visit your doctors regularly and ask questions if you have any concerns</p>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                            </div>
+                          </div>
+                          <ul className="standardPlans p-4 ps-5 flip-card-back">
                             <li>
                               Visit your doctors regularly and ask questions if you have
                               any concerns

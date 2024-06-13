@@ -40,7 +40,7 @@ function AccordionItem({ title, content, isOpen, onClick }) {
           style={{ height: isOpen ? `${contentHeight}px` : '0', maxHeight: contentHeight > 300 ? "300px" : "", overflowY: contentHeight > 300 ? "auto" : "" }}
         >
           <div className="cs_accordian_body" ref={accordionContentRef}>
-            <p>{parser(content)}</p>
+            <div>{parser(content)}</div>
           </div>
         </div>
       </div>

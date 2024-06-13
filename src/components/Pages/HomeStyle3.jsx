@@ -83,7 +83,6 @@ export default function HomeStyle3() {
     setInputValue(value); // update the value of input field with user's typing text
   };
 
-  console.log("chatHistory", chatHistory)
   return (
     <div className="cs_homepage">
       {isShow ? (

@@ -74,7 +74,7 @@ export default function ChatBot(props) {
                   </div>
                   <Col>
                     <h6 className="mb-0">Alfred</h6>
-                    <div>Hello, I am Alfred! How can i Assist you today?</div>
+                    <div>Hello, I am Alfred! How can i assist you today?</div>
                   </Col>
                 </Row>
                 {chatHistory.map((message, index) => (

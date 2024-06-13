@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Popover, PopoverBody } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Popover, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
 import user from '../../../images/userprofile.jpg';
 import noNotifications from '../../../images/noNotifications.svg';
-
+ 
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [isOpenModel, setOpenModel] = useState(true);
-
+ 
   const profileDetails = async () => {
     await AxiosInstance("application/json")
       .get("/userdetails")
@@ -24,12 +24,12 @@ export default function Topbar(props) {
       })
       .catch((er) => console.log(er));
   };
-
+ 
   useEffect(() => {
     profileDetails(); //Suspense loading with actual component
     setOpenModel(false);
   }, []);
-
+ 
   const handleProfile = () => {
     navigate('profile')
   }
@@ -38,7 +38,7 @@ export default function Topbar(props) {
     sessionStorage.clear();
     navigate('/signin')
   }
-
+ 
   const menuData = [
     {
       moduleId: '1',
@@ -83,23 +83,20 @@ export default function Topbar(props) {
           </div>
           <div className='d-flex'>
             <div className='position-relative mx-4'>
-              <i className='icon_alfred_notification pointer' id="notificationpopover" onClick={() => handleClose()}></i>
+              <button type="button" id="notificationpopover"><i className='icon_alfred_notification pointer' onClick={() => handleClose()}></i></button>
               <div className="badge badge-pill badge-danger al_noti-icon-badge">0</div>
-              {!isOpenModel &&
-                <Popover
+                <UncontrolledPopover
                   placement="top"
-                  flip
                   target="notificationpopover"
                   trigger="legacy"
                   className='alnotification_panel'
-                  isOpen={!isOpenModel}
                   modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
                 >
                   <PopoverBody className='d-flex flex-column'>
                     <div className='flex-grow-1 h-100 p-2 d-flex flex-column h-100'>
                       <div className='d-flex align-items-center justify-content-between'>
                         <h6 className='mb-0'>Notifications</h6>
-                        <i className="icon_alfred_close pointer" title="Close" onClick={() => handleClose()}></i>
+                        {/* <i className="icon_alfred_close pointer" title="Close" onClick={() => handleClose()}></i> */}
                       </div>
                       <div className='text-center mt-3 d-flex flex-column align-items-center justify-content-center flex-grow-1'>
                         <img src={noNotifications} alt="" width={60} />
@@ -107,10 +104,9 @@ export default function Topbar(props) {
                       </div>
                     </div>
                   </PopoverBody>
-                </Popover>
-              }
+                </UncontrolledPopover>
             </div>
-
+ 
             <div className="d-flex ms-4">
               <div className="pointer">
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
@@ -129,7 +125,7 @@ export default function Topbar(props) {
                       </div>
                       <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
                     </div>
-
+ 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
                       <span className='al_uName'>{decodedToken?.username}</span>
@@ -144,10 +140,11 @@ export default function Topbar(props) {
             </div>
           </div>
         </div>
-      </header>
+      </header >
       {sideMenu && <div className='al_submenu_content'>
         <div className='al_menu_name'>{sideMenu.name}<><span><i className='icon_alfred_right_arrow'></i></span><span className='al_header_bc'>{sideSubMenu.name}</span></></div>
-      </div>}
+      </div>
+      }
     </>
   )
 }

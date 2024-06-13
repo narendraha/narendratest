@@ -48,7 +48,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     setTimeout(() => {
       setLoading(false);
     }, 1000); // Adjust the timeout as needed

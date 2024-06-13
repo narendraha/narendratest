@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { Row, Col, Label, FormGroup } from "reactstrap";
+import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
 import userImg from "../../../images/userprofile.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -289,7 +289,13 @@ export default function Profile() {
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
                           <div>{getProfileDetails?.bmi || "NA"}</div>
-                          <Label>BMI</Label>
+                          <Label>BMI<i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="bmiinfo"></i></Label>
+                          <UncontrolledTooltip
+                            placementPrefix="al_bs_tooltip"
+                            modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                            placement='bottom' target="bmiinfo">
+                            BMI will be updated automatically when height and weight are changed
+                          </UncontrolledTooltip>
                         </div>
                       </Col>
                     </Row>
@@ -844,6 +850,7 @@ export default function Profile() {
             </Row>
           </div>
         </div>
+        
         {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
         {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
         {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}

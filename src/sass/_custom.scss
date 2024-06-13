@@ -62,7 +62,7 @@ a {
       color: #212529;
     }
   }
- 
+
   input.form-control {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;
@@ -407,6 +407,53 @@ hr {
   }
 }
 
+button#notificationpopover {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.flip-card {
+  width: 100%;
+  min-height: 315px;
+  border: none !important;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  margin-bottom: 25px;
+
+  img {
+    width: 100%;
+    max-height: 210px;
+    object-fit: cover;
+  }
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
 .al_hometabs {
   p {
     line-height: normal;
@@ -537,6 +584,7 @@ hr {
           justify-content: center;
           opacity: 0.5;
         }
+
         &.active {
           opacity: 1;
         }

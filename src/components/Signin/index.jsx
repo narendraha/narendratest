@@ -12,6 +12,9 @@ import { auth, provider } from "../Firebase";
 import { signInWithPopup } from "firebase/auth";
 import Loading from "../InnerApp/LoadingComponent";
 import { Icon } from "@iconify/react";
+import handwave from '../../images/handwave.png';
+import google from '../../images/google.svg';
+import apple from '../../images/apple.svg';
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -156,16 +159,13 @@ export default function Signin({ setIsAuthenticated }) {
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
-                        <span className="fw-medium">Welcome to</span>{" "}
-                        <span
-                          className="text-info"
-                          style={{ fontSize: "24px" }}
-                        >
-                          HelloAlfred !
+                        <span className="fw-medium">Welcome to </span>
+                        <span style={{ fontSize: "26px" }}>
+                          Hello<span className="text-info">Alfred.AI <img src={handwave} alt="" width={25} className="mb-2" /></span>
                         </span>
                       </h5>
-                      <p className="text-medium cs_light text-grey text-italic">
-                        Lets take your wellness journey to new heights
+                      <p className="cs_light text-grey text-italic" style={{ fontFamily : 'STIX Two Text'}}>
+                        "Lets take your wellness journey to new heights"
                       </p>
 
                       <div className="al_signinbg">
@@ -258,11 +258,10 @@ export default function Signin({ setIsAuthenticated }) {
                         onClick={handleClick}
                         className="al_signinbuttons"
                       >
-                        <i className="icon_alfred_google"></i>Sign in / Sign up
-                        With Google
+                        <img src={google} alt="google" className="me-2" width={17} />Sign in / Sign up With Google
                       </button>
                       <button type="button" className="al_signinbuttons">
-                        <i className="icon_alfred_apple"></i>
+                        <img src={apple} alt="apple" className="me-2" width={17} />
                         <span>Sign in / Sign up With Apple</span>
                       </button>
                     </div>

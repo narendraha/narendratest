@@ -3,6 +3,7 @@ import { pageTitle } from '../../helpers/PageTitle';
 import Section from '../Section';
 import TestimonialCarouselStyle2 from '../Slider/TestimonialCarouselStyle2';
 import Spacing from '../Spacing';
+import animation from '../../images/animation.mp4';
 
 const personomicsData = [
   {
@@ -43,7 +44,7 @@ export default function Personomics() {
         <div className="cs_banner_img">
           {/* <img src={personomics} alt="chatbot" /> */}
           <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
-            <source src="https://web-staging.in/havideo/animation.mp4" type="video/mp4" />
+            <source src={animation} type="video/mp4" />
           </video>
         </div>
         <div className="container">

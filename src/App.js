@@ -14,6 +14,7 @@ export default function App() {
     try {
       if (token) {
         const decoded = jwtDecode(token);
+        console.log('decoded: ', decoded);
         // Check if token is expired
         const currentTime = Date.now() / 1000;
         if (decoded?.exp < currentTime) {

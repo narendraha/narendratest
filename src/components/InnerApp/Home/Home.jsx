@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,14 +22,16 @@ import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
 import moment from "moment";
+import { useLocation } from "react-router";
 import riskmanagement from '../../../images/riskmanagement.png';
 import riskmanagement2 from '../../../images/riskmanagement2.png';
 
 export default function Home() {
   // const navigate = useNavigate();
+  const location = useLocation();
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [getTabStatus, setGetStatus] = useState({});
-  const [tab, setTab] = useState("1");
+  const [tab, setTab] = useState( location?.state?.activeTab ? location?.state?.activeTab : "1");
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -46,7 +49,13 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+
+  // chart
+  const [chartOptions, setChartOptions] = useState(null);
+  const [symptomData, getSymptomData] = useState([])
+
+  // chart end
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -363,6 +372,84 @@ export default function Home() {
   //     setTab("3");
   //   }
   // };
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      AxiosInstance("application/json")
+        .post(`/query_symptoms`,{})
+        .then((res) => {
+          if (res && res.data && res.status === 200) {
+            if (res.data?.statuscode === 200) {
+              const data = res?.data?.data || [];
+              getSymptomData(data);
+            } else {
+              toast(res.data?.message, {
+                position: "top-right",
+                type: "error",
+              });
+            }
+          }
+        })
+        .catch((er) => {
+          toast(er?.response?.data?.message, {
+            position: "top-right",
+            type: "error",
+          });
+        });
+      // try {
+      //   const response = await axios.post(
+      //     `http://74.249.108.44:3002/api/query_symptoms`,
+      //     {
+      //       patient_id: "ba91af80-5b32-4856",
+      //       // start_date: !startDate ? moment(new Date()).format("YYYY-MM-DD") : moment(startDate).format("YYYY-MM-DD"),
+      //       // end_date: !endDate ? moment(new Date()).format("YYYY-MM-DD") : moment(endDate).format("YYYY-MM-DD"),
+      //     }
+      //   );
+      //   const data = response?.data?.data || [];
+      //   getSymptomData(data);
+      // } catch (error) {
+      //   console.error("Error fetching data:", error);
+      // }
+    };
+  
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!symptomData || !symptomData.length) {
+      // Data not yet available or empty
+      return;
+    }
+  
+    const options = {
+      chart: { type: "line" },
+      title: { text: "Symptoms Data Over Time" },
+      xAxis: { categories: symptomData.map((item) => item.date) },
+      yAxis: { title: { text: "Symptom Value" } },
+      legend: {
+        layout: "vertical",
+        align: "right",
+        verticalAlign: "middle",
+      },
+      tooltip: {
+        formatter: function () {
+          let tooltip = `<strong>Date: ${this.x}</strong><br>`;
+          this.points.forEach((point) => {
+            tooltip += `<span style="color:${point.color}">\u25CF</span> ${point.series.name}: <b>${point.y}</b><br>`;
+          });
+          return tooltip;
+        },
+        shared: true,
+      },
+      series: Object.keys(symptomData[0]?.symptoms || {}).map((symptom) => ({
+        name: symptom,
+        data: symptomData.map((item) => item?.symptoms?.[symptom] || 0),
+      })),
+    };
+  
+    setChartOptions(options);
+  }, [symptomData]);
 
   const sorteddata = [
     [Date.UTC(2024, 2, 21), 81],
@@ -863,7 +950,7 @@ export default function Home() {
                     <Col lg="6" sm="12">
                       <Formik
                         initialValues={{
-                          tdate: "",
+                          tdate: new Date(),
                           weight: "",
                           // height: "",
                           systolic: "",
@@ -889,6 +976,7 @@ export default function Home() {
                             .min(10, "Pulse must be at least 10")
                             .max(220, "Too high!")
                             .required("This field is required"),
+                          tdate: Yup.date().required("This field is required"),
                           isCheckMedicalRecords: Yup.boolean()
                             .oneOf([true], "This field is required")
                             .required("This field is required"),
@@ -936,7 +1024,7 @@ export default function Home() {
                                         enabled: false,
                                       },
                                     }}
-                                    selected={values?.tdate}
+                                    selected={values?.tdate ? values?.tdate : new Date()}
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);
                                     }}
@@ -950,6 +1038,11 @@ export default function Home() {
                                     showMonthDropdown
                                     showYearDropdown
                                     dropdownMode="select"
+                                  />
+                                  <ErrorMessage
+                                    name="tdate"
+                                    component={"div"}
+                                    className="text-danger"
                                   />
                                 </Col>
                               </Row>
@@ -1097,6 +1190,13 @@ export default function Home() {
                         id="expertmonitoringgraph"
                         style={{ height: "350px" }}
                       ></div>
+                       {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
+                          <>
+                            {chartOptions && (
+                              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+                            )}
+                          </>
+                          : <div>No date found!!</div>} */}
                     </Col>
                   </Row>
                 </TabPane>

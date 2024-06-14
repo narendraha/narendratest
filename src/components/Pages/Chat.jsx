@@ -11,38 +11,43 @@ import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 export default function Chat() {
   pageTitle("Behavioural chat");
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isInputShow, setIsInputShow] = useState(false);
-  const [questions, setQuestions] = useState([]); // stored the chat history get from API response
-  const [newques, setnewqus] = useState("");
-  const [newNumber, setNewNumber] = useState(0); //  initial index value of questins
-  const messagesEndRef = useRef(null);
-  const [jsonData, setJsonData] = useState([]);
   const [responseStatus, setResponseStatus] = useState(0);
   const decodedToken = getDecodedTokenFromLocalStorage();
-  const incrementRef = useRef(0);
+  const messagesEndRef = useRef(null);
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userValue, setUserValue] = useState("");
+  const [conversation, setConversation] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState("");
+
   // get questions using useeffect
   useEffect(() => {
     getQuestion();
   }, []);
 
+  const getRandomQuestion = (index) => {
+    if (questions?.length > 0 && responseStatus !==99) {
+      const questionSet = questions[index];
+      const randomIndex = Math.floor(Math.random() * questionSet?.length);
+      setCurrentQuestion(questionSet[randomIndex])
+      return questionSet[randomIndex];
+    }
+  };
+
+  useEffect(() => {
+    setConversation((prevConversation) => [
+      ...prevConversation,
+      { alfred: getRandomQuestion(currentQuestionIndex) },
+    ]);
+  }, [currentQuestionIndex, questions]);
+
   // Scroll to the bottom of the chat container
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  let randomNumber = Math.floor(Math.random() * 15);
-
-  const newfuc = (index) => {
-    if (jsonData.length > 0) {
-      setnewqus(jsonData[index][randomNumber]);
-      setQuestions((prevHistory) => [
-        ...prevHistory,
-        { alfred: jsonData[index][randomNumber] },
-      ]);
-    }
   };
 
   const getQuestion = async () => {
@@ -50,7 +55,8 @@ export default function Chat() {
       .get("/chatbot_questions")
       .then((response) => {
         if (response && response?.status == 200) {
-          setJsonData(response.data?.data);
+          setQuestions(response.data?.data);
+          getRandomQuestion(currentQuestionIndex);
         }
       })
       .catch((er) => {
@@ -62,75 +68,57 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    newfuc(incrementRef.current);
-  }, [jsonData]); // Empty dependency array ensures this effect runs only once on mount
-
-  useEffect(() => {
     scrollToBottom(); // Scroll to bottom whenever messages change
-  }, [incrementRef, questions]);
-
-  useEffect(() => {}, [incrementRef, responseStatus]);
+  }, [conversation]);
 
   const handleFormSubmit = async (e) => {
-    console.log(
-      "outside if responseStatus:",
-      responseStatus,
-      typeof responseStatus
-    );
-    if (
-      responseStatus === 0 ||
-      (responseStatus !== -1 && responseStatus !== 99)
-    ) {
-      incrementRef.current += 1;
-    }
     setIsInputShow(true);
     e.preventDefault();
-    if (!inputValue.trim()) return; // Do not submit empty input
+    if (!userValue.trim()) return; // Do not submit empty input
+    setConversation((prevConversation) => [
+      ...prevConversation,
+      { user: userValue },
+    ]);
+    setUserValue("");
+
     // show the user entered input value
-    setQuestions((prevHistory) => [...prevHistory, { user: inputValue }]);
-    setInputValue(""); // Clear input after submitting
     setIsLoading(true);
 
     // request data
-    let data = {
-      alfred: newques,
-      user: inputValue,
-      questionno: newNumber,
+    const payload = {
+      alfred: currentQuestion,
+      user: userValue,
+      questionno: currentQuestionIndex + 1,
     };
     // api integration
     await AxiosInstance("application/json")
-      .post(`/categorizeresponse`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          // hide the send and remove icon
-          setIsShow(false);
-          //  hide the input
-          setIsInputShow(false);
-          const responseData = res.data;
-          setIsLoading(false);
-          setResponseStatus(responseData?.statuscode);
-          // here  we will add the result to our history of questions and answers
-          // if res status is -1 or index % 3 or res 99 means need to show res msg and also index % 3 measns need to next question
-          if (
-            responseData.statuscode === -1 ||
-            (incrementRef.current > 0 && incrementRef.current % 3 === 0) ||
-            responseData.statuscode === 99
-          ) {
-            setQuestions((prevHistory) => [
-              ...prevHistory,
-              {
-                alfred: responseData?.message,
-              },
-            ]);
-            if (
-              incrementRef.current % 3 === 0 ||
-              responseData.statuscode === 99
-            ) {
-              newfuc(incrementRef.current);
-            }
-          } else {
-            newfuc(incrementRef.current);
-          }
+      .post(`/categorizeresponse`, payload)
+      .then((response) => {
+        const { statuscode, message } = response.data;
+        setIsShow(false); //  hide the input
+        setIsInputShow(false);
+        setIsLoading(false);
+        setResponseStatus(statuscode);
+
+        if (statuscode === -1) {
+          // If statuscode is -1, show Alfred's message and stop
+          setConversation((prevConversation) => [
+            ...prevConversation,
+            { alfred: message },
+          ]);
+        } else if (statuscode === 1) {
+          // If statuscode is 1, show the next question
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        } else if ((currentQuestionIndex + 1) % 3 === 0) {
+          // If the user reaches every 3rd question, show Alfred's message and the next question
+          setConversation((prevConversation) => [
+            ...prevConversation,
+            { alfred: message },
+          ]);
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        } else {
+          // Otherwise, just move to the next question
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         }
       })
       .catch((er) => {
@@ -145,7 +133,7 @@ export default function Chat() {
     let { value } = e.target; // e.target value destructure
     value !== "" &&
       setIsShow(true); /* Show send button when user enter something */
-    setInputValue(value); // update the value of input field with user's typing text
+    setUserValue(value); // update the value of input field with user's typing text
   };
   return (
     <div className="cs_homepage mt-0 h-100">
@@ -179,25 +167,49 @@ export default function Chat() {
                * again split the structure into "key and value" using Object method called entries
                * it convert into array so here split the param as ([key, value])
                */}
-              {Array?.isArray(questions) &&
-                questions?.length > 0 &&
-                questions?.map((message, index) => (
+              {/* {conversation.map((conv, index) => (
+          <div key={index}>
+            {conv.alfred && (
+              <p>
+                <strong>Alfred:</strong> {conv.alfred}
+              </p>
+            )}
+            {conv.user !== undefined && (
+              <p>
+                <strong>User:</strong> {conv.user}
+              </p>
+            )}
+          </div>
+        ))} */}
+              {Array?.isArray(conversation) &&
+                conversation?.length > 0 &&
+                conversation?.map((message, index) => (
                   <React.Fragment key={index}>
-                    {Object.entries(message).map(([key, value]) => (
-                      <Row className="mb-4 al_chatcontent" key={key}>
-                        <div>
-                          {key === "user" ? (
-                            <img src={Chatuser} alt="chat user" className='al_chatimg'/>
-                          ) : key === "alfred" ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
-                        </div>
-                        <Col>
-                          <h6 className="mb-0">{key === "user" ? decodedToken?.username : key}</h6>
-                          <div>{value}</div>
-                        </Col>
-                      </Row>
-                    ))}
+                    <Row className="mb-4 al_chatcontent" key={index}>
+                      <div>
+                        {message.user ? (
+                          <img
+                            src={Chatuser}
+                            alt="chat user"
+                            className="al_chatimg"
+                          />
+                        ) : message.alfred ? (
+                          <img src={Chatbot} alt="Bot" />
+                        ) : null}
+                      </div>
+                      <Col>
+                      {message.alfred && (
+                          <>
+                            <h6 className="mb-0">Alfred:</h6> <div>{message.alfred}</div>
+                          </>
+                        )}
+                        {message.user !== undefined && (
+                          <>
+                            <h6 className="mb-0">{message.user ? decodedToken?.username: message.user}</h6> <div>{message.user}</div>
+                          </>
+                        )}
+                      </Col>
+                    </Row>
                   </React.Fragment>
                 ))}
               {isLoading && <div className="al_chatloading"></div>}
@@ -206,7 +218,7 @@ export default function Chat() {
           </div>
           <div className="cs_mainsearch my-3">
             {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
-            {newNumber > Object.keys(jsonData).length ? (
+            {responseStatus === 99 ? (
               <div className="mt-3 d-flex align-items-center justify-content-center">
                 <button
                   type="submit"
@@ -217,47 +229,43 @@ export default function Chat() {
                 </button>
               </div>
             ) : (
-              <form action="#">
-                <i
-                  className="icon_alfred_search h-auto"
-                ></i>
-                <input
-                  type="text"
-                  placeholder="Ask a question"
-                  name="message"
-                  value={inputValue} // input value
-                  onChange={handleInputChange} // handle changes
-                  disabled={isInputShow} //Disabled once input value is submitted
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault(); // Prevent default form submission behavior
-                      handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                    }
-                  }}
-                />
-                {isShow ? (
-                  <>
-                    <i
-                      className="icon_alfred_close"
-                      onClick={(e) => {
-                        setInputValue("");
-                      }}
-                    ></i>
-                    <i
-                      className="icon_alfred_sendmsg"
-                      style={{
-                        height: "auto",
-                        pointerEvents: isInputShow ? "none" : "",
-                      }}
-                      onClick={(e) => handleFormSubmit(e)}
-                    ></i>
-                  </>
-                ) : (
+            <form action="#">
+              <i className="icon_alfred_search h-auto"></i>
+              <input
+                type="text"
+                placeholder="Ask a question"
+                name="message"
+                value={userValue} // input value
+                onChange={handleInputChange} // handle changes
+                disabled={isInputShow} //Disabled once input value is submitted
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Prevent default form submission behavior
+                    handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                  }
+                }}
+              />
+              {isShow ? (
+                <>
                   <i
-                    className="icon_alfred_speech h-auto"
+                    className="icon_alfred_close"
+                    onClick={(e) => {
+                      setUserValue("");
+                    }}
                   ></i>
-                )}
-              </form>
+                  <i
+                    className="icon_alfred_sendmsg"
+                    style={{
+                      height: "auto",
+                      pointerEvents: isInputShow ? "none" : "",
+                    }}
+                    onClick={(e) => handleFormSubmit(e)}
+                  ></i>
+                </>
+              ) : (
+                <i className="icon_alfred_speech h-auto"></i>
+              )}
+            </form>
             )}
           </div>
         </div>

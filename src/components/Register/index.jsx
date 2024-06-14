@@ -1070,6 +1070,10 @@ export default function Register() {
                                 name="password"
                                 placeholder="Enter password"
                                 className="form-control"
+                                onChange={(e) => {
+                                  const trimmedValue = e.target.value.trim();
+                                  setFieldValue("password", trimmedValue);
+                                }}
                               />
                               <div
                                 onClick={togglePasswordVisibility}
@@ -1113,6 +1117,10 @@ export default function Register() {
                                 name="reenterpassword"
                                 placeholder="Enter password"
                                 className="form-control"
+                                onChange={(e) => {
+                                  const trimmedValue = e.target.value.trim();
+                                  setFieldValue("reenterpassword", trimmedValue);
+                                }}
                               />
                               <div
                                 onClick={togglePasswordVisibility2}

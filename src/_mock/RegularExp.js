@@ -17,3 +17,12 @@ export function allowsOnlyNumericOnly3Digit(e) {
         e.preventDefault();
     }
 }
+
+export function allowsOnlyNumericOnly2Digit(e) {
+    const re = /^[0-9\b]+$/;
+
+    // Prevent the input value
+    if (!re.test(e.key) || (e.target.value.length >= 2 && e.key !== 'Backspace')) {
+        e.preventDefault();
+    }
+}

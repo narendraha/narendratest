@@ -93,7 +93,7 @@ export default function Profile() {
     { value: "Unknown", label: "Unknown" },
   ];
   function maskssn(input) {
-    if (input !== "NA" && input?.length < 2) {
+    if (input !== "NA" && input !== undefined  && input?.length < 2) {
       return input;
     }
     const lastTwoChars = input?.slice(-3);
@@ -267,7 +267,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.ssn !== "NA" ? maskssn(getProfileDetails?.ssn) : "NA"}</div>
+                          <div>{getProfileDetails?.ssn !== "NA" && getProfileDetails?.ssn !== undefined ? maskssn(getProfileDetails?.ssn) : "NA"}</div>
                           <Label>SSN</Label>
                         </div>
                       </Col>
@@ -366,22 +366,22 @@ export default function Profile() {
                   <>
                     <Formik
                       initialValues={{
-                        username: getProfileDetails?.username || "",
-                        email: getProfileDetails?.email || "",
+                        username: getProfileDetails?.username !== "NA" ? getProfileDetails?.username : "",
+                        email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email: "",
                         dob:
-                          getProfileDetails?.dob == "NA"
+                          getProfileDetails?.dob !== "NA"
                             ? new Date()
                             : getProfileDetails?.dob,
-                        gender: getProfileDetails?.gender || "",
-                        mobile: getProfileDetails?.mobile || "",
-                        rtype: getProfileDetails?.rtype || "",
-                        education: getProfileDetails?.education || "",
-                        ssn: getProfileDetails?.ssn || "",
+                        gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
+                        mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
+                        rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
+                        education: getProfileDetails?.education !== "NA" ? getProfileDetails?.rtype : "",
+                        ssn: getProfileDetails?.ssn !== "NA" ? getProfileDetails?.ssn : "",
                         feet: getProfileDetails?.feet !== "NA" ? getProfileDetails?.feet : '',
                         inch: getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : '',
-                        weight: getProfileDetails?.weight || "",
+                        weight: getProfileDetails?.weight !== "NA" ? getProfileDetails?.weight : "",
                         // age: getProfileDetails?.age || "",
-                        bloodtype: getProfileDetails?.bloodtype || "",
+                        bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype :"",
                       }}
                       validationSchema={Yup.object().shape({
                         username: Yup.string()
@@ -506,6 +506,9 @@ export default function Profile() {
                                     name="weight"
                                     placeholder="Enter Weight"
                                     className="form-control"
+                                    onKeyPress={(e) =>
+                                      allowsOnlyNumericOnly3Digit(e)
+                                    }
                                   />
                                   <ErrorMessage
                                     name="weight"

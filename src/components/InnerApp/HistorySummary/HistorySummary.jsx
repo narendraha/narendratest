@@ -79,7 +79,7 @@ export default function HistorySummary() {
                       fontSize: "13px"
                     }}>
                       <tbody className="w-100" style={{height: "100vh"}}>
-                        <tr className="w-100" style={{ height: "100px" }}>
+                        <tr className="w-100" style={{ height: "110px" }}>
                           <td className="px-4 py-3 d-flex align-items-center">
                             <div className="w-50">
                               <img src={logo} alt="" width="120" />
@@ -89,7 +89,7 @@ export default function HistorySummary() {
                               helloalfred.ai</div>
                           </td>
                         </tr>
-                        <tr className="w-100 flex-grow-1" style={{height: `calc(100vh - 132px)`}}>
+                        <tr className="w-100 flex-grow-1" style={{height: `calc(100vh - 142px)`}}>
                           <td className="px-4 pb-3" style={{ verticalAlign: "top" }} dangerouslySetInnerHTML={{ __html: transcript }}>
                           </td>
                         </tr>

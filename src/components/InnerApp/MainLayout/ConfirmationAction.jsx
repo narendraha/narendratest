@@ -44,7 +44,7 @@ export default function ConfirmationAction(props) {
             </Button>
             <Button
               type="button"
-              className="text-capitalize btn al_button_cancel"
+              className="text-capitalize btn al_button_info"
               onClick={() => handleCancel(false)}
             >
               Cancel

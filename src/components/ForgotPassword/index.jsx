@@ -84,20 +84,16 @@ export default function ForgotPassword() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                  <Link to="/">
                     <img
                       src={alferdlogo}
                       className="login_logodesktop"
                       alt="logo"
-                      width={180}
                     />
                     <img
                       src={alferdlogomobile}
                       className="login_logomobile"
                       alt="logo_mobile"
-                      width={180}
                     />
-                  </Link>
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -179,7 +175,7 @@ export default function ForgotPassword() {
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
                   <Link to="/">
-                    <img src={alferdlogo} alt="logo" width={180} />
+                    <img src={alferdlogo} alt="logo" />
                   </Link>
                 </div>
               </Col>
@@ -320,7 +316,7 @@ export default function ForgotPassword() {
         <Col lg="7" sm="6" className="al_left_login h-100">
           <div className="wflexLayout">
             <Link to="/">
-              <img src={alferdlogo} alt="logo" width={180} />
+              <img src={alferdlogo} alt="logo" />
             </Link>
           </div>
         </Col>
@@ -471,7 +467,7 @@ export default function ForgotPassword() {
                   <Col lg="7" sm="6" className="al_left_login h-100">
                     <div className="wflexLayout">
                       <Link to="/">
-                        <img src={alferdlogo} alt="logo" width={180} />
+                        <img src={alferdlogo} alt="logo" />
                       </Link>
                     </div>
                   </Col>

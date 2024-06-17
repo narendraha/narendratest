@@ -378,10 +378,6 @@ textarea {
       color: #2C2C37;
       font-weight: 500;
       font-size: 15px;
-
-      input[type="checkbox"]:checked {
-        //        accent-color: #04C1D6;
-      }
     }
   }
 }
@@ -783,7 +779,7 @@ span {
 }
 
 .al_calendarIcon {
-  background: url('../images/alcalender.svg') no-repeat right 8% top 45% #f3f6fb !important;
+  background: url('../images/alcalender.svg') no-repeat right 12px top 45% #f3f6fb !important;
   background-size: 16px;
 }
 

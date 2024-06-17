@@ -32,7 +32,7 @@
 }
 
 .w-30 {
-    width: 40%;
+    width: 40% !important;
 }
 
 em {
@@ -950,10 +950,6 @@ button#chatpopover {
             color: #ffffff;
         }
 
-        .chat_item:hover {
-            // transform: scale(1.07);
-        }
-
         >div {
             height: 100%;
         }
@@ -1037,43 +1033,6 @@ ul.standardPlans {
         }
     }
 }
-.al_savebtn {
-    background: $white;
-    padding: 8px 25px;
-    border-radius: 5px;
-    color: #00a4b6;
-    font-weight: 500;
-    border: 1px solid #00a4b6;
-    width: 180px;
-    // -webkit-box-shadow: 4px 6px 18px -10px rgba(#00a4b6,0.75);
-    // -moz-box-shadow: 4px 6px 18px -10px rgba(#00a4b6,0.75);
-    // box-shadow: 4px 6px 18px -10px rgba(#00a4b6,0.75);
-        &:hover {
-            background: #00a4b6;
-            border: 1px solid #00a4b6;
-            color: #ffffff;
-
-        }
-
-    }
-    .al_button_cancel {
-        background: $white;
-        padding: 8px 25px;
-        border-radius: 5px;
-        width: 180px;
-        // -webkit-box-shadow: 4px 6px 18px -10px rgba(#F85E5E,0.75);
-        // -moz-box-shadow: 4px 6px 18px -10px rgba(#F85E5E,0.75);
-        // box-shadow: 4px 6px 18px -10px rgba(#F85E5E,0.75);
-        color: #F85E5E;
-        font-weight: 500;
-        border: 1px solid #F85E5E;
-
-        &:hover {
-            background: #F85E5E;
-            color: #ffffff;
-            border: 1px solid #F85E5E;
-        }
-    }
 
 .al_site_container {
     display: flex;
@@ -1794,15 +1753,13 @@ ul.standardPlans {
                 }
             }
 
-            .modelFooter {
-                button {
-                    margin-right: 15px;
-                    min-width: 100px;
-                    font-weight: 500;
+            button {
+                margin-right: 15px;
+                min-width: 100px;
+                font-weight: 500;
 
-                    &:last-child {
-                        margin-right: 0;
-                    }
+                &:last-child {
+                    margin-right: 0;
                 }
             }
         }
@@ -2096,6 +2053,7 @@ button.al_upgrade_btn {
             left: 50%;
             transform: rotate(0deg);
         }
+
         .popover-body {
             min-height: 60vh;
             max-height: 65vh;

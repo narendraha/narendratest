@@ -42,6 +42,7 @@ import HeartValves from "../components/Pages/HeartValves";
 import Congestive from "../components/Pages/Congestive";
 import HistoryChatNew from "../components/Pages/HistoryChatNew";
 import Loading from "../components/InnerApp/LoadingComponent"
+import Terms from "../components/Terms/Terms";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -55,7 +56,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   }, [pathname]);
 
   if (loading) {
-    return <Loading/>; 
+    return <Loading />;
   }
 
   return (
@@ -123,6 +124,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
                 <Route path="contact" element={<Contact />} /> */}
             </Route>
             <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="terms" element={<Terms />} />
             <Route path="registration" element={<Register />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<ErrorPage />} />

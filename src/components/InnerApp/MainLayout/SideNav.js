@@ -11,6 +11,7 @@ export default function SideNav(props) {
   const navigate = useNavigate();
   const [isModalVisible, setisModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [redirectionRoute, setRedirectionRoute] = useState("")
 
   const menuData = [
     // {
@@ -131,7 +132,7 @@ export default function SideNav(props) {
     // }
   ];
 
-  useEffect(() => {}, [props.isShowmenu]);
+  useEffect(() => { }, [props.isShowmenu]);
 
   const handleClose = () => {
     setisModalVisible(!isModalVisible);
@@ -140,13 +141,14 @@ export default function SideNav(props) {
   const getHistoryBotQues = async (payload) => {
     try {
       const response = await AxiosInstance("application/json").post(
-        "/profile_completion",
+        "/profile-completions-summary",
         payload
       );
       if (
         response &&
-        response.status === 200 &&
-        response.data.statuscode === 200
+        response.status === 200
+        // &&
+        // response.data.statuscode === 200
       ) {
         return response.data;
       }
@@ -161,9 +163,10 @@ export default function SideNav(props) {
         history_chat: true,
       };
       const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.data?.reached_75_percent) {
+      if (isCompleted?.status) {
         navigate("/historychat");
       } else {
+        setRedirectionRoute("/profile")
         setisModalVisible(!isModalVisible);
         setModalMessage(isCompleted?.message);
       }
@@ -172,9 +175,10 @@ export default function SideNav(props) {
         history_trans: true,
       };
       const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.data?.history_progress_criteria) {
+      if (isCompleted?.status) {
         navigate("/transcriptsummary");
       } else {
+        setRedirectionRoute("/historychat")
         setisModalVisible(!isModalVisible);
         setModalMessage(isCompleted?.message);
       }
@@ -189,6 +193,7 @@ export default function SideNav(props) {
           msg={modalMessage}
           handleClose={handleClose}
           isModalVisible={isModalVisible}
+          route={redirectionRoute}
         />
       )}
       <nav

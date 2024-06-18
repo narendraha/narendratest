@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import Loading from "../InnerApp/LoadingComponent";
 import OTPComponent from "../ForgotPassword/OTP";
 import { Icon } from "@iconify/react";
+import { customContentValidation } from "../../_mock/coreHelperHA";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -205,14 +206,14 @@ export default function Register() {
                           name="dob"
                           placeholderText="Select DOB"
                           popperPlacement="auto"
-                          popperModifiers={{
+                          popperModifiers={[{
                             flip: {
                               behavior: ["bottom"],
                             },
                             preventOverflow: {
                               enabled: false,
                             },
-                          }}
+                          }]}
                           selected={values.dob}
                           onChange={(e) => {
                             setFieldValue("dob", e);

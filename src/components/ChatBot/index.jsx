@@ -5,6 +5,7 @@ import Chatuser from "../../images/userprofile.jpg";
 import Chatbot from "../../images/alfredicon.svg";
 import { Row, Col } from "reactstrap";
 import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
+import { Icon } from "@iconify/react";
 
 export default function ChatBot(props) {
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
@@ -12,6 +13,7 @@ export default function ChatBot(props) {
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
+  const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
   const decodedToken = getDecodedTokenFromLocalStorage();
 
   const handleFormSubmit = async (e) => {
@@ -41,7 +43,7 @@ export default function ChatBot(props) {
           }
         }
       })
-      .catch((er) => {});
+      .catch((er) => { });
   };
 
   const handleInputChange = (e) => {
@@ -49,9 +51,33 @@ export default function ChatBot(props) {
     value !== ""
       ? setIsShowSendBtn(true)
       : setIsShowSendBtn(
-          false
-        ); /* Show send button when user enter something */
+        false
+      ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
+  };
+
+  const handleAction = (messageId, iconType, alfredValue, userValue) => {
+    setSelectedIcons(prevIcons => ({
+      ...prevIcons,
+      [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
+    }));
+    let reqObj = {
+      message: alfredValue,
+      preference: iconType === "like"
+    }
+    AxiosInstance("application/json")
+      .post(`/preference_chat`, reqObj)
+      .then((res) => {
+        console.log("preference_chat_response=>", { reqObj, res })
+        if (res && res.data && res.status === 200) {
+          if (res.data.statuscode === 200) {
+            setIsLoading(false);
+          } else {
+          }
+        }
+      })
+      .catch((er) => {
+      });
   };
 
   return (
@@ -81,7 +107,7 @@ export default function ChatBot(props) {
                   <React.Fragment key={index}>
                     {Object.entries(message).map(([key, value]) => (
                       <Row className="mb-4 al_chatcontent" key={key}>
-                        <div>
+                        {/* <div>
                           {key === "user" ? (
                             <img
                               src={Chatuser}
@@ -91,12 +117,44 @@ export default function ChatBot(props) {
                           ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
+                        </div> */}
+                        <div>
+                          {key === "user" ? (
+                            <img src={Chatuser} alt="chat user" />
+                          ) : key === "alfred" ? (
+                            <img src={Chatbot} alt="Bot" />
+                          ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">
                             {key === "user" ? decodedToken?.username : key}
                           </h6>
                           <div>{value}</div>
+                          {key === "alfred" && (
+                            <>
+                              <Icon
+                                icon="iconamoon:like-light"
+                                width="1.5em"
+                                height="1.5em"
+                                onClick={() => handleAction(index, 'like', value)} // Handle like action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
+                                }}
+                              />
+                              <Icon
+                                icon="iconamoon:dislike-light"
+                                width="1.5em"
+                                height="1.5em"
+                                className="mx-2"
+                                onClick={() => handleAction(index, 'dislike', value)} // Handle dislike action
+                                style={{
+                                  cursor: 'pointer',
+                                  color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
+                                }}
+                              />
+                            </>
+                          )}
                         </Col>
                       </Row>
                     ))}

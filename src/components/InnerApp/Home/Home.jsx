@@ -4,8 +4,8 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Slider from "react-rangeslider";
-import "react-rangeslider/lib/index.css";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { toast } from "react-toastify";
 import { Card, CardBody, Col, FormGroup, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane, Table } from "reactstrap";
 import * as Yup from "yup";
@@ -25,13 +25,19 @@ import moment from "moment";
 import { useLocation } from "react-router";
 import riskmanagement from '../../../images/riskmanagement.png';
 import riskmanagement2 from '../../../images/riskmanagement2.png';
+// import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
+export const EGoalTimePeriod = {
+  WEEKWISE: 0,
+  DAYSWISE: 1,
+  MONTHWISE: 2
+}
 
 export default function Home() {
   // const navigate = useNavigate();
   const location = useLocation();
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [getTabStatus, setGetStatus] = useState({});
-  const [tab, setTab] = useState( location?.state?.activeTab ? location?.state?.activeTab : "1");
+  const [tab, setTab] = useState(location?.state?.activeTab ? location?.state?.activeTab : "1");
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -49,13 +55,14 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false)
   // chart
   const [chartOptions, setChartOptions] = useState(null);
   const [symptomData, getSymptomData] = useState([])
 
   // chart end
+
+  const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(EGoalTimePeriod.WEEKWISE);
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -72,6 +79,7 @@ export default function Home() {
     syncope: { frequency: "" },
     tirednessafterwards: { frequency: "" },
   });
+  const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({ patientDetails: null, symptomsDetails: null })
 
   const handleFrequencyChange = (category, value) => {
     setBreathlessness((prevState) => ({
@@ -114,7 +122,7 @@ export default function Home() {
     20: "Mild",
     45: "Moderate",
     70: "Severe",
-    90: "Extreme",
+    88: "Extreme",
   };
   const handleValueChange = (value, setValue) => {
     setValue(value);
@@ -257,19 +265,19 @@ export default function Home() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
-      const output = `${getOutputNumber(labelValues)}${getOutputNumber(
-        labelValues1
-      )}${getOutputNumber(labelValues2)}${getOutputNumber(
-        labelValues3
-      )}${getOutputNumber(labelValues4)}${getOutputNumber(
-        labelValues5
-      )}${getOutputNumber(labelValues6)}${getOutputNumber(
-        labelValues7
-      )}${getOutputNumber(labelValues8)}${getOutputNumber(
-        labelValues9
-      )}${getOutputNumber(labelValues10)}${getOutputNumber(
-        labelValues11
-      )}${getOutputNumber(labelValues12)}`;
+      const output = `${getOutputNumber(labelValues)}
+      ${getOutputNumber(labelValues1)}
+      ${getOutputNumber(labelValues2)}
+      ${getOutputNumber(labelValues3)}
+      ${getOutputNumber(labelValues4)}
+      ${getOutputNumber(labelValues5)}
+      ${getOutputNumber(labelValues6)}
+      ${getOutputNumber(labelValues7)}
+      ${getOutputNumber(labelValues8)}
+      ${getOutputNumber(labelValues9)}
+      ${getOutputNumber(labelValues10)}
+      ${getOutputNumber(labelValues11)}
+      ${getOutputNumber(labelValues12)}`;
 
       let newData = {
         breathnessda: {
@@ -350,6 +358,7 @@ export default function Home() {
               });
               changeStatus();
               setTab("4");
+              getPatientDetails()
             } else {
               toast(res.data?.message, {
                 position: "top-right",
@@ -377,7 +386,7 @@ export default function Home() {
 
     const fetchData = async () => {
       AxiosInstance("application/json")
-        .post(`/query_symptoms`,{})
+        .post(`/query_symptoms`, {})
         .then((res) => {
           if (res && res.data && res.status === 200) {
             if (res.data?.statuscode === 200) {
@@ -412,7 +421,7 @@ export default function Home() {
       //   console.error("Error fetching data:", error);
       // }
     };
-  
+
     fetchData();
   }, []);
 
@@ -421,7 +430,7 @@ export default function Home() {
       // Data not yet available or empty
       return;
     }
-  
+
     const options = {
       chart: { type: "line" },
       title: { text: "Symptoms Data Over Time" },
@@ -447,7 +456,7 @@ export default function Home() {
         data: symptomData.map((item) => item?.symptoms?.[symptom] || 0),
       })),
     };
-  
+
     setChartOptions(options);
   }, [symptomData]);
 
@@ -713,6 +722,24 @@ export default function Home() {
     }
   };
 
+  const getPatientDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((response) => {
+        console.log('Lifestylegoal_tab_userdetails_response=>', response)
+        if (response && response?.status == 200) {
+          setPatientAndSymptomsDetails({ patientDetails: response.data?.data })
+          setIsLoading(false)
+        }
+      })
+      .catch((er) => {
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-right",
+          type: "error",
+        });
+      });
+  }
+
   return (
     <>
       <ConfirmationAction
@@ -783,6 +810,7 @@ export default function Home() {
                     className={tab === "4" ? "active" : ""}
                     onClick={() => {
                       setTab("4");
+                      getPatientDetails()
                     }}
                   >
                     <div>
@@ -1016,14 +1044,14 @@ export default function Home() {
                                     name="tdate"
                                     placeholderText="Select date"
                                     popperPlacement="auto"
-                                    popperModifiers={{
+                                    popperModifiers={[{
                                       flip: {
                                         behavior: ["bottom"],
                                       },
                                       preventOverflow: {
                                         enabled: false,
                                       },
-                                    }}
+                                    }]}
                                     selected={values?.tdate ? values?.tdate : new Date()}
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);
@@ -1190,7 +1218,7 @@ export default function Home() {
                         id="expertmonitoringgraph"
                         style={{ height: "350px" }}
                       ></div>
-                       {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
+                      {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
                           <>
                             {chartOptions && (
                               <HighchartsReact highcharts={Highcharts} options={chartOptions} />
@@ -1250,15 +1278,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider(labelValues)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1347,15 +1374,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues1}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider1}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider1(labelValues1)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider1}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1444,15 +1470,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues2}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider2}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider2(labelValues2)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider2}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1541,15 +1566,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues3}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider3}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider3(labelValues3)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider3}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1638,15 +1662,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues4}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider4}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider4(labelValues4)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider4}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1735,15 +1758,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues5}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider5}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider5(labelValues5)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider5}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1832,15 +1854,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues6}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider6}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider6(labelValues6)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider6}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1929,15 +1950,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues7}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider7}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider7(labelValues7)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider7}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2026,15 +2046,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues8}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider8}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider8(labelValues8)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider8}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2123,15 +2142,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues9}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider9}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider9(labelValues9)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider9}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2220,15 +2238,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues10}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider10}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider10(labelValues10)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider10}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2317,15 +2334,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues11}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider11}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider11(labelValues11)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider11}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2414,15 +2430,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues12}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider12}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider12(labelValues12)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider12}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2486,7 +2501,7 @@ export default function Home() {
                     </button>
                   </div>
                 </TabPane>
-                <TabPane tabId="4">
+                {<TabPane tabId="4">
                   <p>Select where you want to be coached in</p>
                   <div className="w-80">
                     <Row className="al_goalslist mb-4">
@@ -2535,19 +2550,19 @@ export default function Home() {
                           <h5 className="mb-2">Hello, {decodedToken?.username}!</h5>
                           <div>
                             <strong>Age: </strong>
-                            <span>40</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.age || "N/A"}</span>
                           </div>
                           <div>
                             <strong>Gender: </strong>
-                            <span>Male</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.gender || "N/A"}</span>
                           </div>
                           <div>
                             <strong>Residence type: </strong>
-                            <span>Cohabitant</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.rtype}</span>
                           </div>
                           <div>
                             <strong>Education: </strong>
-                            <span>University Degree</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N?A"}</span>
                           </div>
                         </Col>
                         <Col lg="6" sm="12">
@@ -2560,6 +2575,16 @@ export default function Home() {
                               </tr>
                             </thead>
                             <tbody>
+                              {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                                return (
+                                  <>
+                                    <tr>
+                                      <td>{lifeStyleGoalSymptomsKeys[key]}</td>
+                                      <td className="text-warning">{patientAndSymptomsDetails?.symptomsDetails[key]?.severity}</td>
+                                    </tr>
+                                  </>
+                                )
+                              })} */}
                               <tr>
                                 <td>Breathlessness even at rest</td>
                                 <td className="text-warning">Moderate</td>
@@ -2580,17 +2605,17 @@ export default function Home() {
 
                       <Row className="mb-4">
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton active">
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.WEEKWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)}>
                             Create goal for <strong>1 week</strong>
                           </div>
                         </Col>
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton">
-                            Create goal for <strong>15 days</strong>
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.DAYSWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)}>
+                            Create goal for <strong>15 days</strong >
                           </div>
                         </Col>
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton">
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.MONTHWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)}>
                             Create goal for <strong>1 month</strong>
                           </div>
                         </Col>
@@ -2607,17 +2632,17 @@ export default function Home() {
                       {/* <LayoutAlertMessage /> */}
                     </div>
                   </div>
-                </TabPane>
+                </TabPane>}
                 <TabPane tabId="5">
                   <Row className="w-80 mt-4">
                     <Col xl="6" md="6" sm="12">
                       <div className="flip-card card al_cardnoborder">
                         <div className="flip-card-inner">
                           <div className="flip-card-front">
-                            <img src={riskmanagement} alt=""/>
+                            <img src={riskmanagement} alt="" />
                             <div className="p-3">
                               <p>Refer to your managing my AF and risk of stroke guide if you get an episode of AF</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">
@@ -2646,7 +2671,7 @@ export default function Home() {
                             <img src={riskmanagement2} alt="" />
                             <div className="p-3">
                               <p>Visit your doctors regularly and ask questions if you have any concerns</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">

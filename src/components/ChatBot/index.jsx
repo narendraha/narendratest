@@ -88,6 +88,7 @@ export default function ChatBot(props) {
               id="homechatclose"
               type="button"
               onClick={() => props.setBotIsOpen(!props.botisOpen)}
+              className="mt-2"
             >
               <i className="icon_alfred_close"></i>
             </Button>

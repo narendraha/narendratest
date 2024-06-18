@@ -11,31 +11,40 @@ check-package-json:
       git checkout $CI_COMMIT_BRANCH
       PREVIOUS_PACKAGE_JSON=$(git show origin/$CI_COMMIT_BRANCH~1:package.json)
       CURRENT_PACKAGE_JSON=$(cat package.json)
-      PREVIOUS_DEPS=$(echo "$PREVIOUS_PACKAGE_JSON" | jq -r '.dependencies | keys[]')
-      CURRENT_DEPS=$(echo "$CURRENT_PACKAGE_JSON" | jq -r '.dependencies | keys[]')
+      PREVIOUS_DEPS=$(echo "$PREVIOUS_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
+      CURRENT_DEPS=$(echo "$CURRENT_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
  
       COUNTER=0
       for dep in $PREVIOUS_DEPS; do
-        if ! echo "$CURRENT_DEPS" | grep -qw "$dep"; then
-          echo "$dep"
+        key=$(echo "$dep" | cut -d'=' -f1)
+        value=$(echo "$dep" | cut -d'=' -f2-)
+        if echo "$CURRENT_DEPS" | grep -qw "$key"; then
+          currvalue=$(echo "$CURRENT_DEPS" | grep -w "$key" | cut -d'=' -f2-)
+          if [[ "$value" != "$currvalue" ]]; then
+            echo "$key is changing from $value to $currvalue"
+            COUNTER=$((COUNTER+1))
+          fi
+        else
+          echo "$key:$value has been removed"
           COUNTER=$((COUNTER+1))
         fi
       done
-      echo "$COUNTER dendencies are missing"
- 
+      echo "$COUNTER dependencies have changed"
  
       NEW_DEPS=$(comm -13 <(echo "$PREVIOUS_DEPS" | sort) <(echo "$CURRENT_DEPS" | sort))
       if [ -n "$NEW_DEPS" ]; then
         echo "New dependencies added:"
         for dep in $NEW_DEPS; do
-          echo "- $dep"
+          key=$(echo "$dep" | cut -d'=' -f1)
+          value=$(echo "$dep" | cut -d'=' -f2-)
+          echo "- $key:$value"
         done
       else
-        echo "No modifications have been made to package.json"
+        echo "No new dependencies have been added"
       fi
      
       if [ $COUNTER -gt 0 ]; then
-      exit 1
+        exit 1
       else
         exit 0
       fi

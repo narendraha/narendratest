@@ -726,7 +726,6 @@ export default function Home() {
     await AxiosInstance("application/json")
       .get("/userdetails")
       .then((response) => {
-        console.log('Lifestylegoal_tab_userdetails_response=>', response)
         if (response && response?.status == 200) {
           setPatientAndSymptomsDetails({ patientDetails: response.data?.data })
           setIsLoading(false)

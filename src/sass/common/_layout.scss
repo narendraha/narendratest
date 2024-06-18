@@ -830,7 +830,7 @@ button#homechatpopover,
 button#homechatclose {
     background-color: transparent;
     width: max-content;
-    padding: 15px 15px 0 !important;
+    padding-right: 15px !important;
     border: none;
     outline: none;
     box-shadow: none;
@@ -1854,6 +1854,9 @@ ul.standardPlans {
 }
 
 .rc-slider {
+    margin-bottom: 15px;
+    width: 98%;
+    margin-left: auto;
 
     .rc-slider-rail,
     .rc-slider-track {
@@ -1866,13 +1869,20 @@ ul.standardPlans {
         box-shadow: none;
         width: 15px;
         height: 15px;
+        left: 2%;
     }
 
-    .rc-slider-mark-text {
-        font-size: 10px;
-        line-height: normal;
-        color: #959CA7;
-        font-weight: 300;
+    .rc-slider-mark {
+        .rc-slider-mark-text {
+            font-size: 10px;
+            line-height: normal;
+            color: #959CA7;
+            font-weight: 300;
+
+            &:first-child {
+                left: 2% !important;
+            }
+        }
     }
 
     .rc-slider-dot {
@@ -2043,13 +2053,6 @@ button.al_upgrade_btn {
     }
 
     .popover-inner {
-        &::before {
-            top: -20px;
-            right: 50%;
-            left: 50%;
-            transform: rotate(0deg);
-        }
-
         .popover-body {
             min-height: 60vh;
             max-height: 65vh;

@@ -10,6 +10,7 @@ import { AxiosInstance } from "../../_mock/utilities";
 import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from '../../images/userprofile.jpg';
+import incompleteprofile from '../../images/incompleteprofile.png';
 
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
@@ -97,7 +98,6 @@ export default function HistoryChatBot() {
     // }
     setIsInputShow(true);
     e.preventDefault();
-    console.log("asdasd", questions);
     if (!inputValue.trim()) return; // Do not submit empty input
     // show the user entered input value
     setQuestions((prevChat) => [
@@ -106,7 +106,6 @@ export default function HistoryChatBot() {
     ]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
-    console.log("questionDetails: ", questionDetails);
 
     const payload = {
       question: questionDetails?.description,
@@ -276,9 +275,6 @@ export default function HistoryChatBot() {
         });
       });
   };
-
-  console.log("xxxxxxxxxx", questions);
-  console.log("current index", incrementRef.current);
 
   return (
     <div className="cs_homepage mt-0 h-100">
@@ -483,7 +479,8 @@ export default function HistoryChatBot() {
                       ))
                     ) : (
                       <div className="d-flex flex-column h-100 align-items-center justify-content-center">
-                        <div>No question available</div>
+                        {/* <div>No question available</div> */}
+                        <img src={incompleteprofile} alt="" style={{ width: "320px" }} />
                         {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
                           <div className="my-3">
                             <button

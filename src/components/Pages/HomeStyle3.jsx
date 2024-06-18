@@ -45,7 +45,6 @@ export default function HomeStyle3() {
     AxiosInstance("application/json")
       .post(`/preference_chat`, reqObj)
       .then((res) => {
-        console.log("preference_chat====>", { reqObj, res })
         if (res && res.data && res.status === 200) {
           if (res.data.statuscode === 200) {
             setIsLoading(false);
@@ -72,7 +71,6 @@ export default function HomeStyle3() {
     await AxiosInstance("application/json")
       .post(`/history`, data)
       .then((res) => {
-        console.log("ask_gpt====>", { data, res })
         if (res && res.data && res.status === 200) {
           setIsShow(true);
           if (res.data.statuscode === 200) {

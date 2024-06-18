@@ -43,6 +43,7 @@ import Congestive from "../components/Pages/Congestive";
 import HistoryChatNew from "../components/Pages/HistoryChatNew";
 import Loading from "../components/InnerApp/LoadingComponent"
 import Terms from "../components/Terms/Terms";
+import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -125,6 +126,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             </Route>
             <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="terms" element={<Terms />} />
+            <Route path="privacypolicy" element={<PrivacyPolicy />} />
             <Route path="registration" element={<Register />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<ErrorPage />} />

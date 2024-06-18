@@ -199,13 +199,13 @@ export default function Signin({ setIsAuthenticated }) {
                               >
                                 {showPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />

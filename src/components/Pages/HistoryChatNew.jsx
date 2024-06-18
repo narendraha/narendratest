@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Field, Form, Formik } from "formik";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import Select from "react-select";
 import { toast } from "react-toastify";
@@ -109,11 +109,11 @@ export default function HistoryChatBot() {
     console.log("questionDetails: ", questionDetails);
 
     const payload = {
-      question: questionDetails?.description,
+      question: questionDetails.description,
       user_message: inputValue,
-      question_key: questionDetails?.question_key,
-      main_type: questionDetails?.main_type,
-      ans_categ: questionDetails?.ans_category,
+      question_key: questionDetails.question_key,
+      main_type: questionDetails.main_type,
+      ans_categ: questionDetails.ans_category,
     };
     // setTimeout(() => {
     //     setQuestions((prevHistory) => [
@@ -296,7 +296,6 @@ export default function HistoryChatBot() {
               onClick={() => handleChatToggle(false)}
             >
               Form
-              <i className="ps-1 icon_alfred_password"></i>
             </div>
           </div>
         </div>
@@ -347,52 +346,50 @@ export default function HistoryChatBot() {
             <div className="cs_mainsearch mb-3">
               {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
               {Object.keys(questions).length !== 0 && (
-                <div className="cs_mainsearch">
-                  <form action="#">
+                <form action="#">
+                  <i
+                    className="icon_alfred_search"
+                    style={{ height: "auto" }}
+                  ></i>
+                  <input
+                    type="text"
+                    placeholder="Ask a question"
+                    name="message"
+                    value={inputValue} // input value
+                    onChange={handleInputChange} // handle changes
+                    disabled={isInputShow} //Disabled once input value is submitted
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault(); // Prevent default form submission behavior
+                        handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                      }
+                    }}
+                  />
+                  {/* Icon shown based on hide and show conditions */}
+                  {isShow ? (
+                    <>
+                      <i
+                        className="icon_alfred_close"
+                        onClick={(e) => {
+                          setInputValue("");
+                        }}
+                      ></i>
+                      <i
+                        className="icon_alfred_sendmsg"
+                        style={{
+                          height: "auto",
+                          pointerEvents: isInputShow ? "none" : "",
+                        }}
+                        onClick={(e) => handleFormSubmit(e)}
+                      ></i>
+                    </>
+                  ) : (
                     <i
-                      className="icon_alfred_search"
+                      className="icon_alfred_speech"
                       style={{ height: "auto" }}
                     ></i>
-                    <input
-                      type="text"
-                      placeholder="Ask a question"
-                      name="message"
-                      value={inputValue} // input value
-                      onChange={handleInputChange} // handle changes
-                      // disabled={isInputShow} //Disabled once input value is submitted
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault(); // Prevent default form submission behavior
-                          handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                        }
-                      }}
-                    />
-                    {/* Icon shown based on hide and show conditions */}
-                    {isShow ? (
-                      <>
-                        <i
-                          className="icon_alfred_close"
-                          onClick={(e) => {
-                            setInputValue("");
-                          }}
-                        ></i>
-                        <i
-                          className="icon_alfred_sendmsg h-auto"
-                          // style={{
-                          //   height: "auto",
-                          //   pointerEvents: isInputShow ? "none" : "",
-                          // }}
-                          onClick={(e) => handleFormSubmit(e)}
-                        ></i>
-                      </>
-                    ) : (
-                      <i
-                        className="icon_alfred_speech"
-                        style={{ height: "auto" }}
-                      ></i>
-                    )}
-                  </form>
-                </div>
+                  )}
+                </form>
               )}
             </div>
           </div>
@@ -499,10 +496,9 @@ export default function HistoryChatBot() {
                             <button
                               type="submit"
                               className="al_greybgbutton"
-                              // onClick={() => navigate("/home")}
-                              onClick={() => handleChatToggle(true)}
+                              onClick={() => navigate("/home")}
                             >
-                              Go to Chat
+                              Go to Dashboard
                             </button>
                           </div>
                         )}

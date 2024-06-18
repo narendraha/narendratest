@@ -152,17 +152,6 @@ video {
   border: none !important;
   border-radius: 15px !important;
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
-
-  &::before {
-    content: "";
-    // position: absolute;
-    // right: -20px;
-    // top: 35%;
-    // border-width: 10px;
-    // border-style: solid;
-    // border-color: transparent transparent #fff transparent;
-    // transform: rotate(90deg);
-  }
 }
 
 .bs-popover-bottom .popover-header::before,

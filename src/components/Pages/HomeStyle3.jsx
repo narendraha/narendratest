@@ -37,26 +37,8 @@ export default function HomeStyle3() {
       ...prevIcons,
       [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
     }));
-    let reqObj = {
-      message: alfredValue,
-      preference: iconType === "like"
-    }
-    // like dislike
-    AxiosInstance("application/json")
-      .post(`/preference_chat`, reqObj)
-      .then((res) => {
-        console.log("preference_chat====>", { reqObj, res })
-        if (res && res.data && res.status === 200) {
-          if (res.data.statuscode === 200) {
-            setIsLoading(false);
-          } else {
-          }
-        }
-      })
-      .catch((er) => {
-      });
-  };
 
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

@@ -14,11 +14,15 @@ check-package-json:
       PREVIOUS_DEPS=$(echo "$PREVIOUS_PACKAGE_JSON" | jq -r '.dependencies | keys[]')
       CURRENT_DEPS=$(echo "$CURRENT_PACKAGE_JSON" | jq -r '.dependencies | keys[]')
  
+      COUNTER=0
       for dep in $PREVIOUS_DEPS; do
         if ! echo "$CURRENT_DEPS" | grep -qw "$dep"; then
-          echo "$dep is missing in the package.json file "
+          echo "$dep"
+          COUNTER=$((COUNTER+1))
         fi
       done
+      echo "$COUNTER dendencies are missing"
+ 
  
       NEW_DEPS=$(comm -13 <(echo "$PREVIOUS_DEPS" | sort) <(echo "$CURRENT_DEPS" | sort))
       if [ -n "$NEW_DEPS" ]; then
@@ -28,4 +32,10 @@ check-package-json:
         done
       else
         echo "No modifications have been made to package.json"
+      fi
+     
+      if [ $COUNTER -gt 0 ]; then
+      exit 1
+      else
+        exit 0
       fi

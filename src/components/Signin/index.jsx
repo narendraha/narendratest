@@ -150,7 +150,7 @@ export default function Signin({ setIsAuthenticated }) {
                       <i className="icon_alfred_home"></i>
                       <UncontrolledTooltip
                         placementPrefix="al_bs_tooltip"
-                        modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                        modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                         placement='left' target="backtohome">
                         Back to Home
                       </UncontrolledTooltip>

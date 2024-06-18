@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { UncontrolledTooltip } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import smalllogo from "../../../images/alfredlogoicon.svg";

@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import Loading from "../InnerApp/LoadingComponent";
 import OTPComponent from "../ForgotPassword/OTP";
 import { Icon } from "@iconify/react";
+import { customContentValidation } from "../../_mock/coreHelperHA";
 
 export default function Register() {
   const navigate = useNavigate();

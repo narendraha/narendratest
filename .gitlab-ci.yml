@@ -17,8 +17,8 @@ check-package-json:
       for dep in $PREVIOUS_DEPS; do
         if ! echo "$CURRENT_DEPS" | grep -qw "$dep"; then
           echo "$dep is missing in the package.json file "
-          exit 1
         fi
+        exit 1
       done
  
       NEW_DEPS=$(comm -13 <(echo "$PREVIOUS_DEPS" | sort) <(echo "$CURRENT_DEPS" | sort))

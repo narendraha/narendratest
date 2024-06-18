@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { UncontrolledTooltip } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import smalllogo from "../../../images/alfredlogoicon.svg";
@@ -235,11 +234,11 @@ export default function SideNav(props) {
                               {props.isShowmenu && (
                                 <UncontrolledTooltip
                                   placementPrefix="al_bs_tooltip"
-                                  modifiers={{
+                                  modifiers={[{
                                     preventOverflow: {
                                       boundariesElement: "window",
                                     },
-                                  }}
+                                  }]}
                                   placement="top"
                                   target={subModules.link + subModules.id}
                                 >

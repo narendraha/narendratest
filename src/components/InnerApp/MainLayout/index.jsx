@@ -41,7 +41,7 @@ export default function MainLayout() {
                     target="homechatpopover"
                     trigger="legacy"
                     isOpen={!botisOpen}
-                    modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                    modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                 >
                     <PopoverBody>
                         Hello, I am Alfred! How can i assist you today?

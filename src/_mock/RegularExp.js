@@ -26,3 +26,12 @@ export function allowsOnlyNumericOnly2Digit(e) {
         e.preventDefault();
     }
 }
+
+export function allowsOnlyNumericOnlysingleDigit(e) {
+    const re = /^[0-9\b]+$/;
+
+    // Prevent the input value
+    if (!re.test(e.key) || (e.target.value.length >= 1 && e.key !== 'Backspace')) {
+        e.preventDefault();
+    }
+}

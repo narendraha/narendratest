@@ -49,6 +49,56 @@ a {
   }
 }
 
+.al_bs_tooltip-auto .tooltip-inner {
+  max-width: 250px;
+  padding: 0.25rem 0.375rem;
+  color: #C6C8D0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0.375rem;
+}
+
+.al_bs_tooltip-auto.tooltip {
+  --bs-tooltip-zindex: 1080;
+  --bs-tooltip-max-width: 200px;
+  --bs-tooltip-padding-x: 0.5rem;
+  --bs-tooltip-padding-y: 0.25rem;
+  --bs-tooltip-margin: ;
+  --bs-tooltip-font-size: 0.875rem;
+  --bs-tooltip-color: #fff;
+  --bs-tooltip-bg: #000;
+  --bs-tooltip-border-radius: 0.375rem;
+  --bs-tooltip-opacity: 0.9;
+  --bs-tooltip-arrow-width: 0.8rem;
+  --bs-tooltip-arrow-height: 0.4rem;
+  z-index: var(--bs-tooltip-zindex);
+  display: block;
+  padding: var(--bs-tooltip-arrow-height);
+  margin: var(--bs-tooltip-margin);
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  white-space: normal;
+  word-spacing: normal;
+  line-break: auto;
+  font-size: $font_13;
+  word-wrap: break-word;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.al_bs_tooltip-auto.tooltip.show {
+  opacity: 1;
+}
+
 .input-group {
   .input-group-prepend {
     .input-group-text {

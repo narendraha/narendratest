@@ -480,7 +480,8 @@ export default function HistoryChatBot() {
                     ) : (
                       <div className="d-flex flex-column h-100 align-items-center justify-content-center">
                         {/* <div>No question available</div> */}
-                        <img src={incompleteprofile} alt="" style={{ width: "320px" }} />
+                        <img src={incompleteprofile} alt="" style={{ width: "200px" }} />
+                        <h6 className="mb-0 text-warning">Will be coming soon</h6>
                         {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
                           <div className="my-3">
                             <button

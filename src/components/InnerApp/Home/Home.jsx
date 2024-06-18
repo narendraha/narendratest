@@ -4,8 +4,8 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Slider from "react-rangeslider";
-import "react-rangeslider/lib/index.css";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { toast } from "react-toastify";
 import { Card, CardBody, Col, FormGroup, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane, Table } from "reactstrap";
 import * as Yup from "yup";
@@ -31,7 +31,7 @@ export default function Home() {
   const location = useLocation();
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [getTabStatus, setGetStatus] = useState({});
-  const [tab, setTab] = useState( location?.state?.activeTab ? location?.state?.activeTab : "1");
+  const [tab, setTab] = useState(location?.state?.activeTab ? location?.state?.activeTab : "1");
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -114,7 +114,7 @@ export default function Home() {
     20: "Mild",
     45: "Moderate",
     70: "Severe",
-    90: "Extreme",
+    88: "Extreme",
   };
   const handleValueChange = (value, setValue) => {
     setValue(value);
@@ -257,19 +257,19 @@ export default function Home() {
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
-      const output = `${getOutputNumber(labelValues)}${getOutputNumber(
-        labelValues1
-      )}${getOutputNumber(labelValues2)}${getOutputNumber(
-        labelValues3
-      )}${getOutputNumber(labelValues4)}${getOutputNumber(
-        labelValues5
-      )}${getOutputNumber(labelValues6)}${getOutputNumber(
-        labelValues7
-      )}${getOutputNumber(labelValues8)}${getOutputNumber(
-        labelValues9
-      )}${getOutputNumber(labelValues10)}${getOutputNumber(
-        labelValues11
-      )}${getOutputNumber(labelValues12)}`;
+      const output = `${getOutputNumber(labelValues)}
+      ${getOutputNumber(labelValues1)}
+      ${getOutputNumber(labelValues2)}
+      ${getOutputNumber(labelValues3)}
+      ${getOutputNumber(labelValues4)}
+      ${getOutputNumber(labelValues5)}
+      ${getOutputNumber(labelValues6)}
+      ${getOutputNumber(labelValues7)}
+      ${getOutputNumber(labelValues8)}
+      ${getOutputNumber(labelValues9)}
+      ${getOutputNumber(labelValues10)}
+      ${getOutputNumber(labelValues11)}
+      ${getOutputNumber(labelValues12)}`;
 
       let newData = {
         breathnessda: {
@@ -377,7 +377,7 @@ export default function Home() {
 
     const fetchData = async () => {
       AxiosInstance("application/json")
-        .post(`/query_symptoms`,{})
+        .post(`/query_symptoms`, {})
         .then((res) => {
           if (res && res.data && res.status === 200) {
             if (res.data?.statuscode === 200) {
@@ -412,7 +412,7 @@ export default function Home() {
       //   console.error("Error fetching data:", error);
       // }
     };
-  
+
     fetchData();
   }, []);
 
@@ -421,7 +421,7 @@ export default function Home() {
       // Data not yet available or empty
       return;
     }
-  
+
     const options = {
       chart: { type: "line" },
       title: { text: "Symptoms Data Over Time" },
@@ -447,7 +447,7 @@ export default function Home() {
         data: symptomData.map((item) => item?.symptoms?.[symptom] || 0),
       })),
     };
-  
+
     setChartOptions(options);
   }, [symptomData]);
 
@@ -1016,14 +1016,14 @@ export default function Home() {
                                     name="tdate"
                                     placeholderText="Select date"
                                     popperPlacement="auto"
-                                    popperModifiers={{
+                                    popperModifiers={[{
                                       flip: {
                                         behavior: ["bottom"],
                                       },
                                       preventOverflow: {
                                         enabled: false,
                                       },
-                                    }}
+                                    }]}
                                     selected={values?.tdate ? values?.tdate : new Date()}
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);
@@ -1190,7 +1190,7 @@ export default function Home() {
                         id="expertmonitoringgraph"
                         style={{ height: "350px" }}
                       ></div>
-                       {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
+                      {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
                           <>
                             {chartOptions && (
                               <HighchartsReact highcharts={Highcharts} options={chartOptions} />
@@ -1250,15 +1250,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider(labelValues)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1347,15 +1346,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues1}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider1}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider1(labelValues1)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider1}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1444,15 +1442,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues2}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider2}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider2(labelValues2)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider2}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1541,15 +1538,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues3}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider3}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider3(labelValues3)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider3}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1638,15 +1634,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues4}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider4}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider4(labelValues4)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider4}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1735,15 +1730,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues5}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider5}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider5(labelValues5)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider5}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1832,15 +1826,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues6}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider6}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider6(labelValues6)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider6}
                               />
                               <br />
                               <strong className="mb-2">
@@ -1929,15 +1922,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues7}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider7}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider7(labelValues7)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider7}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2026,15 +2018,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues8}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider8}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider8(labelValues8)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider8}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2123,15 +2114,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues9}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider9}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider9(labelValues9)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider9}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2220,15 +2210,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues10}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider10}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider10(labelValues10)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider10}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2317,15 +2306,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues11}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider11}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider11(labelValues11)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider11}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2414,15 +2402,14 @@ export default function Home() {
                               </div>
                               <strong>Severity</strong>
                               <Slider
+                                range
                                 min={0}
                                 max={100}
+                                marks={horizontalLabels}
                                 tooltip={false}
                                 value={labelValues12}
-                                labels={horizontalLabels}
                                 onChange={handleValueChangeSlider12}
-                                onChangeComplete={() =>
-                                  handleValueChangeEndSlider12(labelValues12)
-                                }
+                                onChangeComplete={handleValueChangeEndSlider12}
                               />
                               <br />
                               <strong className="mb-2">
@@ -2614,10 +2601,10 @@ export default function Home() {
                       <div className="flip-card card al_cardnoborder">
                         <div className="flip-card-inner">
                           <div className="flip-card-front">
-                            <img src={riskmanagement} alt=""/>
+                            <img src={riskmanagement} alt="" />
                             <div className="p-3">
                               <p>Refer to your managing my AF and risk of stroke guide if you get an episode of AF</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">
@@ -2646,7 +2633,7 @@ export default function Home() {
                             <img src={riskmanagement2} alt="" />
                             <div className="p-3">
                               <p>Visit your doctors regularly and ask questions if you have any concerns</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{verticalAlign: "middle", fontSize: "10px"}}></i></div>
+                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">

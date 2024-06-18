@@ -29,6 +29,7 @@ export default function Register() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [otpResponse, setOtpResponse] = useState("");
   const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] = useState(true);
+
   const genderoptions = [
     { value: "Male", label: "Male" },
     { value: "Female", label: "Female" },
@@ -200,14 +201,14 @@ export default function Register() {
                           name="dob"
                           placeholderText="Select DOB"
                           popperPlacement="auto"
-                          popperModifiers={{
+                          popperModifiers={[{
                             flip: {
                               behavior: ["bottom"],
                             },
                             preventOverflow: {
                               enabled: false,
                             },
-                          }}
+                          }]}
                           selected={values.dob}
                           onChange={(e) => {
                             setFieldValue("dob", e);

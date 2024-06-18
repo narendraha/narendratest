@@ -90,7 +90,7 @@ export default function Topbar(props) {
                   target="notificationpopover"
                   trigger="legacy"
                   className='alnotification_panel'
-                  modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                  modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                 >
                   <PopoverBody className='d-flex flex-column'>
                     <div className='flex-grow-1 h-100 p-2 d-flex flex-column h-100'>

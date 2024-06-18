@@ -146,7 +146,7 @@ export default function Signin({ setIsAuthenticated }) {
                       <i className="icon_alfred_home"></i>
                       <UncontrolledTooltip
                         placementPrefix="al_bs_tooltip"
-                        modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                        modifiers={[{ preventOverflow: { boundariesElement: 'window' }}]}
                         placement='left' target="backtohome">
                         Back to Home
                       </UncontrolledTooltip>
@@ -155,8 +155,8 @@ export default function Signin({ setIsAuthenticated }) {
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
-                        <span className="fw-medium">Welcome to </span>
-                        <span style={{ fontSize: "26px" }}>
+                        <span className="fw-medium">Welcome to </span><br/>
+                        <span>
                           Hello<span className="text-info">Alfred.AI <img src={handwave} alt="" width={25} className="mb-2" /></span>
                         </span>
                       </h5>

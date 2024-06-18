@@ -235,11 +235,11 @@ export default function SideNav(props) {
                               {props.isShowmenu && (
                                 <UncontrolledTooltip
                                   placementPrefix="al_bs_tooltip"
-                                  modifiers={{
+                                  modifiers={[{
                                     preventOverflow: {
                                       boundariesElement: "window",
                                     },
-                                  }}
+                                  }]}
                                   placement="top"
                                   target={subModules.link + subModules.id}
                                 >

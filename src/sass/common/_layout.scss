@@ -1853,34 +1853,30 @@ ul.standardPlans {
     }
 }
 
-.rangeslider {
-    background: linear-gradient(to right, #DBDBDB, #74E0B5, #EECD59, #E89799, #F54A68);
-    box-shadow: none;
-    height: 4px;
+.rc-slider {
 
-    .rangeslider__handle {
+    .rc-slider-rail,
+    .rc-slider-track {
+        background: linear-gradient(to right, #DBDBDB, #74E0B5, #EECD59, #E89799, #F54A68);
+        box-shadow: none;
+    }
+
+    .rc-slider-handle {
         border: 3px solid #626569;
         box-shadow: none;
         width: 15px;
-        height: 18px;
-
-        &::after {
-            display: none;
-        }
+        height: 15px;
     }
 
-    .rangeslider__fill {
-        background-color: transparent;
-        box-shadow: none;
+    .rc-slider-mark-text {
+        font-size: 10px;
+        line-height: normal;
+        color: #959CA7;
+        font-weight: 300;
     }
 
-    .rangeslider__labels {
-        .rangeslider__label-item {
-            font-size: 10px;
-            line-height: normal;
-            color: #959CA7;
-            font-weight: 300;
-        }
+    .rc-slider-dot {
+        display: none;
     }
 }
 

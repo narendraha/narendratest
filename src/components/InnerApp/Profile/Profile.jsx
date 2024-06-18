@@ -292,7 +292,7 @@ export default function Profile() {
                           <Label>BMI<i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="bmiinfo"></i></Label>
                           <UncontrolledTooltip
                             placementPrefix="al_bs_tooltip"
-                            modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='bottom' target="bmiinfo">
                             BMI will be updated automatically when height and weight are changed
                           </UncontrolledTooltip>
@@ -629,14 +629,14 @@ export default function Profile() {
                                     name="dob"
                                     placeholderText="Select DOB"
                                     popperPlacement="auto"
-                                    popperModifiers={{
+                                    popperModifiers={[{
                                       flip: {
                                         behavior: ["bottom"],
                                       },
                                       preventOverflow: {
                                         enabled: false,
                                       },
-                                    }}
+                                    }]}
                                     selected={
                                       values?.dob
                                         ? new Date(values?.dob)

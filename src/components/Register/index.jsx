@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Row, Col, Label, FormGroup, Card, CardBody } from "reactstrap";
+import { Row, Col, Label, FormGroup, Card, CardBody, UncontrolledTooltip } from "reactstrap";
 import Select from "react-select";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import alferdlogomobile from "../../images/alfredlogo.svg";
@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import Loading from "../InnerApp/LoadingComponent";
 import OTPComponent from "../ForgotPassword/OTP";
 import { Icon } from "@iconify/react";
+import { customContentValidation } from "../../_mock/coreHelperHA";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Register() {
   const inputRefs = useRef(Array(4).fill(null));
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [otpResponse, setOtpResponse] = useState("");
+  const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] = useState(true);
   const genderoptions = [
     { value: "Male", label: "Male" },
     { value: "Female", label: "Female" },
@@ -92,6 +94,7 @@ export default function Register() {
         ssn: "",
         insuranceurl: "",
         file: null,
+        termsAndConditions: false
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
@@ -115,10 +118,10 @@ export default function Register() {
             new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000),
             "You must be below 120 years old"
           )
-          .required("Required"),
+          .required("This field is required"),
         gender: Yup.string().required("This field is required"),
         rtype: Yup.string().required("This field is required"),
-        education: Yup.string().required("This field is required"),
+        education: Yup.string().required("This field is required")
       })}
       onSubmit={(values) => onSubmit({ ...values })}
     >
@@ -130,6 +133,7 @@ export default function Register() {
         setFieldTouched,
         handleSubmit,
         formikProps,
+        dirty
       }) => {
         return (
           <Form className="wflexLayout">
@@ -202,14 +206,14 @@ export default function Register() {
                           name="dob"
                           placeholderText="Select DOB"
                           popperPlacement="auto"
-                          popperModifiers={{
+                          popperModifiers={[{
                             flip: {
                               behavior: ["bottom"],
                             },
                             preventOverflow: {
                               enabled: false,
                             },
-                          }}
+                          }]}
                           selected={values.dob}
                           onChange={(e) => {
                             setFieldValue("dob", e);
@@ -360,9 +364,27 @@ export default function Register() {
                           className="text-danger"
                         />
                       </FormGroup>
+
+                      <Label
+                        check
+                        className="d-flex align-items-center"
+                      >
+                        <div id="terms" style={{ lineHeight: 0 }}>
+                          <input name="termsAndConditions" type="checkbox" defaultChecked={values?.termsAndConditions} value={values?.termsAndConditions}
+                            disabled={isTermsAndConditionsRead}
+                            onChange={(e) => {
+                              setFieldValue("termsAndConditions", e.target.checked);
+                            }} />
+                        </div>&nbsp; I agree to the&nbsp;<Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={() => serIsTermsAndConditionsRead(!isTermsAndConditionsRead)}>terms and conditions</Link>
+                        {isTermsAndConditionsRead &&
+                          <UncontrolledTooltip color="primary" placement="right" target="terms">
+                            Check the terms & conditions to enable
+                          </UncontrolledTooltip>
+                        }
+                      </Label>
                     </div>
                     <div className="al_login_footer mt-3">
-                      <button type="submit" className="al_login_button">
+                      <button type="submit" className="al_login_button" disabled={!values?.termsAndConditions}>
                         Continue
                       </button>
                       <button
@@ -465,13 +487,13 @@ export default function Register() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                      0,
-                                                      index
-                                                    ) +
-                                                    updatedValue +
-                                                    values.otp.substring(
-                                                      index + 1
-                                                    ),
+                                                    0,
+                                                    index
+                                                  ) +
+                                                  updatedValue +
+                                                  values.otp.substring(
+                                                    index + 1
+                                                  ),
                                             },
                                           });
                                           if (
@@ -1081,13 +1103,13 @@ export default function Register() {
                               >
                                 {showPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />
@@ -1097,9 +1119,7 @@ export default function Register() {
                             <span
                               style={{ color: "#9ba8b9", fontSize: "11px" }}
                             >
-                              Password must contain 8 characters, one uppercase,
-                              one lowercase, one number and one special
-                              character
+                              Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
                             </span>
                             <ErrorMessage
                               name="password"
@@ -1128,13 +1148,13 @@ export default function Register() {
                               >
                                 {isShowConfirmPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />

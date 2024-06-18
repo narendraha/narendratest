@@ -1,23 +1,23 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
-import userImg from "../../../images/userprofile.jpg";
+import React, { Suspense, useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import Select from "react-select";
+import moment from "moment/moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AxiosInstance } from "../../../_mock/utilities";
-import { allowsOnlyNumeric, allowsOnlyNumericOnly3Digit, phoneNumberReg } from "../../../_mock/RegularExp";
-import moment from "moment/moment";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import ConfirmationAction from "../MainLayout/ConfirmationAction";
-import Loading from "../../InnerApp/LoadingComponent";
-import { createResource } from "../createResource"; //Suspense loading
+import Select from "react-select";
+import { toast } from "react-toastify";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import * as Yup from "yup";
+import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
-import { ChangeProfilePassword } from "./changeProfilePassword";
-import { BankDetails } from "./bankDetails";
+import { AxiosInstance } from "../../../_mock/utilities";
+import userImg from "../../../images/userprofile.jpg";
+import Loading from "../../InnerApp/LoadingComponent";
+import ConfirmationAction from "../MainLayout/ConfirmationAction";
+import { createResource } from "../createResource"; //Suspense loading
 import { ProfileSettings } from "./ProfileSettings";
+import { BankDetails } from "./bankDetails";
+import { ChangeProfilePassword } from "./changeProfilePassword";
 
 export const EProfileButton = {
   CHANGEPASSWORD: 1,
@@ -32,6 +32,7 @@ export default function Profile() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null); //Suspense loading
   const [isOpenModel, setOpenModel] = useState({ profileButton: 0, isOpen: false }); // To handle Modals
+  const [updatedFile, setUpdatedFile] = useState("");
 
   const closeProfileButtonModal = (data) => {
     setOpenModel({ profileButton: 0, isOpen: data })
@@ -43,20 +44,6 @@ export default function Profile() {
       .get("/userdetails")
       .then((res) => {
         const responseData = res.data?.data;
-
-        if (responseData && responseData?.dob && responseData?.dob !== "NA") {
-          // Transform the date format from "YYYY-MM-DD" to "MM/dd/yyyy"
-          const formattedDate = new Date(responseData?.dob);
-          const formattedDateString = formattedDate.toLocaleDateString(
-            "en-US",
-            {
-              month: "2-digit",
-              day: "2-digit",
-              year: "numeric",
-            }
-          );
-          responseData.dob = formattedDateString;
-        }
         setGetProfileDetails(responseData);
       })
       .catch((er) => { });
@@ -93,7 +80,7 @@ export default function Profile() {
     { value: "Unknown", label: "Unknown" },
   ];
   function maskssn(input) {
-    if (input !== "NA" && input !== undefined  && input?.length < 2) {
+    if (input !== "NA" && input !== undefined && input?.length < 2) {
       return input;
     }
     const lastTwoChars = input?.slice(-3);
@@ -138,6 +125,52 @@ export default function Profile() {
     setOpenModel({ profileButton: activeProfileButton, isOpen: true })
   }
 
+
+  const getFileSizeInMb = (fileSize = 0) => (fileSize ? fileSize / 1024 / 1024 : 0);
+
+  const onFileUpload = (e) => {
+    if (e.target.files[0]) {
+      const file = e.target.files[0];
+      let fileSize = getFileSizeInMb(file.size);
+      if (fileSize <= 200) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        AxiosInstance("'multipart/form-data")
+          .post(`/upload-profile-image`, formData)
+          .then((res) => {
+            console.log("upload-profile-image=>", { file, res });
+            if (res.data && res.status === 200) {
+              if (res.data.statuscode === 200) {
+                setUpdatedFile(res.data.data?.profile_img)
+                toast(res.data.message, {
+                  position: "top-right",
+                  type: "success",
+                });
+              } else {
+                toast(res.data.message, {
+                  position: "top-right",
+                  type: "error",
+                });
+              }
+            }
+          })
+          .catch((er) => {
+            toast(er?.response?.data?.message, {
+              position: "top-right",
+              type: "error",
+            });
+          });
+      } else {
+        toast("Please Select file less than 200 MB", {
+          position: "top-right",
+          type: "error",
+        });
+      }
+    }
+  }
+
+
   // Suspense loading with fallback icon
   if (resource) {
     return (
@@ -157,7 +190,7 @@ export default function Profile() {
             <Row className="al_profile_manage">
               <Col xl="3" lg="3" sm="4">
                 <div className={"al_profile_photo "}>
-                  <img src={userImg} alt="profilePhoto" />
+                  <img src={updatedFile ? updatedFile : userImg} alt="profilePhoto" />
 
                   {isEdit && (
                     <>
@@ -165,7 +198,7 @@ export default function Profile() {
                         type="file"
                         id="uploadPicture"
                         name="uploadProfilePic"
-                        onChange={(e) => { }}
+                        onChange={(e) => onFileUpload(e)}
                         hidden
                         accept=".jpg,.jpeg,.png"
                       />
@@ -196,7 +229,7 @@ export default function Profile() {
                     <Row>
                       <Col>
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.plan || "NA"}</div>
+                          <div>{getProfileDetails?.subscription === "NA" ? "No Plan is Available" : "NA"}</div>
                           <Label>Your Subscription Plan</Label>
                         </div>
                       </Col>
@@ -204,8 +237,10 @@ export default function Profile() {
                         <button
                           type="button"
                           className="al_upgrade_btn al_basic"
+                          disabled={true}
                         >
                           Upgrade Plan
+                          <i className="ps-1 icon_alfred_password"></i>
                         </button>
                       </div>
                     </Row>
@@ -213,7 +248,7 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.feet || "NA"}{getProfileDetails?.inch >= 0 ? `.${getProfileDetails?.inch}` : ""}</div>
+                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !=="NA" ? getProfileDetails?.inch : "00"}` : "NA"}</div>
                           <Label>Height (ft)</Label>
                         </div>
                       </Col>
@@ -282,7 +317,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.nationality || "NA"}</div>
+                          <div>{getProfileDetails?.nationality === "NA" ? "United State" : getProfileDetails?.nationality}</div>
                           <Label>Nationality</Label>
                         </div>
                       </Col>
@@ -292,7 +327,7 @@ export default function Profile() {
                           <Label>BMI<i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="bmiinfo"></i></Label>
                           <UncontrolledTooltip
                             placementPrefix="al_bs_tooltip"
-                            modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='bottom' target="bmiinfo">
                             BMI will be updated automatically when height and weight are changed
                           </UncontrolledTooltip>
@@ -313,7 +348,7 @@ export default function Profile() {
                             PIV-idfrontside.jpg
                           </span>
                         </div>
-                        <a href="/#">View</a>
+                        <a href="/#" className="text-grey" style={{ pointerEvents: "none" }}>View<i className="ps-1 icon_alfred_password"></i></a>
                       </div>
 
                       <div className="d-flex wrap my-2">
@@ -326,7 +361,7 @@ export default function Profile() {
                             PIV-idbackside.jpg
                           </span>
                         </div>
-                        <a href="/#">View</a>
+                        <a href="/#" className="text-grey" style={{ pointerEvents: "none" }}>View<i className="ps-1 icon_alfred_password"></i></a>
                       </div>
                     </div>
                     <hr />
@@ -367,11 +402,11 @@ export default function Profile() {
                     <Formik
                       initialValues={{
                         username: getProfileDetails?.username !== "NA" ? getProfileDetails?.username : "",
-                        email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email: "",
+                        email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email : "",
                         dob:
                           getProfileDetails?.dob !== "NA"
-                            ? new Date()
-                            : getProfileDetails?.dob,
+                            ? getProfileDetails?.dob
+                            : new Date(),
                         gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                         mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                         rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
@@ -381,7 +416,8 @@ export default function Profile() {
                         inch: getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : '',
                         weight: getProfileDetails?.weight !== "NA" ? getProfileDetails?.weight : "",
                         // age: getProfileDetails?.age || "",
-                        bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype :"",
+                        bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
+                        nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : ""
                       }}
                       validationSchema={Yup.object().shape({
                         username: Yup.string()
@@ -419,9 +455,14 @@ export default function Profile() {
                         //   .max(50, "Too Long!")
                         //   .required("This field is required"),
                         feet: Yup.string()
-                          .min(1, "Too Short!")
-                          .max(3, "Too Long!")
-                          .required("This field is required"),
+                        .test(
+                          'is-greater-than-one',
+                          'Height must be greater than 1',
+                          value => value && parseFloat(value) >= 1
+                        )
+                        .min(1, "Too Short!") // Minimum length of 1 character
+                        .max(3, "Too Long!")  // Maximum length of 3 characters
+                        .required("This field is required"),
                         weight: Yup.number()
                           .min(10, "Weight must be at least 10")
                           .max(650, "Weight is too high!")
@@ -437,6 +478,7 @@ export default function Profile() {
                         let data = {
                           ...values,
                           dob: moment(values.dob).format("YYYY-MM-DD"),
+                          nationality: "United State"
                         };
                         setFormData(data);
                         setGetProfileDetails(data)
@@ -466,7 +508,7 @@ export default function Profile() {
                                         placeholder="Feet"
                                         className="form-control"
                                         onKeyPress={(e) =>
-                                          allowsOnlyNumericOnly3Digit(e)
+                                          allowsOnlyNumericOnlysingleDigit(e)
                                         }
                                       />
                                       <ErrorMessage
@@ -483,7 +525,7 @@ export default function Profile() {
                                         placeholder="Inch"
                                         className="form-control"
                                         onKeyPress={(e) =>
-                                          allowsOnlyNumericOnly3Digit(e)
+                                          allowsOnlyNumericOnly2Digit(e)
                                         }
                                       />
                                       <ErrorMessage
@@ -629,14 +671,14 @@ export default function Profile() {
                                     name="dob"
                                     placeholderText="Select DOB"
                                     popperPlacement="auto"
-                                    popperModifiers={{
+                                    popperModifiers={[{
                                       flip: {
                                         behavior: ["bottom"],
                                       },
                                       preventOverflow: {
                                         enabled: false,
                                       },
-                                    }}
+                                    }]}
                                     selected={
                                       values?.dob
                                         ? new Date(values?.dob)
@@ -647,7 +689,7 @@ export default function Profile() {
                                     onChange={(e) => {
                                       setFieldValue("dob", e);
                                     }}
-                                    dateFormat={"MM/dd/yyyy"}
+                                    dateFormat={"yyyy/MM/dd"}
                                     maxDate={new Date()}
                                     onBlur={() => setFieldTouched("dob", true)}
                                     autoComplete="off"
@@ -668,13 +710,6 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Mobile
                                   </Label>
-                                  {/* <Field
-                                    type="text"
-                                    name="mobile"
-                                    placeholder="Enter Mobile"
-                                    className="form-control"
-                                    onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                  /> */}
                                   <div className="input-group">
                                     <div className="input-group-prepend">
                                       <span
@@ -706,7 +741,7 @@ export default function Profile() {
                                     SSN
                                   </Label>
                                   <Field
-                                    type="password"
+                                    type="text"
                                     name="ssn"
                                     placeholder="Enter SSN"
                                     className="form-control"
@@ -853,7 +888,7 @@ export default function Profile() {
             </Row>
           </div>
         </div>
-        
+
         {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
         {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
         {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import AllRoutes from "./routes";
 import { useNavigate } from "react-router";
 import { jwtDecode } from "jwt-decode";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'slick-carousel/slick/slick.css';
+import './sass/index.scss';
 
 export default function App() {
   const navigate = useNavigate();
@@ -14,7 +17,6 @@ export default function App() {
     try {
       if (token) {
         const decoded = jwtDecode(token);
-        console.log('decoded: ', decoded);
         // Check if token is expired
         const currentTime = Date.now() / 1000;
         if (decoded?.exp < currentTime) {

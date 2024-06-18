@@ -150,7 +150,7 @@ export default function Signin({ setIsAuthenticated }) {
                       <i className="icon_alfred_home"></i>
                       <UncontrolledTooltip
                         placementPrefix="al_bs_tooltip"
-                        modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                        modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                         placement='left' target="backtohome">
                         Back to Home
                       </UncontrolledTooltip>
@@ -165,7 +165,7 @@ export default function Signin({ setIsAuthenticated }) {
                         </span>
                       </h5>
                       <p className="cs_light text-grey text-italic" style={{ fontFamily : 'STIX Two Text'}}>
-                        "Lets take your wellness journey to new heights"
+                        "Let's take your wellness journey to new heights"
                       </p>
 
                       <div className="al_signinbg">
@@ -203,13 +203,13 @@ export default function Signin({ setIsAuthenticated }) {
                               >
                                 {showPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />

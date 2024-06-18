@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Popover, PopoverBody, UncontrolledPopover } from 'reactstrap';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
-import user from '../../../images/userprofile.jpg';
 import noNotifications from '../../../images/noNotifications.svg';
- 
+import user from '../../../images/userprofile.jpg';
+
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
-  const [isOpenModel, setOpenModel] = useState(true);
- 
+  const [isOpenModel, setOpenModel] = useState(false);
+
   const profileDetails = async () => {
     await AxiosInstance("application/json")
       .get("/userdetails")
@@ -27,7 +27,7 @@ export default function Topbar(props) {
  
   useEffect(() => {
     profileDetails(); //Suspense loading with actual component
-    setOpenModel(false);
+    // setOpenModel(false);
   }, []);
  
   const handleProfile = () => {
@@ -71,7 +71,7 @@ export default function Topbar(props) {
   const lPathName = useLocation().pathname;
   const sideMenu = menuData.find(s => '/' + s.link === lPathName?.replace('/*', '') || s.subModules.findIndex(y => '/' + y.link === lPathName?.replace('/*', '')) !== -1);
   const sideSubMenu = sideMenu?.subModules?.find(y => ('/' + y.link === lPathName?.replace('/*', '')))
-  const handleClose = () => {
+  const handleCloseAndOpen = () => {
     setOpenModel(!isOpenModel)
   }
   return (
@@ -83,20 +83,21 @@ export default function Topbar(props) {
           </div>
           <div className='d-flex'>
             <div className='position-relative mx-4'>
-              <button type="button" id="notificationpopover"><i className='icon_alfred_notification pointer' onClick={() => handleClose()}></i></button>
+              <button type="button" id="notificationpopover"><i className='icon_alfred_notification pointer' onClick={() => handleCloseAndOpen()}></i></button>
               <div className="badge badge-pill badge-danger al_noti-icon-badge">0</div>
                 <UncontrolledPopover
                   placement="top"
                   target="notificationpopover"
                   trigger="legacy"
                   className='alnotification_panel'
-                  modifiers={{ preventOverflow: { boundariesElement: 'window' } }}
+                  isOpen={isOpenModel}
+                  modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                 >
                   <PopoverBody className='d-flex flex-column'>
                     <div className='flex-grow-1 h-100 p-2 d-flex flex-column h-100'>
                       <div className='d-flex align-items-center justify-content-between'>
                         <h6 className='mb-0'>Notifications</h6>
-                        {/* <i className="icon_alfred_close pointer" title="Close" onClick={() => handleClose()}></i> */}
+                        <i className="icon_alfred_close pointer" title="Close" onClick={() => handleCloseAndOpen()}></i>
                       </div>
                       <div className='text-center mt-3 d-flex flex-column align-items-center justify-content-center flex-grow-1'>
                         <img src={noNotifications} alt="" width={60} />

@@ -25,6 +25,12 @@ import moment from "moment";
 import { useLocation } from "react-router";
 import riskmanagement from '../../../images/riskmanagement.png';
 import riskmanagement2 from '../../../images/riskmanagement2.png';
+// import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
+export const EGoalTimePeriod = {
+  WEEKWISE: 0,
+  DAYSWISE: 1,
+  MONTHWISE: 2
+}
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -49,13 +55,14 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false)
   // chart
   const [chartOptions, setChartOptions] = useState(null);
   const [symptomData, getSymptomData] = useState([])
 
   // chart end
+
+  const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(EGoalTimePeriod.WEEKWISE);
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -72,6 +79,7 @@ export default function Home() {
     syncope: { frequency: "" },
     tirednessafterwards: { frequency: "" },
   });
+  const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({ patientDetails: null, symptomsDetails: null })
 
   const handleFrequencyChange = (category, value) => {
     setBreathlessness((prevState) => ({
@@ -350,6 +358,7 @@ export default function Home() {
               });
               changeStatus();
               setTab("4");
+              getPatientDetails()
             } else {
               toast(res.data?.message, {
                 position: "top-right",
@@ -713,6 +722,24 @@ export default function Home() {
     }
   };
 
+  const getPatientDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((response) => {
+        console.log('Lifestylegoal_tab_userdetails_response=>', response)
+        if (response && response?.status == 200) {
+          setPatientAndSymptomsDetails({ patientDetails: response.data?.data })
+          setIsLoading(false)
+        }
+      })
+      .catch((er) => {
+        toast(er?.response?.data?.message || er?.message, {
+          position: "top-right",
+          type: "error",
+        });
+      });
+  }
+
   return (
     <>
       <ConfirmationAction
@@ -783,6 +810,7 @@ export default function Home() {
                     className={tab === "4" ? "active" : ""}
                     onClick={() => {
                       setTab("4");
+                      getPatientDetails()
                     }}
                   >
                     <div>
@@ -2478,7 +2506,7 @@ export default function Home() {
                     </button>
                   </div>
                 </TabPane>
-                <TabPane tabId="4">
+                {<TabPane tabId="4">
                   <p>Select where you want to be coached in</p>
                   <div className="w-80">
                     <Row className="al_goalslist mb-4">
@@ -2527,19 +2555,19 @@ export default function Home() {
                           <h5 className="mb-2">Hello, {decodedToken?.username}!</h5>
                           <div>
                             <strong>Age: </strong>
-                            <span>40</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.age || "N/A"}</span>
                           </div>
                           <div>
                             <strong>Gender: </strong>
-                            <span>Male</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.gender || "N/A"}</span>
                           </div>
                           <div>
                             <strong>Residence type: </strong>
-                            <span>Cohabitant</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.rtype}</span>
                           </div>
                           <div>
                             <strong>Education: </strong>
-                            <span>University Degree</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N?A"}</span>
                           </div>
                         </Col>
                         <Col lg="6" sm="12">
@@ -2552,6 +2580,16 @@ export default function Home() {
                               </tr>
                             </thead>
                             <tbody>
+                              {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                                return (
+                                  <>
+                                    <tr>
+                                      <td>{lifeStyleGoalSymptomsKeys[key]}</td>
+                                      <td className="text-warning">{patientAndSymptomsDetails?.symptomsDetails[key]?.severity}</td>
+                                    </tr>
+                                  </>
+                                )
+                              })} */}
                               <tr>
                                 <td>Breathlessness even at rest</td>
                                 <td className="text-warning">Moderate</td>
@@ -2572,17 +2610,17 @@ export default function Home() {
 
                       <Row className="mb-4">
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton active">
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.WEEKWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)}>
                             Create goal for <strong>1 week</strong>
                           </div>
                         </Col>
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton">
-                            Create goal for <strong>15 days</strong>
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.DAYSWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)}>
+                            Create goal for <strong>15 days</strong >
                           </div>
                         </Col>
                         <Col lg="4" sm="6">
-                          <div className="al_lightbgbutton">
+                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.MONTHWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)}>
                             Create goal for <strong>1 month</strong>
                           </div>
                         </Col>
@@ -2599,7 +2637,7 @@ export default function Home() {
                       {/* <LayoutAlertMessage /> */}
                     </div>
                   </div>
-                </TabPane>
+                </TabPane>}
                 <TabPane tabId="5">
                   <Row className="w-80 mt-4">
                     <Col xl="6" md="6" sm="12">

@@ -450,6 +450,7 @@ export default function ForgotPassword() {
           })}
           onSubmit={(values) => {
             // console.log("values: ", values);
+            handleThirdFormSubmit(values)
           }}
         >
           {({
@@ -495,13 +496,13 @@ export default function ForgotPassword() {
                               >
                                 {showPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />
@@ -509,9 +510,7 @@ export default function ForgotPassword() {
                               </div>
                             </div>
                             <span className="al_note mt-2 fw-light">
-                              Password must contain 8 characters, one uppercase,
-                              one lowercase, one number and one special
-                              character
+                            Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
                             </span>
                             <ErrorMessage
                               name="password"
@@ -540,13 +539,13 @@ export default function ForgotPassword() {
                               >
                                 {isShowConfirmPassword ? (
                                   <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
+                                  icon="bi:eye"
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                                 ) : (
                                   <Icon
-                                    icon="bi:eye"
+                                    icon="bi:eye-slash"
                                     width="1.2em"
                                     height="1.2em"
                                   />
@@ -564,7 +563,7 @@ export default function ForgotPassword() {
                           <button
                             type="submit"
                             className="al_login_button"
-                            onClick={() => handleThirdFormSubmit(values)}
+                            // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue
                           </button>

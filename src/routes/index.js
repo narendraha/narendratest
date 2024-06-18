@@ -57,7 +57,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   }, [pathname]);
 
   if (loading) {
-    return <Loading/>; 
+    return <Loading />;
   }
 
   return (

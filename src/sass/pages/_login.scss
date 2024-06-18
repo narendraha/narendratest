@@ -51,14 +51,11 @@ ul {
                 background-size: cover;
                 padding: 0;
 
-                a {
+                img {
                     position: absolute;
                     top: 50px;
                     left: 40px;
-                }
-
-                img {
-                    height: 65px;
+                    height: 80px;
                 }
 
                 .wd-flex-center {
@@ -85,6 +82,20 @@ ul {
                 .al_65 {
                     width: 65%;
                     justify-content: center;
+                }
+
+                h5 {
+                    span {
+                        line-height: 1;
+                    }
+
+                    .fw-medium {
+                        font-weight: 400 !important;
+                    }
+
+                    >span:last-child {
+                        font-size: 26px;
+                    }
                 }
 
                 .wflexScroll {

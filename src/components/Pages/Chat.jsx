@@ -139,8 +139,8 @@ export default function Chat() {
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth p-0">
         <div className="d-flex flex-column">
-          <div className="flex-grow-1">
-            <div className="scrolldiv mt-3">
+          <div className="flex-grow-1 mt-3">
+            <div className="scrolldiv">
               {/* Chat need to be rendered here */}
               {/* Welcome message */}
               <Row className="mb-4 al_chatcontent">

@@ -68,7 +68,6 @@ export default function ChatBot(props) {
     AxiosInstance("application/json")
       .post(`/preference_chat`, reqObj)
       .then((res) => {
-        console.log("preference_chat_response=>", { reqObj, res })
         if (res && res.data && res.status === 200) {
           if (res.data.statuscode === 200) {
             setIsLoading(false);

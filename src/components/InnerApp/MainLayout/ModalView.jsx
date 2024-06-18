@@ -34,7 +34,7 @@ export default function ModalView(props) {
           </button>
           <button
             type="submit"
-            className="btn al_savebtn"
+            className="btn al_button_add"
             onClick={() => handleRedirect()}
           >
             Complete Now

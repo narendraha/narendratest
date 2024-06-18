@@ -77,7 +77,6 @@ export const ChangeProfilePassword = ({ props }) => {
                             }
                             )}
                             onSubmit={(values) => {
-                                console.log("submit=>", values)
                                 handleSubmit(values)
                             }}
                         >{({ values, setFieldValue }) => (

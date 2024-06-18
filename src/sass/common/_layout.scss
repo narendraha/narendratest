@@ -2043,12 +2043,12 @@ button.al_upgrade_btn {
     }
 
     .popover-inner {
-        &::before {
-            top: -20px;
-            right: 50%;
-            left: 50%;
-            transform: rotate(0deg);
-        }
+        // &::before {
+        //     top: -20px;
+        //     right: 50%;
+        //     left: 50%;
+        //     transform: rotate(0deg);
+        // }
 
         .popover-body {
             min-height: 60vh;

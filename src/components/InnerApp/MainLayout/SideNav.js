@@ -132,7 +132,7 @@ export default function SideNav(props) {
     // }
   ];
 
-  useEffect(() => {}, [props.isShowmenu]);
+  useEffect(() => { }, [props.isShowmenu]);
 
   const handleClose = () => {
     setisModalVisible(!isModalVisible);
@@ -236,8 +236,9 @@ export default function SideNav(props) {
                                 <UncontrolledTooltip
                                   placementPrefix="al_bs_tooltip"
                                   modifiers={[{
-                                    preventOverflow: {
-                                      boundariesElement: "window",
+                                    name: "preventOverflow",
+                                    options: {
+                                      rootBoundary: "document",
                                     },
                                   }]}
                                   placement="top"

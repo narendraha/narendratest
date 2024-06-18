@@ -1016,14 +1016,19 @@ export default function Home() {
                                     name="tdate"
                                     placeholderText="Select date"
                                     popperPlacement="auto"
-                                    popperModifiers={[{
-                                      flip: {
-                                        behavior: ["bottom"],
+                                    popperModifiers={[
+                                      {
+                                        name: "preventOverflow",
+                                        options: {
+                                          enabled: false,
+                                        },
                                       },
-                                      preventOverflow: {
-                                        enabled: false,
-                                      },
-                                    }]}
+                                      {
+                                        name: "flip",
+                                        options: {
+                                          fallbackPlacements: ['bottom']
+                                        },
+                                      }]}
                                     selected={values?.tdate ? values?.tdate : new Date()}
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);

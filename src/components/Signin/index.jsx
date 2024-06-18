@@ -128,20 +128,16 @@ export default function Signin({ setIsAuthenticated }) {
               <Row className="al_login_section">
                 <Col lg="7" sm="6" className="al_left_login h-100">
                   <div className="wflexLayout">
-                    <Link to="/">
                       <img
                         src={alferdlogo}
                         className="login_logodesktop"
                         alt="logo"
-                        width={180}
                       />
                       <img
                         src={alferdlogomobile}
                         className="login_logomobile"
                         alt="logo_mobile"
-                        width={180}
                       />
-                    </Link>
                   </div>
                 </Col>
                 <Col lg="5" sm="6" className="al_login-right h-100">
@@ -159,12 +155,12 @@ export default function Signin({ setIsAuthenticated }) {
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
-                        <span className="fw-medium">Welcome to </span>
+                        <span className="fw-medium">Welcome to </span><br/>
                         <span style={{ fontSize: "26px" }}>
                           Hello<span className="text-info">Alfred.AI <img src={handwave} alt="" width={25} className="mb-2" /></span>
                         </span>
                       </h5>
-                      <p className="cs_light text-grey text-italic" style={{ fontFamily : 'STIX Two Text'}}>
+                      <p className="cs_light text-grey text-italic mb-4" style={{ fontFamily : 'STIX Two Text'}}>
                         "Let's take your wellness journey to new heights"
                       </p>
 

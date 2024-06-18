@@ -123,25 +123,25 @@ video {
   border-radius: var(--bs-popover-border-radius);
 }
 
-.popover.bs-popover-auto .arrow::after {
-  border-right-color: #ffffff;
-}
+// .popover.bs-popover-auto .arrow::after {
+//   border-right-color: #ffffff;
+// }
 
-.popover.bs-popover-right .arrow::after {
-  border-right-color: #ffffff;
-}
+// .popover.bs-popover-right .arrow::after {
+//   border-right-color: #ffffff;
+// }
 
-.popover.bs-popover-left .arrow::after {
-  border-left-color: #ffffff;
-}
+// .popover.bs-popover-left .arrow::after {
+//   border-left-color: #ffffff;
+// }
 
-.popover.bs-popover-top .arrow::after {
-  border-top-color: #ffffff;
-}
+// .popover.bs-popover-top .arrow::after {
+//   border-top-color: #ffffff;
+// }
 
-.popover.bs-popover-bottom .arrow::after {
-  border-bottom-color: #ffffff;
-}
+// .popover.bs-popover-bottom .arrow::after {
+//   border-bottom-color: #ffffff;
+// }
 
 .popover.bs-popover-auto[x-placement^=bottom] .popover-header::before,
 .popover.bs-popover-bottom .popover-header::before {
@@ -152,17 +152,6 @@ video {
   border: none !important;
   border-radius: 15px !important;
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
-
-  &::before {
-    content: "";
-    position: absolute;
-    right: -20px;
-    top: 35%;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent transparent #fff transparent;
-    transform: rotate(90deg);
-  }
 }
 
 .bs-popover-bottom .popover-header::before,
@@ -378,10 +367,6 @@ textarea {
       color: #2C2C37;
       font-weight: 500;
       font-size: 15px;
-
-      input[type="checkbox"]:checked {
-        //        accent-color: #04C1D6;
-      }
     }
   }
 }
@@ -783,7 +768,7 @@ span {
 }
 
 .al_calendarIcon {
-  background: url('../images/alcalender.svg') no-repeat right 8% top 45% #f3f6fb !important;
+  background: url('../images/alcalender.svg') no-repeat right 12px top 45% #f3f6fb !important;
   background-size: 16px;
 }
 

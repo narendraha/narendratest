@@ -139,7 +139,6 @@ export default function Profile() {
         AxiosInstance("'multipart/form-data")
           .post(`/upload-profile-image`, formData)
           .then((res) => {
-            console.log("upload-profile-image=>", { file, res });
             if (res.data && res.status === 200) {
               if (res.data.statuscode === 200) {
                 setUpdatedFile(res.data.data?.profile_img)

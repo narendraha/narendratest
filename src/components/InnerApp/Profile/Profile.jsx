@@ -7,7 +7,7 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AxiosInstance } from "../../../_mock/utilities";
-import { allowsOnlyNumeric, allowsOnlyNumericOnly3Digit, phoneNumberReg } from "../../../_mock/RegularExp";
+import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
 import moment from "moment/moment";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
@@ -43,20 +43,6 @@ export default function Profile() {
       .get("/userdetails")
       .then((res) => {
         const responseData = res.data?.data;
-
-        if (responseData && responseData?.dob && responseData?.dob !== "NA") {
-          // Transform the date format from "YYYY-MM-DD" to "MM/dd/yyyy"
-          const formattedDate = new Date(responseData?.dob);
-          const formattedDateString = formattedDate.toLocaleDateString(
-            "en-US",
-            {
-              month: "2-digit",
-              day: "2-digit",
-              year: "numeric",
-            }
-          );
-          responseData.dob = formattedDateString;
-        }
         setGetProfileDetails(responseData);
       })
       .catch((er) => { });
@@ -213,7 +199,7 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.feet || "NA"}{getProfileDetails?.inch >= 0 ? `.${getProfileDetails?.inch}` : ""}</div>
+                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !=="NA" ? getProfileDetails?.inch : "00"}` : "NA"}</div>
                           <Label>Height (ft)</Label>
                         </div>
                       </Col>
@@ -370,8 +356,8 @@ export default function Profile() {
                         email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email: "",
                         dob:
                           getProfileDetails?.dob !== "NA"
-                            ? new Date()
-                            : getProfileDetails?.dob,
+                            ? getProfileDetails?.dob
+                            : new Date(),
                         gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                         mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                         rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
@@ -419,9 +405,14 @@ export default function Profile() {
                         //   .max(50, "Too Long!")
                         //   .required("This field is required"),
                         feet: Yup.string()
-                          .min(1, "Too Short!")
-                          .max(3, "Too Long!")
-                          .required("This field is required"),
+                        .test(
+                          'is-greater-than-one',
+                          'Height must be greater than 1',
+                          value => value && parseFloat(value) >= 1
+                        )
+                        .min(1, "Too Short!") // Minimum length of 1 character
+                        .max(3, "Too Long!")  // Maximum length of 3 characters
+                        .required("This field is required"),
                         weight: Yup.number()
                           .min(10, "Weight must be at least 10")
                           .max(650, "Weight is too high!")
@@ -466,7 +457,7 @@ export default function Profile() {
                                         placeholder="Feet"
                                         className="form-control"
                                         onKeyPress={(e) =>
-                                          allowsOnlyNumericOnly3Digit(e)
+                                          allowsOnlyNumericOnlysingleDigit(e)
                                         }
                                       />
                                       <ErrorMessage
@@ -483,7 +474,7 @@ export default function Profile() {
                                         placeholder="Inch"
                                         className="form-control"
                                         onKeyPress={(e) =>
-                                          allowsOnlyNumericOnly3Digit(e)
+                                          allowsOnlyNumericOnly2Digit(e)
                                         }
                                       />
                                       <ErrorMessage
@@ -647,7 +638,7 @@ export default function Profile() {
                                     onChange={(e) => {
                                       setFieldValue("dob", e);
                                     }}
-                                    dateFormat={"MM/dd/yyyy"}
+                                    dateFormat={"yyyy/MM/dd"}
                                     maxDate={new Date()}
                                     onBlur={() => setFieldTouched("dob", true)}
                                     autoComplete="off"
@@ -668,13 +659,6 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Mobile
                                   </Label>
-                                  {/* <Field
-                                    type="text"
-                                    name="mobile"
-                                    placeholder="Enter Mobile"
-                                    className="form-control"
-                                    onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                  /> */}
                                   <div className="input-group">
                                     <div className="input-group-prepend">
                                       <span
@@ -706,7 +690,7 @@ export default function Profile() {
                                     SSN
                                   </Label>
                                   <Field
-                                    type="password"
+                                    type="text"
                                     name="ssn"
                                     placeholder="Enter SSN"
                                     className="form-control"

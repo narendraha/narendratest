@@ -409,7 +409,7 @@ export default function Profile() {
                         gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                         mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                         rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
-                        education: getProfileDetails?.education !== "NA" ? getProfileDetails?.rtype : "",
+                        education: getProfileDetails?.education !== "NA" ? getProfileDetails?.education : "",
                         ssn: getProfileDetails?.ssn !== "NA" ? getProfileDetails?.ssn : "",
                         feet: getProfileDetails?.feet !== "NA" ? getProfileDetails?.feet : '',
                         inch: getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : '',

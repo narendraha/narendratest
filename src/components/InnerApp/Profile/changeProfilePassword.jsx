@@ -94,7 +94,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                             onClick={() => setFieldValue('oldPasswordEyeClose', !values?.oldPasswordEyeClose)}
                                             className="password_icon"
                                         >
-                                            <Icon icon={values?.oldPasswordEyeClose ? 'bi:eye-slash' : 'bi:eye'} width="1.2em" height="1.2em" />
+                                            <Icon icon={values?.oldPasswordEyeClose ? 'bi:eye' : 'bi:eye-slash'} width="1.2em" height="1.2em" />
                                         </div>
                                     </div>
                                     <ErrorMessage name="currentPassword" component={"div"} className="text-danger" />
@@ -110,7 +110,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                             onClick={() => setFieldValue('newPasswordEyeClose', !values?.newPasswordEyeClose)}
                                             className="password_icon"
                                         >
-                                            <Icon icon={values?.newPasswordEyeClose ? 'bi:eye-slash' : 'bi:eye'} width="1.2em" height="1.2em" />
+                                            <Icon icon={values?.newPasswordEyeClose ? 'bi:eye' : 'bi:eye-slash'} width="1.2em" height="1.2em" />
                                         </div>
                                     </div>
                                     <ErrorMessage name="newPassword" component={"div"} className="text-danger" />

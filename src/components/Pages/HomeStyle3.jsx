@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function HomeStyle3() {
   pageTitle("Home");
+  const inputRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
@@ -19,6 +20,7 @@ export default function HomeStyle3() {
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
   const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
   const [randomId, setRandomId] = useState(null);
+  const [isInputShow, setIsInputShow] = useState(false);
 
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
@@ -31,6 +33,9 @@ export default function HomeStyle3() {
   useEffect(() => {
     setRandomId(uuidv4().slice(0, 5))
   }, [randomId === null])
+
+  // To focus input field
+  useEffect(() => { inputRef.current?.focus() })
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
     setSelectedIcons(prevIcons => ({
@@ -58,6 +63,7 @@ export default function HomeStyle3() {
 
 
   const handleFormSubmit = async (e) => {
+    setIsInputShow(true);
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
     setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
@@ -72,6 +78,7 @@ export default function HomeStyle3() {
       .post(`/history`, data)
       .then((res) => {
         if (res && res.data && res.status === 200) {
+          setIsInputShow(false);
           setIsShow(true);
           if (res.data.statuscode === 200) {
             const responseData = res.data.data;
@@ -164,6 +171,8 @@ export default function HomeStyle3() {
                   name="message"
                   value={inputValue}
                   onChange={handleInputChange}
+                  disabled={isInputShow} //Disabled once input value is submitted
+                  ref={inputRef}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault(); // Prevent default form submission behavior
@@ -216,6 +225,8 @@ export default function HomeStyle3() {
                   name="message"
                   value={inputValue}
                   onChange={handleInputChange}
+                  disabled={isInputShow} //Disabled once input value is submitted
+                  ref={inputRef}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault(); // Prevent default form submission behavior

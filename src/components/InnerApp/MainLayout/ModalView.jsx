@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import { Modal, ModalBody } from "reactstrap";
 
@@ -7,14 +7,10 @@ export default function ModalView(props) {
   const handleClose = () => {
     props?.handleClose(!props?.isModalVisible);
   };
-  const handleRedirect = (item = true) => {
+  const handleRedirect = () => {
     props?.handleClose(!props?.isModalVisible);
-    navigate(props?.route)
-    // if (item) {
-    //   navigate("/profile");
-    // } else {
-    //   navigate("/home", { state: { activeTab: "3" } });
-    // }
+    let routePath = (props?.route === 'home') ? (props?.route, { state: { activeTab: "3" } }) : (props?.route)
+    navigate(`/${routePath}`)
   };
 
   return (

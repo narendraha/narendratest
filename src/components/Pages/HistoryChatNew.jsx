@@ -15,6 +15,7 @@ import incompleteprofile from '../../images/incompleteprofile.png';
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
   const navigate = useNavigate();
+  const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
@@ -83,6 +84,9 @@ export default function HistoryChatBot() {
   }, [incrementRef, questions]);
 
   useEffect(() => { }, [incrementRef, responseStatus]);
+
+  // To focus input field
+  useEffect(() => { inputRef.current?.focus() })
 
   const handleFormSubmit = async (e) => {
     console.log(
@@ -230,6 +234,7 @@ export default function HistoryChatBot() {
       });
   };
 
+
   const handleSubmit = async (values) => {
     const formattedData = [];
     let hasValue = false;
@@ -355,7 +360,8 @@ export default function HistoryChatBot() {
                       name="message"
                       value={inputValue} // input value
                       onChange={handleInputChange} // handle changes
-                      // disabled={isInputShow} //Disabled once input value is submitted
+                      disabled={isInputShow} //Disabled once input value is submitted
+                      ref={inputRef}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault(); // Prevent default form submission behavior
@@ -373,11 +379,11 @@ export default function HistoryChatBot() {
                           }}
                         ></i>
                         <i
-                          className="icon_alfred_sendmsg h-auto"
-                          // style={{
-                          //   height: "auto",
-                          //   pointerEvents: isInputShow ? "none" : "",
-                          // }}
+                          className="icon_alfred_sendmsg"
+                          style={{
+                            height: "auto",
+                            pointerEvents: isInputShow ? "none" : "",
+                          }}
                           onClick={(e) => handleFormSubmit(e)}
                         ></i>
                       </>

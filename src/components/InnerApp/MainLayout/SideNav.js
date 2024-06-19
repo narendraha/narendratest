@@ -146,9 +146,8 @@ export default function SideNav(props) {
       );
       if (
         response &&
-        response.status === 200
-        // &&
-        // response.data.statuscode === 200
+        response.status === 200 &&
+        response.data.statuscode === 200
       ) {
         return response.data;
       }
@@ -158,32 +157,14 @@ export default function SideNav(props) {
   };
 
   const handleMenuClick = async (link) => {
-    if (link === "historychat") {
-      let data = {
-        history_chat: true,
-      };
-      const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.status) {
-        navigate("/historychat");
-      } else {
-        setRedirectionRoute("/profile")
-        setisModalVisible(!isModalVisible);
-        setModalMessage(isCompleted?.message);
-      }
-    } else if (link === "transcriptsummary") {
-      let data = {
-        history_trans: true,
-      };
-      const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.status) {
-        navigate("/transcriptsummary");
-      } else {
-        setRedirectionRoute("/historychat")
-        setisModalVisible(!isModalVisible);
-        setModalMessage(isCompleted?.message);
-      }
+    let reqObj = (link === "historychat") ? { history_chat: true } : { history_trans: true }
+    const profileCompletion = await getHistoryBotQues(reqObj);
+    if (profileCompletion?.status && profileCompletion?.data) {
+      setRedirectionRoute(profileCompletion?.data?.web_redirection_key);
+      setisModalVisible(!isModalVisible);
+      setModalMessage(profileCompletion?.message);
     } else {
-      navigate(`/${link}`);
+      navigate(`/${link}`)
     }
   };
   return (

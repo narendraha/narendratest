@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardBody, Button } from "reactstrap";
 import { AxiosInstance } from "../../_mock/utilities";
 import Chatuser from "../../images/userprofile.jpg";
@@ -8,15 +8,27 @@ import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 import { Icon } from "@iconify/react";
 
 export default function ChatBot(props) {
+  const inputRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
   const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
+  const [isInputShow, setIsInputShow] = useState(false);
+
   const decodedToken = getDecodedTokenFromLocalStorage();
 
+  useEffect(() => inputFocusAndScroll());
+
+  const inputFocusAndScroll = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    inputRef.current?.focus()
+  };
+  
   const handleFormSubmit = async (e) => {
+    setIsInputShow(true);
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
     setChatHistory((prevHistory) => [...prevHistory, { user: inputValue }]);
@@ -31,6 +43,7 @@ export default function ChatBot(props) {
       .then((res) => {
         if (res && res.data && res.status === 200) {
           setIsShow(true);
+          setIsInputShow(false);
           if (res.data.statuscode === 200) {
             const responseData = res.data.data;
             // Convert responseData to an array of objects
@@ -163,6 +176,7 @@ export default function ChatBot(props) {
                 {(isLoading || (isLoading && !isShow)) && (
                   <div className="al_chatloading"></div>
                 )}
+                <div ref={messagesEndRef} />
               </div>
             </div>
             <div
@@ -177,6 +191,8 @@ export default function ChatBot(props) {
                   name="message"
                   value={inputValue}
                   onChange={handleInputChange}
+                  disabled={isInputShow} //Disabled once input value is submitted
+                  ref={inputRef}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault(); // Prevent default form submission behavior

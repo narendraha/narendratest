@@ -84,20 +84,16 @@ export default function ForgotPassword() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                  <Link to="/">
-                    <img
-                      src={alferdlogo}
-                      className="login_logodesktop"
-                      alt="logo"
-                      width={180}
-                    />
-                    <img
-                      src={alferdlogomobile}
-                      className="login_logomobile"
-                      alt="logo_mobile"
-                      width={180}
-                    />
-                  </Link>
+                  <img
+                    src={alferdlogo}
+                    className="login_logodesktop"
+                    alt="logo"
+                  />
+                  <img
+                    src={alferdlogomobile}
+                    className="login_logomobile"
+                    alt="logo_mobile"
+                  />
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -178,9 +174,7 @@ export default function ForgotPassword() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                  <Link to="/">
-                    <img src={alferdlogo} alt="logo" width={180} />
-                  </Link>
+                  <img src={alferdlogo} alt="logo" />
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -319,9 +313,7 @@ export default function ForgotPassword() {
       <Row className="al_login_section">
         <Col lg="7" sm="6" className="al_left_login h-100">
           <div className="wflexLayout">
-            <Link to="/">
-              <img src={alferdlogo} alt="logo" width={180} />
-            </Link>
+            <img src={alferdlogo} alt="logo" />
           </div>
         </Col>
         <Col lg="5" sm="6" className="al_login-right h-100">
@@ -453,7 +445,6 @@ export default function ForgotPassword() {
               .required("Confirm Password is required"),
           })}
           onSubmit={(values) => {
-            // console.log("values: ", values);
             handleThirdFormSubmit(values)
           }}
         >
@@ -471,9 +462,7 @@ export default function ForgotPassword() {
                 <Row className="al_login_section">
                   <Col lg="7" sm="6" className="al_left_login h-100">
                     <div className="wflexLayout">
-                      <Link to="/">
-                        <img src={alferdlogo} alt="logo" width={180} />
-                      </Link>
+                      <img src={alferdlogo} alt="logo" />
                     </div>
                   </Col>
                   <Col lg="5" sm="6" className="al_login-right h-100">
@@ -490,8 +479,8 @@ export default function ForgotPassword() {
                                 placeholder="Enter password"
                                 className="form-control"
                                 onChange={(e) => {
-                                    const trimmedValue = e.target.value.trim();
-                                    setFieldValue("password", trimmedValue);
+                                  const trimmedValue = e.target.value.trim();
+                                  setFieldValue("password", trimmedValue);
                                 }}
                               />
                               <div
@@ -500,10 +489,10 @@ export default function ForgotPassword() {
                               >
                                 {showPassword ? (
                                   <Icon
-                                  icon="bi:eye"
-                                  width="1.2em"
-                                  height="1.2em"
-                                />
+                                    icon="bi:eye"
+                                    width="1.2em"
+                                    height="1.2em"
+                                  />
                                 ) : (
                                   <Icon
                                     icon="bi:eye-slash"
@@ -514,7 +503,7 @@ export default function ForgotPassword() {
                               </div>
                             </div>
                             <span className="al_note mt-2 fw-light">
-                            Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
+                              Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
                             </span>
                             <ErrorMessage
                               name="password"
@@ -533,9 +522,9 @@ export default function ForgotPassword() {
                                 placeholder="Enter password"
                                 className="form-control"
                                 onChange={(e) => {
-                                    const trimmedValue = e.target.value.trim();
-                                    setFieldValue("reenterpassword", trimmedValue);
-                                  }}
+                                  const trimmedValue = e.target.value.trim();
+                                  setFieldValue("reenterpassword", trimmedValue);
+                                }}
                               />
                               <div
                                 onClick={togglePasswordVisibility2}
@@ -543,10 +532,10 @@ export default function ForgotPassword() {
                               >
                                 {isShowConfirmPassword ? (
                                   <Icon
-                                  icon="bi:eye"
-                                  width="1.2em"
-                                  height="1.2em"
-                                />
+                                    icon="bi:eye"
+                                    width="1.2em"
+                                    height="1.2em"
+                                  />
                                 ) : (
                                   <Icon
                                     icon="bi:eye-slash"
@@ -567,7 +556,7 @@ export default function ForgotPassword() {
                           <button
                             type="submit"
                             className="al_login_button"
-                            // onClick={() => handleThirdFormSubmit(values)}
+                          // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue
                           </button>

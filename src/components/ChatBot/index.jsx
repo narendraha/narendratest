@@ -68,7 +68,6 @@ export default function ChatBot(props) {
     AxiosInstance("application/json")
       .post(`/preference_chat`, reqObj)
       .then((res) => {
-        console.log("preference_chat_response=>", { reqObj, res })
         if (res && res.data && res.status === 200) {
           if (res.data.statuscode === 200) {
             setIsLoading(false);
@@ -89,6 +88,7 @@ export default function ChatBot(props) {
               id="homechatclose"
               type="button"
               onClick={() => props.setBotIsOpen(!props.botisOpen)}
+              className="mt-2"
             >
               <i className="icon_alfred_close"></i>
             </Button>

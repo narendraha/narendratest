@@ -7,6 +7,7 @@ import Select from "react-select";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import alferdlogomobile from "../../images/alfredlogo.svg";
 import successImg from "../../images/sucessimg.svg";
+import approvalsent from "../../images/approvalsent.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -140,16 +141,16 @@ export default function Register() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                    <img
-                      src={alferdlogo}
-                      className="login_logodesktop"
-                      alt="logo"
-                    />
-                    <img
-                      src={alferdlogomobile}
-                      className="login_logomobile"
-                      alt="logo_mobile"
-                    />
+                  <img
+                    src={alferdlogo}
+                    className="login_logodesktop"
+                    alt="logo"
+                  />
+                  <img
+                    src={alferdlogomobile}
+                    className="login_logomobile"
+                    alt="logo_mobile"
+                  />
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -432,7 +433,7 @@ export default function Register() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                    <img src={alferdlogo} alt="logo" />
+                  <img src={alferdlogo} alt="logo" />
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -592,7 +593,7 @@ export default function Register() {
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
-                    <img src={alferdlogo} alt="logo" />
+                  <img src={alferdlogo} alt="logo" />
                 </div>
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
@@ -903,7 +904,7 @@ export default function Register() {
       <Row className="al_login_section">
         <Col lg="7" sm="6" className="al_left_login h-100">
           <div className="wflexLayout">
-              <img src={alferdlogo} alt="logo" />
+            <img src={alferdlogo} alt="logo" />
           </div>
         </Col>
         <Col lg="5" sm="6" className="al_login-right h-100">
@@ -918,6 +919,14 @@ export default function Register() {
                     Login to your account with new password
                   </p>
                 </div>
+                {/* <div className="text-center mb-4">
+                  <img src={approvalsent} alt="approval" height={85} />
+                  <div className="mt-4">You have registered</div>
+                  <h4 className="text-success">successfully</h4>
+                  <p className="mb-0 textLight">
+                    Your account is currently under review. You will receive an email notification once it’s approved. Thank you
+                  </p>
+                </div> */}
               </div>
               <div className="al_login_footer mt-3">
                 <button
@@ -936,6 +945,7 @@ export default function Register() {
       </Row>
     </form>
   );
+
   const [activeForm, setActiveForm] = useState(1);
   const [formData, setFormData] = useState(null);
 
@@ -1063,7 +1073,7 @@ export default function Register() {
                 <Row className="al_login_section">
                   <Col lg="7" sm="6" className="al_left_login h-100">
                     <div className="wflexLayout">
-                        <img src={alferdlogo} alt="logo" />
+                      <img src={alferdlogo} alt="logo" />
                     </div>
                   </Col>
                   <Col lg="5" sm="6" className="al_login-right h-100">
@@ -1090,10 +1100,10 @@ export default function Register() {
                               >
                                 {showPassword ? (
                                   <Icon
-                                  icon="bi:eye"
-                                  width="1.2em"
-                                  height="1.2em"
-                                />
+                                    icon="bi:eye"
+                                    width="1.2em"
+                                    height="1.2em"
+                                  />
                                 ) : (
                                   <Icon
                                     icon="bi:eye-slash"
@@ -1135,10 +1145,10 @@ export default function Register() {
                               >
                                 {isShowConfirmPassword ? (
                                   <Icon
-                                  icon="bi:eye"
-                                  width="1.2em"
-                                  height="1.2em"
-                                />
+                                    icon="bi:eye"
+                                    width="1.2em"
+                                    height="1.2em"
+                                  />
                                 ) : (
                                   <Icon
                                     icon="bi:eye-slash"

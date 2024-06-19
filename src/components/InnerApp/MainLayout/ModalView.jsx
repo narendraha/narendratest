@@ -9,11 +9,12 @@ export default function ModalView(props) {
   };
   const handleRedirect = (item = true) => {
     props?.handleClose(!props?.isModalVisible);
-    if (item) {
-      navigate("/profile");
-    } else {
-      navigate("/home", { state: { activeTab: "3" } });
-    }
+    navigate(props?.route)
+    // if (item) {
+    //   navigate("/profile");
+    // } else {
+    //   navigate("/home", { state: { activeTab: "3" } });
+    // }
   };
 
   return (

@@ -1074,8 +1074,8 @@ export default function Home() {
                                 </Col>
                               </Row>
                               <Row>
-                                <Col xl="4" lg="6" sm="4">
-                                  <div className="al_vitalunits">
+                                <Col xl="4" lg="6" sm="4" className="mb-3">
+                                  <div className="al_vitalunits h-100">
                                     <i className="icon_alfred_weight" style={{ color: "#9086f7" }}></i>
                                     <FormGroup className="mb-0">
                                       <Label>Weight</Label>
@@ -1097,8 +1097,8 @@ export default function Home() {
                                     <div className="text-grey mt-1">(lbs)</div>
                                   </div>
                                 </Col>
-                                <Col xl="4" lg="6" sm="4">
-                                  <div className="al_vitalunits">
+                                <Col xl="4" lg="6" sm="4" className="mb-3">
+                                  <div className="al_vitalunits h-100">
                                     <i className="icon_alfred_bp" style={{ color: "#efbc06" }}></i>
                                     <FormGroup className="mb-0">
                                       <Label>Blood Pressure</Label>
@@ -1113,11 +1113,6 @@ export default function Home() {
                                               allowsOnlyNumericOnly3Digit(e)
                                             }
                                           />
-                                          <ErrorMessage
-                                            name="systolic"
-                                            component={"div"}
-                                            className="text-danger"
-                                          />
                                         </div>
                                         <div className="mt-2 text-muted">/</div>
                                         <div>
@@ -1130,19 +1125,19 @@ export default function Home() {
                                               allowsOnlyNumericOnly3Digit(e)
                                             }
                                           />
-                                          <ErrorMessage
-                                            name="diastolic"
-                                            component={"div"}
-                                            className="text-danger"
-                                          />
                                         </div>
                                       </div>
+                                      <ErrorMessage
+                                        name="systolic"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
                                     </FormGroup>
                                     <div className="text-grey mt-1">(BPM)</div>
                                   </div>
                                 </Col>
-                                <Col xl="4" lg="6" sm="4">
-                                  <div className="al_vitalunits">
+                                <Col xl="4" lg="6" sm="4" className="mb-3">
+                                  <div className="al_vitalunits h-100">
                                     <i className="icon_alfred_pulse" style={{ color: "#7ff1e4" }}></i>
                                     <FormGroup className="mb-0">
                                       <Label>Pulse</Label>
@@ -2502,7 +2497,7 @@ export default function Home() {
                 </TabPane>
                 {<TabPane tabId="4">
                   <p>Select where you want to be coached in</p>
-                  <div className="w-80">
+                  <div className="w-100">
                     <Row className="al_goalslist mb-4">
                       <Col lg="3">
                         <Label
@@ -2544,7 +2539,7 @@ export default function Home() {
                     <hr />
                     <div className="mt-4">
                       <Row className="mb-3">
-                        <Col lg="6" sm="12">
+                        {/* <Col lg="4" sm="12">
                           <p className="al_note">Your Details</p>
                           <h5 className="mb-2">Hello, {decodedToken?.username}!</h5>
                           <div>
@@ -2563,18 +2558,20 @@ export default function Home() {
                             <strong>Education: </strong>
                             <span>{patientAndSymptomsDetails?.patientDetails?.education || "N?A"}</span>
                           </div>
-                        </Col>
-                        <Col lg="6" sm="12">
+                        </Col> */}
+                        <Col lg="12" sm="12">
                           <h6 className="mt-3 mb-2">Your Medication</h6>
-                          <Table borderless responsive>
-                            <thead>
-                              <tr>
-                                <th>Symptoms</th>
-                                <th className="w-25">Range</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                          <Row>
+                            <Col lg="4" sm="12">
+                              <Table borderless responsive>
+                                <thead>
+                                  <tr>
+                                    <th>Symptoms</th>
+                                    <th className="w-25">Range</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
                                 return (
                                   <>
                                     <tr>
@@ -2584,16 +2581,38 @@ export default function Home() {
                                   </>
                                 )
                               })} */}
-                              <tr>
-                                <td>Breathlessness even at rest</td>
-                                <td className="text-warning">Moderate</td>
-                              </tr>
-                              <tr>
-                                <td>Dizziness</td>
-                                <td className="text-success">Mild</td>
-                              </tr>
-                            </tbody>
-                          </Table>
+                                  <tr>
+                                    <td>Breathlessness even at rest</td>
+                                    <td className="text-warning">Moderate</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Dizziness</td>
+                                    <td className="text-success">Mild</td>
+                                  </tr>
+                                </tbody>
+                              </Table>
+                            </Col>
+                            <Col lg="4" sm="12">
+                              <Table borderless responsive>
+                                <thead>
+                                  <tr>
+                                    <th>Symptoms</th>
+                                    <th className="w-25">Range</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>Breathlessness even at rest</td>
+                                    <td className="text-warning">Moderate</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Dizziness</td>
+                                    <td className="text-success">Mild</td>
+                                  </tr>
+                                </tbody>
+                              </Table>
+                            </Col>
+                          </Row>
                         </Col>
                       </Row>
 

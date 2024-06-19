@@ -39,6 +39,11 @@ em {
     font-weight: 300 !important;
 }
 
+ol li {
+    line-height: normal;
+    margin-bottom: 15px;
+}
+
 .symptomssec {
     >div {
         display: flex;
@@ -539,7 +544,7 @@ section:not(.cs_banner) {
 
         .modal-body {
             &.wflexLayout {
-                max-height: 65vh;
+                max-height: 70vh;
             }
         }
     }
@@ -548,8 +553,7 @@ section:not(.cs_banner) {
 .al_vitalunits {
     background-color: #F0F2F7;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 20px 16px;
     text-align: center;
 
     i {
@@ -1697,6 +1701,59 @@ ul.standardPlans {
 
 
 .al_outerparentwp {
+    .al_button_info {
+        background: $white;
+        padding: 8px 25px;
+        border-radius: 5px;
+        color: #FAB12B;
+        font-weight: 500;
+        border: 1px solid #FAB12B;
+
+        &:hover {
+            background: #FAB12B;
+            color: #ffffff;
+        }
+    }
+
+    .al_button_add {
+        background: #2C2C37;
+        padding: 9px 25px;
+        border: 1px solid #2C2C37;
+        border-radius: 5px;
+        color: $white;
+        font-weight: 500;
+
+        &:hover {
+            background: #1AC9DD;
+            border-color: #1AC9DD;
+        }
+    }
+
+    .al_button_cancel {
+        background: $white;
+        padding: 8px 25px;
+        border-radius: 5px;
+        color: #F85E5E;
+        font-weight: 500;
+        border: 1px solid #F85E5E;
+
+        &:hover {
+            background: #F85E5E;
+            color: #ffffff;
+            border-color: #F85E5E;
+        }
+    }
+
+    button {
+        margin-right: 15px;
+        min-width: 100px;
+        font-weight: 500;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
     .al_confirm_modal {
         display: flex;
         align-items: center;
@@ -1709,59 +1766,6 @@ ul.standardPlans {
             padding: 35px;
             border-color: #ffffff;
             max-height: 100%;
-
-            .al_button_info {
-                background: $white;
-                padding: 8px 25px;
-                border-radius: 5px;
-                color: #FAB12B;
-                font-weight: 500;
-                border: 1px solid #FAB12B;
-
-                &:hover {
-                    background: #FAB12B;
-                    color: #ffffff;
-                }
-            }
-
-            .al_button_add {
-                background: #2C2C37;
-                padding: 9px 25px;
-                border: 1px solid #2C2C37;
-                border-radius: 5px;
-                color: $white;
-                font-weight: 500;
-
-                &:hover {
-                    background: #1AC9DD;
-                    border-color: #1AC9DD;
-                }
-            }
-
-            .al_button_cancel {
-                background: $white;
-                padding: 8px 25px;
-                border-radius: 5px;
-                color: #F85E5E;
-                font-weight: 500;
-                border: 1px solid #F85E5E;
-
-                &:hover {
-                    background: #F85E5E;
-                    color: #ffffff;
-                    border-color: #F85E5E;
-                }
-            }
-
-            button {
-                margin-right: 15px;
-                min-width: 100px;
-                font-weight: 500;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
         }
 
         .al_modal_heading {
@@ -1944,19 +1948,20 @@ button.al_upgrade_btn {
     .al_profile_photo {
         width: 100%;
         height: auto;
-        background-color: #00B8E6;
+        background-color: #f6f6f6;
         margin-bottom: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0 !important;
+        padding: 5px !important;
         position: relative;
-        border: 1px solid #eeeeee;
+        border: 1px solid #f6f6f6;
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            max-height: 260px;
         }
 
         div {

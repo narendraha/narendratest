@@ -12,6 +12,7 @@ import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3D
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from "../../../_mock/utilities";
 import userImg from "../../../images/userprofile.jpg";
+import femaleuserImg from "../../../images/femaleuserImg.jpg";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource"; //Suspense loading
@@ -189,7 +190,7 @@ export default function Profile() {
             <Row className="al_profile_manage">
               <Col xl="3" lg="3" sm="4">
                 <div className={"al_profile_photo "}>
-                  <img src={updatedFile ? updatedFile : userImg} alt="profilePhoto" />
+                  <img src={updatedFile ? updatedFile : getProfileDetails?.gender === "Male" ? userImg : femaleuserImg} alt="profilePhoto" />
 
                   {isEdit && (
                     <>

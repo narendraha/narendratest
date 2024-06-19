@@ -502,9 +502,9 @@ export default function ForgotPassword() {
                                 )}
                               </div>
                             </div>
-                            <span className="al_note mt-2 fw-light">
+                            <div className="al_note mt-2 fw-light">
                               Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
-                            </span>
+                            </div>
                             <ErrorMessage
                               name="password"
                               component={"div"}

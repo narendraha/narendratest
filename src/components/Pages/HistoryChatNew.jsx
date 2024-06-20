@@ -153,12 +153,13 @@ export default function HistoryChatBot() {
             setResponseStatus(res.data?.message);
           } else {
             if (res.data?.data) {
+
               setQuestions((prevChat) => [
                 ...prevChat,
                 ...(res.data?.message !== ""
-                  ? [{ sender: "alfred", text: res.data.message }]
+                  ? [{ sender: "alfred", text: res.data.message?.concat("\n"+res.data?.data?.description) }]
                   : []),
-                { sender: "alfred", text: res.data?.data?.description },
+                // { sender: "none", text: res.data?.data?.description },
               ]);
             }
           }
@@ -282,16 +283,16 @@ export default function HistoryChatBot() {
       });
   };
 
-    // To get user details
-    const profileDetails = async () => {
-      await AxiosInstance("application/json")
-        .get("/userdetails")
-        .then((res) => {
-          const responseData = res.data?.data;
-          setGetProfileDetails(responseData);
-        })
-        .catch((er) => { });
-    };
+  // To get user details
+  const profileDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((res) => {
+        const responseData = res.data?.data;
+        setGetProfileDetails(responseData);
+      })
+      .catch((er) => { });
+  };
 
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
 
@@ -336,7 +337,7 @@ export default function HistoryChatBot() {
                           <h6 className="mb-0">
                             {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
                           </h6>
-                          <div>{message.text}</div>
+                          <div style={{whiteSpace:"pre-wrap"}}>{message.text}</div>
                         </Col>
                       </Row>
                     </React.Fragment>

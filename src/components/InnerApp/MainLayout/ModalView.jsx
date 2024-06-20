@@ -16,7 +16,7 @@ export default function ModalView(props) {
     } else if (route === "historychat" && link === "transcriptsummary")
       props?.modelVisibleProp({ isModalVisible: true, path: route })
     else {
-      navigate(props?.route)
+      navigate(route)
       props?.handleClose(!props?.isModalVisible);
     }
   };

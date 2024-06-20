@@ -303,7 +303,7 @@ export default function HistoryChatBot() {
                 <div className="scrolldiv ps-0">
                   {questions?.map((message, index) => (
                     <React.Fragment key={index}>
-                      <Row className="mb-4 al_chatcontent" key={index}>
+                      <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
                         <div>
                           {message.sender === "user" ? (
                             <img src={Chatuser} alt="chat user" className='al_chatimg' />

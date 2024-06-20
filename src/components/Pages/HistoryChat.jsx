@@ -271,7 +271,7 @@ export default function HistoryChatBot() {
                 <div className="scrolldiv ps-0">
                   {questions?.map((message, index) => (
                     Object.entries(message)?.map(([key, value]) => (
-                      <Row className="mb-4 al_chatcontent" key={key}>
+                      <Row className={"mb-4 al_chatcontent" + (key === "user" ? " al_usermsg" : "")} key={key}>
                         <div>
                           {key === "user" ? (
                             <img src={Chatuser} alt="chat user" />

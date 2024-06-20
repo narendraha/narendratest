@@ -213,6 +213,7 @@ export default function Profile() {
                     </>
                   )}
                 </div>
+                {isEdit && <div className="al_note"><span className="text-warning fw-medium">*Note: </span>Only jpeg, jpg, and png image formats are allowed</div>}
               </Col>
               <Col xl="7" lg="8" md="8" sm="8" className="px-5">
                 {!isEdit && (

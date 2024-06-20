@@ -3,14 +3,12 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, UncontrolledPopover } from 'reactstrap';
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
+import femaleuserImg from "../../../images/femaleuserImg.jpg";
 import noNotifications from '../../../images/noNotifications.svg';
 import maleuserImg from '../../../images/userprofile.jpg';
-import femaleuserImg from "../../../images/femaleuserImg.jpg";
 
 export default function Topbar(props) {
-  const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
@@ -76,7 +74,7 @@ export default function Topbar(props) {
     setOpenModel(!isOpenModel)
   }
 
-  const profilePicture = (getProfileDetails && getProfileDetails?.gender?.toLowerCase() === "male" ? maleuserImg : femaleuserImg) || maleuserImg;
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg) : getProfileDetails?.profile_url);
 
   return (
     <>
@@ -133,7 +131,7 @@ export default function Topbar(props) {
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
-                      <span className='al_uName'>{decodedToken?.username}</span>
+                      <span className='al_uName'>{getProfileDetails?.username}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">

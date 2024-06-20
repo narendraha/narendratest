@@ -137,7 +137,7 @@ export default function Profile() {
 
       if (isValidFileSize && isValidFileExtention) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file_', file);
 
         AxiosInstance("'multipart/form-data")
           .post(`/upload-profile-image`, formData)
@@ -172,7 +172,7 @@ export default function Profile() {
     }
   }
 
-  const profilePicture = updatedFile ? updatedFile : ((getProfileDetails && getProfileDetails?.gender?.toLowerCase() === "male" ? maleuserImg : femaleuserImg) || maleuserImg);
+  const profilePicture = (updatedFile ? updatedFile : (getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg) : getProfileDetails?.profile_url);
 
   // Suspense loading with fallback icon
   if (resource) {

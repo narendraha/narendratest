@@ -5,12 +5,12 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import { allowsOnlyNumeric } from "../../_mock/RegularExp";
-import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 import { AxiosInstance } from "../../_mock/utilities";
 import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
-import Chatuser from '../../images/userprofile.jpg';
+import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import incompleteprofile from '../../images/incompleteprofile.png';
+import ChatMaleuser from "../../images/userprofile.jpg";
 
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
@@ -26,7 +26,7 @@ export default function HistoryChatBot() {
   const [responseStatus, setResponseStatus] = useState("");
   const incrementRef = useRef(0);
   const [questionDetails, setQuestionDetails] = useState(null);
-  const decodedToken = getDecodedTokenFromLocalStorage();
+  const [getProfileDetails, setGetProfileDetails] = useState([]);
 
   // form tab
   //   toggle button
@@ -44,6 +44,7 @@ export default function HistoryChatBot() {
   // get questions using useeffect
   useEffect(() => {
     setQuestions([]);
+    profileDetails();
     setTimeout(() => {
       setIsLoading(false);
       getHistoryBotQues();
@@ -281,6 +282,19 @@ export default function HistoryChatBot() {
       });
   };
 
+    // To get user details
+    const profileDetails = async () => {
+      await AxiosInstance("application/json")
+        .get("/userdetails")
+        .then((res) => {
+          const responseData = res.data?.data;
+          setGetProfileDetails(responseData);
+        })
+        .catch((er) => { });
+    };
+
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
+
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth wflexLayout p-0">
@@ -311,14 +325,16 @@ export default function HistoryChatBot() {
                       <Row className="mb-4 al_chatcontent" key={index}>
                         <div>
                           {message.sender === "user" ? (
-                            <img src={Chatuser} alt="chat user" className='al_chatimg' />
+                            <img 
+                            src={profilePicture}
+                            alt="chat user" className='al_chatimg' />
                           ) : message.sender === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">
-                            {message.sender === "alfred" ? "Alfred" : decodedToken?.username}
+                            {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
                           </h6>
                           <div>{message.text}</div>
                         </Col>

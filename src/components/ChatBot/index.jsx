@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Card, CardBody, Button } from "reactstrap";
-import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/userprofile.jpg";
-import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col } from "reactstrap";
-import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Button, Card, CardBody, Col, Row } from "reactstrap";
+import { AxiosInstance } from "../../_mock/utilities";
+import Chatbot from "../../images/alfredicon.svg";
+import ChatFemaleuser from "../../images/femaleuserImg.jpg";
+import ChatMaleuser from "../../images/userprofile.jpg";
 
 export default function ChatBot(props) {
   const inputRef = useRef(null);
@@ -17,16 +16,16 @@ export default function ChatBot(props) {
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
   const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
   const [isInputShow, setIsInputShow] = useState(false);
-
-  const decodedToken = getDecodedTokenFromLocalStorage();
+  const [getProfileDetails, setGetProfileDetails] = useState([]);
 
   useEffect(() => inputFocusAndScroll());
+  useEffect(() => { profileDetails() }, [])
 
   const inputFocusAndScroll = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     inputRef.current?.focus()
   };
-  
+
   const handleFormSubmit = async (e) => {
     setIsInputShow(true);
     e.preventDefault();
@@ -92,6 +91,17 @@ export default function ChatBot(props) {
       });
   };
 
+  // To get user details
+  const profileDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((res) => {
+        const responseData = res.data?.data;
+        setGetProfileDetails(responseData);
+      })
+      .catch((er) => { });
+  };
+
   return (
     <>
       <div className="al_chatbot">
@@ -133,14 +143,16 @@ export default function ChatBot(props) {
                         </div> */}
                         <div>
                           {key === "user" ? (
-                            <img src={Chatuser} alt="chat user" />
+                            <img
+                              src={(getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url}
+                              alt="chat user" />
                           ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">
-                            {key === "user" ? decodedToken?.username : key}
+                            {key === "user" ? getProfileDetails?.username : key}
                           </h6>
                           <div>{value}</div>
                           {key === "alfred" && (

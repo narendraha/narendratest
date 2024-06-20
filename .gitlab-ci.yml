@@ -7,14 +7,13 @@ check-package-json:
     - apt-get update && apt-get install -y jq
   script:
     |
-      git fetch origin $CI_COMMIT_BRANCH
-      git checkout $CI_COMMIT_BRANCH
-      PREVIOUS_PACKAGE_JSON=$(git show origin/$CI_COMMIT_BRANCH~1:package.json)
+      git fetch origin main
+      PREVIOUS_PACKAGE_JSON=$(git show origin/main:package.json)
       CURRENT_PACKAGE_JSON=$(cat package.json)
       PREVIOUS_DEPS=$(echo "$PREVIOUS_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
       CURRENT_DEPS=$(echo "$CURRENT_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
- 
       COUNTER=0
+      CHANGED=()
       for dep in $PREVIOUS_DEPS; do
         key=$(echo "$dep" | cut -d'=' -f1)
         value=$(echo "$dep" | cut -d'=' -f2-)
@@ -22,6 +21,7 @@ check-package-json:
           currvalue=$(echo "$CURRENT_DEPS" | grep -w "$key" | cut -d'=' -f2-)
           if [[ "$value" != "$currvalue" ]]; then
             echo "$key is changing from $value to $currvalue"
+            CHANGED+=($key)
             COUNTER=$((COUNTER+1))
           fi
         else
@@ -37,14 +37,18 @@ check-package-json:
         for dep in $NEW_DEPS; do
           key=$(echo "$dep" | cut -d'=' -f1)
           value=$(echo "$dep" | cut -d'=' -f2-)
-          echo "- $key:$value"
+          if echo "${CHANGED[@]}" | grep -qw "$key"; then
+            continue
+          else
+            echo "- $key:$value"
+          fi
         done
       else
         echo "No new dependencies have been added"
       fi
-     
+ 
       if [ $COUNTER -gt 0 ]; then
-        exit 1
+      exit 1
       else
         exit 0
       fi

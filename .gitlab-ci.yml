@@ -30,6 +30,8 @@ check-package-json:
         fi
       done
       echo "$COUNTER dependencies have changed"
+
+      # gjjh
  
       NEW_DEPS=$(comm -13 <(echo "$PREVIOUS_DEPS" | sort) <(echo "$CURRENT_DEPS" | sort))
       if [ -n "$NEW_DEPS" ]; then

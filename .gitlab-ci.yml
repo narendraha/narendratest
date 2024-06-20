@@ -1,54 +1,13 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-  - check-package-json
- 
-check-package-json:
-  stage: check-package-json
-  before_script:
-    - apt-get update && apt-get install -y jq
-  script:
-    |
-      git fetch origin main
-      PREVIOUS_PACKAGE_JSON=$(git show origin/main:package.json)
-      CURRENT_PACKAGE_JSON=$(cat package.json)
-      PREVIOUS_DEPS=$(echo "$PREVIOUS_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
-      CURRENT_DEPS=$(echo "$CURRENT_PACKAGE_JSON" | jq -r '.dependencies | to_entries |.[] | @uri "\(.key)=\(.value)"')
-      COUNTER=0
-      CHANGED=()
-      for dep in $PREVIOUS_DEPS; do
-        key=$(echo "$dep" | cut -d'=' -f1)
-        value=$(echo "$dep" | cut -d'=' -f2-)
-        if echo "$CURRENT_DEPS" | grep -qw "$key"; then
-          currvalue=$(echo "$CURRENT_DEPS" | grep -w "$key" | cut -d'=' -f2-)
-          if [[ "$value" != "$currvalue" ]]; then
-            echo "$key is changing from $value to $currvalue"
-            CHANGED+=($key)
-            COUNTER=$((COUNTER+1))
-          fi
-        else
-          echo "$key:$value has been removed"
-          COUNTER=$((COUNTER+1))
-        fi
-      done
-      echo "$COUNTER dependencies have changed"
- 
-      NEW_DEPS=$(comm -13 <(echo "$PREVIOUS_DEPS" | sort) <(echo "$CURRENT_DEPS" | sort))
-      if [ -n "$NEW_DEPS" ]; then
-        echo "New dependencies added:"
-        for dep in $NEW_DEPS; do
-          key=$(echo "$dep" | cut -d'=' -f1)
-          value=$(echo "$dep" | cut -d'=' -f2-)
-          if echo "${CHANGED[@]}" | grep -qw "$key"; then
-            continue
-          else
-            echo "- $key:$value"
-          fi
-        done
-      else
-        echo "No new dependencies have been added"
-      fi
- 
-      if [ $COUNTER -gt 0 ]; then
-      exit 1
-      else
-        exit 0
-      fi
+- test
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml

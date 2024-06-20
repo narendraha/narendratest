@@ -373,7 +373,7 @@ export default function Register() {
                         </div>&nbsp; I agree to the&nbsp;<Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={() => serIsTermsAndConditionsRead(!isTermsAndConditionsRead)}>terms and conditions</Link>
                         {isTermsAndConditionsRead &&
                           <UncontrolledTooltip color="primary" placement="right" target="terms">
-                            Check the terms & conditions to enable
+                            Please read the Terms and Conditions to enable this option
                           </UncontrolledTooltip>
                         }
                       </Label>

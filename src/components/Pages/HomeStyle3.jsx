@@ -117,7 +117,7 @@ export default function HomeStyle3() {
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
                     {Object.entries(message).map(([key, value]) => (
-                      <Row className="mb-4 al_chatcontent" key={key}>
+                      <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
                         <div>
                           {key === "User" ? (
                             <img src={Chatuser} alt="chat user" />

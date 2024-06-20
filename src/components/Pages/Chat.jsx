@@ -160,8 +160,6 @@ export default function Chat() {
         <div className="d-flex flex-column">
           <div className="flex-grow-1 mt-3">
             <div className="scrolldiv">
-              {/* Chat need to be rendered here */}
-              {/* Welcome message */}
               <Row className="mb-4 al_chatcontent">
                 <div>
                   <img src={Chatbot} alt="Bot" />
@@ -181,30 +179,11 @@ export default function Chat() {
                   </div>
                 </Col>
               </Row>
-              {/*
-               * Loop the question it's stored in array[] and split the based on response
-               * again split the structure into "key and value" using Object method called entries
-               * it convert into array so here split the param as ([key, value])
-               */}
-              {/* {conversation.map((conv, index) => (
-          <div key={index}>
-            {conv.alfred && (
-              <p>
-                <strong>Alfred:</strong> {conv.alfred}
-              </p>
-            )}
-            {conv.user !== undefined && (
-              <p>
-                <strong>User:</strong> {conv.user}
-              </p>
-            )}
-          </div>
-        ))} */}
               {Array?.isArray(conversation) &&
                 conversation?.length > 0 &&
                 conversation?.map((message, index) => (
                   <React.Fragment key={index}>
-                    <Row className="mb-4 al_chatcontent" key={index}>
+                    <Row className={"mb-4 al_chatcontent" + (message.user ? " al_usermsg" : "")} key={index}>
                       <div>
                         {message.user ? (
                           <img

@@ -6,7 +6,8 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, Unco
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
 import noNotifications from '../../../images/noNotifications.svg';
-import user from '../../../images/userprofile.jpg';
+import userImg from "../../../images/userprofile.jpg";
+import femaleuserImg from "../../../images/femaleuserImg.jpg";
 
 export default function Topbar(props) {
   const decodedToken = getDecodedTokenFromLocalStorage();
@@ -113,7 +114,7 @@ export default function Topbar(props) {
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
                     <div className="al_progresscontainer">
-                      <img src={user} alt="user" className='al_useravatar al_avatar' />
+                      <img src={getProfileDetails?.gender === "Male" ? userImg : femaleuserImg} alt="user" className='al_useravatar al_avatar' />
                       <div className='al_progressbar'>
                         <CircularProgressbar
                           value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}

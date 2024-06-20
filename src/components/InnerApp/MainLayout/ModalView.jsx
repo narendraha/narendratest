@@ -6,11 +6,19 @@ export default function ModalView(props) {
   const navigate = useNavigate();
   const handleClose = () => {
     props?.handleClose(!props?.isModalVisible);
+    navigate("/home")
   };
   const handleRedirect = () => {
-    props?.handleClose(!props?.isModalVisible);
-    let routePath = (props?.route === 'home') ? (props?.route, { state: { activeTab: "3" } }) : (props?.route)
-    navigate(`/${routePath}`)
+    let { link, route } = props?.path;
+    if (route === "home") {
+      navigate(route, { state: { activeTab: "3" } })
+      props?.handleClose(!props?.isModalVisible);
+    } else if (route === "historychat" && link === "transcriptsummary")
+      props?.modelVisibleProp({ isModalVisible: true, path: route })
+    else {
+      navigate(props?.route)
+      props?.handleClose(!props?.isModalVisible);
+    }
   };
 
   return (

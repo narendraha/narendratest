@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
 import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from "../../../_mock/utilities";
-import userImg from "../../../images/userprofile.jpg";
+import maleuserImg from "../../../images/userprofile.jpg";
 import femaleuserImg from "../../../images/femaleuserImg.jpg";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
@@ -132,8 +132,10 @@ export default function Profile() {
   const onFileUpload = (e) => {
     if (e.target.files[0]) {
       const file = e.target.files[0];
-      let fileSize = getFileSizeInMb(file.size);
-      if (fileSize <= 200) {
+      let isValidFileSize = getFileSizeInMb(file.size) <= 200;
+      let isValidFileExtention = ['jpg', 'jpeg', 'png']?.includes(file?.name?.split(".")?.pop()?.toLowerCase())
+
+      if (isValidFileSize && isValidFileExtention) {
         const formData = new FormData();
         formData.append('file', file);
 
@@ -162,7 +164,7 @@ export default function Profile() {
             });
           });
       } else {
-        toast("Please Select file less than 200 MB", {
+        toast(!isValidFileSize ? "Please Select file less than 200 MB" : "Please Upload Valid file type", {
           position: "top-right",
           type: "error",
         });
@@ -170,6 +172,7 @@ export default function Profile() {
     }
   }
 
+  const profilePicture = updatedFile ? updatedFile : ((getProfileDetails && getProfileDetails?.gender?.toLowerCase() === "male" ? maleuserImg : femaleuserImg) || maleuserImg);
 
   // Suspense loading with fallback icon
   if (resource) {
@@ -190,7 +193,7 @@ export default function Profile() {
             <Row className="al_profile_manage">
               <Col xl="3" lg="3" sm="4">
                 <div className={"al_profile_photo "}>
-                  <img src={updatedFile ? updatedFile : getProfileDetails?.gender === "Male" ? userImg : femaleuserImg} alt="profilePhoto" />
+                  <img src={profilePicture} alt="profilePhoto" />
 
                   {isEdit && (
                     <>
@@ -248,7 +251,7 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !=="NA" ? getProfileDetails?.inch : "00"}` : "NA"}</div>
+                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : "00"}` : "NA"}</div>
                           <Label>Height (ft)</Label>
                         </div>
                       </Col>
@@ -455,14 +458,14 @@ export default function Profile() {
                         //   .max(50, "Too Long!")
                         //   .required("This field is required"),
                         feet: Yup.string()
-                        .test(
-                          'is-greater-than-one',
-                          'Height must be greater than 1',
-                          value => value && parseFloat(value) >= 1
-                        )
-                        .min(1, "Too Short!") // Minimum length of 1 character
-                        .max(3, "Too Long!")  // Maximum length of 3 characters
-                        .required("This field is required"),
+                          .test(
+                            'is-greater-than-one',
+                            'Height must be greater than 1',
+                            value => value && parseFloat(value) >= 1
+                          )
+                          .min(1, "Too Short!") // Minimum length of 1 character
+                          .max(3, "Too Long!")  // Maximum length of 3 characters
+                          .required("This field is required"),
                         weight: Yup.number()
                           .min(10, "Weight must be at least 10")
                           .max(650, "Weight is too high!")

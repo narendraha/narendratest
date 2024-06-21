@@ -748,8 +748,8 @@ section:not(.cs_banner) {
         flex-direction: row-reverse;
 
         img {
-            background-color: #e7e7e7;
-            border: 1px solid #e7e7e7;
+            background-color: #ededed;
+            border: 1px solid #ededed;
         }
     }
 
@@ -1143,7 +1143,7 @@ ul.standardPlans {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #8f92a1;
+            background-color: #ededed;
             color: #ffffff;
             font-size: 14px !important;
             font-weight: $font_w500;

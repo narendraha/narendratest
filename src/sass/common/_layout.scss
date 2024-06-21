@@ -746,6 +746,11 @@ section:not(.cs_banner) {
     &.al_usermsg {
         text-align: right;
         flex-direction: row-reverse;
+
+        img {
+            background-color: #ededed;
+            border: 1px solid #ededed;
+        }
     }
 
     >div:first-child {
@@ -758,8 +763,9 @@ section:not(.cs_banner) {
     }
 
     img {
-        width: 30px !important;
+        width: 32px !important;
         border-radius: 50%;
+        height: 32px;
     }
 
     h6 {
@@ -1137,7 +1143,7 @@ ul.standardPlans {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #8f92a1;
+            background-color: #ededed;
             color: #ffffff;
             font-size: 14px !important;
             font-weight: $font_w500;
@@ -1905,6 +1911,16 @@ ul.standardPlans {
     }
 }
 
+.al_popverchat {
+    i {
+        position: absolute;
+        left: -8px;
+        top: -5px;
+        background-color: #ffffff;
+        border-radius: 50%;
+    }
+}
+
 .card.al_cardnoborder {
     border: 1px solid #f6f6f6;
     box-shadow: 4px 10px 20px rgba(0, 0, 0, 0.06);
@@ -1914,6 +1930,7 @@ ul.standardPlans {
 .disabled,
 :disabled {
     opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .al_buttonaddplus {
@@ -1949,6 +1966,7 @@ button.al_upgrade_btn {
 .al_profile_manage {
     h2 {
         font-size: 24px;
+        line-height: 1;
     }
 
     hr {
@@ -1956,9 +1974,35 @@ button.al_upgrade_btn {
         border-top: 1px dashed #CFD2E1;
     }
 
+    .al_profile-edit-icon {
+        width: 45px;
+        height: 45px;
+        background: #F0F0F0;
+        border-radius: 50%;
+        color: #1C2C3C;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: #1C2C3C;
+
+            i {
+                color: #ffffff;
+            }
+        }
+
+        i {
+            font-size: 15px;
+            color: #1C2C3C;
+        }
+    }
+
     .al_profile_photo {
         width: 100%;
         height: auto;
+        min-height: 220px;
         background-color: #f6f6f6;
         margin-bottom: 15px;
         display: flex;
@@ -1979,26 +2023,6 @@ button.al_upgrade_btn {
             font-size: 40px;
             color: #ffffff;
             font-weight: $font_w500;
-        }
-
-        .al_profile-edit-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(34, 33, 33, 0.7);
-            border-radius: 50%;
-            position: absolute;
-            bottom: 4%;
-            right: 4%;
-            color: #ffffff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            i {
-                font-size: 15px;
-                color: #ffffff;
-            }
         }
     }
 

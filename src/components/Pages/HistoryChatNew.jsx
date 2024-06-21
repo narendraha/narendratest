@@ -320,7 +320,7 @@ export default function HistoryChatBot() {
         </div>
         {isChatOneActive ? (
           <div className="wflexLayout">
-            <div className="flex-grow-1 mt-3">
+            <div className="flex-grow-1 my-3">
               {Array?.isArray(questions) && questions?.length > 0 &&
                 <div className="scrolldiv ps-0">
                   {questions?.map((message, index) => (

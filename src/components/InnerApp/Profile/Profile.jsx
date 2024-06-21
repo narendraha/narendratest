@@ -173,7 +173,8 @@ export default function Profile() {
     }
   }
 
-  const profilePicture = (updatedFile ? updatedFile : (getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg) : getProfileDetails?.profile_url);
+  // const profilePicture = (updatedFile ? updatedFile : (getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
+  const profilePicture = (updatedFile ? updatedFile : (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg));
 
   // Suspense loading with fallback icon
   if (resource) {

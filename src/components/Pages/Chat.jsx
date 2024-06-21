@@ -152,7 +152,8 @@ export default function Chat() {
       .catch((er) => { });
   };
 
-  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
+  // const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
+  const profilePicture = ((getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser));
   
   return (
     <div className="cs_homepage mt-0 h-100">

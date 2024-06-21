@@ -74,7 +74,8 @@ export default function Topbar(props) {
     setOpenModel(!isOpenModel)
   }
 
-  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg) : getProfileDetails?.profile_url);
+  // const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
+  const profilePicture = ((getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg));
 
   return (
     <>

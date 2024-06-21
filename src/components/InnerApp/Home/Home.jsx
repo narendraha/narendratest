@@ -123,7 +123,7 @@ export default function Home() {
     20: "Mild",
     45: "Moderate",
     70: "Severe",
-    88: "Extreme",
+    90: "Extreme",
   };
   const handleValueChange = (value, setValue) => {
     setValue(value);
@@ -387,7 +387,7 @@ export default function Home() {
 
     const fetchData = async () => {
       AxiosInstance("application/json")
-        .post(`/query_symptoms`, {})
+        .post(`/health_details_graph`, {})
         .then((res) => {
           if (res && res.data && res.status === 200) {
             if (res.data?.statuscode === 200) {
@@ -426,36 +426,90 @@ export default function Home() {
     fetchData();
   }, []);
 
+
+  // Format dates in YYYY-MM-DD format
+  
+
   useEffect(() => {
     if (!symptomData || !symptomData.length) {
       // Data not yet available or empty
       return;
     }
+   // Extract unique dates from data
+  const uniqueDates = Array.from(new Set(symptomData?.length > 0 && symptomData.map((item) => item.tdate)));
+
+  // Sort unique dates in ascending order
+  // uniqueDates.sort();
+
+  // Format dates in YYYY-MM-DD format
+  const formattedDates = uniqueDates.map((date) =>
+    Highcharts.dateFormat("%Y-%m-%d", new Date(date))
+  );
+
+    const prepareSeries = (data) => {
+      const systolicSeries = {
+        name: "Systolic",
+        data: [],
+      };
+  
+      const diastolicSeries = {
+        name: "Diastolic",
+        data: [],
+      };
+  
+      data.forEach((item) => {
+        if(item.tdate !== null){
+          systolicSeries.data.push({
+            x: formattedDates.indexOf(item.tdate),
+            y: item.systolic_p,
+            customTooltip: `Systolic: ${item.systolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+          });
+          diastolicSeries.data.push({
+            x: formattedDates.indexOf(item.tdate),
+            y: item.diastolic_p,
+            customTooltip: `Diastolic: ${item.diastolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+          });
+        }
+      });
+  
+      return [systolicSeries, diastolicSeries];
+    };
+    const series = prepareSeries(symptomData);
 
     const options = {
-      chart: { type: "line" },
-      title: { text: "Symptoms Data Over Time" },
-      xAxis: { categories: symptomData.map((item) => item.date) },
-      yAxis: { title: { text: "Symptom Value" } },
-      legend: {
-        layout: "vertical",
-        align: "right",
-        verticalAlign: "middle",
+      chart: {
+        type: "line",
+      },
+      title: {
+        text: "Blood Pressure Records",
+      },
+      xAxis: {
+        categories: formattedDates,
+        title: {
+          text: "Date",
+        },
+      },
+      yAxis: {
+        title: {
+          text: "Blood Pressure (BPM)",
+        },
       },
       tooltip: {
         formatter: function () {
-          let tooltip = `<strong>Date: ${this.x}</strong><br>`;
-          this.points.forEach((point) => {
-            tooltip += `<span style="color:${point.color}">\u25CF</span> ${point.series.name}: <b>${point.y}</b><br>`;
-          });
-          return tooltip;
+          const index = this.series.xAxis.categories.indexOf(this.x);
+          const date = formattedDates[index];
+          return `<b>${date}</b><br/>${this.point.customTooltip}`;
         },
-        shared: true,
       },
-      series: Object.keys(symptomData[0]?.symptoms || {}).map((symptom) => ({
-        name: symptom,
-        data: symptomData.map((item) => item?.symptoms?.[symptom] || 0),
-      })),
+      series: series,
+      plotOptions: {
+        series: {
+          lineWidth: 1,
+          marker: {
+            enabled: true,
+          },
+        },
+      },
     };
 
     setChartOptions(options);
@@ -1130,6 +1184,11 @@ export default function Home() {
                                       </div>
                                       <ErrorMessage
                                         name="systolic"
+                                        component={"div"}
+                                        className="text-danger"
+                                      />
+                                      <ErrorMessage
+                                        name="diastolic"
                                         component={"div"}
                                         className="text-danger"
                                       />

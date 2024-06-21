@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import { pageTitle } from "../../helpers/PageTitle";
-import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/userprofile.jpg";
-import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col } from "reactstrap";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
+import { Col, Row } from "reactstrap";
+import { AxiosInstance } from "../../_mock/utilities";
+import { pageTitle } from "../../helpers/PageTitle";
+import Chatbot from "../../images/alfredicon.svg";
+import ChatFemaleuser from "../../images/femaleuserImg.jpg";
+import ChatMaleuser from "../../images/userprofile.jpg";
 
 export default function Chat() {
   pageTitle("Behavioural chat");
   const navigate = useNavigate();
+  const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
   const [isInputShow, setIsInputShow] = useState(false);
   const [responseStatus, setResponseStatus] = useState(0);
-  const decodedToken = getDecodedTokenFromLocalStorage();
   const messagesEndRef = useRef(null);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -23,10 +23,12 @@ export default function Chat() {
   const [conversation, setConversation] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
+  const [getProfileDetails, setGetProfileDetails] = useState([]);
 
   // get questions using useeffect
   useEffect(() => {
     getQuestion();
+    profileDetails();
   }, []);
 
   const getRandomQuestion = (index) => {
@@ -44,6 +46,9 @@ export default function Chat() {
       { alfred: getRandomQuestion(currentQuestionIndex) },
     ]);
   }, [currentQuestionIndex, questions]);
+
+  // To focus input field
+  useEffect(() => { inputRef.current?.focus() })
 
   // Scroll to the bottom of the chat container
   const scrollToBottom = () => {
@@ -100,7 +105,7 @@ export default function Chat() {
         setIsLoading(false);
         setResponseStatus(statuscode);
 
-        if (statuscode === -1) {
+        if (statuscode === -1 || statuscode === 99) {
           // If statuscode is -1, show Alfred's message and stop
           setConversation((prevConversation) => [
             ...prevConversation,
@@ -135,6 +140,20 @@ export default function Chat() {
       setIsShow(true); /* Show send button when user enter something */
     setUserValue(value); // update the value of input field with user's typing text
   };
+
+  // To get user details
+  const profileDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((res) => {
+        const responseData = res.data?.data;
+        setGetProfileDetails(responseData);
+      })
+      .catch((er) => { });
+  };
+
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
+  
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth p-0">
@@ -186,7 +205,7 @@ export default function Chat() {
                       <div>
                         {message.user ? (
                           <img
-                            src={Chatuser}
+                            src={profilePicture}
                             alt="chat user"
                             className="al_chatimg"
                           />
@@ -202,7 +221,7 @@ export default function Chat() {
                         )}
                         {message.user !== undefined && (
                           <>
-                            <h6 className="mb-0">{message.user ? decodedToken?.username : message.user}</h6> <div>{message.user}</div>
+                            <h6 className="mb-0">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
                           </>
                         )}
                       </Col>
@@ -235,7 +254,8 @@ export default function Chat() {
                     name="message"
                     value={userValue} // input value
                     onChange={handleInputChange} // handle changes
-                    // disabled={isInputShow} //Disabled once input value is submitted
+                    disabled={isInputShow} //Disabled once input value is submitted
+                    ref={inputRef}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         e.preventDefault(); // Prevent default form submission behavior
@@ -252,11 +272,11 @@ export default function Chat() {
                         }}
                       ></i>
                       <i
-                        className="icon_alfred_sendmsg h-auto"
-                        // style={{
-                        //   height: "auto",
-                        //   pointerEvents: isInputShow ? "none" : "",
-                        // }}
+                        className="icon_alfred_sendmsg"
+                        style={{
+                          height: "auto",
+                          pointerEvents: isInputShow ? "none" : "",
+                        }}
                         onClick={(e) => handleFormSubmit(e)}
                       ></i>
                     </>

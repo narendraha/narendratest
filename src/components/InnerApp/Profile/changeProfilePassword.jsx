@@ -22,11 +22,12 @@ export const ChangeProfilePassword = ({ props }) => {
         AxiosInstance("application/json")
             .put(`/change-password`, reqObj)
             .then((res) => {
+                setIsFormLoading(true);
                 if (res && res.data && res.status === 200) {
-                    setIsFormLoading(true);
-                    setOpenModel(false)
-                    props(isOpenModel)
+                    setIsFormLoading(false)
                     if (res.data?.statuscode === 200) {
+                        setOpenModel(false)
+                        props(isOpenModel)
                         toast(res.data?.message, {
                             position: "top-right",
                             type: "success",
@@ -112,6 +113,9 @@ export const ChangeProfilePassword = ({ props }) => {
                                         >
                                             <Icon icon={values?.newPasswordEyeClose ? 'bi:eye' : 'bi:eye-slash'} width="1.2em" height="1.2em" />
                                         </div>
+                                    </div>
+                                    <div className="al_note mt-2 fw-light">
+                                        Password must contain 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character
                                     </div>
                                     <ErrorMessage name="newPassword" component={"div"} className="text-danger" />
                                 </FormGroup>

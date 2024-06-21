@@ -11,7 +11,7 @@ export default function SideNav(props) {
   const navigate = useNavigate();
   const [isModalVisible, setisModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [redirectionRoute, setRedirectionRoute] = useState("")
+  const [redirectionPath, setRedirectionPath] = useState({ link: "", route: "" })
 
   const menuData = [
     // {
@@ -146,9 +146,8 @@ export default function SideNav(props) {
       );
       if (
         response &&
-        response.status === 200
-        // &&
-        // response.data.statuscode === 200
+        response.status === 200 &&
+        response.data.statuscode === 200
       ) {
         return response.data;
       }
@@ -157,35 +156,25 @@ export default function SideNav(props) {
     }
   };
 
-  const handleMenuClick = async (link) => {
-    if (link === "historychat") {
-      let data = {
-        history_chat: true,
-      };
-      const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.status) {
-        navigate("/historychat");
-      } else {
-        setRedirectionRoute("/profile")
+  const handleMenuClick = async (link, reOpenModel = false) => {
+    let reqObj = ((link === "historychat") ? { history_chat: true } : (link === "transcriptsummary") ? { history_trans: true } : "")
+    const profileCompletion = reqObj !== "" && await getHistoryBotQues(reqObj);
+    if (profileCompletion?.status && profileCompletion?.data) {
+      setRedirectionPath({ link: link, route: profileCompletion?.data?.web_redirection_key });
+      if (!reOpenModel)
         setisModalVisible(!isModalVisible);
-        setModalMessage(isCompleted?.message);
-      }
-    } else if (link === "transcriptsummary") {
-      let data = {
-        history_trans: true,
-      };
-      const isCompleted = await getHistoryBotQues(data);
-      if (isCompleted?.status) {
-        navigate("/transcriptsummary");
-      } else {
-        setRedirectionRoute("/historychat")
-        setisModalVisible(!isModalVisible);
-        setModalMessage(isCompleted?.message);
-      }
+      setModalMessage(profileCompletion?.message);
     } else {
-      navigate(`/${link}`);
+      setisModalVisible(false);
+      navigate(`/${link}`)
     }
   };
+
+  const getIsmodalVisibleProp = (data) => {
+    if (data?.isModalVisible)
+      handleMenuClick(data?.path, true)
+  }
+
   return (
     <>
       {isModalVisible && (
@@ -193,7 +182,8 @@ export default function SideNav(props) {
           msg={modalMessage}
           handleClose={handleClose}
           isModalVisible={isModalVisible}
-          route={redirectionRoute}
+          path={redirectionPath}
+          modelVisibleProp={getIsmodalVisibleProp}
         />
       )}
       <nav

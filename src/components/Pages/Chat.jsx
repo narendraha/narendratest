@@ -160,6 +160,24 @@ export default function Chat() {
                   </div>
                 </Col>
               </Row>
+              {/*   * Loop the question it's stored in array[] and split the based on response
+               * again split the structure into "key and value" using Object method called entries
+               * it convert into array so here split the param as ([key, value])
+               */}
+              {/* {conversation.map((conv, index) => (
+                <div key={index}>
+                  {conv.alfred && (
+                    <p>
+                      <strong>Alfred:</strong> {conv.alfred}
+                    </p>
+                  )}
+                  {conv.user !== undefined && (
+                    <p>
+                      <strong>User:</strong> {conv.user}
+                    </p>
+                  )}
+                </div>
+              ))} */}
               {Array?.isArray(conversation) &&
                 conversation?.length > 0 &&
                 conversation?.map((message, index) => (
@@ -208,44 +226,44 @@ export default function Chat() {
                 </button>
               </div>
             ) : (
-            <div className="cs_mainsearch">
-              <form action="#">
-                <i className="icon_alfred_search h-auto"></i>
-                <input
-                  type="text"
-                  placeholder="Ask a question"
-                  name="message"
-                  value={userValue} // input value
-                  onChange={handleInputChange} // handle changes
-                  // disabled={isInputShow} //Disabled once input value is submitted
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault(); // Prevent default form submission behavior
-                      handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                    }
-                  }}
-                />
-                {isShow ? (
-                  <>
-                    <i
-                      className="icon_alfred_close"
-                      onClick={(e) => {
-                        setUserValue("");
-                      }}
-                    ></i>
-                    <i
-                      className="icon_alfred_sendmsg h-auto"
-                      // style={{
-                      //   height: "auto",
-                      //   pointerEvents: isInputShow ? "none" : "",
-                      // }}
-                      onClick={(e) => handleFormSubmit(e)}
-                    ></i>
-                  </>
-                ) : (
-                  <i className="icon_alfred_speech h-auto"></i>
-                )}
-              </form>
+              <div className="cs_mainsearch">
+                <form action="#">
+                  <i className="icon_alfred_search h-auto"></i>
+                  <input
+                    type="text"
+                    placeholder="Ask a question"
+                    name="message"
+                    value={userValue} // input value
+                    onChange={handleInputChange} // handle changes
+                    // disabled={isInputShow} //Disabled once input value is submitted
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault(); // Prevent default form submission behavior
+                        handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                      }
+                    }}
+                  />
+                  {isShow ? (
+                    <>
+                      <i
+                        className="icon_alfred_close"
+                        onClick={(e) => {
+                          setUserValue("");
+                        }}
+                      ></i>
+                      <i
+                        className="icon_alfred_sendmsg h-auto"
+                        // style={{
+                        //   height: "auto",
+                        //   pointerEvents: isInputShow ? "none" : "",
+                        // }}
+                        onClick={(e) => handleFormSubmit(e)}
+                      ></i>
+                    </>
+                  ) : (
+                    <i className="icon_alfred_speech h-auto"></i>
+                  )}
+                </form>
               </div>
             )}
           </div>

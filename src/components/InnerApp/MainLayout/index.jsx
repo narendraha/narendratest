@@ -10,6 +10,7 @@ import chatBot from '../../../images/chatboticon.svg';
 export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
     const [isShowmenu, setIsShowmenu] = useState(true);
+    const [popOverClose, setPopOverClose] = useState(true);
 
     useEffect(() => {
         setBotIsOpen(false);
@@ -35,16 +36,18 @@ export default function MainLayout() {
                 }
             </Button>
 
-            {!botisOpen &&
+            {!botisOpen && popOverClose &&
                 <Popover
                     placement="left"
                     target="homechatpopover"
                     trigger="legacy"
+                    className='al_popverchat'
                     isOpen={!botisOpen}
                     modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                 >
                     <PopoverBody>
                         Hello, I am Alfred! How can i assist you today?
+                        <i className='icon_alfred_closecircle' onClick={() => setPopOverClose(false)}></i>
                     </PopoverBody>
                 </Popover>
             }

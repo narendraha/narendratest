@@ -195,9 +195,12 @@ export default function Profile() {
               <Col xl="3" lg="3" sm="4">
                 <div className={"al_profile_photo "}>
                   <img src={profilePicture} alt="profilePhoto" />
+                </div>
+                {isEdit && (
+                  <>
+                    <div className="al_note"><span className="text-warning fw-medium">*Note: </span>Only jpeg, jpg, and png image formats are allowed</div>
 
-                  {isEdit && (
-                    <>
+                    <div className="d-flex justify-content-center mt-3">
                       <input
                         type="file"
                         id="uploadPicture"
@@ -214,10 +217,12 @@ export default function Profile() {
                           <i className="icon_alfred_edit"></i>
                         </div>
                       </Label>
-                    </>
-                  )}
-                </div>
-                {isEdit && <div className="al_note"><span className="text-warning fw-medium">*Note: </span>Only jpeg, jpg, and png image formats are allowed</div>}
+                      <div className="al_profile-edit-icon ms-3">
+                        <i className="icon_alfred_trashbin"></i>
+                      </div>
+                    </div>
+                  </>
+                )}
               </Col>
               <Col xl="7" lg="8" md="8" sm="8" className="px-5">
                 {!isEdit && (

@@ -183,7 +183,7 @@
 
     .w-80,
     .w-50 {
-        width: 95% !important;
+        width: 90% !important;
     }
 
     .w-30 {
@@ -202,12 +202,83 @@
 
     .cs_banner.cs_style_3 .cs_banner_title,
     .cs_banner.cs_style_5 .cs_banner_title {
-        font-size: 40px !important;
+        font-size: 22px !important;
         line-height: normal;
+        margin-top: 15px;
+    }
+
+    .videobanner>div:first-child {
+        width: 100% !important;
+    }
+
+    .cs_banner {
+        flex-direction: column;
+
+        .cs_banner_img {
+            display: flex !important;
+            position: unset !important;
+            width: 100% !important;
+            padding: 0 25px !important;
+
+            img,
+            video {
+                height: 180px !important;
+            }
+        }
+    }
+
+    .al_note_content {
+        font-size: 8px;
+    }
+
+    .symptomssec {
+        img {
+            width: 70% !important;
+            margin: 15px auto;
+        }
     }
 
     h3 {
         font-size: 26px;
+    }
+
+    .cs_nav .cs_nav_list a {
+        padding: 10px !important;
+    }
+
+    .cs_nav_innersubmenu {
+        margin-top: 10px;
+    }
+
+    .al_login-right {
+        padding: 3% 10% !important;
+
+        .wflex-items-center {
+            justify-content: flex-start !important;
+        }
+    }
+
+    .al_left_login>.wflexLayout {
+        align-items: flex-start;
+        padding-top: 10px;
+        padding-left: 30px;
+
+        img {
+            position: unset !important;
+            height: 60px !important;
+        }
+    }
+
+    .al_login_section {
+        overflow: auto;
+    }
+
+    .al_login_button_back {
+        padding: 0 !important;
+    }
+
+    .al_login_button {
+        margin-bottom: 0 !important;
     }
 }
 
@@ -259,7 +330,28 @@
 
     .al_hometabs a.nav-link {
         padding: 5px !important;
-        margin-right: 6px;
+        margin-right: 6px !important;
+    }
+
+    .al_hometabs .tab-content .tab-pane:nth-of-type(2) {
+        >.d-flex {
+            flex-direction: column;
+            h5.mb-0 {
+                margin-bottom: 10px !important;
+            }
+        }
+        >.row {
+            flex-direction: column-reverse;
+        }
+    }
+
+    button#notificationpopover {
+        padding: 0 !important;
+        min-width: 0 !important;
+    }
+    
+    .ms-4 {
+        margin-left: 10px !important;
     }
 
     .d-xs-none {
@@ -318,5 +410,16 @@
 @media screen and (min-width: 1200px) and (max-width: 4000px) {
     .mobileanim {
         height: 85%;
+    }
+}
+@media screen and (min-width: 767px) and (max-width: 1300px) {
+    .rc-slider-mark {
+        .rc-slider-mark-text {
+            font-size: 8px !important;
+        }
+    }
+    .al_symptoms .al_frequencylist label.btn {
+        padding: 8px !important;
+        font-size: 10px !important;
     }
 }

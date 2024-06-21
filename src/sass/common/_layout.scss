@@ -741,19 +741,31 @@ section:not(.cs_banner) {
     font-size: 13px;
     line-height: normal;
     color: #2C2C37;
+    margin: 0;
+
+    &.al_usermsg {
+        text-align: right;
+        flex-direction: row-reverse;
+    }
 
     >div:first-child {
         width: auto;
-        padding-right: 0;
+        padding: 0;
+    }
+
+    .col {
+        max-width: 85%;
     }
 
     img {
         width: 30px !important;
+        border-radius: 50%;
     }
 
     h6 {
         font-size: 15px;
         font-weight: 500;
+        line-height: 1;
         margin-bottom: 3px !important;
     }
 
@@ -801,6 +813,7 @@ section:not(.cs_banner) {
 
     h6 {
         font-size: 14px;
+        line-height: 1;
     }
 
     .card {
@@ -1860,8 +1873,6 @@ ul.standardPlans {
 
 .rc-slider {
     margin-bottom: 15px;
-    width: 98%;
-    margin-left: auto;
 
     .rc-slider-rail,
     .rc-slider-track {
@@ -1874,7 +1885,6 @@ ul.standardPlans {
         box-shadow: none;
         width: 15px;
         height: 15px;
-        left: 2%;
     }
 
     .rc-slider-mark {

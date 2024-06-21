@@ -106,18 +106,7 @@ export default function ChatBot(props) {
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
                     {Object.entries(message).map(([key, value]) => (
-                      <Row className="mb-4 al_chatcontent" key={key}>
-                        {/* <div>
-                          {key === "user" ? (
-                            <img
-                              src={Chatuser}
-                              alt="chat user"
-                              className="al_chatimg"
-                            />
-                          ) : key === "alfred" ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
-                        </div> */}
+                      <Row className={"mb-4 al_chatcontent" + (key === "user" ? " al_usermsg" : "")} key={key}>
                         <div>
                           {key === "user" ? (
                             <img src={Chatuser} alt="chat user" />

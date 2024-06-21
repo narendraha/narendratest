@@ -5,16 +5,17 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import { allowsOnlyNumeric } from "../../_mock/RegularExp";
-import { getDecodedTokenFromLocalStorage } from "../../_mock/jwtUtils";
 import { AxiosInstance } from "../../_mock/utilities";
 import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
-import Chatuser from '../../images/userprofile.jpg';
+import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import incompleteprofile from '../../images/incompleteprofile.png';
+import ChatMaleuser from "../../images/userprofile.jpg";
 
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
   const navigate = useNavigate();
+  const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
   const [isShow, setIsShow] = useState(false); // show or hide the message box after sending a message.
@@ -25,7 +26,7 @@ export default function HistoryChatBot() {
   const [responseStatus, setResponseStatus] = useState("");
   const incrementRef = useRef(0);
   const [questionDetails, setQuestionDetails] = useState(null);
-  const decodedToken = getDecodedTokenFromLocalStorage();
+  const [getProfileDetails, setGetProfileDetails] = useState([]);
 
   // form tab
   //   toggle button
@@ -43,6 +44,7 @@ export default function HistoryChatBot() {
   // get questions using useeffect
   useEffect(() => {
     setQuestions([]);
+    profileDetails();
     setTimeout(() => {
       setIsLoading(false);
       getHistoryBotQues();
@@ -83,6 +85,9 @@ export default function HistoryChatBot() {
   }, [incrementRef, questions]);
 
   useEffect(() => { }, [incrementRef, responseStatus]);
+
+  // To focus input field
+  useEffect(() => { inputRef.current?.focus() })
 
   const handleFormSubmit = async (e) => {
     console.log(
@@ -148,12 +153,13 @@ export default function HistoryChatBot() {
             setResponseStatus(res.data?.message);
           } else {
             if (res.data?.data) {
+
               setQuestions((prevChat) => [
                 ...prevChat,
                 ...(res.data?.message !== ""
-                  ? [{ sender: "alfred", text: res.data.message }]
+                  ? [{ sender: "alfred", text: res.data.message?.concat("\n"+res.data?.data?.description) }]
                   : []),
-                { sender: "alfred", text: res.data?.data?.description },
+                // { sender: "none", text: res.data?.data?.description },
               ]);
             }
           }
@@ -230,6 +236,7 @@ export default function HistoryChatBot() {
       });
   };
 
+
   const handleSubmit = async (values) => {
     const formattedData = [];
     let hasValue = false;
@@ -276,6 +283,19 @@ export default function HistoryChatBot() {
       });
   };
 
+  // To get user details
+  const profileDetails = async () => {
+    await AxiosInstance("application/json")
+      .get("/userdetails")
+      .then((res) => {
+        const responseData = res.data?.data;
+        setGetProfileDetails(responseData);
+      })
+      .catch((er) => { });
+  };
+
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
+
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth wflexLayout p-0">
@@ -306,16 +326,18 @@ export default function HistoryChatBot() {
                       <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
                         <div>
                           {message.sender === "user" ? (
-                            <img src={Chatuser} alt="chat user" className='al_chatimg' />
+                            <img 
+                            src={profilePicture}
+                            alt="chat user" className='al_chatimg' />
                           ) : message.sender === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">
-                            {message.sender === "alfred" ? "Alfred" : decodedToken?.username}
+                            {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
                           </h6>
-                          <div>{message.text}</div>
+                          <div style={{whiteSpace:"pre-wrap"}}>{message.text}</div>
                         </Col>
                       </Row>
                     </React.Fragment>
@@ -355,7 +377,8 @@ export default function HistoryChatBot() {
                       name="message"
                       value={inputValue} // input value
                       onChange={handleInputChange} // handle changes
-                      // disabled={isInputShow} //Disabled once input value is submitted
+                      disabled={isInputShow} //Disabled once input value is submitted
+                      ref={inputRef}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault(); // Prevent default form submission behavior
@@ -373,11 +396,11 @@ export default function HistoryChatBot() {
                           }}
                         ></i>
                         <i
-                          className="icon_alfred_sendmsg h-auto"
-                          // style={{
-                          //   height: "auto",
-                          //   pointerEvents: isInputShow ? "none" : "",
-                          // }}
+                          className="icon_alfred_sendmsg"
+                          style={{
+                            height: "auto",
+                            pointerEvents: isInputShow ? "none" : "",
+                          }}
                           onClick={(e) => handleFormSubmit(e)}
                         ></i>
                       </>

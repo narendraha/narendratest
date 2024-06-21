@@ -1,28 +1,26 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Row, Col, Label, FormGroup, Card, CardBody, UncontrolledTooltip } from "reactstrap";
-import Select from "react-select";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import successImg from "../../images/sucessimg.svg";
-import approvalsent from "../../images/approvalsent.svg";
+import moment from "moment"; // Import moment library
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import OtpInput from "react-otp-input";
+import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import { Card, CardBody, Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import * as Yup from "yup";
 import {
   allowsOnlyNumeric,
   passwordReg,
   phoneNumberReg,
 } from "../../_mock/RegularExp";
-import moment from "moment"; // Import moment library
 import { AxiosInstance } from "../../_mock/utilities";
-import OtpInput from "react-otp-input";
-import { toast } from "react-toastify";
-import Loading from "../InnerApp/LoadingComponent";
+import alferdlogomobile from "../../images/alfredlogo.svg";
+import alferdlogo from "../../images/alfredlogowhite.svg";
+import successImg from "../../images/sucessimg.svg";
 import OTPComponent from "../ForgotPassword/OTP";
-import { Icon } from "@iconify/react";
-import { customContentValidation } from "../../_mock/coreHelperHA";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Register() {
   const navigate = useNavigate();

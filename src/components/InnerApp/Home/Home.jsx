@@ -123,7 +123,7 @@ export default function Home() {
     20: "Mild",
     45: "Moderate",
     70: "Severe",
-    88: "Extreme",
+    90: "Extreme",
   };
   const handleValueChange = (value, setValue) => {
     setValue(value);

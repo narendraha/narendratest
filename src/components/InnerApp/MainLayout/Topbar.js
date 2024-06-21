@@ -3,14 +3,12 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, UncontrolledPopover } from 'reactstrap';
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from '../../../_mock/utilities';
-import noNotifications from '../../../images/noNotifications.svg';
-import userImg from "../../../images/userprofile.jpg";
 import femaleuserImg from "../../../images/femaleuserImg.jpg";
+import noNotifications from '../../../images/noNotifications.svg';
+import maleuserImg from '../../../images/userprofile.jpg';
 
 export default function Topbar(props) {
-  const decodedToken = getDecodedTokenFromLocalStorage();
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
@@ -25,12 +23,12 @@ export default function Topbar(props) {
       })
       .catch((er) => console.log(er));
   };
- 
+
   useEffect(() => {
     profileDetails(); //Suspense loading with actual component
     // setOpenModel(false);
   }, []);
- 
+
   const handleProfile = () => {
     navigate('profile')
   }
@@ -39,7 +37,7 @@ export default function Topbar(props) {
     sessionStorage.clear();
     navigate('/signin')
   }
- 
+
   const menuData = [
     {
       moduleId: '1',
@@ -75,6 +73,9 @@ export default function Topbar(props) {
   const handleCloseAndOpen = () => {
     setOpenModel(!isOpenModel)
   }
+
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg) : getProfileDetails?.profile_url);
+
   return (
     <>
       <header className='al_top_navigation al-pad'>
@@ -86,35 +87,35 @@ export default function Topbar(props) {
             <div className='position-relative mx-4'>
               <button type="button" id="notificationpopover"><i className='icon_alfred_notification pointer' onClick={() => handleCloseAndOpen()}></i></button>
               <div className="badge badge-pill badge-danger al_noti-icon-badge">0</div>
-                <UncontrolledPopover
-                  placement="top"
-                  target="notificationpopover"
-                  trigger="legacy"
-                  className='alnotification_panel'
-                  isOpen={isOpenModel}
-                  modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                >
-                  <PopoverBody className='d-flex flex-column'>
-                    <div className='flex-grow-1 h-100 p-2 d-flex flex-column h-100'>
-                      <div className='d-flex align-items-center justify-content-between'>
-                        <h6 className='mb-0'>Notifications</h6>
-                        <i className="icon_alfred_close pointer" title="Close" onClick={() => handleCloseAndOpen()}></i>
-                      </div>
-                      <div className='text-center mt-3 d-flex flex-column align-items-center justify-content-center flex-grow-1'>
-                        <img src={noNotifications} alt="" width={60} />
-                        <div className='mt-3'>Clear notifications, just like a steady pulse—nothing new!</div>
-                      </div>
+              <UncontrolledPopover
+                placement="top"
+                target="notificationpopover"
+                trigger="legacy"
+                className='alnotification_panel'
+                isOpen={isOpenModel}
+                modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+              >
+                <PopoverBody className='d-flex flex-column'>
+                  <div className='flex-grow-1 h-100 p-2 d-flex flex-column h-100'>
+                    <div className='d-flex align-items-center justify-content-between'>
+                      <h6 className='mb-0'>Notifications</h6>
+                      <i className="icon_alfred_close pointer" title="Close" onClick={() => handleCloseAndOpen()}></i>
                     </div>
-                  </PopoverBody>
-                </UncontrolledPopover>
+                    <div className='text-center mt-3 d-flex flex-column align-items-center justify-content-center flex-grow-1'>
+                      <img src={noNotifications} alt="" width={60} />
+                      <div className='mt-3'>Clear notifications, just like a steady pulse—nothing new!</div>
+                    </div>
+                  </div>
+                </PopoverBody>
+              </UncontrolledPopover>
             </div>
- 
+
             <div className="d-flex ms-4">
               <div className="pointer">
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
                     <div className="al_progresscontainer">
-                      <img src={getProfileDetails?.gender === "Male" ? userImg : femaleuserImg} alt="user" className='al_useravatar al_avatar' />
+                      <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
                       <div className='al_progressbar'>
                         <CircularProgressbar
                           value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}
@@ -127,10 +128,10 @@ export default function Topbar(props) {
                       </div>
                       <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
                     </div>
- 
+
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2'>
-                      <span className='al_uName'>{decodedToken?.username}</span>
+                      <span className='al_uName'>{getProfileDetails?.username}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">

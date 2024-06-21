@@ -1057,6 +1057,7 @@ export default function Register() {
               .required("Confirm Password is required"),
           })}
           onSubmit={(values) => {
+            handleThirdFormSubmit(values)
           }}
         >
           {({
@@ -1169,7 +1170,7 @@ export default function Register() {
                           <button
                             type="submit"
                             className="al_login_button"
-                            onClick={() => handleThirdFormSubmit(values)}
+                            // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue
                           </button>

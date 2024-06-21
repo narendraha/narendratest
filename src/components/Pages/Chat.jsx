@@ -100,7 +100,7 @@ export default function Chat() {
         setIsLoading(false);
         setResponseStatus(statuscode);
 
-        if (statuscode === -1) {
+        if (statuscode === -1 || statuscode === 99) {
           // If statuscode is -1, show Alfred's message and stop
           setConversation((prevConversation) => [
             ...prevConversation,

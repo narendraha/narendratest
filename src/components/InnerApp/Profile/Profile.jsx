@@ -64,19 +64,20 @@ export default function Profile() {
   const residenceoptions = [
     { value: "Cohabitant", label: "Cohabitant" },
     { value: "Non-Resident", label: "Non-Resident" },
+    { value: "Others", label: "Others" },
   ];
   const bloodTypes = [
-    { value: "A +", label: "A +" },
-    { value: "A -", label: "A -" },
+    { value: "A+", label: "A+" },
+    { value: "A-", label: "A-" },
     { value: "A Unknown", label: "A Unknown" },
-    { value: "B +", label: "B +" },
-    { value: "B -", label: "B -" },
+    { value: "B+", label: "B+" },
+    { value: "B-", label: "B-" },
     { value: "B Unknown", label: "B Unknown" },
-    { value: "AB +", label: "AB +" },
-    { value: "AB -", label: "AB -" },
+    { value: "AB+", label: "AB+" },
+    { value: "AB-", label: "AB-" },
     { value: "AB Unknown", label: "AB Unknown" },
-    { value: "O +", label: "O +" },
-    { value: "O -", label: "O -" },
+    { value: "O+", label: "O+" },
+    { value: "O-", label: "O-" },
     { value: "O Unknown", label: "O Unknown" },
     { value: "Unknown", label: "Unknown" },
   ];
@@ -218,7 +219,7 @@ export default function Profile() {
               <Col xl="7" lg="8" md="8" sm="8" className="px-5">
                 {!isEdit && (
                   <>
-                    <h2 className="cs_semibold mb-1">
+                    <h2 className="cs_semibold mb-1 text-capitalize">
                       {getProfileDetails?.username ? getProfileDetails?.username : decodedToken?.username}
                     </h2>
                     <h6 className="al_profile_role mb-2">

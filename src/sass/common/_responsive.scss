@@ -412,3 +412,14 @@
         height: 85%;
     }
 }
+@media screen and (min-width: 767px) and (max-width: 1300px) {
+    .rc-slider-mark {
+        .rc-slider-mark-text {
+            font-size: 8px !important;
+        }
+    }
+    .al_symptoms .al_frequencylist label.btn {
+        padding: 8px !important;
+        font-size: 10px !important;
+    }
+}

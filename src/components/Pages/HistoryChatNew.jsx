@@ -44,7 +44,6 @@ export default function HistoryChatBot() {
   // get questions using useeffect
   useEffect(() => {
     setQuestions([]);
-    profileDetails();
     setTimeout(() => {
       setIsLoading(false);
       getHistoryBotQues();
@@ -90,6 +89,7 @@ export default function HistoryChatBot() {
   useEffect(() => { inputRef.current?.focus() })
 
   const handleFormSubmit = async (e) => {
+    profileDetails();
     console.log(
       "outside if responseStatus:",
       responseStatus,
@@ -148,7 +148,6 @@ export default function HistoryChatBot() {
           //   setResponseStatus(responseData?.status_code);
           // here  we will add the result to our history of questions and answers
           // if res status is -1 or index % 3 or res 99 means need to show res msg and also index % 3 measns need to next question
-
           if (responseData.statuscode === 99) {
             setResponseStatus(res.data?.message);
           } else {
@@ -156,10 +155,14 @@ export default function HistoryChatBot() {
 
               setQuestions((prevChat) => [
                 ...prevChat,
-                ...(res.data?.message !== ""
-                  ? [{ sender: "alfred", text: res.data.message?.concat("\n"+res.data?.data?.description) }]
-                  : []),
-                // { sender: "none", text: res.data?.data?.description },
+                // ...(res.data?.message !== ""
+                //   ? [{ sender: "alfred", text: res.data.message }]
+                //   : []),
+                // { sender: "alfred", text: res.data?.data?.description },
+                ...([{
+                  sender: "alfred", text: res.data?.message !== "" ? res.data.message?.concat("\n" + res.data?.data?.description) :
+                    res.data?.data?.description
+                }])
               ]);
             }
           }
@@ -294,10 +297,7 @@ export default function HistoryChatBot() {
       .catch((er) => { });
   };
 
-  // const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
-  const profilePicture = ((getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser));
-
-  
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth wflexLayout p-0">
@@ -328,18 +328,18 @@ export default function HistoryChatBot() {
                       <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
                         <div>
                           {message.sender === "user" ? (
-                            <img 
-                            src={profilePicture}
-                            alt="chat user" className='al_chatimg' />
+                            <img
+                              src={profilePicture}
+                              alt="chat user" className='al_chatimg' />
                           ) : message.sender === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
-                          <h6 className="mb-0">
+                          <h6 className="mb-0 text-capitalize">
                             {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
                           </h6>
-                          <div style={{whiteSpace:"pre-wrap"}}>{message.text}</div>
+                          <div style={{ whiteSpace: "pre-wrap" }}>{message.text}</div>
                         </Col>
                       </Row>
                     </React.Fragment>

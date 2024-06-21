@@ -74,8 +74,7 @@ export default function Topbar(props) {
     setOpenModel(!isOpenModel)
   }
 
-  // const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
-  const profilePicture = ((getProfileDetails?.gender?.toLowerCase() === "female" ? maleuserImg : femaleuserImg));
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
 
   return (
     <>
@@ -131,7 +130,7 @@ export default function Topbar(props) {
                     </div>
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
-                    <div className='d-flex flex-column ms-2'>
+                    <div className='d-flex flex-column ms-2 text-capitalize'>
                       <span className='al_uName'>{getProfileDetails?.username}</span>
                     </div>
                   </DropdownToggle>

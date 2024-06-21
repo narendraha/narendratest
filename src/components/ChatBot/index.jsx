@@ -27,6 +27,7 @@ export default function ChatBot(props) {
   };
 
   const handleFormSubmit = async (e) => {
+    profileDetails()
     setIsInputShow(true);
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
@@ -140,7 +141,7 @@ export default function ChatBot(props) {
                           ) : null}
                         </div>
                         <Col>
-                          <h6 className="mb-0">
+                          <h6 className="mb-0 text-capitalize">
                             {key === "user" ? getProfileDetails?.username : key}
                           </h6>
                           <div>{value}</div>

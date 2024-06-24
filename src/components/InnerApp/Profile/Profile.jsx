@@ -217,9 +217,9 @@ export default function Profile() {
                           <i className="icon_alfred_edit"></i>
                         </div>
                       </Label>
-                      <div className="al_profile-edit-icon ms-3">
+                      {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
                         <i className="icon_alfred_trashbin"></i>
-                      </div>
+                      </div>}
                     </div>
                   </>
                 )}
@@ -872,7 +872,10 @@ export default function Profile() {
                               <button
                                 type="button"
                                 className="al_cancelbgbutton mx-3"
-                                onClick={() => setIsEdit(!isEdit)}
+                                onClick={() => {
+                                  setIsEdit(!isEdit)
+                                  setUpdatedFile("")
+                                }}
                               >
                                 Cancel
                               </button>

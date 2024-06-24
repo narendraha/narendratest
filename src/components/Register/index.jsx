@@ -82,18 +82,19 @@ export default function Register() {
 
   const FirstForm = ({ onSubmit }) => (
     <Formik
+      enableReinitialize
       initialValues={{
-        username: "",
-        email: "",
-        dob: "",
-        gender: "",
-        mobile: "",
-        rtype: "",
-        education: "",
-        ssn: "",
-        insuranceurl: "",
-        file: null,
-        termsAndConditions: false
+        username: formData?.username || "",
+        email: formData?.email || "",
+        dob: formData?.dob || "",
+        gender: formData?.gender || "",
+        mobile: formData?.mobile || "",
+        rtype: formData?.rtype || "",
+        education: formData?.education || "",
+        ssn: formData?.ssn || "",
+        insuranceurl: formData?.insuranceurl || "",
+        file: formData?.file || null,
+        termsAndConditions: formData?.termsAndConditions || false
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
@@ -371,7 +372,9 @@ export default function Register() {
                             onChange={(e) => {
                               setFieldValue("termsAndConditions", e.target.checked);
                             }} />
-                        </div>&nbsp; I agree to the&nbsp;<Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={() => serIsTermsAndConditionsRead(!isTermsAndConditionsRead)}>terms and conditions</Link>
+                        </div>&nbsp; I agree to the&nbsp;<Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={() => {
+                          serIsTermsAndConditionsRead(!isTermsAndConditionsRead); setFormData({ ...formData, ...values });
+                        }}>terms and conditions</Link>
                         {isTermsAndConditionsRead &&
                           <UncontrolledTooltip color="primary" placement="right" target="terms">
                             Please read the Terms and Conditions to enable this option
@@ -1170,7 +1173,7 @@ export default function Register() {
                           <button
                             type="submit"
                             className="al_login_button"
-                            // onClick={() => handleThirdFormSubmit(values)}
+                          // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue
                           </button>

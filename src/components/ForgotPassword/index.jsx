@@ -64,8 +64,9 @@ export default function ForgotPassword() {
 
   const FirstForm = ({ onSubmit }) => (
     <Formik
+      enableReinitialize
       initialValues={{
-        email: "",
+        email: formData?.email || "",
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -433,7 +434,7 @@ export default function ForgotPassword() {
         <Formik
           initialValues={{
             password: "",
-            // reenterpassword: "",
+            reenterpassword: "",
           }}
           validationSchema={Yup.object().shape({
             // Define validation rules for Password form fields

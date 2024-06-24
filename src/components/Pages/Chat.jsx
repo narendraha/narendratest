@@ -28,8 +28,8 @@ export default function Chat() {
   // get questions using useeffect
   useEffect(() => {
     getQuestion();
-    profileDetails();
   }, []);
+  
 
   const getRandomQuestion = (index) => {
     if (questions?.length > 0 && responseStatus !== 99) {
@@ -77,6 +77,7 @@ export default function Chat() {
   }, [conversation]);
 
   const handleFormSubmit = async (e) => {
+    profileDetails();
     setIsInputShow(true);
     e.preventDefault();
     if (!userValue.trim()) return; // Do not submit empty input
@@ -104,7 +105,6 @@ export default function Chat() {
         setIsInputShow(false);
         setIsLoading(false);
         setResponseStatus(statuscode);
-
         if (statuscode === -1 || statuscode === 99) {
           // If statuscode is -1, show Alfred's message and stop
           setConversation((prevConversation) => [
@@ -153,7 +153,7 @@ export default function Chat() {
   };
 
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
-  
+
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth p-0">
@@ -221,7 +221,7 @@ export default function Chat() {
                         )}
                         {message.user !== undefined && (
                           <>
-                            <h6 className="mb-0">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
+                            <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
                           </>
                         )}
                       </Col>

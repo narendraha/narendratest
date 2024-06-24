@@ -136,6 +136,7 @@ export default function Register() {
       }) => {
         return (
           <Form className="wflexLayout">
+            {isFormLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -996,6 +997,7 @@ export default function Register() {
       dob: moment(formData.dob).format("YYYY-MM-DD"),
       password: values?.password,
     };
+    delete data.reenterpassword;
     delete data.otp;
     delete data.file;
 
@@ -1043,7 +1045,7 @@ export default function Register() {
         <Formik
           initialValues={{
             password: "",
-            // reenterpassword: "",
+            reenterpassword: "",
           }}
           validationSchema={Yup.object().shape({
             // Define validation rules for Password form fields

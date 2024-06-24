@@ -11,7 +11,6 @@ import watermark from '../../../images/watermark.png';
 import { Link } from 'react-router-dom';
 
 export default function HistorySummary() {
-  // const decodedToken = getDecodedTokenFromLocalStorage();
   const [transcript, setTranscript] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [viewDisclaimer, setViewDisclaimer] = useState(false);

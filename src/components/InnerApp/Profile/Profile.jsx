@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import * as Yup from "yup";
 import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from "../../../_mock/utilities";
 import maleuserImg from "../../../images/userprofile.jpg";
 import femaleuserImg from "../../../images/femaleuserImg.jpg";
@@ -27,7 +26,6 @@ export const EProfileButton = {
 }
 
 export default function Profile() {
-  const decodedToken = getDecodedTokenFromLocalStorage();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
@@ -228,10 +226,10 @@ export default function Profile() {
                 {!isEdit && (
                   <>
                     <h2 className="cs_semibold mb-1 text-capitalize">
-                      {getProfileDetails?.username ? getProfileDetails?.username : decodedToken?.username}
+                      {getProfileDetails?.username}
                     </h2>
                     <h6 className="al_profile_role mb-2">
-                      {getProfileDetails?.email ? getProfileDetails?.email : decodedToken?.email}
+                      {getProfileDetails?.email}
                     </h6>
                     <div className="al_pointsearned mb-4">
                       Points Earned: 89

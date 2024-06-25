@@ -792,6 +792,10 @@ export default function Home() {
       });
   }
 
+  useEffect(() =>{
+    setTab(location?.state?.activeTab ? location?.state?.activeTab : "1")
+  },[location]);
+  
   return (
     <>
       <ConfirmationAction

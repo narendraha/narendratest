@@ -141,7 +141,7 @@ export default function About() {
                       setTab("3");
                     }}
                   >
-                    AFib Education and Information Awareness
+                    Afib Education and Information Awareness
                   </NavLink>
                 </NavItem>
                 <NavItem>

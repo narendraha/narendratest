@@ -12,7 +12,7 @@ export default function Ablation() {
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/faq.png"
         title="Don’t Let Your Health<br/> Take a Backseat!"
-        subTitle="Rhythm control may be used when afib symptoms get worse."
+        subTitle="Rhythm control may be used when Afib symptoms get worse."
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>

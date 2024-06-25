@@ -22,8 +22,8 @@ export default function Exercise() {
           </h3>
           <Row className='my-5'>
             <Col>
-              <p>If you’ve been diagnosed with atrial fibrillation (AFib), many exercises should be safe to continue (or start). But, it’s important to work with a healthcare professional to identify exercises that are safe for you and emergency symptoms to watch out for.</p>
-              <p>In many cases, exercising with atrial fibrillation(AFib) can help you live a stronger, healthier life. Exercise can help you maintain a healthy weight, which can have benefits for heart health. There are also other cardiovascular benefits to physical activity, including slowing your resting heart rate and lowering your blood pressure. Exercise may also help relieve anxiety and stress, which may have positive effects on quality of life.</p>
+              <p>If you’ve been diagnosed with atrial fibrillation (Afib), many exercises should be safe to continue (or start). But, it’s important to work with a healthcare professional to identify exercises that are safe for you and emergency symptoms to watch out for.</p>
+              <p>In many cases, exercising with atrial fibrillation(Afib) can help you live a stronger, healthier life. Exercise can help you maintain a healthy weight, which can have benefits for heart health. There are also other cardiovascular benefits to physical activity, including slowing your resting heart rate and lowering your blood pressure. Exercise may also help relieve anxiety and stress, which may have positive effects on quality of life.</p>
               <p>We may encourage you to stop smoking, maintain a healthy diet and weight, manage stress and sleep well. To achieve the above goals, we usually recommend to follow up with interdisciplinary team of providers available in your region or your health system</p>
             </Col>
             <div className='w-auto ps-5'>

@@ -103,6 +103,7 @@ export default function ChatBot(props) {
       .catch((er) => { });
   };
 
+  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
     <>
       <div className="al_chatbot">
@@ -134,7 +135,7 @@ export default function ChatBot(props) {
                         <div>
                           {key === "user" ? (
                             <img
-                              src={(getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url}
+                              src={profilePicture}
                               alt="chat user" />
                           ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />

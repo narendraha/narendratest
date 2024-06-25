@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UncontrolledTooltip } from "reactstrap";
-import { AxiosInstance } from "../../../_mock/utilities";
+import { getProfileCmpDetails } from '../../../_mock/helperIndex';
 import smalllogo from "../../../images/alfredlogoicon.svg";
 import logo from "../../../images/alfredlogowhite.svg";
 import ModalView from "../MainLayout/ModalView";
@@ -9,9 +9,7 @@ import ModalView from "../MainLayout/ModalView";
 export default function SideNav(props) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isModalVisible, setisModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [redirectionPath, setRedirectionPath] = useState({ link: "", route: "" })
+  const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
   const menuData = [
     // {
@@ -135,45 +133,21 @@ export default function SideNav(props) {
   useEffect(() => { }, [props.isShowmenu]);
 
   const handleClose = () => {
-    setisModalVisible(!isModalVisible);
-  };
-
-  const getHistoryBotQues = async (payload) => {
-    try {
-      const response = await AxiosInstance("application/json").post(
-        "/profile-completions-summary",
-        payload
-      );
-      if (
-        response &&
-        response.status === 200 &&
-        response.data.statuscode === 200
-      ) {
-        return response.data;
-      }
-    } catch (error) {
-      return false;
-    }
+    setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
   };
 
   const handleMenuClick = async (link, reOpenModel = false) => {
-    let reqObj = ((link === "historychat") ? { history_chat: true } : (link === "transcriptsummary") ? { history_trans: true } : "")
-    const profileCompletion = reqObj !== "" && await getHistoryBotQues(reqObj);
-    if (profileCompletion?.status && profileCompletion?.data) {
-      setRedirectionPath({ link: link, route: profileCompletion?.data?.web_redirection_key });
-      if (!reOpenModel)
-        setisModalVisible(!isModalVisible);
-      setModalMessage(profileCompletion?.message);
-    } else {
-      setisModalVisible(false);
-      navigate(`/${link}`)
-    }
+    const result = await getProfileCmpDetails(link, false, true);
+    setProfileCmpModalProps(result);
+    if (result?.navigationLink !== "")
+      navigate(result?.navigationLink)
   };
 
   const getIsmodalVisibleProp = (data) => {
     if (data?.isModalVisible)
       handleMenuClick(data?.path, true)
   }
+  let { redirectionPath, isModalVisible, modalMessage } = profileCmpModalProps;
 
   return (
     <>

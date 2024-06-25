@@ -9,12 +9,16 @@ import webicon from '../../../images/websiteicon.svg';
 import footerbg from '../../../images/footerbg.svg';
 import watermark from '../../../images/watermark.png';
 import { Link } from 'react-router-dom';
+import ModalView from "../../InnerApp/MainLayout/ModalView";
+import { getProfileCmpDetails } from '../../../_mock/helperIndex';
+import { useNavigate } from "react-router";
 
 export default function HistorySummary() {
-  // const decodedToken = getDecodedTokenFromLocalStorage();
+  const navigate = useNavigate();
   const [transcript, setTranscript] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [viewDisclaimer, setViewDisclaimer] = useState(false);
+  const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
   const ref = useRef();
   const options = {
@@ -28,8 +32,19 @@ export default function HistorySummary() {
     },
   };
 
+  const fetchProfileComplitionDetails = async (path = "", reOpenModel = false) => {
+    let link = reOpenModel ? path : 'transcriptsummary'
+    const result = await getProfileCmpDetails(link);
+    setProfileCmpModalProps(result);
+    if (result?.navigationLink !== "")
+      navigate(`/${result?.navigationLink}`)
+  };
+  let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
+
   useEffect(() => {
-    getHistoryBotTranscript();
+    fetchProfileComplitionDetails();
+    if ((navigationLink !== undefined) && (navigationLink !== ""))
+      getHistoryBotTranscript();
   }, []);
 
   const getHistoryBotTranscript = async () => {
@@ -65,10 +80,28 @@ export default function HistorySummary() {
     setViewDisclaimer(!viewDisclaimer);
   }
 
+  const handleClose = _ => {
+    setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
+  }
+
+  const getIsmodalVisibleProp = (data) => {
+    if (data?.isModalVisible)
+      fetchProfileComplitionDetails(data?.path, true)
+  }
+
   return (
     <>
       {isLoading && <Loading />}
-      <div className="wflexLayout">
+      {isModalVisible && (
+        <ModalView
+          msg={modalMessage}
+          handleClose={handleClose}
+          isModalVisible={isModalVisible}
+          path={redirectionPath}
+          modelVisibleProp={getIsmodalVisibleProp}
+        />
+      )}
+      {transcript && <div className="wflexLayout">
         <div className="wflexScroll al-pad d-flex flex-column">
           <div className="flex-grow-1 d-flex flex-column">
             <h3 className="bc_main_text mb-3">History Transcript Summary</h3>
@@ -121,7 +154,7 @@ export default function HistorySummary() {
             </button>
           </div>
         </div>
-      </div>
+      </div>}
       <Modal className='modal-lg detailsModal' wrapClassName="al_outerparentwp" isOpen={viewDisclaimer}>
         <div className='d-flex align-items-center justify-content-between p-4'>
           <h6 className='mb-0'>Disclaimer</h6>

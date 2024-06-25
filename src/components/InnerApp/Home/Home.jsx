@@ -12,7 +12,6 @@ import * as Yup from "yup";
 import {
   allowsOnlyNumericOnly3Digit
 } from "../../../_mock/RegularExp";
-import { getDecodedTokenFromLocalStorage } from "../../../_mock/jwtUtils";
 import { AxiosInstance } from "../../../_mock/utilities";
 import atrialfib from "../../../images/atrialfib.png";
 import bulp from "../../../images/idea.png";
@@ -36,7 +35,6 @@ export const EGoalTimePeriod = {
 export default function Home() {
   // const navigate = useNavigate();
   const location = useLocation();
-  const decodedToken = getDecodedTokenFromLocalStorage();
   const [getTabStatus, setGetStatus] = useState({});
   const [tab, setTab] = useState(location?.state?.activeTab ? location?.state?.activeTab : "1");
   const [labelValues, setLabelValues] = useState(0);
@@ -384,7 +382,7 @@ export default function Home() {
   // };
 
   useEffect(() => {
-
+    getPatientDetails();
     const fetchData = async () => {
       AxiosInstance("application/json")
         .post(`/health_details_graph`, {})
@@ -428,50 +426,50 @@ export default function Home() {
 
 
   // Format dates in YYYY-MM-DD format
-  
+
 
   useEffect(() => {
     if (!symptomData || !symptomData.length) {
       // Data not yet available or empty
       return;
     }
-   // Extract unique dates from data
-  const uniqueDates = Array.from(new Set(symptomData?.length > 0 && symptomData.map((item) => item.tdate)));
+    // Extract unique dates from data
+    const uniqueDates = Array.from(new Set(symptomData?.length > 0 && symptomData.map((item) => item.tdate)));
 
-  // Sort unique dates in ascending order
-  // uniqueDates.sort();
+    // Sort unique dates in ascending order
+    // uniqueDates.sort();
 
-  // Format dates in YYYY-MM-DD format
-  const formattedDates = uniqueDates.map((date) =>
-    Highcharts.dateFormat("%Y-%m-%d", new Date(date))
-  );
+    // Format dates in YYYY-MM-DD format
+    const formattedDates = uniqueDates.map((date) =>
+      Highcharts.dateFormat("%Y-%m-%d", new Date(date))
+    );
 
     const prepareSeries = (data) => {
       const systolicSeries = {
         name: "Systolic",
         data: [],
       };
-  
+
       const diastolicSeries = {
         name: "Diastolic",
         data: [],
       };
-  
+
       data.forEach((item) => {
-        if(item.tdate !== null){
+        if (item.tdate !== null) {
           systolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.systolic_p,
-            customTooltip: `Systolic: ${item.systolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Systolic: ${item.systolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
           });
           diastolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.diastolic_p,
-            customTooltip: `Diastolic: ${item.diastolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Diastolic: ${item.diastolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
           });
         }
       });
-  
+
       return [systolicSeries, diastolicSeries];
     };
     const series = prepareSeries(symptomData);
@@ -794,6 +792,10 @@ export default function Home() {
       });
   }
 
+  useEffect(() => {
+    setTab(location?.state?.activeTab ? location?.state?.activeTab : "1")
+  }, [location]);
+
   return (
     <>
       <ConfirmationAction
@@ -809,8 +811,8 @@ export default function Home() {
       {isLoading && <Loading />}
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
-          <h3 className="bc_main_text mb-1">
-            Hello, {decodedToken?.username}!
+          <h3 className="bc_main_text mb-1 text-capitalize">
+            Hello, {patientAndSymptomsDetails?.patientDetails?.username}!
           </h3>
           <Row className="al_hometabs">
             <Col sm="12">
@@ -1051,9 +1053,14 @@ export default function Home() {
                           systolic: Yup.number()
                             .max(200, "Systolic is too high!")
                             .required("This field is required"),
-                          diastolic: Yup.number()
-                            .max(120, "Diastolic is Too high!")
-                            .required("This field is required"),
+                          diastolic: Yup.number().when('systolic', {
+                            is: (systolic) => systolic,
+                            then: Yup.number().max(120, "Diastolic is Too high!").required("This field is required"),
+                            otherWise: Yup.number().optional()
+                          }),
+                          // diastolic: Yup.number()
+                          //   .max(120, "Diastolic is Too high!")
+                          //   .required("This field is required"),
                           pulse: Yup.number()
                             .min(10, "Pulse must be at least 10")
                             .max(220, "Too high!")
@@ -1193,7 +1200,7 @@ export default function Home() {
                                         className="text-danger"
                                       />
                                     </FormGroup>
-                                    <div className="text-grey mt-1">(BPM)</div>
+                                    <div className="text-grey mt-1">(mmHg)</div>
                                   </div>
                                 </Col>
                                 <Col xl="4" lg="6" sm="4" className="mb-3">
@@ -2601,7 +2608,7 @@ export default function Home() {
                       <Row className="mb-3">
                         <Col lg="4" sm="6">
                           <p className="al_note">Your Details</p>
-                          <h5 className="mb-2">Hello, {decodedToken?.username}!</h5>
+                          <h5 className="mb-2 text-capitalize">Hello, {patientAndSymptomsDetails?.patientDetails?.username || "N/A"}!</h5>
                           <div>
                             <strong>Age: </strong>
                             <span>{patientAndSymptomsDetails?.patientDetails?.age || "N/A"}</span>
@@ -2612,7 +2619,7 @@ export default function Home() {
                           </div>
                           <div>
                             <strong>Residence type: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.rtype}</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.rtype || "N/A"}</span>
                           </div>
                           <div>
                             <strong>Education: </strong>

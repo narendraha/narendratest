@@ -11,6 +11,8 @@ import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import incompleteprofile from '../../images/incompleteprofile.png';
 import ChatMaleuser from "../../images/userprofile.jpg";
+import ModalView from "../InnerApp/MainLayout/ModalView";
+import { getProfileCmpDetails } from '../../_mock/helperIndex';
 
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
@@ -27,6 +29,7 @@ export default function HistoryChatBot() {
   const incrementRef = useRef(0);
   const [questionDetails, setQuestionDetails] = useState(null);
   const [getProfileDetails, setGetProfileDetails] = useState([]);
+  const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
   // form tab
   //   toggle button
@@ -41,12 +44,24 @@ export default function HistoryChatBot() {
   getChatQus?.forEach((field) => {
     initialValues[field.question_key] = "";
   });
+
+  const fetchProfileComplitionDetails = async () => {
+    const result = await getProfileCmpDetails('historychat');
+    setProfileCmpModalProps(result);
+  };
+  useEffect(() => {
+  }, []);
+
+  let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
+
   // get questions using useeffect
   useEffect(() => {
     setQuestions([]);
     setTimeout(() => {
       setIsLoading(false);
-      getHistoryBotQues();
+      fetchProfileComplitionDetails();
+      if ((navigationLink !== undefined) || (navigationLink !== ""))
+        getHistoryBotQues();
       setIsInputShow(false);
     }, 1000);
   }, [isChatOneActive]);
@@ -297,248 +312,262 @@ export default function HistoryChatBot() {
       .catch((er) => { });
   };
 
+  const handleClose = _ => {
+    setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
+  }
+
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
-    <div className="cs_homepage mt-0 h-100">
-      <div className="w-50 al_chatbotauth wflexLayout p-0">
-        <div className="d-flex justify-content-center mt-3 h-auto pb-1">
-          <div className="d-flex chatbtn">
-            <div
-              className={`chat_item ${isChatOneActive ? "chat_active" : ""}`}
-              onClick={() => handleChatToggle(true)}
-            >
-              Chat
-            </div>
-            <div
-              className={`chat_item ${!isChatOneActive ? "chat_active" : ""}`}
-              onClick={() => handleChatToggle(false)}
-            >
-              Form
-              <i className="ps-1 icon_alfred_password"></i>
-            </div>
-          </div>
-        </div>
-        {isChatOneActive ? (
-          <div className="wflexLayout">
-            <div className="flex-grow-1 my-3">
-              {Array?.isArray(questions) && questions?.length > 0 &&
-                <div className="scrolldiv ps-0">
-                  {questions?.map((message, index) => (
-                    <React.Fragment key={index}>
-                      <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
-                        <div>
-                          {message.sender === "user" ? (
-                            <img
-                              src={profilePicture}
-                              alt="chat user" className='al_chatimg' />
-                          ) : message.sender === "alfred" ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
-                        </div>
-                        <Col>
-                          <h6 className="mb-0 text-capitalize">
-                            {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
-                          </h6>
-                          <div style={{ whiteSpace: "pre-wrap" }}>{message.text}</div>
-                        </Col>
-                      </Row>
-                    </React.Fragment>
-                  ))}
-                  {isLoading && <div className="al_chatloading"></div>}
-                  <div ref={messagesEndRef} />
-                </div>}
-              {(responseStatus || questions?.length === 0) && (
-                <div className="d-flex flex-column h-100 align-items-center justify-content-center">
-                  <div>No question available</div>
-                  {Object.keys(questions).length === 0 && (
-                    <div className="mt-3 d-flex align-items-center justify-content-center">
-                      <button
-                        type="submit"
-                        className="al_greybgbutton"
-                        onClick={() => navigate("/home")}
-                      >
-                        Go to Dashboard
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="cs_mainsearch mb-3">
-              {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
-              {Object.keys(questions).length !== 0 && (
-                <div className="cs_mainsearch">
-                  <form action="#">
-                    <i
-                      className="icon_alfred_search"
-                      style={{ height: "auto" }}
-                    ></i>
-                    <input
-                      type="text"
-                      placeholder="Ask a question"
-                      name="message"
-                      value={inputValue} // input value
-                      onChange={handleInputChange} // handle changes
-                      disabled={isInputShow} //Disabled once input value is submitted
-                      ref={inputRef}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault(); // Prevent default form submission behavior
-                          handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                        }
-                      }}
-                    />
-                    {/* Icon shown based on hide and show conditions */}
-                    {isShow ? (
-                      <>
-                        <i
-                          className="icon_alfred_close"
-                          onClick={(e) => {
-                            setInputValue("");
-                          }}
-                        ></i>
-                        <i
-                          className="icon_alfred_sendmsg"
-                          style={{
-                            height: "auto",
-                            pointerEvents: isInputShow ? "none" : "",
-                          }}
-                          onClick={(e) => handleFormSubmit(e)}
-                        ></i>
-                      </>
-                    ) : (
-                      <i
-                        className="icon_alfred_speech"
-                        style={{ height: "auto" }}
-                      ></i>
-                    )}
-                  </form>
-                </div>
-              )}
+    <>
+      {isModalVisible && (
+        <ModalView
+          msg={modalMessage}
+          handleClose={handleClose}
+          isModalVisible={isModalVisible}
+          path={redirectionPath}
+        />
+      )}
+      <div className="cs_homepage mt-0 h-100">
+        <div className="w-50 al_chatbotauth wflexLayout p-0">
+          <div className="d-flex justify-content-center mt-3 h-auto pb-1">
+            <div className="d-flex chatbtn">
+              <div
+                className={`chat_item ${isChatOneActive ? "chat_active" : ""}`}
+                onClick={() => handleChatToggle(true)}
+              >
+                Chat
+              </div>
+              <div
+                className={`chat_item ${!isChatOneActive ? "chat_active" : ""}`}
+                onClick={() => handleChatToggle(false)}
+              >
+                Form
+                <i className="ps-1 icon_alfred_password"></i>
+              </div>
             </div>
           </div>
-        ) : (
-          <div className="wflexLayout">
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              {({ values, setFieldValue }) => (
-                <Form className="wflexScroll d-flex flex-column">
-                  <div className="form_chat flex-grow-1 mt-3">
-                    {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
-                      getChatQus?.map((field, index) => (
-                        <FormGroup key={index}>
-                          <Label
-                            htmlFor={field.description}
-                            className="form-label"
-                          >
-                            {index + 1}. {field.description}
-                          </Label>
-                          {field.type_ === "Dropdown" ? (
-                            <FormGroup>
-                              <Select
-                                id={field.question_key}
-                                className="inputSelect"
-                                name={field.question_key}
-                                value={
-                                  values[field.question_key]
-                                    ? {
-                                      value: values[field.question_key],
-                                      label: values[field.question_key],
-                                    }
-                                    : null
-                                }
-                                options={field.options?.map((option) => ({
-                                  value: option,
-                                  label: option,
-                                }))}
-                                onChange={(selectedOption) =>
-                                  setFieldValue(
-                                    field.question_key,
-                                    selectedOption ? selectedOption.value : ""
-                                  )
-                                }
-                              />
-                            </FormGroup>
-                          ) : field.type_ === "Radio" ? (
-                            <div className="d-flex px-1 gap-3 flex-row">
-                              {field.options?.map((option, optionIndex) => (
-                                <FormGroup key={optionIndex}>
-                                  <Field
-                                    type="radio"
-                                    id={`${field.question_key}-${option}`}
-                                    name={field.question_key}
-                                    value={option}
-                                    className="form-check-input"
-                                    style={{ minWidth: "auto" }}
-                                  />
-                                  <label
-                                    htmlFor={`${field.question_key}-${option}`}
-                                    className="form-check-label px-2"
-                                  >
-                                    {option}
-                                  </label>
-                                </FormGroup>
-                              ))}
-                            </div>
-                          ) : field.type_ === "integer" ? (
-                            <FormGroup>
-                              <Field
-                                type="text"
-                                id={field.question_key}
-                                name={field.question_key}
-                                className="form-control"
-                                onKeyDown={allowsOnlyNumeric}
-                              />
-                            </FormGroup>
-                          ) : (
-                            <FormGroup>
-                              <Field
-                                type="text"
-                                //   as="textarea"
-                                id={field.question_key}
-                                name={field.question_key}
-                                className="form-control"
-                              />
-                            </FormGroup>
-                          )}
-                        </FormGroup>
-                      ))
-                    ) : (
-                      <div className="d-flex flex-column h-100 align-items-center justify-content-center">
-                        {/* <div>No question available</div> */}
-                        <img src={incompleteprofile} alt="" style={{ width: "200px" }} />
-                        <h6 className="mb-0 text-warning">Will be coming soon</h6>
-                        {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
-                          <div className="my-3">
-                            <button
-                              type="submit"
-                              className="al_greybgbutton"
-                            // onClick={() => navigate("/dashboard")}
-                            >
-                              Submit
-                            </button>
+          {isChatOneActive ? (
+            <div className="wflexLayout">
+              <div className="flex-grow-1 my-3">
+                {Array?.isArray(questions) && questions?.length > 0 &&
+                  <div className="scrolldiv ps-0">
+                    {questions?.map((message, index) => (
+                      <React.Fragment key={index}>
+                        <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
+                          <div>
+                            {message.sender === "user" ? (
+                              <img
+                                src={profilePicture}
+                                alt="chat user" className='al_chatimg' />
+                            ) : message.sender === "alfred" ? (
+                              <img src={Chatbot} alt="Bot" />
+                            ) : null}
                           </div>
-                        ) : (
-                          <div className="my-3">
-                            <button
-                              type="submit"
-                              className="al_greybgbutton"
-                              // onClick={() => navigate("/home")}
-                              onClick={() => handleChatToggle(true)}
-                            >
-                              Go to Chat
-                            </button>
-                          </div>
-                        )}
+                          <Col>
+                            <h6 className="mb-0 text-capitalize">
+                              {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
+                            </h6>
+                            <div style={{ whiteSpace: "pre-wrap" }}>{message.text}</div>
+                          </Col>
+                        </Row>
+                      </React.Fragment>
+                    ))}
+                    {isLoading && <div className="al_chatloading"></div>}
+                    <div ref={messagesEndRef} />
+                  </div>}
+                {(responseStatus || questions?.length === 0) && (
+                  <div className="d-flex flex-column h-100 align-items-center justify-content-center">
+                    <div>No question available</div>
+                    {Object.keys(questions).length === 0 && (
+                      <div className="mt-3 d-flex align-items-center justify-content-center">
+                        <button
+                          type="submit"
+                          className="al_greybgbutton"
+                          onClick={() => navigate("/home")}
+                        >
+                          Go to Dashboard
+                        </button>
                       </div>
                     )}
                   </div>
+                )}
+              </div>
+              <div className="cs_mainsearch mb-3">
+                {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
+                {Object.keys(questions).length !== 0 && (
+                  <div className="cs_mainsearch">
+                    <form action="#">
+                      <i
+                        className="icon_alfred_search"
+                        style={{ height: "auto" }}
+                      ></i>
+                      <input
+                        type="text"
+                        placeholder="Ask a question"
+                        name="message"
+                        value={inputValue} // input value
+                        onChange={handleInputChange} // handle changes
+                        disabled={isInputShow} //Disabled once input value is submitted
+                        ref={inputRef}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault(); // Prevent default form submission behavior
+                            handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                          }
+                        }}
+                      />
+                      {/* Icon shown based on hide and show conditions */}
+                      {isShow ? (
+                        <>
+                          <i
+                            className="icon_alfred_close"
+                            onClick={(e) => {
+                              setInputValue("");
+                            }}
+                          ></i>
+                          <i
+                            className="icon_alfred_sendmsg"
+                            style={{
+                              height: "auto",
+                              pointerEvents: isInputShow ? "none" : "",
+                            }}
+                            onClick={(e) => handleFormSubmit(e)}
+                          ></i>
+                        </>
+                      ) : (
+                        <i
+                          className="icon_alfred_speech"
+                          style={{ height: "auto" }}
+                        ></i>
+                      )}
+                    </form>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="wflexLayout">
+              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+                {({ values, setFieldValue }) => (
+                  <Form className="wflexScroll d-flex flex-column">
+                    <div className="form_chat flex-grow-1 mt-3">
+                      {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
+                        getChatQus?.map((field, index) => (
+                          <FormGroup key={index}>
+                            <Label
+                              htmlFor={field.description}
+                              className="form-label"
+                            >
+                              {index + 1}. {field.description}
+                            </Label>
+                            {field.type_ === "Dropdown" ? (
+                              <FormGroup>
+                                <Select
+                                  id={field.question_key}
+                                  className="inputSelect"
+                                  name={field.question_key}
+                                  value={
+                                    values[field.question_key]
+                                      ? {
+                                        value: values[field.question_key],
+                                        label: values[field.question_key],
+                                      }
+                                      : null
+                                  }
+                                  options={field.options?.map((option) => ({
+                                    value: option,
+                                    label: option,
+                                  }))}
+                                  onChange={(selectedOption) =>
+                                    setFieldValue(
+                                      field.question_key,
+                                      selectedOption ? selectedOption.value : ""
+                                    )
+                                  }
+                                />
+                              </FormGroup>
+                            ) : field.type_ === "Radio" ? (
+                              <div className="d-flex px-1 gap-3 flex-row">
+                                {field.options?.map((option, optionIndex) => (
+                                  <FormGroup key={optionIndex}>
+                                    <Field
+                                      type="radio"
+                                      id={`${field.question_key}-${option}`}
+                                      name={field.question_key}
+                                      value={option}
+                                      className="form-check-input"
+                                      style={{ minWidth: "auto" }}
+                                    />
+                                    <label
+                                      htmlFor={`${field.question_key}-${option}`}
+                                      className="form-check-label px-2"
+                                    >
+                                      {option}
+                                    </label>
+                                  </FormGroup>
+                                ))}
+                              </div>
+                            ) : field.type_ === "integer" ? (
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  id={field.question_key}
+                                  name={field.question_key}
+                                  className="form-control"
+                                  onKeyDown={allowsOnlyNumeric}
+                                />
+                              </FormGroup>
+                            ) : (
+                              <FormGroup>
+                                <Field
+                                  type="text"
+                                  //   as="textarea"
+                                  id={field.question_key}
+                                  name={field.question_key}
+                                  className="form-control"
+                                />
+                              </FormGroup>
+                            )}
+                          </FormGroup>
+                        ))
+                      ) : (
+                        <div className="d-flex flex-column h-100 align-items-center justify-content-center">
+                          {/* <div>No question available</div> */}
+                          <img src={incompleteprofile} alt="" style={{ width: "200px" }} />
+                          <h6 className="mb-0 text-warning">Will be coming soon</h6>
+                          {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
+                            <div className="my-3">
+                              <button
+                                type="submit"
+                                className="al_greybgbutton"
+                              // onClick={() => navigate("/dashboard")}
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="my-3">
+                              <button
+                                type="submit"
+                                className="al_greybgbutton"
+                                // onClick={() => navigate("/home")}
+                                onClick={() => handleChatToggle(true)}
+                              >
+                                Go to Chat
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
 
-                </Form>
-              )}
-            </Formik>
-          </div>
-        )}
-      </div>
-    </div >
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          )}
+        </div>
+      </div >
+    </>
   );
 }

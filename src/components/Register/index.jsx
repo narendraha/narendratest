@@ -368,7 +368,7 @@ export default function Register() {
                       >
                         <div id="terms" style={{ lineHeight: 0 }}>
                           <input name="termsAndConditions" type="checkbox" defaultChecked={values?.termsAndConditions} value={values?.termsAndConditions}
-                            disabled={isTermsAndConditionsRead}
+                            // disabled={isTermsAndConditionsRead}
                             onChange={(e) => {
                               setFieldValue("termsAndConditions", e.target.checked);
                             }} />

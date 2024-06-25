@@ -3,7 +3,7 @@ import { pageTitle } from '../../helpers/PageTitle';
 import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
 
 export default function EcoPharmacy() {
-  pageTitle('Eco Pharmacy');
+  pageTitle('Health Partners - Pharmacy');
   return (
     <>
     <BannerSectionStyle3

@@ -148,6 +148,7 @@ export default function HistoryChatBot() {
           //   setResponseStatus(responseData?.status_code);
           // here  we will add the result to our history of questions and answers
           // if res status is -1 or index % 3 or res 99 means need to show res msg and also index % 3 measns need to next question
+
           if (responseData.statuscode === 99) {
             setResponseStatus(res.data?.message);
           } else {

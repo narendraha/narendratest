@@ -29,7 +29,6 @@ export default function Chat() {
   useEffect(() => {
     getQuestion();
   }, []);
-  
 
   const getRandomQuestion = (index) => {
     if (questions?.length > 0 && responseStatus !== 99) {
@@ -153,7 +152,6 @@ export default function Chat() {
   };
 
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
-
   return (
     <div className="cs_homepage mt-0 h-100">
       <div className="w-50 al_chatbotauth p-0">

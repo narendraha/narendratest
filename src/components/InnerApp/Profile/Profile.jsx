@@ -18,6 +18,7 @@ import { createResource } from "../createResource"; //Suspense loading
 import { ProfileSettings } from "./ProfileSettings";
 import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions } from '../../../_mock/helperIndex';
 
 export const EProfileButton = {
   CHANGEPASSWORD: 1,
@@ -32,6 +33,7 @@ export default function Profile() {
   const [resource, setResource] = useState(null); //Suspense loading
   const [isOpenModel, setOpenModel] = useState({ profileButton: 0, isOpen: false }); // To handle Modals
   const [updatedFile, setUpdatedFile] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // loading status of api call
 
   const closeProfileButtonModal = (data) => {
     setOpenModel({ profileButton: 0, isOpen: data })
@@ -53,17 +55,10 @@ export default function Profile() {
   }, []);
 
   const [isEdit, setIsEdit] = useState(false);
-  const genderoptions = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Other", label: "Other" },
-  ];
+  const genderoptions = getGenderoptions;
+  const residenceoptions = getResidenceoptions;
+  const educationOptions = getEductaionOptions;
 
-  const residenceoptions = [
-    { value: "Cohabitant", label: "Cohabitant" },
-    { value: "Non-Resident", label: "Non-Resident" },
-    { value: "Others", label: "Others" },
-  ];
   const bloodTypes = [
     { value: "A+", label: "A+" },
     { value: "A-", label: "A-" },
@@ -87,28 +82,38 @@ export default function Profile() {
     const maskedPart = "*".repeat(input?.length - 3);
     return `${maskedPart}${lastTwoChars}`;
   }
+
+  const reLoadWindow = () => {
+    let isWinowLoaded = false
+    window.location.reload()
+    return isWinowLoaded = true
+  }
   const handleSubmit = (data) => {
     setIsShowconfirm(data);
     if (data) {
+      setIsLoading(true)
       setIsShowconfirm(!data);
       AxiosInstance("application/json")
         .put(`/update_details`, formData)
         .then((res) => {
           if (res && res.data && res.status === 200) {
-            if (res.data?.statuscode === 200) {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "success",
-              });
-              setIsEdit(false);
-              profileDetails();
-              navigate("/profile");
-            } else {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "error",
-              });
-              navigate("/profile");
+            if (reLoadWindow()?.isWinowLoaded) {
+              setIsLoading(false)
+              if (res.data?.statuscode === 200) {
+                toast(res.data?.message, {
+                  position: "top-right",
+                  type: "success",
+                });
+                setIsEdit(false);
+                profileDetails();
+                navigate("/profile");
+              } else {
+                toast(res.data?.message, {
+                  position: "top-right",
+                  type: "error",
+                });
+                navigate("/profile");
+              }
             }
           }
         })
@@ -138,10 +143,12 @@ export default function Profile() {
         const formData = new FormData();
         formData.append('file_', file);
 
+        setIsLoading(true)
         AxiosInstance("'multipart/form-data")
           .post(`/upload-profile-image`, formData)
           .then((res) => {
             if (res.data && res.status === 200) {
+              setIsLoading(false)
               if (res.data.statuscode === 200) {
                 setUpdatedFile(res.data.data?.profile_img)
                 toast(res.data.message, {
@@ -171,7 +178,8 @@ export default function Profile() {
     }
   }
 
-  const profilePicture = (updatedFile ? updatedFile : (getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
+
+  const profilePicture = updatedFile === "" ? ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url) : updatedFile;
 
   // Suspense loading with fallback icon
   if (resource) {
@@ -185,6 +193,7 @@ export default function Profile() {
     resource.read(); // This will throw a promise that Suspense will catch
     return (
       <>
+        {isLoading && <Loading />}
         <ConfirmationAction newFun={handleSubmit} open={isShowconfirm} />
         <div className="wflexLayout">
           <div className="wflexScroll al-pad">
@@ -215,9 +224,9 @@ export default function Profile() {
                           <i className="icon_alfred_edit"></i>
                         </div>
                       </Label>
-                      {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
+                      {/* {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
                         <i className="icon_alfred_trashbin"></i>
-                      </div>}
+                      </div>} */}
                     </div>
                   </>
                 )}
@@ -425,7 +434,8 @@ export default function Profile() {
                         weight: getProfileDetails?.weight !== "NA" ? getProfileDetails?.weight : "",
                         // age: getProfileDetails?.age || "",
                         bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
-                        nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : ""
+                        nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : "",
+                        profile_url: profilePicture || ""
                       }}
                       validationSchema={Yup.object().shape({
                         username: Yup.string()
@@ -489,7 +499,8 @@ export default function Profile() {
                           nationality: "United State"
                         };
                         setFormData(data);
-                        setGetProfileDetails(data)
+                        setGetProfileDetails(data);
+                        setUpdatedFile("");
                       }}
                     >
                       {({
@@ -798,11 +809,25 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Education
                                   </Label>
-                                  <Field
+                                  {/* <Field
                                     type="text"
                                     name="education"
                                     placeholder="Enter Education"
                                     className="form-control"
+                                  /> */}
+                                  <Select
+                                    options={educationOptions}
+                                    name="education"
+                                    className="inputSelect"
+                                    value={educationOptions.find(
+                                      (option) => option.value === values.education
+                                    )}
+                                    onChange={(selectedOption) => {
+                                      setFieldValue(
+                                        "education",
+                                        selectedOption ? selectedOption.value : ""
+                                      );
+                                    }}
                                   />
                                   <ErrorMessage
                                     name="education"

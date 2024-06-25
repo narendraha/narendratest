@@ -1,5 +1,30 @@
 import { AxiosInstance } from '../_mock/utilities';
 
+// gender options 
+export const getGenderoptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Other", label: "Other" },
+];
+
+//  residence options
+export const getResidenceoptions = [
+    { value: "Cohabitant", label: "Cohabitant" },
+    { value: "Non-Resident", label: "Non-Resident" },
+    { value: "Other", label: "Other" },
+];
+
+// eductaion options
+export const getEductaionOptions = [
+    { value: "10th", label: "10th" },
+    { value: "12th", label: "12th" },
+    { value: "Diploma", label: "Diploma" },
+    { value: "Bachelor's Degree", label: "Bachelor's Degree" },
+    { value: "Master's Degree", label: "Master's Degree" },
+    { value: "PhD", label: "PhD" },
+    { value: "Other", label: "Other" },
+];
+
 // custom pattens for custom validations
 export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },

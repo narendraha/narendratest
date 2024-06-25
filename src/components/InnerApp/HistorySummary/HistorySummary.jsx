@@ -43,7 +43,7 @@ export default function HistorySummary() {
 
   useEffect(() => {
     fetchProfileComplitionDetails();
-    if ((navigationLink !== undefined) || (navigationLink !== ""))
+    if ((navigationLink !== undefined) && (navigationLink !== ""))
       getHistoryBotTranscript();
   }, []);
 

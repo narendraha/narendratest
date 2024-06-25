@@ -60,7 +60,7 @@ export default function HistoryChatBot() {
     setTimeout(() => {
       setIsLoading(false);
       fetchProfileComplitionDetails();
-      if ((navigationLink !== undefined) || (navigationLink !== ""))
+      if ((navigationLink !== undefined) && (navigationLink !== ""))
         getHistoryBotQues();
       setIsInputShow(false);
     }, 1000);

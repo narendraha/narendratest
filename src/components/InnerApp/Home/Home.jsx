@@ -460,12 +460,12 @@ export default function Home() {
           systolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.systolic_p,
-            customTooltip: `Systolic: ${item.systolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Systolic: ${item.systolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
           });
           diastolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.diastolic_p,
-            customTooltip: `Diastolic: ${item.diastolic_p} BPM <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Diastolic: ${item.diastolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
           });
         }
       });
@@ -792,10 +792,10 @@ export default function Home() {
       });
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     setTab(location?.state?.activeTab ? location?.state?.activeTab : "1")
-  },[location]);
-  
+  }, [location]);
+
   return (
     <>
       <ConfirmationAction
@@ -1053,9 +1053,14 @@ export default function Home() {
                           systolic: Yup.number()
                             .max(200, "Systolic is too high!")
                             .required("This field is required"),
-                          diastolic: Yup.number()
-                            .max(120, "Diastolic is Too high!")
-                            .required("This field is required"),
+                          diastolic: Yup.number().when('systolic', {
+                            is: (systolic) => systolic,
+                            then: Yup.number().max(120, "Diastolic is Too high!").required("This field is required"),
+                            otherWise: Yup.number().optional()
+                          }),
+                          // diastolic: Yup.number()
+                          //   .max(120, "Diastolic is Too high!")
+                          //   .required("This field is required"),
                           pulse: Yup.number()
                             .min(10, "Pulse must be at least 10")
                             .max(220, "Too high!")
@@ -1195,7 +1200,7 @@ export default function Home() {
                                         className="text-danger"
                                       />
                                     </FormGroup>
-                                    <div className="text-grey mt-1">(BPM)</div>
+                                    <div className="text-grey mt-1">(mmHg)</div>
                                   </div>
                                 </Col>
                                 <Col xl="4" lg="6" sm="4" className="mb-3">

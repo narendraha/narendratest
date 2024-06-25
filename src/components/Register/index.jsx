@@ -21,6 +21,7 @@ import alferdlogo from "../../images/alfredlogowhite.svg";
 import successImg from "../../images/sucessimg.svg";
 import OTPComponent from "../ForgotPassword/OTP";
 import Loading from "../InnerApp/LoadingComponent";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions } from "../../_mock/helperIndex";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -29,16 +30,9 @@ export default function Register() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [otpResponse, setOtpResponse] = useState("");
   const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] = useState(true);
-  const genderoptions = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Others", label: "Others" },
-  ];
-
-  const residenceoptions = [
-    { value: "Cohabitant", label: "Cohabitant" },
-    { value: "Non-Resident", label: "Non-Resident" },
-  ];
+  const genderoptions = getGenderoptions;
+  const residenceoptions = getResidenceoptions;
+  const educationOptions = getEductaionOptions;
 
   const [showPassword, setShowPassword] = useState(false);
   const [isShowConfirmPassword, setisShowConfirmPassword] = useState(false);
@@ -309,11 +303,25 @@ export default function Register() {
                         <Label>
                           <span className="requiredLabel">*</span>Education
                         </Label>
-                        <Field
+                        {/* <Field
                           type="text"
                           name="education"
                           placeholder="Enter Education"
                           className="form-control"
+                        /> */}
+                        <Select
+                          options={educationOptions}
+                          name="education"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "education",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
                         />
                         <ErrorMessage
                           name="education"

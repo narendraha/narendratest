@@ -18,7 +18,7 @@ const faqData = [
   {
     title: 'What are the symptoms?',
     content:
-      'AFib symptoms can come and go, and they can vary. Talk to a healthcare professional if you experience one or more of these symptoms: <b>IRREGULAR HEARTBEAT</b>, <b>HEART RACING, CHEST PAIN</b>, <b> SHORTNESS OF BREATH</b>, <b> FATIGUE</b>, <b> LIGHT-HEADEDNESS</b>',
+      'Afib symptoms can come and go, and they can vary. Talk to a healthcare professional if you experience one or more of these symptoms: <b>IRREGULAR HEARTBEAT</b>, <b>HEART RACING, CHEST PAIN</b>, <b> SHORTNESS OF BREATH</b>, <b> FATIGUE</b>, <b> LIGHT-HEADEDNESS</b>',
   },
   {
     title: 'Is there a cure for it?',

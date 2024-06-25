@@ -929,9 +929,9 @@ export default function Home() {
                             <h6>Rhythm</h6>
                             <img src={rhythm} alt="" style={{ height: "120px", objectFit: "contain" }} />
                             <p className="mt-3">
-                              Atrial fibrillation (AFib) is an irregular and often
+                              Atrial fibrillation (Afib) is an irregular and often
                               very rapid heart rhythm. An irregular heart rhythm is
-                              called an arrhythmia. AFib can lead to blood clots in
+                              called an arrhythmia. Afib can lead to blood clots in
                               the heart. The condition also increases the risk of
                               stroke, heart failure and other heart-related
                               complications.

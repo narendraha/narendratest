@@ -97,7 +97,7 @@ export default function Header({ logoSrc, variant }) {
       subModules: [
         { id: "1", name: "Health Plan", link: 'healthplan' },
         { id: "2", name: "Accountable Care Organization", link: 'aco' },
-        { id: "3", name: "Pharmacy", link: 'pharmacy' },
+        { id: "3", name: "Pharmacy", link: 'ecopharmacy' },
         { id: "4", name: "Dietician", link: 'dietician' },
         { id: "4", name: "Health care Consultants", link: 'healthcare' }
       ]

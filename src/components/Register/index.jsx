@@ -36,6 +36,7 @@ export default function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isShowConfirmPassword, setisShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -1002,6 +1003,7 @@ export default function Register() {
       });
   };
   const handleThirdFormSubmit = (values) => {
+    setIsSubmitting(true);
     setFormData({ ...formData, ...values });
     let data = {
       ...formData,
@@ -1016,6 +1018,7 @@ export default function Register() {
       .post(`/create_account`, data)
       .then((res) => {
         if (res && res.data && res.status === 200) {
+          setIsSubmitting(false);
           if (res.data?.statuscode === 200) {
             setIsLoading(false);
             toast(res.data?.message, {
@@ -1181,6 +1184,7 @@ export default function Register() {
                           <button
                             type="submit"
                             className="al_login_button"
+                            disabled={isSubmitting} // Disable button when submitting
                           // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue

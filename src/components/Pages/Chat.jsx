@@ -7,7 +7,7 @@ import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../images/userprofile.jpg";
-
+import Loading from "../InnerApp/LoadingComponent";
 export default function Chat() {
   pageTitle("Behavioural chat");
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ export default function Chat() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [getProfileDetails, setGetProfileDetails] = useState([]);
+  const [isFormLoading, setIsFormLoading] = useState(false);
 
   // get questions using useeffect
   useEffect(() => {
@@ -55,11 +56,13 @@ export default function Chat() {
   };
 
   const getQuestion = async () => {
+    setIsFormLoading(true)
     await AxiosInstance("application/json")
       .get("/chatbot_questions")
       .then((response) => {
         if (response && response?.status == 200) {
           setQuestions(response.data?.data);
+          setIsFormLoading(false);
           getRandomQuestion(currentQuestionIndex);
         }
       })
@@ -154,6 +157,7 @@ export default function Chat() {
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
     <div className="cs_homepage mt-0 h-100">
+      {isFormLoading && <Loading />}
       <div className="w-50 al_chatbotauth p-0">
         <div className="d-flex flex-column">
           <div className="flex-grow-1 mt-3">

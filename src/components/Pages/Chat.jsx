@@ -9,6 +9,7 @@ import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../images/userprofile.jpg";
 import ModalView from "../InnerApp/MainLayout/ModalView";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Chat() {
   pageTitle("Behavioural chat");
@@ -29,6 +30,7 @@ export default function Chat() {
   const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
   let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
+  const [isFormLoading, setIsFormLoading] = useState(false);
 
   // get questions using useeffect
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-      getQuestion();
+    getQuestion();
   }, [navigationLink !== ""])
 
   const getRandomQuestion = (index) => {
@@ -64,11 +66,13 @@ export default function Chat() {
   };
 
   const getQuestion = async () => {
+    setIsFormLoading(true)
     await AxiosInstance("application/json")
       .get("/chatbot_questions")
       .then((response) => {
         if (response && response?.status == 200) {
           setQuestions(response.data?.data);
+          setIsFormLoading(false);
           getRandomQuestion(currentQuestionIndex);
         }
       })
@@ -190,6 +194,7 @@ export default function Chat() {
         />
       )}
       <div className="cs_homepage mt-0 h-100">
+        {isFormLoading && <Loading />}
         <div className="w-50 al_chatbotauth p-0">
           <div className="d-flex flex-column">
             <div className="flex-grow-1 mt-3">

@@ -9,8 +9,9 @@ import { AxiosInstance } from "../../_mock/utilities";
 import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
-import incompleteprofile from '../../images/incompleteprofile.png';
+import incompleteprofile from "../../images/incompleteprofile.png";
 import ChatMaleuser from "../../images/userprofile.jpg";
+import Loading from "../InnerApp/LoadingComponent";
 import ModalView from "../InnerApp/MainLayout/ModalView";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 
@@ -29,6 +30,7 @@ export default function HistoryChatBot() {
   const incrementRef = useRef(0);
   const [questionDetails, setQuestionDetails] = useState(null);
   const [getProfileDetails, setGetProfileDetails] = useState([]);
+  const [isFormLoading, setIsFormLoading] = useState(true);
   const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
   // form tab
@@ -56,6 +58,7 @@ export default function HistoryChatBot() {
 
   // get questions using useeffect
   useEffect(() => {
+    setIsFormLoading(true);
     setQuestions([]);
     setTimeout(() => {
       setIsLoading(false);
@@ -64,7 +67,7 @@ export default function HistoryChatBot() {
         getHistoryBotQues();
       setIsInputShow(false);
     }, 1000);
-  }, [isChatOneActive]);
+  }, [isChatOneActive, navigationLink]);
 
   // Scroll to the bottom of the chat container
   const scrollToBottom = () => {
@@ -98,10 +101,12 @@ export default function HistoryChatBot() {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [incrementRef, questions]);
 
-  useEffect(() => { }, [incrementRef, responseStatus]);
+  useEffect(() => {}, [incrementRef, responseStatus]);
 
   // To focus input field
-  useEffect(() => { inputRef.current?.focus() })
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
 
   const handleFormSubmit = async (e) => {
     profileDetails();
@@ -168,17 +173,23 @@ export default function HistoryChatBot() {
             setResponseStatus(res.data?.message);
           } else {
             if (res.data?.data) {
-
               setQuestions((prevChat) => [
                 ...prevChat,
                 // ...(res.data?.message !== ""
                 //   ? [{ sender: "alfred", text: res.data.message }]
                 //   : []),
                 // { sender: "alfred", text: res.data?.data?.description },
-                ...([{
-                  sender: "alfred", text: res.data?.message !== "" ? res.data.message?.concat("\n" + res.data?.data?.description) :
-                    res.data?.data?.description
-                }])
+                ...[
+                  {
+                    sender: "alfred",
+                    text:
+                      res.data?.message !== ""
+                        ? res.data.message?.concat(
+                            "\n" + res.data?.data?.description
+                          )
+                        : res.data?.data?.description,
+                  },
+                ],
               ]);
             }
           }
@@ -225,10 +236,12 @@ export default function HistoryChatBot() {
 
   // Form tab handled here
   const getHistoryBotQues = async () => {
+    setIsFormLoading(true);
     await AxiosInstance("application/json")
       .get("/initial_question")
       .then((response) => {
         if (response && response?.status == 200) {
+          setIsFormLoading(false);
           if (response.data.statuscode === 200) {
             setQuestionDetails(response.data.data);
             setQuestions((prevChat) => [
@@ -254,7 +267,6 @@ export default function HistoryChatBot() {
         });
       });
   };
-
 
   const handleSubmit = async (values) => {
     const formattedData = [];
@@ -310,7 +322,7 @@ export default function HistoryChatBot() {
         const responseData = res.data?.data;
         setGetProfileDetails(responseData);
       })
-      .catch((er) => { });
+      .catch((er) => {});
   };
 
   const handleClose = _ => {
@@ -327,7 +339,9 @@ export default function HistoryChatBot() {
           isModalVisible={isModalVisible}
           path={redirectionPath}
         />
-      )}
+      )}{isFormLoading ? (
+        <Loading />
+      ) : (
       <div className="cs_homepage mt-0 h-100">
         <div className="w-50 al_chatbotauth wflexLayout p-0">
           <div className="d-flex justify-content-center mt-3 h-auto pb-1">
@@ -568,7 +582,7 @@ export default function HistoryChatBot() {
             </div>
           )}
         </div>
-      </div >
+      </div >)}
     </>
   );
 }

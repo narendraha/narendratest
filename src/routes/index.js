@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout3 from "../components/Layout/Layout3";
 import HomeStyle3 from "../components/Pages/HomeStyle3";
 import About from "../components/Pages/About";
@@ -75,6 +75,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="chat" element={<Chat />} />
               {/* <Route path="historychat" element={<HistoryChat />} /> */}
               <Route path="historychat" element={<HistoryChatNew />} />
+              <Route path="*" element={<Navigate to="/home" />} />
 
             </Route>
           </>

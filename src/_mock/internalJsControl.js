@@ -72,7 +72,7 @@ export const getProfileCmpDetails = async (link, reOpenModel = false) => {
     let redirectionPath = "", modalMessage = "", isModalVisible = false, navigationLink = ""
     let reqObj = ((link === "historychat") ? { history_chat: true } : (link === "transcriptsummary") ? { history_trans: true } : (link === "chat") ? { behavioural_chat: true } : "")
     const profileCompletion = reqObj && await getProfileCompletionSUmmary(reqObj);
-    console.log("profileCompletion_response=>", { link, profileCompletion })
+    console.log("profileCompletion_response=>", { reqObj, link, profileCompletion })
     if (profileCompletion?.status && profileCompletion?.data) {
         redirectionPath = { link: link, route: profileCompletion?.data?.web_redirection_key };
         if (!reOpenModel)

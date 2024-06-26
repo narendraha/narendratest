@@ -38,8 +38,9 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    getQuestion();
-  }, [navigationLink !== ""])
+    if (navigationLink && navigationLink !== "")
+      getQuestion();
+  }, [navigationLink])
 
   const getRandomQuestion = (index) => {
     if (questions?.length > 0 && responseStatus !== 99) {
@@ -168,7 +169,7 @@ export default function Chat() {
     let link = reOpenModel ? path : 'chat'
     const result = await getProfileCmpDetails(link);
     setProfileCmpModalProps(result);
-    if (result?.navigationLink !== "")
+    if (result?.navigationLink && result?.navigationLink !== "")
       navigate(`/${result?.navigationLink}`)
   };
 

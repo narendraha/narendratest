@@ -791,6 +791,10 @@ span {
   div[class$="-menu"] {
     margin-left: 1px;
 
+    div[class$="-MenuList"] {
+      max-height: 180px;
+    }
+
     div[class$="-option"] {
       line-height: 1.25;
     }

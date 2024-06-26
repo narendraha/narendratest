@@ -36,7 +36,7 @@ export default function HistorySummary() {
     let link = reOpenModel ? path : 'transcriptsummary'
     const result = await getProfileCmpDetails(link);
     setProfileCmpModalProps(result);
-    if (result?.navigationLink !== "")
+    if (result?.navigationLink && result?.navigationLink !== "")
       navigate(`/${result?.navigationLink}`)
   };
   let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
@@ -46,8 +46,9 @@ export default function HistorySummary() {
   }, []);
 
   useEffect(() => {
-    getHistoryBotTranscript();
-  }, [navigationLink !== ""]);
+    if (navigationLink && navigationLink !== "")
+      getHistoryBotTranscript();
+  }, [navigationLink]);
 
 
   const getHistoryBotTranscript = async () => {

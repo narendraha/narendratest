@@ -8,7 +8,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import * as Yup from "yup";
-import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly3Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
+import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
 import { AxiosInstance } from "../../../_mock/utilities";
 import maleuserImg from "../../../images/userprofile.jpg";
 import femaleuserImg from "../../../images/femaleuserImg.jpg";
@@ -482,8 +482,8 @@ export default function Profile() {
                           .max(3, "Too Long!")  // Maximum length of 3 characters
                           .required("This field is required"),
                         weight: Yup.number()
-                          .min(10, "Weight must be at least 10")
-                          .max(650, "Weight is too high!")
+                          .min(22, "Weight must be at least 22 lbs")
+                          .max(1400, "Weight is too high!")
                           .required("This field is required"),
                         // age: Yup.string()
                         //   .min(1, "Too Short!")
@@ -568,7 +568,7 @@ export default function Profile() {
                                     placeholder="Enter Weight"
                                     className="form-control"
                                     onKeyPress={(e) =>
-                                      allowsOnlyNumericOnly3Digit(e)
+                                      allowsOnlyNumericOnly4Digit(e)
                                     }
                                   />
                                   <ErrorMessage

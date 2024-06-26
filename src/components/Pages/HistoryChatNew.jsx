@@ -49,7 +49,9 @@ export default function HistoryChatBot() {
     const result = await getProfileCmpDetails('historychat');
     setProfileCmpModalProps(result);
   };
+
   useEffect(() => {
+    fetchProfileComplitionDetails();
   }, []);
 
   let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
@@ -59,9 +61,7 @@ export default function HistoryChatBot() {
     setQuestions([]);
     setTimeout(() => {
       setIsLoading(false);
-      fetchProfileComplitionDetails();
-      if ((navigationLink !== undefined) && (navigationLink !== ""))
-        getHistoryBotQues();
+      getHistoryBotQues();
       setIsInputShow(false);
     }, 1000);
   }, [isChatOneActive]);

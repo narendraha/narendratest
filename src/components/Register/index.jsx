@@ -302,7 +302,7 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>Education
+                          <span className="requiredLabel">*</span>Highest Education
                         </Label>
                         {/* <Field
                           type="text"

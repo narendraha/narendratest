@@ -2624,7 +2624,7 @@ export default function Home() {
                           </div>
                           <div>
                             <strong>Education: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N?A"}</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N/A"}</span>
                           </div>
                         </Col>
                         <Col lg="8" sm="6">

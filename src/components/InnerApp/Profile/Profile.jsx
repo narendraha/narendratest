@@ -89,36 +89,56 @@ export default function Profile() {
     return isWinowLoaded = true
   }
   const handleSubmit = (data) => {
-    setIsShowconfirm(data);
+    setIsShowconfirm(!data);
     if (data) {
       setIsLoading(true)
-      setIsShowconfirm(!data);
-      AxiosInstance("application/json")
-        .put(`/update_details`, formData)
-        .then((res) => {
-          if (res && res.data && res.status === 200) {
-            if (reLoadWindow()?.isWinowLoaded) {
-              setIsLoading(false)
-              if (res.data?.statuscode === 200) {
-                toast(res.data?.message, {
-                  position: "top-right",
-                  type: "success",
-                });
-                setIsEdit(false);
-                profileDetails();
-                navigate("/profile");
+      const uploadProfileImageRequest = AxiosInstance("multipart/form-data").post("/upload-profile-image", updatedFile?.formData);
+      const updateProfileDatialsRequest = AxiosInstance("application/json").put("/update_details", formData);
+      let requestMethods = [updateProfileDatialsRequest]
+      if (updatedFile?.formData)
+        requestMethods?.push(uploadProfileImageRequest)
+      Promise.all(requestMethods)
+        .then((requestMethods) => {
+          let updateProfileDatialsResponse = requestMethods?.[0];
+          let uploadProfileImageResponse = requestMethods?.length > 1 ? requestMethods?.[1] : false;
+          let isProfileImageUpdate = !uploadProfileImageResponse ? true : reLoadWindow()?.isWinowLoaded;
+          if (isProfileImageUpdate) {
+            setIsLoading(false)
+            if (!uploadProfileImageResponse || uploadProfileImageResponse.data && uploadProfileImageResponse.status === 200 && uploadProfileImageResponse.data.statuscode === 200) {
+              if (updateProfileDatialsResponse && updateProfileDatialsResponse.data && updateProfileDatialsResponse.status === 200) {
+                if (updateProfileDatialsResponse.data?.statuscode === 200) {
+                  toast(updateProfileDatialsResponse.data?.message, {
+                    position: "top-right",
+                    type: "success",
+                  });
+                  setIsEdit(false);
+                  if (!uploadProfileImageResponse)
+                    profileDetails();
+                  navigate("/profile");
+                } else {
+                  toast(updateProfileDatialsResponse.data?.message, {
+                    position: "top-right",
+                    type: "error",
+                  });
+                  navigate("/profile");
+                }
               } else {
-                toast(res.data?.message, {
+                toast(updateProfileDatialsResponse.data?.message, {
                   position: "top-right",
                   type: "error",
                 });
                 navigate("/profile");
               }
+            } else {
+              toast(uploadProfileImageResponse.data.message, {
+                position: "top-right",
+                type: "error",
+              });
             }
           }
         })
         .catch((er) => {
-          toast(er?.response?.data?.message, {
+          toast(er?.response?.data?.detail, {
             position: "top-right",
             type: "error",
           });
@@ -142,33 +162,7 @@ export default function Profile() {
       if (isValidFileSize && isValidFileExtention) {
         const formData = new FormData();
         formData.append('file_', file);
-
-        setIsLoading(true)
-        AxiosInstance("'multipart/form-data")
-          .post(`/upload-profile-image`, formData)
-          .then((res) => {
-            if (res.data && res.status === 200) {
-              setIsLoading(false)
-              if (res.data.statuscode === 200) {
-                setUpdatedFile(res.data.data?.profile_img)
-                toast(res.data.message, {
-                  position: "top-right",
-                  type: "success",
-                });
-              } else {
-                toast(res.data.message, {
-                  position: "top-right",
-                  type: "error",
-                });
-              }
-            }
-          })
-          .catch((er) => {
-            toast(er?.response?.data?.message, {
-              position: "top-right",
-              type: "error",
-            });
-          });
+        setUpdatedFile({ file: URL.createObjectURL(file), formData })
       } else {
         toast(!isValidFileSize ? "Please Select file less than 200 MB" : "Please Upload Valid file type", {
           position: "top-right",
@@ -224,9 +218,9 @@ export default function Profile() {
                           <i className="icon_alfred_edit"></i>
                         </div>
                       </Label>
-                      {/* {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
+                      {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
                         <i className="icon_alfred_trashbin"></i>
-                      </div>} */}
+                      </div>}
                     </div>
                   </>
                 )}
@@ -246,7 +240,7 @@ export default function Profile() {
                     <Row>
                       <Col>
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.subscription === "NA" ? "No Plan is Available" : "NA"}</div>
+                          <div>{getProfileDetails?.subscription === "NA" ? "No Plan is Available" : "N/A"}</div>
                           <Label>Your Subscription Plan</Label>
                         </div>
                       </Col>
@@ -265,19 +259,19 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : "00"}` : "NA"}</div>
+                          <div>{getProfileDetails?.feet > 0 ? `${getProfileDetails?.feet}.${getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : "00"}` : "N/A"}</div>
                           <Label>Height (ft)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.weight || "NA"}</div>
+                          <div>{getProfileDetails?.weight || "N/A"}</div>
                           <Label>Weight (lbs)</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.bloodtype || "NA"}</div>
+                          <div>{getProfileDetails?.bloodtype || "N/A"}</div>
                           <Label>Blood Type</Label>
                         </div>
                       </Col>
@@ -286,19 +280,19 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.rtype || "NA"}</div>
+                          <div>{getProfileDetails?.rtype || "N/A"}</div>
                           <Label>Residence Type</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.education || "NA"}</div>
-                          <Label>Education</Label>
+                          <div>{getProfileDetails?.education || "N/A"}</div>
+                          <Label>Highest Education</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.dob || "NA"}</div>
+                          <div>{getProfileDetails?.dob || "N/A"}</div>
                           <Label>Date of Birth</Label>
                         </div>
                       </Col>
@@ -307,19 +301,19 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.age || "NA"}</div>
+                          <div>{getProfileDetails?.age || "N/A"}</div>
                           <Label>Age</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.gender || "NA"}</div>
+                          <div>{getProfileDetails?.gender || "N/A"}</div>
                           <Label>Gender</Label>
                         </div>
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.ssn !== "NA" && getProfileDetails?.ssn !== undefined ? maskssn(getProfileDetails?.ssn) : "NA"}</div>
+                          <div>{getProfileDetails?.ssn !== "NA" && getProfileDetails?.ssn !== undefined ? maskssn(getProfileDetails?.ssn) : "N/A"}</div>
                           <Label>SSN</Label>
                         </div>
                       </Col>
@@ -328,7 +322,7 @@ export default function Profile() {
                     <Row>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.mobile || "NA"}</div>
+                          <div>{getProfileDetails?.mobile || "N/A"}</div>
                           <Label>Mobile</Label>
                         </div>
                       </Col>
@@ -340,7 +334,7 @@ export default function Profile() {
                       </Col>
                       <Col md="4" sm="12">
                         <div className="al_profiledata">
-                          <div>{getProfileDetails?.bmi || "NA"}</div>
+                          <div>{getProfileDetails?.bmi || "N/A"}</div>
                           <Label>BMI<i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="bmiinfo"></i></Label>
                           <UncontrolledTooltip
                             placementPrefix="al_bs_tooltip"
@@ -386,7 +380,7 @@ export default function Profile() {
                       <Col md="6" sm="12">
                         <div className="al_profiledata">
                           <div>
-                            {getProfileDetails?.insurance_provider || "NA"}
+                            {getProfileDetails?.insurance_provider || "N/A"}
                           </div>
                           <Label>Name of Insurance Provider</Label>
                         </div>
@@ -394,7 +388,7 @@ export default function Profile() {
                       <Col md="6" sm="12">
                         <div className="al_profiledata">
                           <div>
-                            {getProfileDetails?.insurance_policy_no || "NA"}
+                            {getProfileDetails?.insurance_policy_no || "N/A"}
                           </div>
                           <Label>Insurance Policy / Card Number</Label>
                         </div>
@@ -417,6 +411,7 @@ export default function Profile() {
                 {isEdit && (
                   <>
                     <Formik
+                      enableReinitialize
                       initialValues={{
                         username: getProfileDetails?.username !== "NA" ? getProfileDetails?.username : "",
                         email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email : "",
@@ -424,6 +419,7 @@ export default function Profile() {
                           getProfileDetails?.dob !== "NA"
                             ? getProfileDetails?.dob
                             : new Date(),
+                        // gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                         gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                         mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                         rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
@@ -500,7 +496,7 @@ export default function Profile() {
                         };
                         setFormData(data);
                         setGetProfileDetails(data);
-                        setUpdatedFile("");
+                        updatedFile("")
                       }}
                     >
                       {({
@@ -509,6 +505,7 @@ export default function Profile() {
                         errors,
                         touched,
                         setFieldTouched,
+                        dirty
                       }) => {
                         return (
                           <Form>
@@ -807,7 +804,7 @@ export default function Profile() {
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
-                                    Education
+                                    Highest Education
                                   </Label>
                                   {/* <Field
                                     type="text"
@@ -889,7 +886,7 @@ export default function Profile() {
                               </Col>
                             </Row>
                             <div className="mt-3">
-                              <button type="submit" className="al_savebtn">
+                              <button type="submit" disabled={!dirty && !updatedFile} className="al_savebtn">
                                 Save
                               </button>
                               <button

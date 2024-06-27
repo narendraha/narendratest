@@ -84,6 +84,21 @@ ul {
                     justify-content: center;
                 }
 
+                .al_accounttype {
+                    border-radius: 15px;
+                    padding: 30px;
+                    cursor: pointer;
+
+                    &:nth-of-type(1) {
+                        background: url("../../images/patientrole.svg") no-repeat bottom right 30px #E9EEF4;
+                        background-size: 80px;
+                    }
+                    &:nth-of-type(2) {
+                        background: url("../../images/physicianrole.svg") no-repeat bottom right 30px #E9EEF4;
+                        background-size: 80px;
+                    }
+                }
+
                 h5 {
                     span {
                         line-height: 1;

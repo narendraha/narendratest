@@ -16,13 +16,10 @@ export const getResidenceoptions = [
 
 // eductaion options
 export const getEductaionOptions = [
-    { value: "10th", label: "10th" },
-    { value: "12th", label: "12th" },
-    { value: "Diploma", label: "Diploma" },
-    { value: "Bachelor's Degree", label: "Bachelor's Degree" },
-    { value: "Master's Degree", label: "Master's Degree" },
-    { value: "PhD", label: "PhD" },
-    { value: "Other", label: "Other" },
+    { value: "High school", label: "High school" },
+    { value: "undergraduate", label: "undergraduate" },
+    { value: "graduate", label: "graduate" },
+    { value: "postgraduate", label: "postgraduate" },
 ];
 
 // custom pattens for custom validations

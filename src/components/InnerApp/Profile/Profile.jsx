@@ -806,12 +806,6 @@ export default function Profile() {
                                     <span className="requiredLabel">*</span>
                                     Highest Education
                                   </Label>
-                                  {/* <Field
-                                    type="text"
-                                    name="education"
-                                    placeholder="Enter Education"
-                                    className="form-control"
-                                  /> */}
                                   <Select
                                     options={educationOptions}
                                     name="education"

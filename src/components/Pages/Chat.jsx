@@ -31,7 +31,6 @@ export default function Chat() {
 
   let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
   const [isFormLoading, setIsFormLoading] = useState(false);
-
   // get questions using useeffect
   useEffect(() => {
     fetchProfileComplitionDetails()

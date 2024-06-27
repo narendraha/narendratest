@@ -25,7 +25,6 @@ export default function Chat() {
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [isFormLoading, setIsFormLoading] = useState(false);
-
   // get questions using useeffect
   useEffect(() => {
     getQuestion();

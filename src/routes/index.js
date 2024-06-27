@@ -44,6 +44,7 @@ import HistoryChatNew from "../components/Pages/HistoryChatNew";
 import Loading from "../components/InnerApp/LoadingComponent"
 import Terms from "../components/Terms/Terms";
 import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
+import ApproveUsers from "../components/Admin/ApproveUsers";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -71,12 +72,12 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="home" element={<Home />} />
               <Route path="transcriptsummary" element={<HistorySummary />} />
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
+              <Route path="approveusers" element={<ApproveUsers />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
               {/* <Route path="historychat" element={<HistoryChat />} /> */}
               <Route path="historychat" element={<HistoryChatNew />} />
               <Route path="*" element={<Navigate to="/home" />} />
-
             </Route>
           </>
         ) : (

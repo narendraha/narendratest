@@ -154,6 +154,18 @@
         }
     }
 
+    .modal-md, .modal-lg, .modal-xl {
+        max-width: 75% !important;
+    }
+
+    .modal-sm {
+        max-width: 50% !important;
+    }
+
+    .al_approveusers {
+        width: 150%;
+    }
+
     .w-50 {
         width: 80% !important;
     }
@@ -181,6 +193,10 @@
 
 @media screen and (max-width: 768px) {
 
+    .al_approveusers {
+        width: 200%;
+    }
+
     .w-80,
     .w-50 {
         width: 90% !important;
@@ -188,6 +204,14 @@
 
     .w-30 {
         width: 80% !important;
+    }
+
+    .modal-md, .modal-lg, .modal-xl {
+        max-width: 85% !important;
+    }
+
+    .modal-sm {
+        max-width: 70% !important;
     }
 
     button {
@@ -205,6 +229,14 @@
         font-size: 22px !important;
         line-height: normal;
         margin-top: 15px;
+    }
+
+    .al_approveusers {
+        width: 320%;
+    }
+
+    .flex-xs-column {
+        flex-direction: column;
     }
 
     .videobanner>div:first-child {
@@ -280,6 +312,10 @@
     .al_login_button {
         margin-bottom: 0 !important;
     }
+
+    .modal-sm, .modal-md, .modal-lg, .modal-xl {
+        max-width: 98% !important;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -336,10 +372,12 @@
     .al_hometabs .tab-content .tab-pane:nth-of-type(2) {
         >.d-flex {
             flex-direction: column;
+
             h5.mb-0 {
                 margin-bottom: 10px !important;
             }
         }
+
         >.row {
             flex-direction: column-reverse;
         }
@@ -349,7 +387,7 @@
         padding: 0 !important;
         min-width: 0 !important;
     }
-    
+
     .ms-4 {
         margin-left: 10px !important;
     }
@@ -412,12 +450,14 @@
         height: 85%;
     }
 }
+
 @media screen and (min-width: 767px) and (max-width: 1300px) {
     .rc-slider-mark {
         .rc-slider-mark-text {
             font-size: 8px !important;
         }
     }
+
     .al_symptoms .al_frequencylist label.btn {
         padding: 8px !important;
         font-size: 10px !important;

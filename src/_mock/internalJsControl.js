@@ -16,13 +16,10 @@ export const getResidenceoptions = [
 
 // eductaion options
 export const getEductaionOptions = [
-    { value: "10th", label: "10th" },
-    { value: "12th", label: "12th" },
-    { value: "Diploma", label: "Diploma" },
-    { value: "Bachelor's Degree", label: "Bachelor's Degree" },
-    { value: "Master's Degree", label: "Master's Degree" },
-    { value: "PhD", label: "PhD" },
-    { value: "Other", label: "Other" },
+    { value: "High school", label: "High school" },
+    { value: "undergraduate", label: "undergraduate" },
+    { value: "graduate", label: "graduate" },
+    { value: "postgraduate", label: "postgraduate" },
 ];
 
 // custom pattens for custom validations
@@ -70,9 +67,9 @@ const getProfileCompletionSUmmary = async (payload) => {
 
 export const getProfileCmpDetails = async (link, reOpenModel = false) => {
     let redirectionPath = "", modalMessage = "", isModalVisible = false, navigationLink = ""
-    let reqObj = ((link === "historychat") ? { history_chat: true } : (link === "transcriptsummary") ? { history_trans: true } : "")
+    let reqObj = ((link === "historychat") ? { history_chat: true } : (link === "transcriptsummary") ? { history_trans: true } : (link === "chat") ? { behavioural_chat: true } : "")
     const profileCompletion = reqObj && await getProfileCompletionSUmmary(reqObj);
-    console.log("profileCompletion_response=>", { link, profileCompletion })
+    console.log("profileCompletion_response=>", { reqObj, link, profileCompletion })
     if (profileCompletion?.status && profileCompletion?.data) {
         redirectionPath = { link: link, route: profileCompletion?.data?.web_redirection_key };
         if (!reOpenModel)

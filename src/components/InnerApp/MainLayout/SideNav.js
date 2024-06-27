@@ -136,10 +136,10 @@ export default function SideNav(props) {
     setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
   };
 
-  const handleMenuClick = async (link, reOpenModel = false) => {
+  const handleMenuClick = async (link) => {
     const result = await getProfileCmpDetails(link, false, true);
     setProfileCmpModalProps(result);
-    if (result?.navigationLink !== "")
+    if (result?.navigationLink && result?.navigationLink !== "")
       navigate(result?.navigationLink)
   };
 

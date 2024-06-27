@@ -13,7 +13,7 @@ export default function ModalView(props) {
     if (route === "home") {
       navigate(`/${route}`, { state: { activeTab: "3" }, replace: true })
       props?.handleClose(!props?.isModalVisible);
-    } else if (route === "historychat" && link === "transcriptsummary") {
+    } else if ((route === "historychat" && link === "transcriptsummary") || (route === "historychat" && link === "chat")) {
       props?.modelVisibleProp({ isModalVisible: true, path: route })
     } else {
       navigate(`/${route}`, { replace: true })

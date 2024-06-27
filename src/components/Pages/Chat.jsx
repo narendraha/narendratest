@@ -7,7 +7,10 @@ import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../images/userprofile.jpg";
+import ModalView from "../InnerApp/MainLayout/ModalView";
+import { getProfileCmpDetails } from '../../_mock/helperIndex';
 import Loading from "../InnerApp/LoadingComponent";
+
 export default function Chat() {
   pageTitle("Behavioural chat");
   const navigate = useNavigate();
@@ -24,11 +27,19 @@ export default function Chat() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [getProfileDetails, setGetProfileDetails] = useState([]);
+  const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
+
+  let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
   const [isFormLoading, setIsFormLoading] = useState(false);
   // get questions using useeffect
   useEffect(() => {
-    getQuestion();
+    fetchProfileComplitionDetails()
   }, []);
+
+  useEffect(() => {
+    if (navigationLink && navigationLink !== "")
+      getQuestion();
+  }, [navigationLink])
 
   const getRandomQuestion = (index) => {
     if (questions?.length > 0 && responseStatus !== 99) {
@@ -153,38 +164,65 @@ export default function Chat() {
       .catch((er) => { });
   };
 
+  const fetchProfileComplitionDetails = async (path = "", reOpenModel = false) => {
+    let link = reOpenModel ? path : 'chat'
+    const result = await getProfileCmpDetails(link);
+    setProfileCmpModalProps(result);
+    if (result?.navigationLink && result?.navigationLink !== "")
+      navigate(`/${result?.navigationLink}`)
+  };
+
+  const handleClose = _ => {
+    setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
+  }
+
+  const getIsmodalVisibleProp = (data) => {
+    if (data?.isModalVisible)
+      fetchProfileComplitionDetails(data?.path, true)
+  }
+
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
-    <div className="cs_homepage mt-0 h-100">
-      {isFormLoading && <Loading />}
-      <div className="w-50 al_chatbotauth p-0">
-        <div className="d-flex flex-column">
-          <div className="flex-grow-1 mt-3">
-            <div className="scrolldiv">
-              <Row className="mb-4 al_chatcontent">
-                <div>
-                  <img src={Chatbot} alt="Bot" />
-                </div>
-                <Col>
-                  <h6 className="mb-0">Alfred</h6>
+    <>
+      {isModalVisible && (
+        <ModalView
+          msg={modalMessage}
+          handleClose={handleClose}
+          isModalVisible={isModalVisible}
+          path={redirectionPath}
+          modelVisibleProp={getIsmodalVisibleProp}
+        />
+      )}
+      <div className="cs_homepage mt-0 h-100">
+        {isFormLoading && <Loading />}
+        <div className="w-50 al_chatbotauth p-0">
+          <div className="d-flex flex-column">
+            <div className="flex-grow-1 mt-3">
+              <div className="scrolldiv">
+                <Row className="mb-4 al_chatcontent">
                   <div>
-                    Welcome to the Patient Personality Questionnaire, my name
-                    Alfred and I'll be leading you through a series of 17
-                    behavioral questions! <br /> <br /> Please rate your
-                    agreement following questions on a scale of 1 to 10.
-                    'Strongly Disagree' correponds to a 1, while 'Strongly
-                    Agree' would be a 10.
-                    <br />
-                    <br />
-                    Let's get started!
+                    <img src={Chatbot} alt="Bot" />
                   </div>
-                </Col>
-              </Row>
-              {/*   * Loop the question it's stored in array[] and split the based on response
+                  <Col>
+                    <h6 className="mb-0">Alfred</h6>
+                    <div>
+                      Welcome to the Patient Personality Questionnaire, my name
+                      Alfred and I'll be leading you through a series of 17
+                      behavioral questions! <br /> <br /> Please rate your
+                      agreement following questions on a scale of 1 to 10.
+                      'Strongly Disagree' correponds to a 1, while 'Strongly
+                      Agree' would be a 10.
+                      <br />
+                      <br />
+                      Let's get started!
+                    </div>
+                  </Col>
+                </Row>
+                {/*   * Loop the question it's stored in array[] and split the based on response
                * again split the structure into "key and value" using Object method called entries
                * it convert into array so here split the param as ([key, value])
                */}
-              {/* {conversation.map((conv, index) => (
+                {/* {conversation.map((conv, index) => (
                 <div key={index}>
                   {conv.alfred && (
                     <p>
@@ -198,98 +236,99 @@ export default function Chat() {
                   )}
                 </div>
               ))} */}
-              {Array?.isArray(conversation) &&
-                conversation?.length > 0 &&
-                conversation?.map((message, index) => (
-                  <React.Fragment key={index}>
-                    <Row className={"mb-4 al_chatcontent" + (message.user ? " al_usermsg" : "")} key={index}>
-                      <div>
-                        {message.user ? (
-                          <img
-                            src={profilePicture}
-                            alt="chat user"
-                            className="al_chatimg"
-                          />
-                        ) : message.alfred ? (
-                          <img src={Chatbot} alt="Bot" />
-                        ) : null}
-                      </div>
-                      <Col>
-                        {message.alfred && (
-                          <>
-                            <h6 className="mb-0">Alfred:</h6> <div>{message.alfred}</div>
-                          </>
-                        )}
-                        {message.user !== undefined && (
-                          <>
-                            <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
-                          </>
-                        )}
-                      </Col>
-                    </Row>
-                  </React.Fragment>
-                ))}
-              {isLoading && <div className="al_chatloading"></div>}
-              <div ref={messagesEndRef} />
+                {Array?.isArray(conversation) &&
+                  conversation?.length > 0 &&
+                  conversation?.map((message, index) => (
+                    <React.Fragment key={index}>
+                      <Row className={"mb-4 al_chatcontent" + (message.user ? " al_usermsg" : "")} key={index}>
+                        <div>
+                          {message.user ? (
+                            <img
+                              src={profilePicture}
+                              alt="chat user"
+                              className="al_chatimg"
+                            />
+                          ) : message.alfred ? (
+                            <img src={Chatbot} alt="Bot" />
+                          ) : null}
+                        </div>
+                        <Col>
+                          {message.alfred && (
+                            <>
+                              <h6 className="mb-0">Alfred:</h6> <div>{message.alfred}</div>
+                            </>
+                          )}
+                          {message.user !== undefined && (
+                            <>
+                              <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
+                            </>
+                          )}
+                        </Col>
+                      </Row>
+                    </React.Fragment>
+                  ))}
+                {isLoading && <div className="al_chatloading"></div>}
+                <div ref={messagesEndRef} />
+              </div>
             </div>
-          </div>
-          <div className="cs_mainsearch my-3">
-            {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
-            {responseStatus === 99 ? (
-              <div className="mt-3 d-flex align-items-center justify-content-center">
-                <button
-                  type="submit"
-                  className="al_greybgbutton"
-                  onClick={() => navigate("/home")}
-                >
-                  Go to Dashboard
-                </button>
-              </div>
-            ) : (
-              <div className="cs_mainsearch">
-                <form action="#">
-                  <i className="icon_alfred_search h-auto"></i>
-                  <input
-                    type="text"
-                    placeholder="Ask a question"
-                    name="message"
-                    value={userValue} // input value
-                    onChange={handleInputChange} // handle changes
-                    disabled={isInputShow} //Disabled once input value is submitted
-                    ref={inputRef}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault(); // Prevent default form submission behavior
-                        handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
-                      }
-                    }}
-                  />
-                  {isShow ? (
-                    <>
-                      <i
-                        className="icon_alfred_close"
-                        onClick={(e) => {
-                          setUserValue("");
-                        }}
-                      ></i>
-                      <i
-                        className="icon_alfred_sendmsg"
-                        style={{
-                          height: "auto",
-                          pointerEvents: isInputShow ? "none" : "",
-                        }}
-                        onClick={(e) => handleFormSubmit(e)}
-                      ></i>
-                    </>
-                  ) : (
-                    <i className="icon_alfred_speech h-auto"></i>
-                  )}
-                </form>
-              </div>
-            )}
+            <div className="cs_mainsearch my-3">
+              {/* Once it reach the end of lenght it will show "Go to Dashboard" button or else it show input with condition based ICONS */}
+              {responseStatus === 99 ? (
+                <div className="mt-3 d-flex align-items-center justify-content-center">
+                  <button
+                    type="submit"
+                    className="al_greybgbutton"
+                    onClick={() => navigate("/home")}
+                  >
+                    Go to Dashboard
+                  </button>
+                </div>
+              ) : (
+                <div className="cs_mainsearch">
+                  <form action="#">
+                    <i className="icon_alfred_search h-auto"></i>
+                    <input
+                      type="text"
+                      placeholder="Ask a question"
+                      name="message"
+                      value={userValue} // input value
+                      onChange={handleInputChange} // handle changes
+                      disabled={isInputShow} //Disabled once input value is submitted
+                      ref={inputRef}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault(); // Prevent default form submission behavior
+                          handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+                        }
+                      }}
+                    />
+                    {isShow ? (
+                      <>
+                        <i
+                          className="icon_alfred_close"
+                          onClick={(e) => {
+                            setUserValue("");
+                          }}
+                        ></i>
+                        <i
+                          className="icon_alfred_sendmsg"
+                          style={{
+                            height: "auto",
+                            pointerEvents: isInputShow ? "none" : "",
+                          }}
+                          onClick={(e) => handleFormSubmit(e)}
+                        ></i>
+                      </>
+                    ) : (
+                      <i className="icon_alfred_speech h-auto"></i>
+                    )}
+                  </form>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -9,6 +9,15 @@ export function allowsOnlyNumeric(e) {
     }
 }
 
+export function allowsOnlyNumericOnly4Digit(e) {
+    const re = /^[0-9\b]+$/;
+
+    // Prevent the input value
+    if (!re.test(e.key) || (e.target.value.length >= 4 && e.key !== 'Backspace')) {
+        e.preventDefault();
+    }
+}
+
 export function allowsOnlyNumericOnly3Digit(e) {
     const re = /^[0-9\b]+$/;
 

@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 import { Card, CardBody, Col, FormGroup, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane, Table } from "reactstrap";
 import * as Yup from "yup";
 import {
-  allowsOnlyNumericOnly3Digit
+  allowsOnlyNumericOnly3Digit,
+  allowsOnlyNumericOnly4Digit,
 } from "../../../_mock/RegularExp";
 import { AxiosInstance } from "../../../_mock/utilities";
 import atrialfib from "../../../images/atrialfib.png";
@@ -1044,18 +1045,18 @@ export default function Home() {
                         }}
                         validationSchema={Yup.object().shape({
                           weight: Yup.number()
-                            .min(10, "Weight must be at least 10")
-                            .max(650, "Weight is too high!")
+                            .min(22, "Weight must be at least 22 lbs")
+                            .max(1400, "Weight is too high!")
                             .required("This field is required"),
                           // height: Yup.number()
                           //   .typeError("Must be a number")
                           //   .required("This field is required"),
                           systolic: Yup.number()
-                            .max(200, "Systolic is too high!")
-                            .required("This field is required"),
+                            .max(370, "Systolic is too high!")
+                            .required("Systolic is required"),
                           diastolic: Yup.number().when('systolic', {
-                            is: (systolic) => systolic,
-                            then: Yup.number().max(120, "Diastolic is Too high!").required("This field is required"),
+                            is: (systolic) => systolic <= 370,
+                            then: Yup.number().max(360, "Diastolic is Too high!").required("Diastolic is required"),
                             otherWise: Yup.number().optional()
                           }),
                           // diastolic: Yup.number()
@@ -1147,7 +1148,7 @@ export default function Home() {
                                         placeholder="100"
                                         className="form-control"
                                         onKeyPress={(e) =>
-                                          allowsOnlyNumericOnly3Digit(e)
+                                          allowsOnlyNumericOnly4Digit(e)
                                         }
                                       />
                                       <ErrorMessage
@@ -2623,7 +2624,7 @@ export default function Home() {
                           </div>
                           <div>
                             <strong>Education: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N?A"}</span>
+                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N/A"}</span>
                           </div>
                         </Col>
                         <Col lg="8" sm="6">

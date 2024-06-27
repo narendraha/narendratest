@@ -187,7 +187,6 @@ export default function Register() {
                             name="username"
                             placeholder="Enter Full Name"
                             className="form-control"
-                            disabled={true}
                           />
                           <ErrorMessage
                             name="username"
@@ -328,14 +327,8 @@ export default function Register() {
                         </FormGroup>
                         <FormGroup>
                           <Label>
-                            <span className="requiredLabel">*</span>Education
+                            <span className="requiredLabel">*</span>Highest Education
                           </Label>
-                          {/* <Field
-                          type="text"
-                          name="education"
-                          placeholder="Enter Education"
-                          className="form-control"
-                        /> */}
                           <Select
                             options={educationOptions}
                             name="education"
@@ -992,6 +985,7 @@ export default function Register() {
     let data = {
       email: values?.email,
       username: values?.username,
+      mobile: values?.mobile
     };
     resendOtp(data);
   };

@@ -60,6 +60,7 @@ export default function HistoryChatBot() {
 
   // get questions using useeffect
   useEffect(() => {
+    setIsFormLoading(true);
     if (navigationLink && navigationLink !== "") {
       setIsFormLoading(true);
       setQuestions([]);

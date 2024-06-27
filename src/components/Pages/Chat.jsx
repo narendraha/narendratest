@@ -33,6 +33,7 @@ export default function Chat() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   // get questions using useeffect
   useEffect(() => {
+    setIsFormLoading(true);
     fetchProfileComplitionDetails()
   }, []);
 

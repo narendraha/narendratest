@@ -7,9 +7,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { toast } from "react-toastify";
-import { Card, CardBody, Col, FormGroup, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane, Table } from "reactstrap";
-import * as Yup from "yup";
 import {
+  Card,
+  CardBody,
+  Col,
+  FormGroup,
+  Label,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+  Table,
+} from "reactstrap";
+import * as Yup from "yup";
+import { 
   allowsOnlyNumericOnly3Digit,
   allowsOnlyNumericOnly4Digit,
 } from "../../../_mock/RegularExp";
@@ -23,21 +36,23 @@ import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
 import moment from "moment";
 import { useLocation } from "react-router";
-import riskmanagement from '../../../images/riskmanagement.png';
-import riskmanagement2 from '../../../images/riskmanagement2.jpg';
-import riskmanagement3 from '../../../images/riskmanagement3.jpg';
+import riskmanagement from "../../../images/riskmanagement.png";
+import riskmanagement2 from "../../../images/riskmanagement2.jpg";
+import riskmanagement3 from "../../../images/riskmanagement3.jpg";
 // import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
 export const EGoalTimePeriod = {
   WEEKWISE: 0,
   DAYSWISE: 1,
-  MONTHWISE: 2
-}
+  MONTHWISE: 2,
+};
 
 export default function Home() {
   // const navigate = useNavigate();
   const location = useLocation();
   const [getTabStatus, setGetStatus] = useState({});
-  const [tab, setTab] = useState(location?.state?.activeTab ? location?.state?.activeTab : "1");
+  const [tab, setTab] = useState(
+    location?.state?.activeTab ? location?.state?.activeTab : "1"
+  );
   const [labelValues, setLabelValues] = useState(0);
   const [labelValues1, setLabelValues1] = useState(0);
   const [labelValues2, setLabelValues2] = useState(0);
@@ -55,14 +70,17 @@ export default function Home() {
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   // chart
   const [chartOptions, setChartOptions] = useState(null);
-  const [symptomData, getSymptomData] = useState([])
-
+  const [symptomData, getSymptomData] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   // chart end
 
-  const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(EGoalTimePeriod.WEEKWISE);
+  const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(
+    EGoalTimePeriod.WEEKWISE
+  );
   // symptoms
   const [breathlessness, setBreathlessness] = useState({
     breathnessda: { frequency: "" },
@@ -79,7 +97,10 @@ export default function Home() {
     syncope: { frequency: "" },
     tirednessafterwards: { frequency: "" },
   });
-  const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({ patientDetails: null, symptomsDetails: null })
+  const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({
+    patientDetails: null,
+    symptomsDetails: null,
+  });
 
   const handleFrequencyChange = (category, value) => {
     setBreathlessness((prevState) => ({
@@ -358,7 +379,7 @@ export default function Home() {
               });
               changeStatus();
               setTab("4");
-              getPatientDetails()
+              getPatientDetails();
             } else {
               toast(res.data?.message, {
                 position: "top-right",
@@ -381,53 +402,42 @@ export default function Home() {
   //     setTab("3");
   //   }
   // };
-
+  const fetchData = async (data) => {
+    let graphData = {
+      start_date: data?.start_date,
+      end_date: data?.end_date,
+    };
+    AxiosInstance("application/json")
+      .post(`/health_details_graph`, graphData)
+      .then((res) => {
+        if (res && res.data && res.status === 200) {
+          if (res.data?.statuscode === 200) {
+            const data = res?.data?.data || [];
+            getSymptomData(data);
+          } else {
+            toast(res.data?.message, {
+              position: "top-right",
+              type: "error",
+            });
+          }
+        }
+      })
+      .catch((er) => {
+        toast(er?.response?.data?.message, {
+          position: "top-right",
+          type: "error",
+        });
+      });
+  };
   useEffect(() => {
     getPatientDetails();
-    const fetchData = async () => {
-      AxiosInstance("application/json")
-        .post(`/health_details_graph`, {})
-        .then((res) => {
-          if (res && res.data && res.status === 200) {
-            if (res.data?.statuscode === 200) {
-              const data = res?.data?.data || [];
-              getSymptomData(data);
-            } else {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "error",
-              });
-            }
-          }
-        })
-        .catch((er) => {
-          toast(er?.response?.data?.message, {
-            position: "top-right",
-            type: "error",
-          });
-        });
-      // try {
-      //   const response = await axios.post(
-      //     `http://74.249.108.44:3002/api/query_symptoms`,
-      //     {
-      //       patient_id: "ba91af80-5b32-4856",
-      //       // start_date: !startDate ? moment(new Date()).format("YYYY-MM-DD") : moment(startDate).format("YYYY-MM-DD"),
-      //       // end_date: !endDate ? moment(new Date()).format("YYYY-MM-DD") : moment(endDate).format("YYYY-MM-DD"),
-      //     }
-      //   );
-      //   const data = response?.data?.data || [];
-      //   getSymptomData(data);
-      // } catch (error) {
-      //   console.error("Error fetching data:", error);
-      // }
-    };
-
-    fetchData();
   }, []);
-
-
+  useEffect(() => {
+    if (tab === "2") {
+      fetchData();
+    }
+  }, [tab]);
   // Format dates in YYYY-MM-DD format
-
 
   useEffect(() => {
     if (!symptomData || !symptomData.length) {
@@ -435,7 +445,9 @@ export default function Home() {
       return;
     }
     // Extract unique dates from data
-    const uniqueDates = Array.from(new Set(symptomData?.length > 0 && symptomData.map((item) => item.tdate)));
+    const uniqueDates = Array.from(
+      new Set(symptomData?.length > 0 && symptomData.map((item) => item.tdate))
+    );
 
     // Sort unique dates in ascending order
     // uniqueDates.sort();
@@ -492,6 +504,9 @@ export default function Home() {
         title: {
           text: "Blood Pressure (BPM)",
         },
+      },
+      credits: {
+        enabled: false, // Hides the Highcharts watermark
       },
       tooltip: {
         formatter: function () {
@@ -657,7 +672,7 @@ export default function Home() {
       let finalData = {
         ...healthDetails,
         tdate: moment(healthDetails?.tdate).format("YYYY-MM-DD"),
-        bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`
+        bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`,
       };
       delete finalData?.isCheckMedicalRecords;
       delete finalData?.systolic;
@@ -692,13 +707,13 @@ export default function Home() {
   };
 
   const getTabListStatus = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     await AxiosInstance("application/json")
       .get("/getstatus")
       .then((response) => {
         if (response && response?.status == 200) {
           setGetStatus(response.data?.data);
-          setIsLoading(false)
+          setIsLoading(false);
         }
       })
       .catch((er) => {
@@ -748,7 +763,7 @@ export default function Home() {
             //   position: "top-right",
             //   type: "success",
             // });
-            getTabListStatus()
+            getTabListStatus();
           } else {
             // toast(res.data?.message, {
             //   position: "top-right",
@@ -781,8 +796,8 @@ export default function Home() {
       .get("/userdetails")
       .then((response) => {
         if (response && response?.status == 200) {
-          setPatientAndSymptomsDetails({ patientDetails: response.data?.data })
-          setIsLoading(false)
+          setPatientAndSymptomsDetails({ patientDetails: response.data?.data });
+          setIsLoading(false);
         }
       })
       .catch((er) => {
@@ -791,10 +806,10 @@ export default function Home() {
           type: "error",
         });
       });
-  }
+  };
 
   useEffect(() => {
-    setTab(location?.state?.activeTab ? location?.state?.activeTab : "1")
+    setTab(location?.state?.activeTab ? location?.state?.activeTab : "1");
   }, [location]);
 
   return (
@@ -804,8 +819,8 @@ export default function Home() {
           isShowconfirm
             ? handleSubmit
             : show1
-              ? handlehealthHub
-              : show2 && handleHeathDetails
+            ? handlehealthHub
+            : show2 && handleHeathDetails
         }
         open={isShowconfirm || show1 || show2}
       />
@@ -826,7 +841,13 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className={getTabStatus?.health_hub === 1 ? "active" : ""}>H</span>
+                      <span
+                        className={
+                          getTabStatus?.health_hub === 1 ? "active" : ""
+                        }
+                      >
+                        H
+                      </span>
                       <span className="d-none d-sm-block">Health Hub</span>
                       {/* <i className="icon_alfred_back-arrow"></i> */}
                     </div>
@@ -840,7 +861,13 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className={getTabStatus?.expert_monitoring === 1 ? "active" : ""}>E</span>
+                      <span
+                        className={
+                          getTabStatus?.expert_monitoring === 1 ? "active" : ""
+                        }
+                      >
+                        E
+                      </span>
                       <span className="d-none d-sm-block">
                         Expert Monitoring
                       </span>
@@ -855,7 +882,13 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className={getTabStatus?.list_your_symptoms === 1 ? "active" : ""}>L</span>
+                      <span
+                        className={
+                          getTabStatus?.list_your_symptoms === 1 ? "active" : ""
+                        }
+                      >
+                        L
+                      </span>
                       <span className="d-none d-sm-block">
                         List your Symptoms
                       </span>
@@ -867,11 +900,17 @@ export default function Home() {
                     className={tab === "4" ? "active" : ""}
                     onClick={() => {
                       setTab("4");
-                      getPatientDetails()
+                      getPatientDetails();
                     }}
                   >
                     <div>
-                      <span className={getTabStatus?.lifestyle_goals === 1 ? "active" : ""}>L</span>
+                      <span
+                        className={
+                          getTabStatus?.lifestyle_goals === 1 ? "active" : ""
+                        }
+                      >
+                        L
+                      </span>
                       <span className="d-none d-sm-block">Lifestyle Goals</span>
                     </div>
                   </NavLink>
@@ -884,7 +923,15 @@ export default function Home() {
                     }}
                   >
                     <div>
-                      <span className={getTabStatus?.optimal_risk_managemment === 1 ? "active" : ""}>O</span>
+                      <span
+                        className={
+                          getTabStatus?.optimal_risk_managemment === 1
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        O
+                      </span>
                       <span className="d-none d-sm-block">
                         Optimal Risk Management
                       </span>
@@ -901,48 +948,67 @@ export default function Home() {
                         <Col sm="6">
                           <div className="mb-4">
                             <h6>Understand Atrial fibrillation(AF)</h6>
-                            <img src={atrialfib} alt="" style={{ height: "120px", objectFit: "contain" }} />
+                            <img
+                              src={atrialfib}
+                              alt=""
+                              style={{ height: "120px", objectFit: "contain" }}
+                            />
                             <p className="mt-3">
                               Atrial fibrillation (AF) is a type of arrhythmia,
-                              which means that the heart beats fast and irregularly.
-                              The risk of AF increases markedly with age. Some of
-                              the known causes of AF include chronic high blood
-                              pressure, heart valve diseases and hyperthyroidism.
+                              which means that the heart beats fast and
+                              irregularly. The risk of AF increases markedly
+                              with age. Some of the known causes of AF include
+                              chronic high blood pressure, heart valve diseases
+                              and hyperthyroidism.
                             </p>
                           </div>
                         </Col>
                         <Col sm="6">
                           <div className="mb-4">
                             <h6>Why treatment?</h6>
-                            <img src={whytreatment} alt="" style={{ height: "120px", objectFit: "contain" }} />
+                            <img
+                              src={whytreatment}
+                              alt=""
+                              style={{ height: "120px", objectFit: "contain" }}
+                            />
                             <p className="mt-3">
-                              The way the heart beats in atrial fibrillation means
-                              there's a risk of blood clots forming in the heart
-                              chambers. If these enter the bloodstream, they can
-                              cause a stroke. Your doctor will assess and discuss
-                              your risk with you, and try to minimise your chance of
-                              having a stroke.
+                              The way the heart beats in atrial fibrillation
+                              means there's a risk of blood clots forming in the
+                              heart chambers. If these enter the bloodstream,
+                              they can cause a stroke. Your doctor will assess
+                              and discuss your risk with you, and try to
+                              minimise your chance of having a stroke.
                             </p>
                           </div>
                         </Col>
                         <Col sm="6">
                           <div className="mb-4">
                             <h6>Rhythm</h6>
-                            <img src={rhythm} alt="" style={{ height: "120px", objectFit: "contain" }} />
+                            <img
+                              src={rhythm}
+                              alt=""
+                              style={{ height: "120px", objectFit: "contain" }}
+                            />
                             <p className="mt-3">
-                              Atrial fibrillation (Afib) is an irregular and often
-                              very rapid heart rhythm. An irregular heart rhythm is
-                              called an arrhythmia. Afib can lead to blood clots in
-                              the heart. The condition also increases the risk of
-                              stroke, heart failure and other heart-related
-                              complications.
+                              Atrial fibrillation (Afib) is an irregular and
+                              often very rapid heart rhythm. An irregular heart
+                              rhythm is called an arrhythmia. Afib can lead to
+                              blood clots in the heart. The condition also
+                              increases the risk of stroke, heart failure and
+                              other heart-related complications.
                             </p>
                           </div>
                         </Col>
                       </Row>
                     </Col>
                     <Col lg="5" sm="12">
-                      <Card className="al_cardnoborder" style={{ backgroundColor: "#F7F7F7", boxShadow: "none" }}>
+                      <Card
+                        className="al_cardnoborder"
+                        style={{
+                          backgroundColor: "#F7F7F7",
+                          boxShadow: "none",
+                        }}
+                      >
                         <CardBody>
                           <h6>Videos</h6>
                           <Row className="mt-3 al_knowldgebank">
@@ -960,7 +1026,26 @@ export default function Home() {
                                   ></iframe>
                                   <div className="mt-2">
                                     Text of the printing and typesetting
-                                    industry.Text of the printing and typesetting
+                                    industry.Text of the printing and
+                                    typesetting industry.
+                                  </div>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                            <Col sm="6" className="mb-3">
+                              <Card className="al_cardnoborder h-100">
+                                <CardBody>
+                                  <iframe
+                                    width="100%"
+                                    height="130"
+                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                  ></iframe>
+                                  <div className="mt-2">
+                                    Text of the printing and typesetting
                                     industry.
                                   </div>
                                 </CardBody>
@@ -979,25 +1064,8 @@ export default function Home() {
                                     allowFullScreen
                                   ></iframe>
                                   <div className="mt-2">
-                                    Text of the printing and typesetting industry.
-                                  </div>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                            <Col sm="6" className="mb-3">
-                              <Card className="al_cardnoborder h-100">
-                                <CardBody>
-                                  <iframe
-                                    width="100%"
-                                    height="130"
-                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                    title="YouTube video player"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                  ></iframe>
-                                  <div className="mt-2">
-                                    Text of the printing and typesetting industry.
+                                    Text of the printing and typesetting
+                                    industry.
                                   </div>
                                 </CardBody>
                               </Card>
@@ -1024,9 +1092,16 @@ export default function Home() {
                     <h5 className="mb-0">Health details </h5>
                     {getLastUpdated?.difference >= 0 ? (
                       <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
-                        <img src={bulp} alt="" width={20} />You, Last gave your symptoms{" "}
-                        <span style={{ color: '#3bc0c3' }}> {getLastUpdated?.difference}</span> days ago on<span style={{ color: '#3bc0c3' }}>
-                          {getLastUpdated?.date}</span>
+                        <img src={bulp} alt="" width={20} />
+                        You, Last gave your symptoms{" "}
+                        <span style={{ color: "#3bc0c3" }}>
+                          {" "}
+                          {getLastUpdated?.difference}
+                        </span>{" "}
+                        days ago on
+                        <span style={{ color: "#3bc0c3" }}>
+                          {getLastUpdated?.date}
+                        </span>
                       </div>
                     ) : null}
                   </div>
@@ -1106,15 +1181,19 @@ export default function Home() {
                                     name="tdate"
                                     placeholderText="Select date"
                                     popperPlacement="auto"
-                                    popperModifiers={[{
-                                      flip: {
-                                        behavior: ["bottom"],
+                                    popperModifiers={[
+                                      {
+                                        flip: {
+                                          behavior: ["bottom"],
+                                        },
+                                        preventOverflow: {
+                                          enabled: false,
+                                        },
                                       },
-                                      preventOverflow: {
-                                        enabled: false,
-                                      },
-                                    }]}
-                                    selected={values?.tdate ? values?.tdate : new Date()}
+                                    ]}
+                                    selected={
+                                      values?.tdate ? values?.tdate : new Date()
+                                    }
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);
                                     }}
@@ -1123,7 +1202,9 @@ export default function Home() {
                                     )}
                                     dateFormat={"MM/dd/yyyy"}
                                     maxDate={new Date()}
-                                    onBlur={() => setFieldTouched("tdate", true)}
+                                    onBlur={() =>
+                                      setFieldTouched("tdate", true)
+                                    }
                                     autoComplete="off"
                                     showMonthDropdown
                                     showYearDropdown
@@ -1139,7 +1220,10 @@ export default function Home() {
                               <Row>
                                 <Col xl="4" lg="6" sm="4" className="mb-3">
                                   <div className="al_vitalunits h-100">
-                                    <i className="icon_alfred_weight" style={{ color: "#9086f7" }}></i>
+                                    <i
+                                      className="icon_alfred_weight"
+                                      style={{ color: "#9086f7" }}
+                                    ></i>
                                     <FormGroup className="mb-0">
                                       <Label>Weight</Label>
                                       <Field
@@ -1162,7 +1246,10 @@ export default function Home() {
                                 </Col>
                                 <Col xl="4" lg="6" sm="4" className="mb-3">
                                   <div className="al_vitalunits h-100">
-                                    <i className="icon_alfred_bp" style={{ color: "#efbc06" }}></i>
+                                    <i
+                                      className="icon_alfred_bp"
+                                      style={{ color: "#efbc06" }}
+                                    ></i>
                                     <FormGroup className="mb-0">
                                       <Label>Blood Pressure</Label>
                                       <div className="d-flex gap-2">
@@ -1206,7 +1293,10 @@ export default function Home() {
                                 </Col>
                                 <Col xl="4" lg="6" sm="4" className="mb-3">
                                   <div className="al_vitalunits h-100">
-                                    <i className="icon_alfred_pulse" style={{ color: "#7ff1e4" }}></i>
+                                    <i
+                                      className="icon_alfred_pulse"
+                                      style={{ color: "#7ff1e4" }}
+                                    ></i>
                                     <FormGroup className="mb-0">
                                       <Label>Pulse</Label>
                                       <Field
@@ -1276,17 +1366,170 @@ export default function Home() {
                       </Formik>
                     </Col>
                     <Col lg="6" sm="12">
+                      {/* 
+                        * old graph
                       <div
                         id="expertmonitoringgraph"
                         style={{ height: "350px" }}
-                      ></div>
-                      {/* {Array.isArray(symptomData) && symptomData?.length >0  ?
-                          <>
-                            {chartOptions && (
-                              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-                            )}
-                          </>
-                          : <div>No date found!!</div>} */}
+                      ></div> */}
+                      <Formik
+                        initialValues={{
+                          start_date: null,
+                          end_date: null,
+                        }}
+                        validationSchema={Yup.object().shape({
+                          start_date: Yup.date()
+                            .nullable()
+                            .required("Start Date is required"),
+                          end_date: Yup.date()
+                            .nullable()
+                            .min(
+                              Yup.ref("start_date"),
+                              "End Date should be greater than or equal to Start Date"
+                            )
+                            .max(
+                              new Date(),
+                              "End Date should not be in the future"
+                            )
+                            .required("End Date is required"),
+                        })}
+                        onSubmit={(values) => {
+                          let data = {
+                            start_date: moment(values.start_date).format(
+                              "YYYY-MM-DD"
+                            ),
+                            end_date: moment(values.end_date).format(
+                              "YYYY-MM-DD"
+                            ),
+                          };
+                          fetchData(data);
+                        }}
+                      >
+                        {({
+                          values,
+                          setFieldValue,
+                          errors,
+                          touched,
+                          setFieldTouched,
+                        }) => {
+                          return (
+                            <Form>
+                              <div className="d-flex justify-content-evenly">
+                                <div>
+                                  <FormGroup>
+                                    <Label>
+                                      <span className="requiredLabel">*</span>
+                                      Start Date:
+                                    </Label>
+                                    <DatePicker
+                                      className="form-control al_calendarIcon"
+                                      name="start_date"
+                                      placeholderText="Select start date"
+                                      popperPlacement="auto"
+                                      popperModifiers={[
+                                        {
+                                          flip: {
+                                            behavior: ["bottom"],
+                                          },
+                                          preventOverflow: {
+                                            enabled: false,
+                                          },
+                                        },
+                                      ]}
+                                      selected={
+                                        values?.start_date
+                                          ? new Date(values?.start_date)
+                                          : null
+                                      }
+                                      onChange={(date) =>
+                                        setFieldValue("start_date", date)
+                                      }
+                                      onBlur={() =>
+                                        setFieldTouched("start_date", true)
+                                      }
+                                      dateFormat="yyyy/MM/dd"
+                                      maxDate={new Date()}
+                                      autoComplete="off"
+                                      showMonthDropdown
+                                      showYearDropdown
+                                      dropdownMode="select"
+                                    />
+                                    <ErrorMessage
+                                      name="start_date"
+                                      component={"div"}
+                                      className="text-danger"
+                                    />
+                                  </FormGroup>
+                                </div>
+                                <div style={{ marginLeft: "10px" }}>
+                                  <FormGroup>
+                                    <Label>
+                                      <span className="requiredLabel">*</span>
+                                      End Date:
+                                    </Label>
+                                    <DatePicker
+                                      className="form-control al_calendarIcon"
+                                      name="end_date"
+                                      placeholderText="Select end date"
+                                      popperPlacement="auto"
+                                      popperModifiers={[
+                                        {
+                                          flip: {
+                                            behavior: ["bottom"],
+                                          },
+                                          preventOverflow: {
+                                            enabled: false,
+                                          },
+                                        },
+                                      ]}
+                                      selected={
+                                        values?.end_date
+                                          ? new Date(values?.end_date)
+                                          : null
+                                      }
+                                      onChange={(date) =>
+                                        setFieldValue("end_date", date)
+                                      }
+                                      onBlur={() =>
+                                        setFieldTouched("end_date", true)
+                                      }
+                                      dateFormat="yyyy/MM/dd"
+                                      maxDate={new Date()}
+                                      autoComplete="off"
+                                      showMonthDropdown
+                                      showYearDropdown
+                                      dropdownMode="select"
+                                    />
+                                    <ErrorMessage
+                                      name="end_date"
+                                      component={"div"}
+                                      className="text-danger"
+                                    />
+                                  </FormGroup>
+                                </div>
+                                <div className="d-flex align-items-center justify-content-end mx-1 mt-3">
+                                  <button type="submit" className="al_savebtn">
+                                    Submit
+                                  </button>
+                                </div>
+                              </div>
+                            </Form>
+                          );
+                        }}
+                      </Formik>
+
+                      {Array.isArray(symptomData) && symptomData?.length > 0 ? (
+                        <>
+                          {chartOptions && (
+                            <HighchartsReact
+                              highcharts={Highcharts}
+                              options={chartOptions}
+                            />
+                          )}
+                        </>
+                      ) : (
+                        <div>No date found!!</div>
+                      )}
                     </Col>
                   </Row>
                 </TabPane>
@@ -1312,11 +1555,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.breathnessda.frequency ===
+                                    className={`btn ${
+                                      breathlessness.breathnessda.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1408,11 +1652,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.breathnessea.frequency ===
+                                    className={`btn ${
+                                      breathlessness.breathnessea.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1504,11 +1749,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.dizziness.frequency ===
+                                    className={`btn ${
+                                      breathlessness.dizziness.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1600,11 +1846,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.col_swet.frequency ===
+                                    className={`btn ${
+                                      breathlessness.col_swet.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1696,11 +1943,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.p_tiredness.frequency ===
+                                    className={`btn ${
+                                      breathlessness.p_tiredness.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1792,11 +2040,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.chest_pain.frequency ===
+                                    className={`btn ${
+                                      breathlessness.chest_pain.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1888,11 +2137,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.pressurechest.frequency ===
+                                    className={`btn ${
+                                      breathlessness.pressurechest.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -1984,11 +2234,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.worry.frequency ===
+                                    className={`btn ${
+                                      breathlessness.worry.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2080,11 +2331,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.weakness.frequency ===
+                                    className={`btn ${
+                                      breathlessness.weakness.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2176,11 +2428,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.infirmity.frequency ===
+                                    className={`btn ${
+                                      breathlessness.infirmity.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2272,11 +2525,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.nsynacpe.frequency ===
+                                    className={`btn ${
+                                      breathlessness.nsynacpe.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2368,11 +2622,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.syncope.frequency ===
+                                    className={`btn ${
+                                      breathlessness.syncope.frequency ===
                                       frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2464,11 +2719,12 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${breathlessness.tirednessafterwards
-                                      .frequency === frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`btn ${
+                                      breathlessness.tirednessafterwards
+                                        .frequency === frequency
+                                        ? "active"
+                                        : ""
+                                    }`}
                                   >
                                     <input
                                       type="radio"
@@ -2627,19 +2883,87 @@ export default function Home() {
                             <span>{patientAndSymptomsDetails?.patientDetails?.education || "N/A"}</span>
                           </div>
                         </Col>
-                        <Col lg="8" sm="6">
-                          <h6 className="mt-3 mb-2">Your Medication</h6>
-                          <Row>
-                            <Col lg="6" sm="12">
-                              <Table borderless responsive>
-                                <thead>
-                                  <tr>
-                                    <th>Symptoms</th>
-                                    <th className="w-25">Range</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Exercise</span>
+                            <input type="checkbox" name="exercise" />
+                          </Label>
+                        </Col>
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Weight</span>
+                            <input type="checkbox" name="weight" />
+                          </Label>
+                        </Col>
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Blood pressure</span>
+                            <input type="checkbox" name="bloodpressure" />
+                          </Label>
+                        </Col>
+                      </Row>
+                      <hr />
+                      <div className="mt-4">
+                        <Row className="mb-3">
+                          <Col lg="4" sm="6">
+                            <p className="al_note">Your Details</p>
+                            <h5 className="mb-2 text-capitalize">
+                              Hello,{" "}
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.username || "N/A"}
+                              !
+                            </h5>
+                            <div>
+                              <strong>Age: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.age || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Gender: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.gender || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Residence type: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.rtype || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Education: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.education || "N?A"}
+                              </span>
+                            </div>
+                          </Col>
+                          <Col lg="8" sm="6">
+                            <h6 className="mt-3 mb-2">Your Medication</h6>
+                            <Row>
+                              <Col lg="6" sm="12">
+                                <Table borderless responsive>
+                                  <thead>
+                                    <tr>
+                                      <th>Symptoms</th>
+                                      <th className="w-25">Range</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
                                 return (
                                   <>
                                     <tr>
@@ -2649,56 +2973,92 @@ export default function Home() {
                                   </>
                                 )
                               })} */}
-                                  <tr>
-                                    <td>Breathlessness even at rest</td>
-                                    <td className="text-warning">Moderate</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Dizziness</td>
-                                    <td className="text-success">Mild</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
+                                    <tr>
+                                      <td>Breathlessness even at rest</td>
+                                      <td className="text-warning">Moderate</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Dizziness</td>
+                                      <td className="text-success">Mild</td>
+                                    </tr>
+                                  </tbody>
+                                </Table>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
 
-                      <hr />
-                      <h6 className="mt-3">
-                        Choose the time period to set your goal
-                      </h6>
+                        <hr />
+                        <h6 className="mt-3">
+                          Choose the time period to set your goal
+                        </h6>
 
-                      <Row className="mb-4">
-                        <Col lg="3" sm="6">
-                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.WEEKWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)}>
-                            Create goal for <strong>1 week</strong>
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.DAYSWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)}>
-                            Create goal for <strong>15 days</strong >
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div className={`al_lightbgbutton ${getActiveLifestyleGoal === EGoalTimePeriod.MONTHWISE ? 'active' : ""}`} onClick={() => setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)}>
-                            Create goal for <strong>1 month</strong>
-                          </div>
-                        </Col>
-                      </Row>
-                      <p className="al_note mb-3">
-                        Disclaimer: Goal will be created based on the list of
-                        symptoms you have selected and the data you have
-                        provided in this application{" "}
-                      </p>
+                        <Row className="mb-4">
+                          <Col lg="3" sm="6">
+                            <div
+                              className={`al_lightbgbutton ${
+                                getActiveLifestyleGoal ===
+                                EGoalTimePeriod.WEEKWISE
+                                  ? "active"
+                                  : ""
+                              }`}
+                              onClick={() =>
+                                setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
+                              }
+                            >
+                              Create goal for <strong>1 week</strong>
+                            </div>
+                          </Col>
+                          <Col lg="3" sm="6">
+                            <div
+                              className={`al_lightbgbutton ${
+                                getActiveLifestyleGoal ===
+                                EGoalTimePeriod.DAYSWISE
+                                  ? "active"
+                                  : ""
+                              }`}
+                              onClick={() =>
+                                setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
+                              }
+                            >
+                              Create goal for <strong>15 days</strong>
+                            </div>
+                          </Col>
+                          <Col lg="3" sm="6">
+                            <div
+                              className={`al_lightbgbutton ${
+                                getActiveLifestyleGoal ===
+                                EGoalTimePeriod.MONTHWISE
+                                  ? "active"
+                                  : ""
+                              }`}
+                              onClick={() =>
+                                setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
+                              }
+                            >
+                              Create goal for <strong>1 month</strong>
+                            </div>
+                          </Col>
+                        </Row>
+                        <p className="al_note mb-3">
+                          Disclaimer: Goal will be created based on the list of
+                          symptoms you have selected and the data you have
+                          provided in this application{" "}
+                        </p>
 
-                      <button type="button" className="al_savebtn" onClick={() => setTab("5")}>
-                        OK
-                      </button>
-                      {/* <LayoutAlertMessage /> */}
+                        <button
+                          type="button"
+                          className="al_savebtn"
+                          onClick={() => setTab("5")}
+                        >
+                          OK
+                        </button>
+                        {/* <LayoutAlertMessage /> */}
+                      </div>
                     </div>
-                  </div>
-                </TabPane>}
+                    </div>
+                  </TabPane>
+                }
                 <TabPane tabId="5">
                   <Row className="mt-4">
                     <Col xl="4" md="6" sm="12" className="mb-3">
@@ -2707,18 +3067,29 @@ export default function Home() {
                           <div className="flip-card-front">
                             <img src={riskmanagement} alt="" />
                             <div className="p-3">
-                              <p>Refer to your managing my AF and risk of stroke guide if you get an episode of AF</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
+                              <p>
+                                Refer to your managing my AF and risk of stroke
+                                guide if you get an episode of AF
+                              </p>
+                              <div className="text-info text-end fw-medium">
+                                Know more
+                                <i
+                                  className="icon_alfred_right_arrow ms-1"
+                                  style={{
+                                    verticalAlign: "middle",
+                                    fontSize: "10px",
+                                  }}
+                                ></i>
+                              </div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">
                             <li>
-                              Refer to your managing my AF and risk of stroke guide if
-                              you get an episode of AF
+                              Refer to your managing my AF and risk of stroke
+                              guide if you get an episode of AF
                             </li>
                             <li>Learn about your AF medicines</li>
                             <li>Feel your pulse every morning and evening</li>
-
                           </ul>
                         </div>
                       </div>
@@ -2729,22 +3100,34 @@ export default function Home() {
                           <div className="flip-card-front">
                             <img src={riskmanagement2} alt="" />
                             <div className="p-3">
-                              <p>Take your AF medications the way doctor tells you, and do not run out of medication</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
+                              <p>
+                                Take your AF medications the way doctor tells
+                                you, and do not run out of medication
+                              </p>
+                              <div className="text-info text-end fw-medium">
+                                Know more
+                                <i
+                                  className="icon_alfred_right_arrow ms-1"
+                                  style={{
+                                    verticalAlign: "middle",
+                                    fontSize: "10px",
+                                  }}
+                                ></i>
+                              </div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">
                             <li>
-                              Take your AF medications the way doctor tells you, and do
-                              not run out of medication
+                              Take your AF medications the way doctor tells you,
+                              and do not run out of medication
                             </li>
                             <li>
-                              Visit your doctors regularly and ask questions if you have
-                              any concerns
+                              Visit your doctors regularly and ask questions if
+                              you have any concerns
                             </li>
                             <li>
-                              Keep an up-to-date list of all medications which you are
-                              using
+                              Keep an up-to-date list of all medications which
+                              you are using
                             </li>
                           </ul>
                         </div>
@@ -2756,22 +3139,35 @@ export default function Home() {
                           <div className="flip-card-front">
                             <img src={riskmanagement3} alt="" />
                             <div className="p-3">
-                              <p>Know your stroke risk factors and keep a record of your CHADS score in this booklet</p>
-                              <div className="text-info text-end fw-medium">Know more<i className="icon_alfred_right_arrow ms-1" style={{ verticalAlign: "middle", fontSize: "10px" }}></i></div>
+                              <p>
+                                Know your stroke risk factors and keep a record
+                                of your CHADS score in this booklet
+                              </p>
+                              <div className="text-info text-end fw-medium">
+                                Know more
+                                <i
+                                  className="icon_alfred_right_arrow ms-1"
+                                  style={{
+                                    verticalAlign: "middle",
+                                    fontSize: "10px",
+                                  }}
+                                ></i>
+                              </div>
                             </div>
                           </div>
                           <ul className="standardPlans p-4 ps-5 flip-card-back">
                             <li>
-                              Know your stroke risk factors and keep a record of your
-                              CHADS score in this booklet
+                              Know your stroke risk factors and keep a record of
+                              your CHADS score in this booklet
                             </li>
                             <li>
-                              Reduce your risk of more frequent or severe AF and risk of
-                              stroke by choosing a healthy lifestyle
+                              Reduce your risk of more frequent or severe AF and
+                              risk of stroke by choosing a healthy lifestyle
                             </li>
                             <li>
-                              If you take Warfarin, make sure that you have regular
-                              blood tests and keep a record of your results
+                              If you take Warfarin, make sure that you have
+                              regular blood tests and keep a record of your
+                              results
                             </li>
                           </ul>
                         </div>

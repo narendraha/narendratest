@@ -4,12 +4,19 @@ const initialState = {
     images: [],
     loading: false,
     error: null,
+    patientDetails: ""
 };
 
 const profileSlice = createSlice({
     name: 'images',
     initialState,
     reducers: {
+        getPatientDetailsRequest: (state) => {
+            state.error = null;
+        },
+        getPatientDetailsResponse: (state, action) => {
+            state.patientDetails = action.payload
+        }
         // uploadProfileImageRequest: (state, action) => {
         //     state.loading = true;
         //     state.error = null;
@@ -22,7 +29,7 @@ const profileSlice = createSlice({
 });
 
 export const {
-    getPatientDetails,
+    getPatientDetailsRequest, getPatientDetailsResponse,
     addProfileImageRequest,
     profileDetailsAndProfileImageUpdateRequest, profileDetailsAndProfileImageUpdateResponse,
 

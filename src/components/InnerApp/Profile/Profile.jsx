@@ -20,7 +20,8 @@ import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
 import { getGenderoptions, getResidenceoptions, getEductaionOptions } from '../../../_mock/helperIndex';
 import ProfileImageUpload from './profileImageUpload';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getPatientDetailsRequest } from "../../../store/Profile/slice";
 
 export const EProfileButton = {
   CHANGEPASSWORD: 1,
@@ -29,71 +30,74 @@ export const EProfileButton = {
 }
 
 export default function Profile() {
+  const dispatch = useDispatch();
 
-  // const uploadedFileData = useSelector((state) => (state?.profileSlice?.images));
-
-  // console.log("uploadedFileDatauploadedFileData", uploadedFileData)
-  const [getProfileDetails, setGetProfileDetails] = useState([]);
-  const [formData, setFormData] = useState();
   const [isShowconfirm, setIsShowconfirm] = useState(false);
-  const [resource, setResource] = useState(null); //Suspense loading
-  const [isOpenModel, setOpenModel] = useState({ profileButton: 0, isOpen: false }); // To handle Modals
-  const [updatedFile, setUpdatedFile] = useState("");
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
-
-  const closeProfileButtonModal = (data) => {
-    setOpenModel({ profileButton: 0, isOpen: data })
-  }
-
-  const navigate = useNavigate();
-  const profileDetails = async () => {
-    await AxiosInstance("application/json")
-      .get("/userdetails")
-      .then((res) => {
-        const responseData = res.data?.data;
-        setGetProfileDetails(responseData);
-      })
-      .catch((er) => { });
-  };
+  const [resource, setResource] = useState(null); //Suspense loading
 
   useEffect(() => {
-    setResource(createResource(profileDetails())); //Suspense loading with actual component
+    setResource(createResource(dispatch(getPatientDetailsRequest()))); //Suspense loading with actual component
   }, []);
 
-  const [isEdit, setIsEdit] = useState(false);
-  const genderoptions = getGenderoptions;
-  const residenceoptions = getResidenceoptions;
-  const educationOptions = getEductaionOptions;
 
-  const bloodTypes = [
-    { value: "A+", label: "A+" },
-    { value: "A-", label: "A-" },
-    { value: "A Unknown", label: "A Unknown" },
-    { value: "B+", label: "B+" },
-    { value: "B-", label: "B-" },
-    { value: "B Unknown", label: "B Unknown" },
-    { value: "AB+", label: "AB+" },
-    { value: "AB-", label: "AB-" },
-    { value: "AB Unknown", label: "AB Unknown" },
-    { value: "O+", label: "O+" },
-    { value: "O-", label: "O-" },
-    { value: "O Unknown", label: "O Unknown" },
-    { value: "Unknown", label: "Unknown" },
-  ];
-  function maskssn(input) {
-    if (input !== "NA" && input !== undefined && input?.length < 2) {
-      return input;
-    }
-    const lastTwoChars = input?.slice(-3);
-    const maskedPart = "*".repeat(input?.length - 3);
-    return `${maskedPart}${lastTwoChars}`;
-  }
+  // const [getProfileDetails, setGetProfileDetails] = useState([]);
+  // const [formData, setFormData] = useState();
+  // const [isShowconfirm, setIsShowconfirm] = useState(false);
+  // const [isOpenModel, setOpenModel] = useState({ profileButton: 0, isOpen: false }); // To handle Modals
+  // const [updatedFile, setUpdatedFile] = useState("");
 
-  const reLoadWindow = () => {
-    let isWinowLoaded = false
-    window.location.reload()
-    return isWinowLoaded = true
-  }
+  // const closeProfileButtonModal = (data) => {
+  //   setOpenModel({ profileButton: 0, isOpen: data })
+  // }
+
+  // const navigate = useNavigate();
+  // const profileDetails = async () => {
+  //   await AxiosInstance("application/json")
+  //     .get("/userdetails")
+  //     .then((res) => {
+  //       const responseData = res.data?.data;
+  //       setGetProfileDetails(responseData);
+  //     })
+  //     .catch((er) => { });
+  // };
+
+
+
+  // const [isEdit, setIsEdit] = useState(false);
+  // const genderoptions = getGenderoptions;
+  // const residenceoptions = getResidenceoptions;
+  // const educationOptions = getEductaionOptions;
+
+  // const bloodTypes = [
+  //   { value: "A+", label: "A+" },
+  //   { value: "A-", label: "A-" },
+  //   { value: "A Unknown", label: "A Unknown" },
+  //   { value: "B+", label: "B+" },
+  //   { value: "B-", label: "B-" },
+  //   { value: "B Unknown", label: "B Unknown" },
+  //   { value: "AB+", label: "AB+" },
+  //   { value: "AB-", label: "AB-" },
+  //   { value: "AB Unknown", label: "AB Unknown" },
+  //   { value: "O+", label: "O+" },
+  //   { value: "O-", label: "O-" },
+  //   { value: "O Unknown", label: "O Unknown" },
+  //   { value: "Unknown", label: "Unknown" },
+  // ];
+  // function maskssn(input) {
+  //   if (input !== "NA" && input !== undefined && input?.length < 2) {
+  //     return input;
+  //   }
+  //   const lastTwoChars = input?.slice(-3);
+  //   const maskedPart = "*".repeat(input?.length - 3);
+  //   return `${maskedPart}${lastTwoChars}`;
+  // }
+
+  // const reLoadWindow = () => {
+  //   let isWinowLoaded = false
+  //   window.location.reload()
+  //   return isWinowLoaded = true
+  // }
   const handleSubmit = (data) => {
     setIsShowconfirm(!data);
     // if (data) {
@@ -152,9 +156,9 @@ export default function Profile() {
     // }
   };
 
-  const openModelHandle = (activeProfileButton) => {
-    setOpenModel({ profileButton: activeProfileButton, isOpen: true })
-  }
+  // const openModelHandle = (activeProfileButton) => {
+  //   setOpenModel({ profileButton: activeProfileButton, isOpen: true })
+  // }
 
 
   // const profilePicture = uploadedFileData === "" ? ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url) : uploadedFileData?.file;
@@ -188,9 +192,9 @@ export default function Profile() {
           </div>
         </div>
 
-        {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
+        {/* {isOpenModel.profileButton === EProfileButton.CHANGEPASSWORD && isOpenModel.isOpen && <ChangeProfilePassword props={closeProfileButtonModal} />}
         {isOpenModel.profileButton === EProfileButton.BANKDETAILS && isOpenModel.isOpen && <BankDetails props={closeProfileButtonModal} />}
-        {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />}
+        {isOpenModel.profileButton === EProfileButton.SETTINGS && isOpenModel.isOpen && <ProfileSettings props={closeProfileButtonModal} />} */}
       </>
     );
   }

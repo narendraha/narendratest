@@ -31,7 +31,7 @@ import Ablation from "../components/Pages/Ablation";
 import Medications from "../components/Pages/Medications";
 import Symptoms from "../components/Pages/Symptoms";
 import Affaq from "../components/Pages/Affaq";
-import Chat from "../components/Pages/Chat"
+import Chat from "../components/Pages/Chat";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "../components/ForgotPassword";
@@ -41,7 +41,7 @@ import HistoryChat from "../components/Pages/HistoryChat";
 import HeartValves from "../components/Pages/HeartValves";
 import Congestive from "../components/Pages/Congestive";
 import HistoryChatNew from "../components/Pages/HistoryChatNew";
-import Loading from "../components/InnerApp/LoadingComponent"
+import Loading from "../components/InnerApp/LoadingComponent";
 import Terms from "../components/Terms/Terms";
 import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
 import ApproveUsers from "../components/Admin/ApproveUsers";
@@ -77,7 +77,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="chat" element={<Chat />} />
               {/* <Route path="historychat" element={<HistoryChat />} /> */}
               <Route path="historychat" element={<HistoryChatNew />} />
-              <Route path="*" element={<Navigate to="/home" />} />
+              <Route path="*" element={<ErrorPage />} />
             </Route>
           </>
         ) : (

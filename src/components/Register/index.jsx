@@ -396,12 +396,12 @@ export default function Register() {
                         >
                           <div id="terms" style={{ lineHeight: 0 }}>
                             <input name="termsAndConditions" type="checkbox" defaultChecked={values?.termsAndConditions} value={values?.termsAndConditions}
-                              // disabled={isTermsAndConditionsRead}
+                              disabled={isTermsAndConditionsRead}
                               onChange={(e) => {
                                 setFieldValue("termsAndConditions", e.target.checked);
                               }} />
                           </div>&nbsp; I agree to the&nbsp;<Link to="/terms" target="_blank" rel="noopener noreferrer" onClick={() => {
-                            serIsTermsAndConditionsRead(!isTermsAndConditionsRead); setFormData({ ...formData, ...values });
+                            serIsTermsAndConditionsRead(false); setFormData({ ...formData, ...values });
                           }}>terms and conditions</Link>
                           {isTermsAndConditionsRead &&
                             <UncontrolledTooltip color="primary" placement="right" target="terms">
@@ -475,6 +475,7 @@ export default function Register() {
                       <div className="text-center">
                         <FormGroup className="mt-3">
                           <Label>{otpResponse ? otpResponse : null}</Label>
+                          {/* <div className="al_text_link text-small" style={{textDecoration: "underline"}}>Change Mobile Number/Email ID</div> */}
                           <Row className="mx-0 al_otpfields">
                             <Field name="otp">
                               {({ field }) => (
@@ -587,6 +588,13 @@ export default function Register() {
                     <div className="al_login_footer mt-3">
                       <button type="submit" className="al_login_button">
                         Verify
+                      </button>
+                      <button
+                        type="button"
+                        className="al_login_button_back mt-3 py-2"
+                        onClick={() => setActiveForm(1)}
+                      >
+                        <i className="icon_alfred_back-arrow me-2" style={{ verticalAlign: "middle" }}></i>Back
                       </button>
                     </div>
                   </div>

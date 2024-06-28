@@ -18,7 +18,7 @@ export default function Pagination() {
         <button className="cs_pagination_item cs_center">3</button>
       </li>
       <li>
-        <span className="cs_pagination_item cs_center">...</span>
+        <span className="cs_pagination_item cs_center py-1">...</span>
       </li>
       <li>
         <button className="cs_pagination_item cs_center">8</button>

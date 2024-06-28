@@ -126,10 +126,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
                 <Route path="timetable" element={<Timetable />} />
                 <Route path="contact" element={<Contact />} /> */}
             </Route>
-            <Route
-              path="signin"
-              element={<Signin setIsAuthenticated={setIsAuthenticated} />}
-            />
+            <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="terms" element={<Terms />} />
             <Route path="privacypolicy" element={<PrivacyPolicy />} />
             <Route path="registration" element={<Register />} />

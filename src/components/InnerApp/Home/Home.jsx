@@ -22,7 +22,7 @@ import {
   Table,
 } from "reactstrap";
 import * as Yup from "yup";
-import { 
+import {
   allowsOnlyNumericOnly3Digit,
   allowsOnlyNumericOnly4Digit,
 } from "../../../_mock/RegularExp";
@@ -819,8 +819,8 @@ export default function Home() {
           isShowconfirm
             ? handleSubmit
             : show1
-            ? handlehealthHub
-            : show2 && handleHeathDetails
+              ? handlehealthHub
+              : show2 && handleHeathDetails
         }
         open={isShowconfirm || show1 || show2}
       />
@@ -1555,12 +1555,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.breathnessda.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.breathnessda.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -1652,12 +1651,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.breathnessea.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.breathnessea.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -1749,12 +1747,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.dizziness.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.dizziness.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -1846,12 +1843,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.col_swet.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.col_swet.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -1943,12 +1939,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.p_tiredness.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.p_tiredness.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2040,12 +2035,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.chest_pain.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.chest_pain.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2137,12 +2131,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.pressurechest.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.pressurechest.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2234,12 +2227,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.worry.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.worry.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2331,12 +2323,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.weakness.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.weakness.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2428,12 +2419,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.infirmity.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.infirmity.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2525,12 +2515,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.nsynacpe.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.nsynacpe.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2622,12 +2611,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.syncope.frequency ===
-                                      frequency
+                                    className={`btn ${breathlessness.syncope.frequency ===
+                                        frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2719,12 +2707,11 @@ export default function Home() {
                                 ].map((frequency) => (
                                   <label
                                     key={frequency}
-                                    className={`btn ${
-                                      breathlessness.tirednessafterwards
+                                    className={`btn ${breathlessness.tirednessafterwards
                                         .frequency === frequency
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                   >
                                     <input
                                       type="radio"
@@ -2865,105 +2852,54 @@ export default function Home() {
                       <Row className="mb-3">
                         <Col lg="4" sm="6">
                           <p className="al_note">Your Details</p>
-                          <h5 className="mb-2 text-capitalize">Hello, {patientAndSymptomsDetails?.patientDetails?.username || "N/A"}!</h5>
+                          <h5 className="mb-2 text-capitalize">
+                            Hello,{" "}
+                            {patientAndSymptomsDetails?.patientDetails
+                              ?.username || "N/A"}
+                            !
+                          </h5>
                           <div>
                             <strong>Age: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.age || "N/A"}</span>
+                            <span>
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.age || "N/A"}
+                            </span>
                           </div>
                           <div>
                             <strong>Gender: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.gender || "N/A"}</span>
+                            <span>
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.gender || "N/A"}
+                            </span>
                           </div>
                           <div>
                             <strong>Residence type: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.rtype || "N/A"}</span>
+                            <span>
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.rtype || "N/A"}
+                            </span>
                           </div>
                           <div>
                             <strong>Education: </strong>
-                            <span>{patientAndSymptomsDetails?.patientDetails?.education || "N/A"}</span>
+                            <span>
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.education || "N?A"}
+                            </span>
                           </div>
                         </Col>
-                        <Col lg="3">
-                          <Label
-                            check
-                            className="d-flex align-items-center justify-content-between"
-                          >
-                            <span>Exercise</span>
-                            <input type="checkbox" name="exercise" />
-                          </Label>
-                        </Col>
-                        <Col lg="3">
-                          <Label
-                            check
-                            className="d-flex align-items-center justify-content-between"
-                          >
-                            <span>Weight</span>
-                            <input type="checkbox" name="weight" />
-                          </Label>
-                        </Col>
-                        <Col lg="3">
-                          <Label
-                            check
-                            className="d-flex align-items-center justify-content-between"
-                          >
-                            <span>Blood pressure</span>
-                            <input type="checkbox" name="bloodpressure" />
-                          </Label>
-                        </Col>
-                      </Row>
-                      <hr />
-                      <div className="mt-4">
-                        <Row className="mb-3">
-                          <Col lg="4" sm="6">
-                            <p className="al_note">Your Details</p>
-                            <h5 className="mb-2 text-capitalize">
-                              Hello,{" "}
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.username || "N/A"}
-                              !
-                            </h5>
-                            <div>
-                              <strong>Age: </strong>
-                              <span>
-                                {patientAndSymptomsDetails?.patientDetails
-                                  ?.age || "N/A"}
-                              </span>
-                            </div>
-                            <div>
-                              <strong>Gender: </strong>
-                              <span>
-                                {patientAndSymptomsDetails?.patientDetails
-                                  ?.gender || "N/A"}
-                              </span>
-                            </div>
-                            <div>
-                              <strong>Residence type: </strong>
-                              <span>
-                                {patientAndSymptomsDetails?.patientDetails
-                                  ?.rtype || "N/A"}
-                              </span>
-                            </div>
-                            <div>
-                              <strong>Education: </strong>
-                              <span>
-                                {patientAndSymptomsDetails?.patientDetails
-                                  ?.education || "N?A"}
-                              </span>
-                            </div>
-                          </Col>
-                          <Col lg="8" sm="6">
-                            <h6 className="mt-3 mb-2">Your Medication</h6>
-                            <Row>
-                              <Col lg="6" sm="12">
-                                <Table borderless responsive>
-                                  <thead>
-                                    <tr>
-                                      <th>Symptoms</th>
-                                      <th className="w-25">Range</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                        <Col lg="8" sm="6">
+                          <h6 className="mt-3 mb-2">Your Medication</h6>
+                          <Row>
+                            <Col lg="6" sm="12">
+                              <Table borderless responsive>
+                                <thead>
+                                  <tr>
+                                    <th>Symptoms</th>
+                                    <th className="w-25">Range</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
                                 return (
                                   <>
                                     <tr>
@@ -2973,91 +2909,87 @@ export default function Home() {
                                   </>
                                 )
                               })} */}
-                                    <tr>
-                                      <td>Breathlessness even at rest</td>
-                                      <td className="text-warning">Moderate</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Dizziness</td>
-                                      <td className="text-success">Mild</td>
-                                    </tr>
-                                  </tbody>
-                                </Table>
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
+                                  <tr>
+                                    <td>Breathlessness even at rest</td>
+                                    <td className="text-warning">Moderate</td>
+                                  </tr>
+                                  <tr>
+                                    <td>Dizziness</td>
+                                    <td className="text-success">Mild</td>
+                                  </tr>
+                                </tbody>
+                              </Table>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
 
-                        <hr />
-                        <h6 className="mt-3">
-                          Choose the time period to set your goal
-                        </h6>
+                      <hr />
+                      <h6 className="mt-3">
+                        Choose the time period to set your goal
+                      </h6>
 
-                        <Row className="mb-4">
-                          <Col lg="3" sm="6">
-                            <div
-                              className={`al_lightbgbutton ${
-                                getActiveLifestyleGoal ===
+                      <Row className="mb-4">
+                        <Col lg="3" sm="6">
+                          <div
+                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
                                 EGoalTimePeriod.WEEKWISE
-                                  ? "active"
-                                  : ""
+                                ? "active"
+                                : ""
                               }`}
-                              onClick={() =>
-                                setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
-                              }
-                            >
-                              Create goal for <strong>1 week</strong>
-                            </div>
-                          </Col>
-                          <Col lg="3" sm="6">
-                            <div
-                              className={`al_lightbgbutton ${
-                                getActiveLifestyleGoal ===
+                            onClick={() =>
+                              setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
+                            }
+                          >
+                            Create goal for <strong>1 week</strong>
+                          </div>
+                        </Col>
+                        <Col lg="3" sm="6">
+                          <div
+                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
                                 EGoalTimePeriod.DAYSWISE
-                                  ? "active"
-                                  : ""
+                                ? "active"
+                                : ""
                               }`}
-                              onClick={() =>
-                                setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
-                              }
-                            >
-                              Create goal for <strong>15 days</strong>
-                            </div>
-                          </Col>
-                          <Col lg="3" sm="6">
-                            <div
-                              className={`al_lightbgbutton ${
-                                getActiveLifestyleGoal ===
+                            onClick={() =>
+                              setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
+                            }
+                          >
+                            Create goal for <strong>15 days</strong>
+                          </div>
+                        </Col>
+                        <Col lg="3" sm="6">
+                          <div
+                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
                                 EGoalTimePeriod.MONTHWISE
-                                  ? "active"
-                                  : ""
+                                ? "active"
+                                : ""
                               }`}
-                              onClick={() =>
-                                setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
-                              }
-                            >
-                              Create goal for <strong>1 month</strong>
-                            </div>
-                          </Col>
-                        </Row>
-                        <p className="al_note mb-3">
-                          Disclaimer: Goal will be created based on the list of
-                          symptoms you have selected and the data you have
-                          provided in this application{" "}
-                        </p>
+                            onClick={() =>
+                              setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
+                            }
+                          >
+                            Create goal for <strong>1 month</strong>
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="al_note mb-3">
+                        Disclaimer: Goal will be created based on the list of
+                        symptoms you have selected and the data you have
+                        provided in this application{" "}
+                      </p>
 
-                        <button
-                          type="button"
-                          className="al_savebtn"
-                          onClick={() => setTab("5")}
-                        >
-                          OK
-                        </button>
-                        {/* <LayoutAlertMessage /> */}
-                      </div>
+                      <button
+                        type="button"
+                        className="al_savebtn"
+                        onClick={() => setTab("5")}
+                      >
+                        OK
+                      </button>
+                      {/* <LayoutAlertMessage /> */}
                     </div>
-                    </div>
-                  </TabPane>
+                  </div>
+                </TabPane>
                 }
                 <TabPane tabId="5">
                   <Row className="mt-4">

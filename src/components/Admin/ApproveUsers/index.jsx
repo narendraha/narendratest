@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, TabContent, Nav, NavItem, NavLink, TabPane, FormGroup, Modal, ModalBody } from 'reactstrap';
 import Select from "react-select";
+import Pagination from '../../Pagination';
 
 export default function ApproveUsers() {
     const [tab, setTab] = useState("1");
@@ -94,7 +95,7 @@ export default function ApproveUsers() {
                                         </div>
                                     </div>
                                 </Row>
-                                <div className='wflexScroll d-flex flex-column'>
+                                <div className='wflexScroll d-flex flex-column mb-2'>
                                     <div className='flex-grow-1'>
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
@@ -106,6 +107,7 @@ export default function ApproveUsers() {
                                                     <th>Date of Birth</th>
                                                     <th>Residence Type</th>
                                                     <th>Insurance</th>
+                                                    <th>Requested Date</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -118,6 +120,7 @@ export default function ApproveUsers() {
                                                     <td>19-04-1985</td>
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance.jpg</a></td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
                                                             <button type="button" className='al_button_sm al_savebtn'>Approve</button>
@@ -134,6 +137,7 @@ export default function ApproveUsers() {
                                                     <td>10-09-1955</td>
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
                                                             <button type="button" className='al_button_sm al_savebtn'>Approve</button>
@@ -150,6 +154,7 @@ export default function ApproveUsers() {
                                                     <td>10-09-1955</td>
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
                                                             <button type="button" className='al_button_sm al_savebtn'>Approve</button>
@@ -166,6 +171,7 @@ export default function ApproveUsers() {
                                                     <td>10-09-1955</td>
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
                                                             <button type="button" className='al_button_sm al_savebtn'>Approve</button>
@@ -182,38 +188,7 @@ export default function ApproveUsers() {
                                                     <td>10-09-1955</td>
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
-                                                    <td>
-                                                        <div className='d-flex gap-2'>
-                                                            <button type="button" className='al_button_sm al_savebtn'>Approve</button>
-                                                            <button type="button" className='al_button_sm al_testbtn' onClick={() => setShowHoldModal(true)}>Hold</button>
-                                                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Richard</td>
-                                                    <td>Male</td>
-                                                    <td>Richard@gmail.com</td>
-                                                    <td>2255432568</td>
-                                                    <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
-                                                    <td>
-                                                        <div className='d-flex gap-2'>
-                                                            <button type="button" className='al_button_sm al_savebtn'>Approve</button>
-                                                            <button type="button" className='al_button_sm al_testbtn' onClick={() => setShowHoldModal(true)}>Hold</button>
-                                                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Richard</td>
-                                                    <td>Male</td>
-                                                    <td>Richard@gmail.com</td>
-                                                    <td>2255432568</td>
-                                                    <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
                                                             <button type="button" className='al_button_sm al_savebtn'>Approve</button>
@@ -225,6 +200,9 @@ export default function ApproveUsers() {
                                             </tbody>
                                         </Table>
                                     </div>
+                                </div>
+                                <div className='px-3 pb-3'>
+                                    <Pagination />
                                 </div>
                             </div>
                         </TabPane>
@@ -266,7 +244,7 @@ export default function ApproveUsers() {
                                         </div>
                                     </div>
                                 </Row>
-                                <div className='wflexScroll d-flex flex-column'>
+                                <div className='wflexScroll d-flex flex-column mb-2'>
                                     <div className='flex-grow-1'>
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
@@ -279,6 +257,7 @@ export default function ApproveUsers() {
                                                     <th>Residence Type</th>
                                                     <th>Insurance</th>
                                                     <th>Approved By</th>
+                                                    <th>Approved Date</th>
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
@@ -292,6 +271,7 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Anthony</td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>Insurance not verified</td>
                                                 </tr>
                                                 <tr>
@@ -303,6 +283,7 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>Anthony</td>
+                                                    <td>27-6-2024, 9:45 am</td>
                                                     <td>-</td>
                                                 </tr>
                                             </tbody>
@@ -349,7 +330,7 @@ export default function ApproveUsers() {
                                         </div>
                                     </div>
                                 </Row>
-                                <div className='wflexScroll d-flex flex-column'>
+                                <div className='wflexScroll d-flex flex-column mb-2'>
                                     <div className='flex-grow-1'>
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
@@ -362,6 +343,8 @@ export default function ApproveUsers() {
                                                     <th>Residence Type</th>
                                                     <th>Insurance</th>
                                                     <th>Hold By</th>
+                                                    <th>Hold Date</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -374,6 +357,8 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Andrew</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Richard</td>
@@ -384,6 +369,8 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>Andrew</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -429,7 +416,7 @@ export default function ApproveUsers() {
                                         </div>
                                     </div>
                                 </Row>
-                                <div className='wflexScroll d-flex flex-column'>
+                                <div className='wflexScroll d-flex flex-column mb-2'>
                                     <div className='flex-grow-1'>
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
@@ -442,6 +429,8 @@ export default function ApproveUsers() {
                                                     <th>Residence Type</th>
                                                     <th>Insurance</th>
                                                     <th>Rejected By</th>
+                                                    <th>Rejected Date</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -454,6 +443,8 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>James</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Richard</td>
@@ -464,6 +455,8 @@ export default function ApproveUsers() {
                                                     <td>Cohabitant</td>
                                                     <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>James</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
                                                 </tr>
                                             </tbody>
                                         </Table>

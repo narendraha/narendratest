@@ -239,6 +239,10 @@
         flex-direction: column;
     }
 
+    .flex-row-xs-reverse {
+        flex-direction: row-reverse !important;
+    }
+
     .videobanner>div:first-child {
         width: 100% !important;
     }

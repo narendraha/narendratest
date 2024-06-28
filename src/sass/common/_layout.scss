@@ -409,13 +409,14 @@ section:not(.cs_banner) {
 }
 
 .al_approveusers {
+    width: 130%;
 
     th,
     td {
-        width: 10%;
+        width: 9%;
 
         &:last-child {
-            width: 20%;
+            width: 19%;
         }
 
         &:nth-child(2) {
@@ -423,7 +424,8 @@ section:not(.cs_banner) {
         }
 
         &:nth-child(3),
-        &:nth-child(6) {
+        &:nth-child(6),
+        &:nth-last-of-type(2) {
             width: 11%;
         }
     }
@@ -2047,8 +2049,7 @@ button.al_upgrade_btn {
 
     .al_profile_photo {
         width: 100%;
-        height: auto;
-        min-height: 220px;
+        height: 260px;
         background-color: #f6f6f6;
         margin-bottom: 15px;
         display: flex;
@@ -2062,7 +2063,6 @@ button.al_upgrade_btn {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            max-height: 260px;
         }
 
         div {

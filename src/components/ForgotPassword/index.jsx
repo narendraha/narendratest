@@ -186,6 +186,7 @@ export default function ForgotPassword() {
                       <div className="text-center">
                         <FormGroup className="mt-3">
                           <Label>{otpResponse ? otpResponse : null}</Label>
+                          <div className="al_text_link text-small" style={{textDecoration: "underline"}}>Change Mobile Number/Email ID</div>
                           <Row className="mx-0 al_otpfields">
                             <Field name="otp">
                               {({ field }) => (

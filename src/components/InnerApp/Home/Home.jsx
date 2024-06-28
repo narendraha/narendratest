@@ -1113,7 +1113,7 @@ export default function Home() {
                     ) : null}
                   </div>
 
-                  <Row>
+                  <Row className="flex-row-xs-reverse">
                     <Col lg="6" sm="12">
                       <Formik
                         initialValues={{
@@ -1422,7 +1422,7 @@ export default function Home() {
                         }) => {
                           return (
                             <Form>
-                              <Row>
+                              <Row className="flex-xs-column">
                                 <Col>
                                   <FormGroup>
                                     <Label>
@@ -1527,7 +1527,7 @@ export default function Home() {
                       </Formik>
 
                       {Array.isArray(symptomData) && symptomData?.length > 0 ? (
-                        <Card className="al_cardview h-auto">
+                        <Card className="al_cardview h-auto mb-3">
                           <CardBody>
                             {chartOptions && (
                               <HighchartsReact

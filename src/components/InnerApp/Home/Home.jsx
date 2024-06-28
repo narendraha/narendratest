@@ -473,12 +473,12 @@ export default function Home() {
           systolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.systolic_p,
-            customTooltip: `Systolic: ${item.systolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b><br/>`,
           });
           diastolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.diastolic_p,
-            customTooltip: `Diastolic: ${item.diastolic_p} mmHg <br/>Pulse: ${item.pulse} BPM<br/>Weight: ${item.weight}`,
+            customTooltip: `Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b><br/>`,
           });
         }
       });
@@ -490,9 +490,16 @@ export default function Home() {
     const options = {
       chart: {
         type: "line",
+        style: {
+          fontFamily: "Poppins",
+        },
       },
       title: {
         text: "Blood Pressure Records",
+        style: {
+          fontSize: "16px",
+          fontWeight: "500",
+        },
       },
       xAxis: {
         categories: formattedDates,
@@ -1372,6 +1379,7 @@ export default function Home() {
                         id="expertmonitoringgraph"
                         style={{ height: "350px" }}
                       ></div> */}
+
                       <Formik
                         initialValues={{
                           start_date: null,
@@ -1414,8 +1422,8 @@ export default function Home() {
                         }) => {
                           return (
                             <Form>
-                              <div className="d-flex justify-content-evenly">
-                                <div>
+                              <Row>
+                                <Col>
                                   <FormGroup>
                                     <Label>
                                       <span className="requiredLabel">*</span>
@@ -1460,8 +1468,8 @@ export default function Home() {
                                       className="text-danger"
                                     />
                                   </FormGroup>
-                                </div>
-                                <div style={{ marginLeft: "10px" }}>
+                                </Col>
+                                <Col>
                                   <FormGroup>
                                     <Label>
                                       <span className="requiredLabel">*</span>
@@ -1506,27 +1514,29 @@ export default function Home() {
                                       className="text-danger"
                                     />
                                   </FormGroup>
-                                </div>
-                                <div className="d-flex align-items-center justify-content-end mx-1 mt-3">
+                                </Col>
+                                <div className="mt-4 pt-2 w-auto">
                                   <button type="submit" className="al_savebtn">
                                     Submit
                                   </button>
                                 </div>
-                              </div>
+                              </Row>
                             </Form>
                           );
                         }}
                       </Formik>
 
                       {Array.isArray(symptomData) && symptomData?.length > 0 ? (
-                        <>
-                          {chartOptions && (
-                            <HighchartsReact
-                              highcharts={Highcharts}
-                              options={chartOptions}
-                            />
-                          )}
-                        </>
+                        <Card className="al_cardview h-auto">
+                          <CardBody>
+                            {chartOptions && (
+                              <HighchartsReact
+                                highcharts={Highcharts}
+                                options={chartOptions}
+                              />
+                            )}
+                          </CardBody>
+                        </Card>
                       ) : (
                         <div>No date found!!</div>
                       )}
@@ -1556,9 +1566,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.breathnessda.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -1652,9 +1662,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.breathnessea.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -1748,9 +1758,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.dizziness.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -1844,9 +1854,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.col_swet.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -1940,9 +1950,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.p_tiredness.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2036,9 +2046,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.chest_pain.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2132,9 +2142,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.pressurechest.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2228,9 +2238,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.worry.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2324,9 +2334,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.weakness.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2420,9 +2430,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.infirmity.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2516,9 +2526,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.nsynacpe.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2612,9 +2622,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.syncope.frequency ===
-                                        frequency
-                                        ? "active"
-                                        : ""
+                                      frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2708,9 +2718,9 @@ export default function Home() {
                                   <label
                                     key={frequency}
                                     className={`btn ${breathlessness.tirednessafterwards
-                                        .frequency === frequency
-                                        ? "active"
-                                        : ""
+                                      .frequency === frequency
+                                      ? "active"
+                                      : ""
                                       }`}
                                   >
                                     <input
@@ -2933,9 +2943,9 @@ export default function Home() {
                         <Col lg="3" sm="6">
                           <div
                             className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                EGoalTimePeriod.WEEKWISE
-                                ? "active"
-                                : ""
+                              EGoalTimePeriod.WEEKWISE
+                              ? "active"
+                              : ""
                               }`}
                             onClick={() =>
                               setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
@@ -2947,9 +2957,9 @@ export default function Home() {
                         <Col lg="3" sm="6">
                           <div
                             className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                EGoalTimePeriod.DAYSWISE
-                                ? "active"
-                                : ""
+                              EGoalTimePeriod.DAYSWISE
+                              ? "active"
+                              : ""
                               }`}
                             onClick={() =>
                               setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
@@ -2961,9 +2971,9 @@ export default function Home() {
                         <Col lg="3" sm="6">
                           <div
                             className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                EGoalTimePeriod.MONTHWISE
-                                ? "active"
-                                : ""
+                              EGoalTimePeriod.MONTHWISE
+                              ? "active"
+                              : ""
                               }`}
                             onClick={() =>
                               setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)

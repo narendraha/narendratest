@@ -266,6 +266,7 @@ export default function Register() {
                                 selectedOption ? selectedOption.value : ""
                               );
                             }}
+                            onBlur={() => setFieldTouched('gender', true)}
                           />
                           <ErrorMessage
                             name="gender"

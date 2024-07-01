@@ -1,8 +1,48 @@
-import React from 'react'
+import React from 'react';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import moment from "moment/moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from 'react-redux';
+import Select from "react-select";
+import { Col, FormGroup, Label, Row } from "reactstrap";
+import * as Yup from 'yup';
+import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
+import { getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
+import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
+import ConfirmationAction from '../MainLayout/ConfirmationAction';
+
+const genderoptions = getGenderoptions;
+const residenceoptions = getResidenceoptions;
+const educationOptions = getEductaionOptions;
+const bloodTypes = [
+    { value: "A+", label: "A+" },
+    { value: "A-", label: "A-" },
+    { value: "A Unknown", label: "A Unknown" },
+    { value: "B+", label: "B+" },
+    { value: "B-", label: "B-" },
+    { value: "B Unknown", label: "B Unknown" },
+    { value: "AB+", label: "AB+" },
+    { value: "AB-", label: "AB-" },
+    { value: "AB Unknown", label: "AB Unknown" },
+    { value: "O+", label: "O+" },
+    { value: "O-", label: "O-" },
+    { value: "O Unknown", label: "O Unknown" },
+    { value: "Unknown", label: "Unknown" },
+];
 
 export const ProfileEditAction = () => {
+    const dispatch = useDispatch();
+
+    const { getProfileDetails, profilePicture, actionData, isConfirmModel } = useSelector((state) => state?.profileSlice);
+
+    const handleSubmit = () => {
+        dispatch(profileDetailsAndProfileImageUpdateRequest(actionData))
+    }
+
     return (
         <React.Fragment>
+            <ConfirmationAction newFun={handleSubmit} open={isConfirmModel} />
             <Formik
                 enableReinitialize
                 initialValues={{
@@ -24,7 +64,7 @@ export const ProfileEditAction = () => {
                     // age: getProfileDetails?.age || "",
                     bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
                     nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : "",
-                    // profile_url: profilePicture || ""
+                    profile_url: profilePicture || ""
                 }}
                 validationSchema={Yup.object().shape({
                     username: Yup.string()
@@ -81,15 +121,12 @@ export const ProfileEditAction = () => {
                 })}
                 onSubmit={(values) => {
                     // Handle form submission here
-                    setIsShowconfirm(true);
                     let data = {
                         ...values,
                         dob: moment(values.dob).format("YYYY-MM-DD"),
                         nationality: "United State"
                     };
-                    setFormData(data);
-                    setGetProfileDetails(data);
-                    updatedFile("")
+                    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
                 }}
             >
                 {({
@@ -101,125 +138,126 @@ export const ProfileEditAction = () => {
                     dirty
                 }) => {
                     return (
-                        <Form>
-                            <Row>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Height (ft)
-                                        </Label>
-                                        <div className="d-flex gap-2">
-                                            <div>
-                                                <Field
-                                                    type="text"
-                                                    name="feet"
-                                                    placeholder="Feet"
-                                                    className="form-control"
-                                                    onKeyPress={(e) =>
-                                                        allowsOnlyNumericOnlysingleDigit(e)
-                                                    }
-                                                />
-                                                <ErrorMessage
-                                                    name="feet"
-                                                    component={"div"}
-                                                    className="text-danger"
-                                                />
+                        <>
+                            <Form>
+                                <Row>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Height (ft)
+                                            </Label>
+                                            <div className="d-flex gap-2">
+                                                <div>
+                                                    <Field
+                                                        type="text"
+                                                        name="feet"
+                                                        placeholder="Feet"
+                                                        className="form-control"
+                                                        onKeyPress={(e) =>
+                                                            allowsOnlyNumericOnlysingleDigit(e)
+                                                        }
+                                                    />
+                                                    <ErrorMessage
+                                                        name="feet"
+                                                        component={"div"}
+                                                        className="text-danger"
+                                                    />
+                                                </div>
+                                                <div className="mt-2"></div>
+                                                <div>
+                                                    <Field
+                                                        type="text"
+                                                        name="inch"
+                                                        placeholder="Inch"
+                                                        className="form-control"
+                                                        onKeyPress={(e) =>
+                                                            allowsOnlyNumericOnly2Digit(e)
+                                                        }
+                                                    />
+                                                    <ErrorMessage
+                                                        name="inch"
+                                                        component={"div"}
+                                                        className="text-danger"
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="mt-2"></div>
-                                            <div>
-                                                <Field
-                                                    type="text"
-                                                    name="inch"
-                                                    placeholder="Inch"
-                                                    className="form-control"
-                                                    onKeyPress={(e) =>
-                                                        allowsOnlyNumericOnly2Digit(e)
-                                                    }
-                                                />
-                                                <ErrorMessage
-                                                    name="inch"
-                                                    component={"div"}
-                                                    className="text-danger"
-                                                />
-                                            </div>
-                                        </div>
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Weight (lbs)
-                                        </Label>
-                                        <Field
-                                            type="text"
-                                            name="weight"
-                                            placeholder="Enter Weight"
-                                            className="form-control"
-                                            onKeyPress={(e) =>
-                                                allowsOnlyNumericOnly4Digit(e)
-                                            }
-                                        />
-                                        <ErrorMessage
-                                            name="weight"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Blood Type
-                                        </Label>
-                                        <Select
-                                            className="inputSelect"
-                                            options={bloodTypes}
-                                            name="bloodtype"
-                                            value={bloodTypes?.find(
-                                                (option) =>
-                                                    option.value === values?.bloodtype
-                                            )}
-                                            onChange={(selectedOption) =>
-                                                setFieldValue(
-                                                    "bloodtype",
-                                                    selectedOption?.value
-                                                )
-                                            }
-                                            onBlur={() =>
-                                                setFieldTouched("bloodtype", true)
-                                            }
-                                        />
-                                        <ErrorMessage
-                                            name="bloodtype"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Weight (lbs)
+                                            </Label>
+                                            <Field
+                                                type="text"
+                                                name="weight"
+                                                placeholder="Enter Weight"
+                                                className="form-control"
+                                                onKeyPress={(e) =>
+                                                    allowsOnlyNumericOnly4Digit(e)
+                                                }
+                                            />
+                                            <ErrorMessage
+                                                name="weight"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Blood Type
+                                            </Label>
+                                            <Select
+                                                className="inputSelect"
+                                                options={bloodTypes}
+                                                name="bloodtype"
+                                                value={bloodTypes?.find(
+                                                    (option) =>
+                                                        option.value === values?.bloodtype
+                                                )}
+                                                onChange={(selectedOption) =>
+                                                    setFieldValue(
+                                                        "bloodtype",
+                                                        selectedOption?.value
+                                                    )
+                                                }
+                                                onBlur={() =>
+                                                    setFieldTouched("bloodtype", true)
+                                                }
+                                            />
+                                            <ErrorMessage
+                                                name="bloodtype"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
 
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>Full
-                                            Name
-                                        </Label>
-                                        <Field
-                                            type="text"
-                                            name="username"
-                                            placeholder="Enter Name"
-                                            className="form-control"
-                                        />
-                                        <ErrorMessage
-                                            name="username"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                {/* <Col md="4" sm="12">
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>Full
+                                                Name
+                                            </Label>
+                                            <Field
+                                                type="text"
+                                                name="username"
+                                                placeholder="Enter Name"
+                                                className="form-control"
+                                            />
+                                            <ErrorMessage
+                                                name="username"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    {/* <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>Age
@@ -238,189 +276,189 @@ export const ProfileEditAction = () => {
                                   />
                                 </FormGroup>
                               </Col> */}
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Gender
-                                        </Label>
-                                        <Select
-                                            options={genderoptions}
-                                            name="gender"
-                                            value={genderoptions?.find(
-                                                (option) =>
-                                                    option.value === values?.gender
-                                            )}
-                                            onChange={(selectedOption) =>
-                                                setFieldValue(
-                                                    "gender",
-                                                    selectedOption?.value
-                                                )
-                                            }
-                                            onBlur={() =>
-                                                setFieldTouched("gender", true)
-                                            }
-                                            className="inputSelect"
-                                        />
-                                        <ErrorMessage
-                                            name="gender"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>Date
-                                            of Birth
-                                        </Label>
-                                        <DatePicker
-                                            className="form-control al_calendarIcon"
-                                            name="dob"
-                                            placeholderText="Select DOB"
-                                            popperPlacement="auto"
-                                            popperModifiers={[{
-                                                flip: {
-                                                    behavior: ["bottom"],
-                                                },
-                                                preventOverflow: {
-                                                    enabled: false,
-                                                },
-                                            }]}
-                                            selected={
-                                                values?.dob
-                                                    ? new Date(values?.dob)
-                                                    : values?.dob == "NA"
-                                                        ? new Date()
-                                                        : new Date()
-                                            }
-                                            onChange={(e) => {
-                                                setFieldValue("dob", e);
-                                            }}
-                                            dateFormat={"yyyy/MM/dd"}
-                                            maxDate={new Date()}
-                                            onBlur={() => setFieldTouched("dob", true)}
-                                            autoComplete="off"
-                                            showMonthDropdown
-                                            showYearDropdown
-                                            dropdownMode="select"
-                                        />
-                                        <ErrorMessage
-                                            name="dob"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Mobile
-                                        </Label>
-                                        <div className="input-group">
-                                            <div className="input-group-prepend">
-                                                <span
-                                                    className="input-group-text"
-                                                    id="basic-addon1"
-                                                >
-                                                    +1
-                                                </span>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Gender
+                                            </Label>
+                                            <Select
+                                                options={genderoptions}
+                                                name="gender"
+                                                value={genderoptions?.find(
+                                                    (option) =>
+                                                        option.value === values?.gender
+                                                )}
+                                                onChange={(selectedOption) =>
+                                                    setFieldValue(
+                                                        "gender",
+                                                        selectedOption?.value
+                                                    )
+                                                }
+                                                onBlur={() =>
+                                                    setFieldTouched("gender", true)
+                                                }
+                                                className="inputSelect"
+                                            />
+                                            <ErrorMessage
+                                                name="gender"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>Date
+                                                of Birth
+                                            </Label>
+                                            <DatePicker
+                                                className="form-control al_calendarIcon"
+                                                name="dob"
+                                                placeholderText="Select DOB"
+                                                popperPlacement="auto"
+                                                popperModifiers={[{
+                                                    flip: {
+                                                        behavior: ["bottom"],
+                                                    },
+                                                    preventOverflow: {
+                                                        enabled: false,
+                                                    },
+                                                }]}
+                                                selected={
+                                                    values?.dob
+                                                        ? new Date(values?.dob)
+                                                        : values?.dob == "NA"
+                                                            ? new Date()
+                                                            : new Date()
+                                                }
+                                                onChange={(e) => {
+                                                    setFieldValue("dob", e);
+                                                }}
+                                                dateFormat={"yyyy/MM/dd"}
+                                                maxDate={new Date()}
+                                                onBlur={() => setFieldTouched("dob", true)}
+                                                autoComplete="off"
+                                                showMonthDropdown
+                                                showYearDropdown
+                                                dropdownMode="select"
+                                            />
+                                            <ErrorMessage
+                                                name="dob"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Mobile
+                                            </Label>
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <span
+                                                        className="input-group-text"
+                                                        id="basic-addon1"
+                                                    >
+                                                        +1
+                                                    </span>
+                                                </div>
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="mobile"
+                                                    placeholder="Enter Mobile Number"
+                                                    onKeyPress={(e) => allowsOnlyNumeric(e)}
+                                                    aria-describedby="basic-addon1"
+                                                />
                                             </div>
+                                            <ErrorMessage
+                                                name="mobile"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                SSN
+                                            </Label>
                                             <Field
                                                 type="text"
+                                                name="ssn"
+                                                placeholder="Enter SSN"
                                                 className="form-control"
-                                                name="mobile"
-                                                placeholder="Enter Mobile Number"
                                                 onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                                aria-describedby="basic-addon1"
                                             />
-                                        </div>
-                                        <ErrorMessage
-                                            name="mobile"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            SSN
-                                        </Label>
-                                        <Field
-                                            type="text"
-                                            name="ssn"
-                                            placeholder="Enter SSN"
-                                            className="form-control"
-                                            onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                        />
-                                        <ErrorMessage
-                                            name="ssn"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Resident Type
-                                        </Label>
-                                        <Select
-                                            className="inputSelect"
-                                            options={residenceoptions}
-                                            name="rtype"
-                                            value={residenceoptions?.find(
-                                                (option) => option.value === values?.rtype
-                                            )}
-                                            onChange={(selectedOption) =>
-                                                setFieldValue(
-                                                    "rtype",
-                                                    selectedOption?.value
-                                                )
-                                            }
-                                            onBlur={() =>
-                                                setFieldTouched("rtype", true)
-                                            }
-                                        />
-                                        <ErrorMessage
-                                            name="rtype"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="4" sm="12">
-                                    <FormGroup>
-                                        <Label>
-                                            <span className="requiredLabel">*</span>
-                                            Highest Education
-                                        </Label>
-                                        <Select
-                                            options={educationOptions}
-                                            name="education"
-                                            className="inputSelect"
-                                            value={educationOptions.find(
-                                                (option) => option.value === values.education
-                                            )}
-                                            onChange={(selectedOption) => {
-                                                setFieldValue(
-                                                    "education",
-                                                    selectedOption ? selectedOption.value : ""
-                                                );
-                                            }}
-                                        />
-                                        <ErrorMessage
-                                            name="education"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                {/* <Col md="4" sm="12">
+                                            <ErrorMessage
+                                                name="ssn"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Resident Type
+                                            </Label>
+                                            <Select
+                                                className="inputSelect"
+                                                options={residenceoptions}
+                                                name="rtype"
+                                                value={residenceoptions?.find(
+                                                    (option) => option.value === values?.rtype
+                                                )}
+                                                onChange={(selectedOption) =>
+                                                    setFieldValue(
+                                                        "rtype",
+                                                        selectedOption?.value
+                                                    )
+                                                }
+                                                onBlur={() =>
+                                                    setFieldTouched("rtype", true)
+                                                }
+                                            />
+                                            <ErrorMessage
+                                                name="rtype"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="4" sm="12">
+                                        <FormGroup>
+                                            <Label>
+                                                <span className="requiredLabel">*</span>
+                                                Highest Education
+                                            </Label>
+                                            <Select
+                                                options={educationOptions}
+                                                name="education"
+                                                className="inputSelect"
+                                                value={educationOptions.find(
+                                                    (option) => option.value === values.education
+                                                )}
+                                                onChange={(selectedOption) => {
+                                                    setFieldValue(
+                                                        "education",
+                                                        selectedOption ? selectedOption.value : ""
+                                                    );
+                                                }}
+                                            />
+                                            <ErrorMessage
+                                                name="education"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    {/* <Col md="4" sm="12">
                                 <FormGroup>
                                   <Label>
                                     <span className="requiredLabel">*</span>
@@ -439,55 +477,55 @@ export const ProfileEditAction = () => {
                                   />
                                 </FormGroup>
                               </Col> */}
-                                <Col md="8" sm="12">
-                                    <FormGroup>
-                                        <Label>Name of Insurance Provider</Label>
-                                        <Field
-                                            type="text"
-                                            name="insurance_provider"
-                                            placeholder="Enter Name of Insurance Provider"
-                                            className="form-control"
-                                        />
-                                        <ErrorMessage
-                                            name="insurance_provider"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                                <Col md="6" sm="12">
-                                    <FormGroup>
-                                        <Label>Insurance Policy / Card Number</Label>
-                                        <Field
-                                            type="text"
-                                            name="insurance_policy_no"
-                                            placeholder="Enter Insurance Policy / Card Number"
-                                            className="form-control"
-                                        />
-                                        <ErrorMessage
-                                            name="insurance_policy_no"
-                                            component={"div"}
-                                            className="text-danger"
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                            <div className="mt-3">
-                                <button type="submit" disabled={!dirty} className="al_savebtn">
-                                    Save
-                                </button>
-                                <button
-                                    type="button"
-                                    className="al_cancelbgbutton mx-3"
-                                    onClick={() => {
-                                        setIsEdit(!isEdit)
-                                        setUpdatedFile("")
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </Form>
+                                    <Col md="8" sm="12">
+                                        <FormGroup>
+                                            <Label>Name of Insurance Provider</Label>
+                                            <Field
+                                                type="text"
+                                                name="insurance_provider"
+                                                placeholder="Enter Name of Insurance Provider"
+                                                className="form-control"
+                                            />
+                                            <ErrorMessage
+                                                name="insurance_provider"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md="6" sm="12">
+                                        <FormGroup>
+                                            <Label>Insurance Policy / Card Number</Label>
+                                            <Field
+                                                type="text"
+                                                name="insurance_policy_no"
+                                                placeholder="Enter Insurance Policy / Card Number"
+                                                className="form-control"
+                                            />
+                                            <ErrorMessage
+                                                name="insurance_policy_no"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <div className="mt-3">
+                                    <button type="submit" disabled={!dirty} className="al_savebtn">
+                                        Save
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="al_cancelbgbutton mx-3"
+                                        onClick={() => {
+                                            dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
+                                        }}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </Form>
+                        </>
                     );
                 }}
             </Formik>

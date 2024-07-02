@@ -8,9 +8,10 @@ import { Provider } from 'react-redux';
 import store from '../store/store';
 
 let controleErrors = {
-    "min": "Enter atleaset {min} characters",
+    "min": "Minimum {min} characters are required",
     "max": "Max {max} characters are allowed",
-    "alphasp": "Allow only alpha and {spacial} but not allowed Space"
+    "alphasp": "Allow only alpha and {spacial} but not allowed Space",
+    "alphaspace": "Allow only alpha Characters "
 }
 
 var N = (e, s, t) => new Promise((a, n) => {

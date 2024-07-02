@@ -16,7 +16,7 @@ const ProfileImageUpload = () => {
     const onFileUpload = (e) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
-            let isValidFileSize = getFileSizeInMb(file.size) <= 10;
+            let isValidFileSize = getFileSizeInMb(file.size) <= 5;
             let isValidFileExtention = ['jpg', 'jpeg', 'png']?.includes(file?.name?.split(".")?.pop()?.toLowerCase())
 
             if (isValidFileSize && isValidFileExtention) {

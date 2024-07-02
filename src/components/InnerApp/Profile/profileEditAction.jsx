@@ -70,13 +70,13 @@ export const ProfileEditAction = () => {
                     username: Yup.string()
                         .min(2, "Too Short!")
                         .max(50, "Too Long!")
-                        .required("This field is required"),
+                        .required("Name is required"),
                     // email: Yup.string()
                     //   .email("Invalid email")
                     //   .required("This field is required"),
                     mobile: Yup.string()
                         .matches(phoneNumberReg, "Invalid phone number")
-                        .required("This field is required"),
+                        .required("Mobile number is required"),
                     dob: Yup.date()
                         .max(
                             new Date(Date.now() - 567648000000),
@@ -91,11 +91,11 @@ export const ProfileEditAction = () => {
                         .required("Required"),
                     gender: Yup.string().required("This field is required"),
                     bloodtype: Yup.string().required(
-                        "This field is required"
+                        "Blood Type is required"
                     ),
                     rtype: Yup.string().required("This field is required"),
                     education: Yup.string().required(
-                        "This field is required"
+                        "Education is required"
                     ),
                     // ssn: Yup.string()
                     //   .min(2, "Too Short!")
@@ -109,11 +109,11 @@ export const ProfileEditAction = () => {
                         )
                         .min(1, "Too Short!") // Minimum length of 1 character
                         .max(3, "Too Long!")  // Maximum length of 3 characters
-                        .required("This field is required"),
+                        .required("Height is required"),
                     weight: Yup.number()
                         .min(22, "Weight must be at least 22 lbs")
                         .max(1400, "Weight is too high!")
-                        .required("This field is required"),
+                        .required("Weight is required"),
                     // age: Yup.string()
                     //   .min(1, "Too Short!")
                     //   .max(3, "Too Long!")
@@ -485,6 +485,7 @@ export const ProfileEditAction = () => {
                                                 name="insurance_provider"
                                                 placeholder="Enter Name of Insurance Provider"
                                                 className="form-control"
+                                                disabled={true}
                                             />
                                             <ErrorMessage
                                                 name="insurance_provider"
@@ -501,6 +502,7 @@ export const ProfileEditAction = () => {
                                                 name="insurance_policy_no"
                                                 placeholder="Enter Insurance Policy / Card Number"
                                                 className="form-control"
+                                                disabled={true}
                                             />
                                             <ErrorMessage
                                                 name="insurance_policy_no"

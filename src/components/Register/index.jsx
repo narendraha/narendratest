@@ -319,6 +319,7 @@ export default function Register() {
                                 selectedOption ? selectedOption.value : ""
                               );
                             }}
+                            onBlur={() => setFieldTouched('rtype', true)}
                           />
                           <ErrorMessage
                             name="rtype"
@@ -343,6 +344,7 @@ export default function Register() {
                                 selectedOption ? selectedOption.value : ""
                               );
                             }}
+                            onBlur={() => setFieldTouched('education', true)}
                           />
                           <ErrorMessage
                             name="education"

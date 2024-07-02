@@ -11,6 +11,7 @@ import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4D
 import { getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
 import ConfirmationAction from '../MainLayout/ConfirmationAction';
+import { customContentValidation, allowedNumbersOnField } from '../../../_mock/helperIndex';
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -67,13 +68,14 @@ export const ProfileEditAction = () => {
                     profile_url: profilePicture || ""
                 }}
                 validationSchema={Yup.object().shape({
-                    username: Yup.string()
-                        .min(2, "Too Short!")
-                        .max(50, "Too Long!")
-                        .required("Name is required"),
+                    // username: Yup.string()
+                    //     .min(2, "Too Short!")
+                    //     .max(50, "Too Long!")
+                    //     .required("Name is required"),
                     // email: Yup.string()
                     //   .email("Invalid email")
                     //   .required("This field is required"),
+                    username: customContentValidation('Full Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
                     mobile: Yup.string()
                         .matches(phoneNumberReg, "Invalid phone number")
                         .required("Mobile number is required"),
@@ -97,10 +99,7 @@ export const ProfileEditAction = () => {
                     education: Yup.string().required(
                         "Education is required"
                     ),
-                    // ssn: Yup.string()
-                    //   .min(2, "Too Short!")
-                    //   .max(50, "Too Long!")
-                    //   .required("This field is required"),
+                    ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9),
                     feet: Yup.string()
                         .test(
                             'is-greater-than-one',
@@ -108,7 +107,7 @@ export const ProfileEditAction = () => {
                             value => value && parseFloat(value) >= 1
                         )
                         .min(1, "Too Short!") // Minimum length of 1 character
-                        .max(3, "Too Long!")  // Maximum length of 3 characters
+                        .max(3, "Max 3 characters are  Long!")  // Maximum length of 3 characters
                         .required("Height is required"),
                     weight: Yup.number()
                         .min(22, "Weight must be at least 22 lbs")
@@ -152,7 +151,7 @@ export const ProfileEditAction = () => {
                                                     <Field
                                                         type="text"
                                                         name="feet"
-                                                        placeholder="Feet"
+                                                        placeholder="e.g.9"
                                                         className="form-control"
                                                         onKeyPress={(e) =>
                                                             allowsOnlyNumericOnlysingleDigit(e)
@@ -169,7 +168,7 @@ export const ProfileEditAction = () => {
                                                     <Field
                                                         type="text"
                                                         name="inch"
-                                                        placeholder="Inch"
+                                                        placeholder="e.g.0"
                                                         className="form-control"
                                                         onKeyPress={(e) =>
                                                             allowsOnlyNumericOnly2Digit(e)
@@ -193,7 +192,7 @@ export const ProfileEditAction = () => {
                                             <Field
                                                 type="text"
                                                 name="weight"
-                                                placeholder="Enter Weight"
+                                                placeholder="e.g. 40"
                                                 className="form-control"
                                                 onKeyPress={(e) =>
                                                     allowsOnlyNumericOnly4Digit(e)
@@ -247,7 +246,7 @@ export const ProfileEditAction = () => {
                                             <Field
                                                 type="text"
                                                 name="username"
-                                                placeholder="Enter Name"
+                                                placeholder="e.g.John Doe"
                                                 className="form-control"
                                             />
                                             <ErrorMessage
@@ -316,7 +315,7 @@ export const ProfileEditAction = () => {
                                             <DatePicker
                                                 className="form-control al_calendarIcon"
                                                 name="dob"
-                                                placeholderText="Select DOB"
+                                                placeholderText="e.g.MM/DD/YYYY"
                                                 popperPlacement="auto"
                                                 popperModifiers={[{
                                                     flip: {
@@ -370,8 +369,9 @@ export const ProfileEditAction = () => {
                                                     type="text"
                                                     className="form-control"
                                                     name="mobile"
-                                                    placeholder="Enter Mobile Number"
-                                                    onKeyPress={(e) => allowsOnlyNumeric(e)}
+                                                    placeholder="e.g.123-4567-8901"
+                                                    // onKeyPress={(e) => allowsOnlyNumeric(e)}
+                                                    onKeyPress={(e) => allowedNumbersOnField(10, e)}
                                                     aria-describedby="basic-addon1"
                                                 />
                                             </div>
@@ -390,7 +390,7 @@ export const ProfileEditAction = () => {
                                             <Field
                                                 type="text"
                                                 name="ssn"
-                                                placeholder="Enter SSN"
+                                                placeholder="e.g.xxx-xxx-xxx"
                                                 className="form-control"
                                                 onKeyPress={(e) => allowsOnlyNumeric(e)}
                                             />

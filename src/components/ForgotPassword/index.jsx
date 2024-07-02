@@ -108,7 +108,7 @@ export default function ForgotPassword() {
                         <Field
                           type="text"
                           name="email"
-                          placeholder="Enter Mobile Number / Email ID"
+                          placeholder="e.g. abc@email.com"
                           className="form-control"
                           onChange={(e) => {
                             const trimmedValue = e.target.value.trim();
@@ -440,6 +440,7 @@ export default function ForgotPassword() {
           validationSchema={Yup.object().shape({
             // Define validation rules for Password form fields
             password: Yup.string()
+              .max(50, "Max 50 characters are allowed")
               .matches(passwordReg, "Please enter a valid password")
               .required("Password is required"),
             reenterpassword: Yup.string()
@@ -478,7 +479,7 @@ export default function ForgotPassword() {
                               <Field
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();
@@ -521,7 +522,7 @@ export default function ForgotPassword() {
                                   isShowConfirmPassword ? "text" : "password"
                                 }
                                 name="reenterpassword"
-                                placeholder="Enter password"
+                                placeholder="Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();

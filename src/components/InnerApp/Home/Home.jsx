@@ -1129,7 +1129,7 @@ export default function Home() {
                           weight: Yup.number()
                             .min(22, "Weight must be at least 22 lbs")
                             .max(1400, "Weight is too high!")
-                            .required("This field is required"),
+                            .required("Weight is required"),
                           // height: Yup.number()
                           //   .typeError("Must be a number")
                           //   .required("This field is required"),
@@ -1145,10 +1145,9 @@ export default function Home() {
                           //   .max(120, "Diastolic is Too high!")
                           //   .required("This field is required"),
                           pulse: Yup.number()
-                            .min(10, "Pulse must be at least 10")
-                            .max(220, "Too high!")
-                            .required("This field is required"),
-                          tdate: Yup.date().required("This field is required"),
+                            .max(200, "BPM is Too high!")
+                            .required("BPM is required"),
+                          tdate: Yup.date().nullable().required("This field is required"),
                           isCheckMedicalRecords: Yup.boolean()
                             .oneOf([true], "This field is required")
                             .required("This field is required"),
@@ -1186,7 +1185,7 @@ export default function Home() {
                                   <DatePicker
                                     className="form-control al_calendarIcon"
                                     name="tdate"
-                                    placeholderText="Select date"
+                                    placeholderText="e.g.MM/DD/YYYY"
                                     popperPlacement="auto"
                                     popperModifiers={[
                                       {
@@ -1199,7 +1198,8 @@ export default function Home() {
                                       },
                                     ]}
                                     selected={
-                                      values?.tdate ? values?.tdate : new Date()
+                                      // values?.tdate ? values?.tdate : new Date()
+                                      values?.tdate
                                     }
                                     onChange={(e) => {
                                       setFieldValue("tdate", e);
@@ -1236,7 +1236,7 @@ export default function Home() {
                                       <Field
                                         type="text"
                                         name="weight"
-                                        placeholder="100"
+                                        placeholder="e.g.100"
                                         className="form-control"
                                         onKeyPress={(e) =>
                                           allowsOnlyNumericOnly4Digit(e)
@@ -1264,7 +1264,7 @@ export default function Home() {
                                           <Field
                                             type="text"
                                             name="systolic"
-                                            placeholder="120"
+                                            placeholder="e.g.120"
                                             className="form-control"
                                             onKeyPress={(e) =>
                                               allowsOnlyNumericOnly3Digit(e)
@@ -1276,7 +1276,7 @@ export default function Home() {
                                           <Field
                                             type="text"
                                             name="diastolic"
-                                            placeholder="80"
+                                            placeholder="e.g.80"
                                             className="form-control"
                                             onKeyPress={(e) =>
                                               allowsOnlyNumericOnly3Digit(e)
@@ -1309,7 +1309,7 @@ export default function Home() {
                                       <Field
                                         type="text"
                                         name="pulse"
-                                        placeholder="70"
+                                        placeholder="e.g.70"
                                         className="form-control"
                                         onKeyPress={(e) =>
                                           allowsOnlyNumericOnly3Digit(e)

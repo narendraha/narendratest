@@ -103,6 +103,7 @@ export default function Register() {
         username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
+          .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
           .required("Email is required"),
         mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10),
@@ -188,7 +189,7 @@ export default function Register() {
                           <Field
                             type="text"
                             name="username"
-                            placeholder="Enter Full Name"
+                            placeholder="e.g.John Doe"
                             className="form-control"
                           />
                           <ErrorMessage
@@ -204,7 +205,7 @@ export default function Register() {
                           <Field
                             type="text"
                             name="email"
-                            placeholder="Enter Email ID"
+                            placeholder="e.g.abc@email.com"
                             className="form-control"
                             onChange={(e) => {
                               const trimmedValue = e.target.value.trim();
@@ -224,7 +225,7 @@ export default function Register() {
                           <DatePicker
                             className="form-control al_calendarIcon"
                             name="dob"
-                            placeholderText="Select DOB"
+                            placeholderText="e.g.MM/DD/YYYY"
                             popperPlacement="auto"
                             popperModifiers={[{
                               flip: {
@@ -294,7 +295,7 @@ export default function Register() {
                               type="text"
                               className="form-control"
                               name="mobile"
-                              placeholder="Enter Mobile Number"
+                              placeholder="e.g.123-4567-8901"
                               // onKeyPress={(e) => allowsOnlyNumeric(e)}
                               onKeyPress={(e) => allowedNumbersOnField(10, e)}
                               aria-describedby="basic-addon1"
@@ -361,7 +362,7 @@ export default function Register() {
                           <Field
                             type="password"
                             name="ssn"
-                            placeholder="Enter SSN"
+                            placeholder="e.g.xxx-xxx-xxx"
                             className="form-control"
                           />
                           <ErrorMessage
@@ -1139,7 +1140,7 @@ export default function Register() {
                               <Field
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="e.g.Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();
@@ -1184,7 +1185,7 @@ export default function Register() {
                                   isShowConfirmPassword ? "text" : "password"
                                 }
                                 name="reenterpassword"
-                                placeholder="Enter password"
+                                placeholder="e.g.Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();

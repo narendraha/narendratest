@@ -101,6 +101,9 @@ a {
 }
 
 .input-group {
+  border: 1px solid #f3f6fb !important;
+  border-radius: 7px;
+
   .input-group-prepend {
     .input-group-text {
       background-color: #f2f6fb;
@@ -355,7 +358,7 @@ input:-webkit-autofill:active {
 
 label {
   color: #9ba8b9;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 13px !important;
   margin-bottom: 6px;
   line-height: normal;
@@ -366,7 +369,7 @@ textarea {
   &.form-control {
     height: 40px;
     font-size: 14px;
-    border: none;
+    border: 1px solid #f3f6fb !important;
     background-color: #f3f6fb;
     border-radius: 7px !important;
     box-shadow: none !important;
@@ -388,6 +391,16 @@ textarea {
   &:focus-visible {
     outline: none;
   }
+}
+
+input:has(+ div.text-danger),
+textarea:has(+ div.text-danger),
+.react-datepicker-wrapper:has(+ div.text-danger) input,
+.input-group:has(+ div.text-danger),
+.inputSelect:has(+ div.text-danger) div[class$=-control],
+div.position-relative:has(+ div.text-danger) input {
+  border: 1px solid #ff9c9c !important;
+  border-radius: 7px;
 }
 
 textarea {
@@ -817,7 +830,7 @@ span {
 
 .inputSelect {
   div[class$="-control"] {
-    border: none !important;
+    border: 1px solid #f3f6fb !important;
     border-radius: 7px !important;
     background-color: #f3f6fb;
     box-shadow: none !important;
@@ -854,13 +867,16 @@ span {
   div[class$="-placeholder"] {
     font-size: 13px;
     font-weight: normal;
-    font-style: italic;
     color: #A0A3B5;
   }
 
   div[class$="-ValueContainer"] {
     padding-left: 0;
     padding-right: 0;
+
+    div[class$="-Input"] {
+      margin: 4px 2px !important
+    }
   }
 }
 

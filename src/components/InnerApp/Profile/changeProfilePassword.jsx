@@ -72,7 +72,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         </div>
                                     </div>
                                     <ErrorMessage name="currentPassword" component={"div"} className="text-danger" />
-                                    <div className="text-danger my-2">{error}</div>
+                                    {error && <div className="text-danger my-2">{error}</div>}
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>

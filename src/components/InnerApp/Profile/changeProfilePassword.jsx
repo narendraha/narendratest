@@ -40,8 +40,9 @@ export const ChangeProfilePassword = ({ props }) => {
                                 newPasswordEyeClose: false
                             }}
                             validationSchema={Yup.object().shape({
-                                currentPassword: Yup.string().required("Current Password is required"),
+                                currentPassword: Yup.string().max(50, "Max 50 characters are allowed").required("Current Password is required"),
                                 newPassword: Yup.string()
+                                    .max(50, "Max 50 characters are allowed")
                                     .matches(passwordReg, "Please enter a valid password")
                                     .required("New Password is required"),
                                 confirmPassword: Yup.string().when("newPassword", {
@@ -63,7 +64,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         Current Password
                                     </Label>
                                     <div className="d-flex align-items-end position-relative">
-                                        <Field name="currentPassword" type={values?.oldPasswordEyeClose ? "text" : "password"} className="form-control" />
+                                        <Field name="currentPassword" type={values?.oldPasswordEyeClose ? "text" : "password"} className="form-control" placeholder="e.g.Pass@123" />
                                         <div
                                             onClick={() => setFieldValue('oldPasswordEyeClose', !values?.oldPasswordEyeClose)}
                                             className="password_icon"
@@ -80,7 +81,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         New Password
                                     </Label>
                                     <div className="d-flex align-items-end position-relative">
-                                        <Field name="newPassword" type={values?.newPasswordEyeClose ? "text" : "password"} className="form-control" />
+                                        <Field name="newPassword" type={values?.newPasswordEyeClose ? "text" : "password"} className="form-control" placeholder="e.g.Pass@123" />
                                         <div
                                             onClick={() => setFieldValue('newPasswordEyeClose', !values?.newPasswordEyeClose)}
                                             className="password_icon"
@@ -99,7 +100,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         Confirm Password
                                     </Label>
                                     <Field name="confirmPassword" type="password" className="form-control" />
-                                    <ErrorMessage name="confirmPassword" component={"div"} className="text-danger" />
+                                    <ErrorMessage name="confirmPassword" component={"div"} className="text-danger" placeholder="e.g.Pass@123" />
                                 </FormGroup>
                                 <div className="mt-4">
                                     <button type="submit" className="btn al_button_add me-3" >

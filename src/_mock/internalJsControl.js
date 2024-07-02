@@ -40,6 +40,9 @@ export const getProfileTabs = {
 // custom pattens for custom validations
 export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
+{ type: 'alphaspace', pattern: /^[a-zA-Z ]*$/, message: 'alphaspace', alowChar: null },
+{ type: 'number', pattern: /^[0-9]{1,20}$/, message: 'number', alowChar: null },
+
 ]
 
 
@@ -112,3 +115,13 @@ export const callAPI = async ({ url, method, data, contentType }) => {
         throw error;
     }
 };
+
+// preventdefault for numbers 
+
+export const allowedNumbersOnField = (fieldLength, e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (!re.test(e.key) || (e.target.value.length >= fieldLength && e.key !== 'Backspace')) {
+        e.preventDefault();
+    }
+}

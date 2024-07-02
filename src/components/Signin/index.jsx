@@ -109,13 +109,15 @@ export default function Signin({ setIsAuthenticated }) {
           // Define validation rules for Password form fields
           username: Yup.string()
             .trim()
-            .required("This field is required")
+            .required("Mobile Number / Email-ID field is required")
             .matches(
               // Regular expression for email or phone number validation
               /^(?:[0-9]{10}|\w+[.-]*\w+@\w+\.[A-Za-z]{2,3})$/,
               "Invalid email or phone number"
             ),
-          password: Yup.string().required("Password is required"),
+          password: Yup.string()
+            .max(50, "Max 50 characters are allowed")
+            .required("Password is required"),
         })}
         onSubmit={(values) => {
           handleSubmit(values);
@@ -128,16 +130,16 @@ export default function Signin({ setIsAuthenticated }) {
               <Row className="al_login_section">
                 <Col lg="7" sm="6" className="al_left_login h-100">
                   <div className="wflexLayout">
-                      <img
-                        src={alferdlogo}
-                        className="login_logodesktop"
-                        alt="logo"
-                      />
-                      <img
-                        src={alferdlogomobile}
-                        className="login_logomobile"
-                        alt="logo_mobile"
-                      />
+                    <img
+                      src={alferdlogo}
+                      className="login_logodesktop"
+                      alt="logo"
+                    />
+                    <img
+                      src={alferdlogomobile}
+                      className="login_logomobile"
+                      alt="logo_mobile"
+                    />
                   </div>
                 </Col>
                 <Col lg="5" sm="6" className="al_login-right h-100">
@@ -155,12 +157,12 @@ export default function Signin({ setIsAuthenticated }) {
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
-                        <span className="fw-medium">Welcome to </span><br/>
+                        <span className="fw-medium">Welcome to </span><br />
                         <span style={{ fontSize: "26px" }}>
                           Hello<span className="text-info">Alfred.AI <img src={handwave} alt="" width={25} className="mb-2" /></span>
                         </span>
                       </h5>
-                      <p className="cs_light text-grey text-italic mb-4" style={{ fontFamily : 'STIX Two Text'}}>
+                      <p className="cs_light text-grey text-italic mb-4" style={{ fontFamily: 'STIX Two Text' }}>
                         "Let's take your wellness journey to new heights"
                       </p>
 
@@ -171,7 +173,7 @@ export default function Signin({ setIsAuthenticated }) {
                             <Field
                               type="text"
                               name="username"
-                              placeholder="Enter Mobile Number / Email ID"
+                              placeholder="e.g.abc@email.com"
                               className="form-control"
                               onChange={(e) => {
                                 const trimmedValue = e.target.value.trim();
@@ -190,7 +192,7 @@ export default function Signin({ setIsAuthenticated }) {
                               <Field
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="e.g.Pass@123"
                                 className="form-control"
                               />
                               <div
@@ -199,10 +201,10 @@ export default function Signin({ setIsAuthenticated }) {
                               >
                                 {showPassword ? (
                                   <Icon
-                                  icon="bi:eye"
-                                  width="1.2em"
-                                  height="1.2em"
-                                />
+                                    icon="bi:eye"
+                                    width="1.2em"
+                                    height="1.2em"
+                                  />
                                 ) : (
                                   <Icon
                                     icon="bi:eye-slash"

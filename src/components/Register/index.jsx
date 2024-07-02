@@ -21,7 +21,7 @@ import alferdlogo from "../../images/alfredlogowhite.svg";
 import successImg from "../../images/sucessimg.svg";
 import OTPComponent from "../ForgotPassword/OTP";
 import Loading from "../InnerApp/LoadingComponent";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions } from "../../_mock/helperIndex";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField } from "../../_mock/helperIndex";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -93,17 +93,20 @@ export default function Register() {
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
-        username: Yup.string()
-          .min(2, "Too Short!")
-          .max(50, "Too Long!")
-          .required("This field is required"),
+        // username: Yup.string()
+        //   .min(2, "Too Short!")
+        //   .max(50, "Too Long!")
+        //   .required("Full Name is required"),
+        // mobile: Yup.string()
+        //   .matches(phoneNumberReg, "Invalid phone number")
+        //   .required("This field is required"),
+        username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
+          .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
-          .required("This field is required"),
-        mobile: Yup.string()
-          .matches(phoneNumberReg, "Invalid phone number")
-          .required("This field is required"),
+          .required("Email is required"),
+        mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10),
         dob: Yup.date()
           .max(
             new Date(Date.now() - 567648000000),
@@ -113,10 +116,11 @@ export default function Register() {
             new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000),
             "You must be below 120 years old"
           )
-          .required("This field is required"),
-        gender: Yup.string().required("This field is required"),
-        rtype: Yup.string().required("This field is required"),
-        education: Yup.string().required("This field is required")
+          .required("DOB is required"),
+        gender: Yup.string().required("Gender is required"),
+        rtype: Yup.string().required("Resident type is required"),
+        education: Yup.string().required("Education field is required"),
+        ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9)
       })}
       onSubmit={(values) => onSubmit({ ...values })}
     >
@@ -185,7 +189,7 @@ export default function Register() {
                           <Field
                             type="text"
                             name="username"
-                            placeholder="Enter Full Name"
+                            placeholder="e.g.John Doe"
                             className="form-control"
                           />
                           <ErrorMessage
@@ -201,7 +205,7 @@ export default function Register() {
                           <Field
                             type="text"
                             name="email"
-                            placeholder="Enter Email ID"
+                            placeholder="e.g.abc@email.com"
                             className="form-control"
                             onChange={(e) => {
                               const trimmedValue = e.target.value.trim();
@@ -221,7 +225,7 @@ export default function Register() {
                           <DatePicker
                             className="form-control al_calendarIcon"
                             name="dob"
-                            placeholderText="Select DOB"
+                            placeholderText="e.g.MM/DD/YYYY"
                             popperPlacement="auto"
                             popperModifiers={[{
                               flip: {
@@ -291,8 +295,9 @@ export default function Register() {
                               type="text"
                               className="form-control"
                               name="mobile"
-                              placeholder="Enter Mobile Number"
-                              onKeyPress={(e) => allowsOnlyNumeric(e)}
+                              placeholder="e.g.123-4567-8901"
+                              // onKeyPress={(e) => allowsOnlyNumeric(e)}
+                              onKeyPress={(e) => allowedNumbersOnField(10, e)}
                               aria-describedby="basic-addon1"
                             />
                           </div>
@@ -357,7 +362,7 @@ export default function Register() {
                           <Field
                             type="password"
                             name="ssn"
-                            placeholder="Enter SSN"
+                            placeholder="e.g.xxx-xxx-xxx"
                             className="form-control"
                           />
                           <ErrorMessage
@@ -1096,6 +1101,7 @@ export default function Register() {
           validationSchema={Yup.object().shape({
             // Define validation rules for Password form fields
             password: Yup.string()
+              .max(50, "Max 50 characters are allowed")
               .matches(passwordReg, "Please enter a valid password")
               .required("Password is required"),
             reenterpassword: Yup.string()
@@ -1134,7 +1140,7 @@ export default function Register() {
                               <Field
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="e.g.Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();
@@ -1179,7 +1185,7 @@ export default function Register() {
                                   isShowConfirmPassword ? "text" : "password"
                                 }
                                 name="reenterpassword"
-                                placeholder="Enter password"
+                                placeholder="e.g.Pass@123"
                                 className="form-control"
                                 onChange={(e) => {
                                   const trimmedValue = e.target.value.trim();

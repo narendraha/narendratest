@@ -1,61 +1,34 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { FormGroup, Label, Modal, ModalBody } from 'reactstrap';
 import * as Yup from 'yup';
 import { passwordReg } from "../../../_mock/RegularExp";
-import { AxiosInstance } from "../../../_mock/utilities";
+import { getActionTypes } from "../../../_mock/internalJsControl";
+import { changeProfilePasswordRequest, setActionTypeAndActionData } from "../../../store/Profile/slice";
 import Loading from "../../InnerApp/LoadingComponent";
 
 export const ChangeProfilePassword = ({ props }) => {
+    const dispatch = useDispatch();
 
-    const [isOpenModel, setOpenModel] = useState(true);
-    const [isFormLoading, setIsFormLoading] = useState(false);
+    const { isLoading, error } = useSelector((state) => (state?.profileSlice));
 
     const handleSubmit = (formData) => {
-        setIsFormLoading(true);
         let reqObj = {
             old_password: formData?.currentPassword,
             new_password: formData?.newPassword
         }
-        AxiosInstance("application/json")
-            .put(`/change-password`, reqObj)
-            .then((res) => {
-                setIsFormLoading(true);
-                if (res && res.data && res.status === 200) {
-                    setIsFormLoading(false)
-                    if (res.data?.statuscode === 200) {
-                        setOpenModel(false)
-                        props(isOpenModel)
-                        toast(res.data?.message, {
-                            position: "top-right",
-                            type: "success",
-                        });
-                    } else {
-                        toast(res.data?.message, {
-                            position: "top-right",
-                            type: "error",
-                        });
-                    }
-                }
-            })
-            .catch((er) => {
-                toast(er?.response?.data?.message, {
-                    position: "top-right",
-                    type: "error",
-                });
-            });
+        dispatch(changeProfilePasswordRequest(reqObj))
     }
 
     const handleClose = () => {
-        setOpenModel(false)
-        props(isOpenModel)
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
     }
 
     return (
         <React.Fragment>
-            <Modal isOpen={isOpenModel ? true : false} className="al_confirm_modal" wrapClassName="al_outerparentwp">
+            <Modal isOpen={true} className="al_confirm_modal" wrapClassName="al_outerparentwp">
                 <ModalBody className="wflexLayout p-0">
                     <div className='wflexScroll'>
                         <Formik
@@ -82,7 +55,7 @@ export const ChangeProfilePassword = ({ props }) => {
                             }}
                         >{({ values, setFieldValue }) => (
                             <Form>
-                                {isFormLoading && <Loading />}
+                                {isLoading && <Loading />}
                                 <h5>Change Password</h5>
                                 <FormGroup>
                                     <Label>
@@ -99,6 +72,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         </div>
                                     </div>
                                     <ErrorMessage name="currentPassword" component={"div"} className="text-danger" />
+                                    {error && <div className="text-danger my-2">{error}</div>}
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>

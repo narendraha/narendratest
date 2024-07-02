@@ -22,6 +22,21 @@ export const getEductaionOptions = [
     { value: "postgraduate", label: "postgraduate" },
 ];
 
+// actionTypes
+export const getActionTypes = {
+    UNSELECT: 0,
+    EDIT: 1,
+    ISCONFIRM: 2,
+    SELECT: 3
+}
+
+// profile page sub componets 
+export const getProfileTabs = {
+    CHANGEPASSWORD: "changePassword",
+    BANKDETAILS: "bankDetails",
+    SETTINGS: "settings"
+}
+
 // custom pattens for custom validations
 export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
@@ -80,4 +95,20 @@ export const getProfileCmpDetails = async (link, reOpenModel = false) => {
         navigationLink = link
     }
     return { redirectionPath, isModalVisible, modalMessage, navigationLink }
-}
+};
+
+
+// for Api Integration
+export const callAPI = async ({ url, method, data, contentType }) => {
+    const axiosInstance = AxiosInstance(contentType);
+    try {
+        const response = await axiosInstance({
+            url,
+            method,
+            data,
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

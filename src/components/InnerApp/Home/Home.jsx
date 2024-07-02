@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import {
   Card,
@@ -30,15 +32,13 @@ import { AxiosInstance } from "../../../_mock/utilities";
 import atrialfib from "../../../images/atrialfib.png";
 import bulp from "../../../images/idea.png";
 import rhythm from "../../../images/rhythm.png";
+import riskmanagement from "../../../images/riskmanagement.png";
+import riskmanagement2 from "../../../images/riskmanagement2.jpg";
+import riskmanagement3 from "../../../images/riskmanagement3.jpg";
 import whytreatment from "../../../images/whytreatment.png";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
-import moment from "moment";
-import { useLocation } from "react-router";
-import riskmanagement from "../../../images/riskmanagement.png";
-import riskmanagement2 from "../../../images/riskmanagement2.jpg";
-import riskmanagement3 from "../../../images/riskmanagement3.jpg";
 // import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
 export const EGoalTimePeriod = {
   WEEKWISE: 0,
@@ -1158,7 +1158,7 @@ export default function Home() {
                           setHealthDetails(values);
                         }}
                       >
-                        {({ setFieldValue, values, setFieldTouched }) => {
+                        {({ setFieldValue, values, setFieldTouched, errors }) => {
                           return (
                             <Form>
                               {/* <Row>
@@ -1287,12 +1287,12 @@ export default function Home() {
                                       <ErrorMessage
                                         name="systolic"
                                         component={"div"}
-                                        className="text-danger"
+                                        className="text-danger systolic"
                                       />
                                       <ErrorMessage
                                         name="diastolic"
                                         component={"div"}
-                                        className="text-danger"
+                                        className="text-danger diastolic"
                                       />
                                     </FormGroup>
                                     <div className="text-grey mt-1">(mmHg)</div>

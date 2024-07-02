@@ -4,6 +4,8 @@ import { HashRouter as Router } from 'react-router-dom';
 import * as Yup from 'yup';
 import App from '../App';
 import { customPatterns } from './helperIndex';
+import { Provider } from 'react-redux';
+import store from '../store/store';
 
 let controleErrors = {
     "min": "Enter atleaset {min} characters",
@@ -35,8 +37,10 @@ var N = (e, s, t) => new Promise((a, n) => {
 export var loadPreDataAndApp = (e = !1) => N(void 0, null, function* () {
     //stop log in production
     process.env.NODE_ENV === "production" && (console.log = function () { })
-
-    let app = React.createElement(Router, null, React.createElement(App, null));
+    let app = React.createElement(Provider, {
+        store: store
+    },
+        React.createElement(Router, null, React.createElement(App, null)))
     parseInt(React.version) >= 18 ? ReactDOM.createRoot(document.getElementById("root")).render(app) : ReactDOM.replace(app, document.getElementById("root"))
 })
 

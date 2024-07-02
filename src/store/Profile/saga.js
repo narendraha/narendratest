@@ -1,4 +1,3 @@
-// src/features/imageSaga.js
 import { toast } from 'react-toastify';
 import { call, put, select, takeLeading, all } from 'redux-saga/effects';
 import { callAPI } from '../../_mock/internalJsControl';
@@ -11,7 +10,7 @@ import {
     changeProfilePasswordResponse
 } from './slice';
 
-
+// TO GET PATIENT DETAILS
 function* getPatientDetails(action) {
     let profileDetails = ""
     try {
@@ -35,13 +34,13 @@ function* getPatientDetails(action) {
         return profileDetails
 }
 
-
+// TO UPDATE PROFILE DETAILS AND PROFILE IMAGE
 function* updateProfileDetailsAndProfileImage(action) {
-
     let errorMessages = "";
-    let profileDetails = ""
+    let profileDetails = "";
+    let isUpdated = false;
+
     const uploadedProfileImageData = (yield select())['profileSlice']?.uploadedProfileImage?.formData || "";
-    let isUpdated = false
 
     const reLoadWindow = () => {
         let isWinowLoaded = false
@@ -117,6 +116,7 @@ function* updateProfileDetailsAndProfileImage(action) {
         yield put(profileDetailsAndProfileImageUpdateResponse(profileDetails, errorMessages))
 }
 
+// TO CHANGE PROFILE PASSWORD
 function* changeProfilePassword(action) {
     let error = ""
     try {

@@ -36,7 +36,8 @@ const profileSlice = createSlice({
                 actionType: action?.payload?.actionType,
                 // actionType: action?.payload?.actionType && action?.payload?.actionType,
                 actionData: action?.payload?.actionData || "",
-                isConfirmModel: action?.payload?.isConfirmModel
+                isConfirmModel: action?.payload?.isConfirmModel,
+                uploadedProfileImage: action?.payload?.actionType === getActionTypes.UNSELECT ? "" : state?.uploadedProfileImage
             }
             return state;
         },
@@ -61,7 +62,6 @@ const profileSlice = createSlice({
             state.actionData = action.payload
         },
         profileDetailsAndProfileImageUpdateResponse: (state, action) => {
-            console.log("errorMessageserrorMessages", action)
             let { profileDetails, errorMessages } = action.payload;
             state = {
                 ...state,

@@ -34,7 +34,7 @@ const bloodTypes = [
 export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails, profilePicture, actionData, isConfirmModel } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails, profilePicture, actionData, isConfirmModel, uploadedProfileImage } = useSelector((state) => state?.profileSlice);
 
     const handleSubmit = () => {
         dispatch(profileDetailsAndProfileImageUpdateRequest(actionData))
@@ -511,7 +511,7 @@ export const ProfileEditAction = () => {
                                     </Col>
                                 </Row>
                                 <div className="mt-3">
-                                    <button type="submit" disabled={!dirty} className="al_savebtn">
+                                    <button type="submit" disabled={uploadedProfileImage && uploadedProfileImage?.file !== "" ? false : !dirty} className="al_savebtn">
                                         Save
                                     </button>
                                     <button

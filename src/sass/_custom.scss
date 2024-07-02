@@ -398,7 +398,9 @@ textarea:has(+ div.text-danger),
 .react-datepicker-wrapper:has(+ div.text-danger) input,
 .input-group:has(+ div.text-danger),
 .inputSelect:has(+ div.text-danger) div[class$=-control],
-div.position-relative:has(+ div.text-danger) input {
+div.position-relative:has(~ div.text-danger) input,
+.al_vitalunits .d-flex.gap-2:has(+ div.systolic.text-danger) input[name="systolic"],
+.al_vitalunits .d-flex.gap-2:has(+ div.diastolic.text-danger) input[name="diastolic"] {
   border: 1px solid #ff9c9c !important;
   border-radius: 7px;
 }

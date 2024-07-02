@@ -9,14 +9,14 @@ const ProfileImageUpload = () => {
     const dispatch = useDispatch();
 
     const { actionType, profilePicture, uploadedProfileImage } = useSelector((state) => state?.profileSlice);
-    const profilePictureData = uploadedProfileImage === "" ? profilePicture : uploadedProfileImage?.file;
+    const profilePictureData = (!uploadedProfileImage && uploadedProfileImage === "") ? profilePicture : uploadedProfileImage?.file;
 
     const getFileSizeInMb = (fileSize = 0) => (fileSize ? fileSize / 1024 / 1024 : 0);
 
     const onFileUpload = (e) => {
         if (e.target.files[0]) {
             const file = e.target.files[0];
-            let isValidFileSize = getFileSizeInMb(file.size) <= 200;
+            let isValidFileSize = getFileSizeInMb(file.size) <= 10;
             let isValidFileExtention = ['jpg', 'jpeg', 'png']?.includes(file?.name?.split(".")?.pop()?.toLowerCase())
 
             if (isValidFileSize && isValidFileExtention) {

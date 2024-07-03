@@ -80,7 +80,7 @@ function* updateProfileDetailsAndProfileImage(action) {
         let isProfileImageUpdate = !uploadProfileImageResponse ? true : reLoadWindow()?.isWinowLoaded;
         if (isProfileImageUpdate) {
             isUpdated = true
-            if (!uploadProfileImageResponse || uploadProfileImageResponse && uploadProfileImageResponse?.data && uploadProfileImageResponse?.status && uploadProfileImageResponse?.statuscode === 200) {
+            if (!uploadProfileImageResponse || (uploadProfileImageResponse && uploadProfileImageResponse?.data && uploadProfileImageResponse?.status && uploadProfileImageResponse?.statuscode === 200)) {
                 if (updateProfileDetailsResponse && updateProfileDetailsResponse?.status && updateProfileDetailsResponse.statuscode === 200) {
                     if (!uploadProfileImageResponse)
                         profileDetails = yield call(getPatientDetails, true)
@@ -148,10 +148,10 @@ function* changeProfilePassword(action) {
 }
 
 
-function* watchAddImageSaga() {
+function* watchProfileSaga() {
     yield takeLeading(changeProfilePasswordRequest.type, changeProfilePassword)
     yield takeLeading(profileDetailsAndProfileImageUpdateRequest.type, updateProfileDetailsAndProfileImage)
     yield takeLeading(getPatientDetailsRequest.type, getPatientDetails);
 }
 
-export default watchAddImageSaga;
+export default watchProfileSaga;

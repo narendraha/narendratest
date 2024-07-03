@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import moment from "moment";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router";
@@ -20,8 +20,7 @@ import {
   NavLink,
   Row,
   TabContent,
-  TabPane,
-  Table,
+  TabPane
 } from "reactstrap";
 import * as Yup from "yup";
 import {
@@ -29,22 +28,16 @@ import {
   allowsOnlyNumericOnly4Digit,
 } from "../../../_mock/RegularExp";
 import { AxiosInstance } from "../../../_mock/utilities";
-import atrialfib from "../../../images/atrialfib.png";
 import bulp from "../../../images/idea.png";
-import rhythm from "../../../images/rhythm.png";
-import riskmanagement from "../../../images/riskmanagement.png";
-import riskmanagement2 from "../../../images/riskmanagement2.jpg";
-import riskmanagement3 from "../../../images/riskmanagement3.jpg";
-import whytreatment from "../../../images/whytreatment.png";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
+import { HealthHub } from "./healthHub";
+import { LifeStyleGoal } from "./lifeStyleGoal";
+import { RiskOptimization } from "./riskOptimization";
+import { SymptomsListForm } from "./symptomsListForm";
+
 // import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
-export const EGoalTimePeriod = {
-  WEEKWISE: 0,
-  DAYSWISE: 1,
-  MONTHWISE: 2,
-};
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -53,19 +46,19 @@ export default function Home() {
   const [tab, setTab] = useState(
     location?.state?.activeTab ? location?.state?.activeTab : "1"
   );
-  const [labelValues, setLabelValues] = useState(0);
-  const [labelValues1, setLabelValues1] = useState(0);
-  const [labelValues2, setLabelValues2] = useState(0);
-  const [labelValues3, setLabelValues3] = useState(0);
-  const [labelValues4, setLabelValues4] = useState(0);
-  const [labelValues5, setLabelValues5] = useState(0);
-  const [labelValues6, setLabelValues6] = useState(0);
-  const [labelValues7, setLabelValues7] = useState(0);
-  const [labelValues8, setLabelValues8] = useState(0);
-  const [labelValues9, setLabelValues9] = useState(0);
-  const [labelValues10, setLabelValues10] = useState(0);
-  const [labelValues11, setLabelValues11] = useState(0);
-  const [labelValues12, setLabelValues12] = useState(0);
+  // const [labelValues, setLabelValues] = useState(0);
+  // const [labelValues1, setLabelValues1] = useState(0);
+  // const [labelValues2, setLabelValues2] = useState(0);
+  // const [labelValues3, setLabelValues3] = useState(0);
+  // const [labelValues4, setLabelValues4] = useState(0);
+  // const [labelValues5, setLabelValues5] = useState(0);
+  // const [labelValues6, setLabelValues6] = useState(0);
+  // const [labelValues7, setLabelValues7] = useState(0);
+  // const [labelValues8, setLabelValues8] = useState(0);
+  // const [labelValues9, setLabelValues9] = useState(0);
+  // const [labelValues10, setLabelValues10] = useState(0);
+  // const [labelValues11, setLabelValues11] = useState(0);
+  // const [labelValues12, setLabelValues12] = useState(0);
   // const [showconfirm, setShowconfirm] = useState(false);
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
@@ -78,59 +71,59 @@ export default function Home() {
   const [endDate, setEndDate] = useState(null);
   // chart end
 
-  const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(
-    EGoalTimePeriod.WEEKWISE
-  );
+  // const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(
+  //   EGoalTimePeriod.WEEKWISE
+  // );
   // symptoms
-  const [breathlessness, setBreathlessness] = useState({
-    breathnessda: { frequency: "" },
-    breathnessea: { frequency: "" },
-    dizziness: { frequency: "" },
-    col_swet: { frequency: "" },
-    p_tiredness: { frequency: "" },
-    chest_pain: { frequency: "" },
-    pressurechest: { frequency: "" },
-    worry: { frequency: "" },
-    weakness: { frequency: "" },
-    infirmity: { frequency: "" },
-    nsynacpe: { frequency: "" },
-    syncope: { frequency: "" },
-    tirednessafterwards: { frequency: "" },
-  });
+  // const [breathlessness, setBreathlessness] = useState({
+  //   breathnessda: { frequency: "" },
+  //   breathnessea: { frequency: "" },
+  //   dizziness: { frequency: "" },
+  //   col_swet: { frequency: "" },
+  //   p_tiredness: { frequency: "" },
+  //   chest_pain: { frequency: "" },
+  //   pressurechest: { frequency: "" },
+  //   worry: { frequency: "" },
+  //   weakness: { frequency: "" },
+  //   infirmity: { frequency: "" },
+  //   nsynacpe: { frequency: "" },
+  //   syncope: { frequency: "" },
+  //   tirednessafterwards: { frequency: "" },
+  // });
   const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({
     patientDetails: null,
     symptomsDetails: null,
   });
 
-  const handleFrequencyChange = (category, value) => {
-    setBreathlessness((prevState) => ({
-      ...prevState,
-      [category]: { frequency: value },
-    }));
-  };
+  // const handleFrequencyChange = (category, value) => {
+  //   setBreathlessness((prevState) => ({
+  //     ...prevState,
+  //     [category]: { frequency: value },
+  //   }));
+  // };
 
-  const [qualityOfLife, setQualityOfLife] = useState({
-    breathnessda: { quality_of_life: "" },
-    breathnessea: { quality_of_life: "" },
-    dizziness: { quality_of_life: "" },
-    col_swet: { quality_of_life: "" },
-    p_tiredness: { quality_of_life: "" },
-    chest_pain: { quality_of_life: "" },
-    pressurechest: { quality_of_life: "" },
-    worry: { quality_of_life: "" },
-    weakness: { quality_of_life: "" },
-    infirmity: { quality_of_life: "" },
-    nsynacpe: { quality_of_life: "" },
-    syncope: { quality_of_life: "" },
-    tirednessafterwards: { quality_of_life: "" },
-  });
+  // const [qualityOfLife, setQualityOfLife] = useState({
+  //   breathnessda: { quality_of_life: "" },
+  //   breathnessea: { quality_of_life: "" },
+  //   dizziness: { quality_of_life: "" },
+  //   col_swet: { quality_of_life: "" },
+  //   p_tiredness: { quality_of_life: "" },
+  //   chest_pain: { quality_of_life: "" },
+  //   pressurechest: { quality_of_life: "" },
+  //   worry: { quality_of_life: "" },
+  //   weakness: { quality_of_life: "" },
+  //   infirmity: { quality_of_life: "" },
+  //   nsynacpe: { quality_of_life: "" },
+  //   syncope: { quality_of_life: "" },
+  //   tirednessafterwards: { quality_of_life: "" },
+  // });
 
-  const handleQualityOfLifeChange = (category, value) => {
-    setQualityOfLife((prevState) => ({
-      ...prevState,
-      [category]: { quality_of_life: value },
-    }));
-  };
+  // const handleQualityOfLifeChange = (category, value) => {
+  //   setQualityOfLife((prevState) => ({
+  //     ...prevState,
+  //     [category]: { quality_of_life: value },
+  //   }));
+  // };
 
   // health hub
   const [show1, setShow1] = useState(false);
@@ -138,264 +131,264 @@ export default function Home() {
   // heath details
   const [show2, setShow2] = useState(false);
   const [healthDetails, setHealthDetails] = useState();
-  const horizontalLabels = {
-    0: "None",
-    20: "Mild",
-    45: "Moderate",
-    70: "Severe",
-    90: "Extreme",
-  };
-  const handleValueChange = (value, setValue) => {
-    setValue(value);
-  };
-  const handleValueChangeEnd = (value, setValue) => {
-    if (value <= 30 && value > 10) {
-      setValue(20);
-    } else if (value <= 55 && value > 35) {
-      setValue(45);
-    } else if (value <= 80 && value > 55) {
-      setValue(70);
-    } else if (value <= 100 && value > 80) {
-      setValue(90);
-    } else {
-      setValue(0);
-    }
-  };
+  // const horizontalLabels = {
+  //   0: "None",
+  //   20: "Mild",
+  //   45: "Moderate",
+  //   70: "Severe",
+  //   90: "Extreme",
+  // };
+  // const handleValueChange = (value, setValue) => {
+  //   setValue(value);
+  // };
+  // const handleValueChangeEnd = (value, setValue) => {
+  //   if (value <= 30 && value > 10) {
+  //     setValue(20);
+  //   } else if (value <= 55 && value > 35) {
+  //     setValue(45);
+  //   } else if (value <= 80 && value > 55) {
+  //     setValue(70);
+  //   } else if (value <= 100 && value > 80) {
+  //     setValue(90);
+  //   } else {
+  //     setValue(0);
+  //   }
+  // };
 
-  // For the first slider
-  const handleValueChangeSlider = (value) => {
-    handleValueChange(value, setLabelValues);
-  };
+  // // For the first slider
+  // const handleValueChangeSlider = (value) => {
+  //   handleValueChange(value, setLabelValues);
+  // };
 
-  const handleValueChangeEndSlider = (value) => {
-    handleValueChangeEnd(value, setLabelValues);
-  };
+  // const handleValueChangeEndSlider = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues);
+  // };
 
-  // For the second slider
-  const handleValueChangeSlider1 = (value) => {
-    handleValueChange(value, setLabelValues1);
-  };
+  // // For the second slider
+  // const handleValueChangeSlider1 = (value) => {
+  //   handleValueChange(value, setLabelValues1);
+  // };
 
-  const handleValueChangeEndSlider1 = (value) => {
-    handleValueChangeEnd(value, setLabelValues1);
-  };
-  // For the third slider
-  const handleValueChangeSlider2 = (value) => {
-    handleValueChange(value, setLabelValues2);
-  };
+  // const handleValueChangeEndSlider1 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues1);
+  // };
+  // // For the third slider
+  // const handleValueChangeSlider2 = (value) => {
+  //   handleValueChange(value, setLabelValues2);
+  // };
 
-  const handleValueChangeEndSlider2 = (value) => {
-    handleValueChangeEnd(value, setLabelValues2);
-  };
-  // For the 4 slider
-  const handleValueChangeSlider3 = (value) => {
-    handleValueChange(value, setLabelValues3);
-  };
+  // const handleValueChangeEndSlider2 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues2);
+  // };
+  // // For the 4 slider
+  // const handleValueChangeSlider3 = (value) => {
+  //   handleValueChange(value, setLabelValues3);
+  // };
 
-  const handleValueChangeEndSlider3 = (value) => {
-    handleValueChangeEnd(value, setLabelValues3);
-  };
-  // For the 5 slider
-  const handleValueChangeSlider4 = (value) => {
-    handleValueChange(value, setLabelValues4);
-  };
+  // const handleValueChangeEndSlider3 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues3);
+  // };
+  // // For the 5 slider
+  // const handleValueChangeSlider4 = (value) => {
+  //   handleValueChange(value, setLabelValues4);
+  // };
 
-  const handleValueChangeEndSlider4 = (value) => {
-    handleValueChangeEnd(value, setLabelValues4);
-  };
-  // For the 6 slider
-  const handleValueChangeSlider5 = (value) => {
-    handleValueChange(value, setLabelValues5);
-  };
+  // const handleValueChangeEndSlider4 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues4);
+  // };
+  // // For the 6 slider
+  // const handleValueChangeSlider5 = (value) => {
+  //   handleValueChange(value, setLabelValues5);
+  // };
 
-  const handleValueChangeEndSlider5 = (value) => {
-    handleValueChangeEnd(value, setLabelValues5);
-  };
-  // For the 7 slider
-  const handleValueChangeSlider6 = (value) => {
-    handleValueChange(value, setLabelValues6);
-  };
+  // const handleValueChangeEndSlider5 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues5);
+  // };
+  // // For the 7 slider
+  // const handleValueChangeSlider6 = (value) => {
+  //   handleValueChange(value, setLabelValues6);
+  // };
 
-  const handleValueChangeEndSlider6 = (value) => {
-    handleValueChangeEnd(value, setLabelValues6);
-  };
-  // For the 8 slider
-  const handleValueChangeSlider7 = (value) => {
-    handleValueChange(value, setLabelValues7);
-  };
+  // const handleValueChangeEndSlider6 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues6);
+  // };
+  // // For the 8 slider
+  // const handleValueChangeSlider7 = (value) => {
+  //   handleValueChange(value, setLabelValues7);
+  // };
 
-  const handleValueChangeEndSlider7 = (value) => {
-    handleValueChangeEnd(value, setLabelValues7);
-  };
-  // For the 9 slider
-  const handleValueChangeSlider8 = (value) => {
-    handleValueChange(value, setLabelValues8);
-  };
+  // const handleValueChangeEndSlider7 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues7);
+  // };
+  // // For the 9 slider
+  // const handleValueChangeSlider8 = (value) => {
+  //   handleValueChange(value, setLabelValues8);
+  // };
 
-  const handleValueChangeEndSlider8 = (value) => {
-    handleValueChangeEnd(value, setLabelValues8);
-  };
-  // For the 10 slider
-  const handleValueChangeSlider9 = (value) => {
-    handleValueChange(value, setLabelValues9);
-  };
+  // const handleValueChangeEndSlider8 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues8);
+  // };
+  // // For the 10 slider
+  // const handleValueChangeSlider9 = (value) => {
+  //   handleValueChange(value, setLabelValues9);
+  // };
 
-  const handleValueChangeEndSlider9 = (value) => {
-    handleValueChangeEnd(value, setLabelValues9);
-  };
-  // For the 11 slider
-  const handleValueChangeSlider10 = (value) => {
-    handleValueChange(value, setLabelValues10);
-  };
+  // const handleValueChangeEndSlider9 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues9);
+  // };
+  // // For the 11 slider
+  // const handleValueChangeSlider10 = (value) => {
+  //   handleValueChange(value, setLabelValues10);
+  // };
 
-  const handleValueChangeEndSlider10 = (value) => {
-    handleValueChangeEnd(value, setLabelValues10);
-  };
-  // For the 11 slider
-  const handleValueChangeSlider11 = (value) => {
-    handleValueChange(value, setLabelValues11);
-  };
+  // const handleValueChangeEndSlider10 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues10);
+  // };
+  // // For the 11 slider
+  // const handleValueChangeSlider11 = (value) => {
+  //   handleValueChange(value, setLabelValues11);
+  // };
 
-  const handleValueChangeEndSlider11 = (value) => {
-    handleValueChangeEnd(value, setLabelValues11);
-  };
-  // For the 11 slider
-  const handleValueChangeSlider12 = (value) => {
-    handleValueChange(value, setLabelValues12);
-  };
+  // const handleValueChangeEndSlider11 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues11);
+  // };
+  // // For the 11 slider
+  // const handleValueChangeSlider12 = (value) => {
+  //   handleValueChange(value, setLabelValues12);
+  // };
 
-  const handleValueChangeEndSlider12 = (value) => {
-    handleValueChangeEnd(value, setLabelValues12);
-  };
+  // const handleValueChangeEndSlider12 = (value) => {
+  //   handleValueChangeEnd(value, setLabelValues12);
+  // };
 
-  const getOutputNumber = (value) => {
-    return horizontalLabels[value];
-  };
+  // const getOutputNumber = (value) => {
+  //   return horizontalLabels[value];
+  // };
 
-  const lifeMappings = {
-    Yes: "true",
-    No: "false",
-  };
+  // const lifeMappings = {
+  //   Yes: "true",
+  //   No: "false",
+  // };
 
-  const getLifeValue = (value) => {
-    return lifeMappings[value.quality_of_life] !== undefined
-      ? lifeMappings[value.quality_of_life]
-      : ""; // If value.quality_of_life is not found in lifeMappings, return an empty string
-  };
+  // const getLifeValue = (value) => {
+  //   return lifeMappings[value.quality_of_life] !== undefined
+  //     ? lifeMappings[value.quality_of_life]
+  //     : ""; // If value.quality_of_life is not found in lifeMappings, return an empty string
+  // };
 
-  const handleSubmit = (data) => {
-    setIsShowconfirm(data);
-    if (data) {
-      const output = `${getOutputNumber(labelValues)}
-      ${getOutputNumber(labelValues1)}
-      ${getOutputNumber(labelValues2)}
-      ${getOutputNumber(labelValues3)}
-      ${getOutputNumber(labelValues4)}
-      ${getOutputNumber(labelValues5)}
-      ${getOutputNumber(labelValues6)}
-      ${getOutputNumber(labelValues7)}
-      ${getOutputNumber(labelValues8)}
-      ${getOutputNumber(labelValues9)}
-      ${getOutputNumber(labelValues10)}
-      ${getOutputNumber(labelValues11)}
-      ${getOutputNumber(labelValues12)}`;
+  // const handleSubmit = (data) => {
+  //   setIsShowconfirm(data);
+  //   if (data) {
+  //     const output = `${getOutputNumber(labelValues)}
+  //     ${getOutputNumber(labelValues1)}
+  //     ${getOutputNumber(labelValues2)}
+  //     ${getOutputNumber(labelValues3)}
+  //     ${getOutputNumber(labelValues4)}
+  //     ${getOutputNumber(labelValues5)}
+  //     ${getOutputNumber(labelValues6)}
+  //     ${getOutputNumber(labelValues7)}
+  //     ${getOutputNumber(labelValues8)}
+  //     ${getOutputNumber(labelValues9)}
+  //     ${getOutputNumber(labelValues10)}
+  //     ${getOutputNumber(labelValues11)}
+  //     ${getOutputNumber(labelValues12)}`;
 
-      let newData = {
-        breathnessda: {
-          frequency: breathlessness.breathnessda.frequency,
-          severity: getOutputNumber(labelValues),
-          quality_of_life: getLifeValue(qualityOfLife.breathnessda),
-        },
-        breathnessea: {
-          frequency: breathlessness.breathnessea.frequency,
-          severity: getOutputNumber(labelValues1),
-          quality_of_life: getLifeValue(qualityOfLife.breathnessea),
-        },
-        dizziness: {
-          frequency: breathlessness.dizziness.frequency,
-          severity: getOutputNumber(labelValues2),
-          quality_of_life: getLifeValue(qualityOfLife.dizziness),
-        },
-        col_swet: {
-          frequency: breathlessness.col_swet.frequency,
-          severity: getOutputNumber(labelValues3),
-          quality_of_life: getLifeValue(qualityOfLife.col_swet),
-        },
-        p_tiredness: {
-          frequency: breathlessness.p_tiredness.frequency,
-          severity: getOutputNumber(labelValues4),
-          quality_of_life: getLifeValue(qualityOfLife.p_tiredness),
-        },
-        chest_pain: {
-          frequency: breathlessness.chest_pain.frequency,
-          severity: getOutputNumber(labelValues5),
-          quality_of_life: getLifeValue(qualityOfLife.chest_pain),
-        },
-        pressurechest: {
-          frequency: breathlessness.pressurechest.frequency,
-          severity: getOutputNumber(labelValues6),
-          quality_of_life: getLifeValue(qualityOfLife.pressurechest),
-        },
-        worry: {
-          frequency: breathlessness.worry.frequency,
-          severity: getOutputNumber(labelValues7),
-          quality_of_life: getLifeValue(qualityOfLife.worry),
-        },
-        weakness: {
-          frequency: breathlessness.weakness.frequency,
-          severity: getOutputNumber(labelValues8),
-          quality_of_life: getLifeValue(qualityOfLife.weakness),
-        },
-        infirmity: {
-          frequency: breathlessness.infirmity.frequency,
-          severity: getOutputNumber(labelValues9),
-          quality_of_life: getLifeValue(qualityOfLife.infirmity),
-        },
-        nsynacpe: {
-          frequency: breathlessness.nsynacpe.frequency,
-          severity: getOutputNumber(labelValues10),
-          quality_of_life: getLifeValue(qualityOfLife.nsynacpe),
-        },
-        syncope: {
-          frequency: breathlessness.syncope.frequency,
-          severity: getOutputNumber(labelValues11),
-          quality_of_life: getLifeValue(qualityOfLife.syncope),
-        },
-        tirednessafterwards: {
-          frequency: breathlessness.tirednessafterwards.frequency,
-          severity: getOutputNumber(labelValues12),
-          quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
-        },
-      };
-      setIsShowconfirm(!data);
-      AxiosInstance("application/json")
-        .post(`/add_symptoms`, newData)
-        .then((res) => {
-          if (res && res.data && res.status === 200) {
-            if (res.data?.statuscode === 200) {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "success",
-              });
-              changeStatus();
-              setTab("4");
-              getPatientDetails();
-            } else {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "error",
-              });
-            }
-          }
-        })
-        .catch((er) => {
-          toast(er?.response?.data?.message, {
-            position: "top-right",
-            type: "error",
-          });
-        });
-    }
-  };
+  //     let newData = {
+  //       breathnessda: {
+  //         frequency: breathlessness.breathnessda.frequency,
+  //         severity: getOutputNumber(labelValues),
+  //         quality_of_life: getLifeValue(qualityOfLife.breathnessda),
+  //       },
+  //       breathnessea: {
+  //         frequency: breathlessness.breathnessea.frequency,
+  //         severity: getOutputNumber(labelValues1),
+  //         quality_of_life: getLifeValue(qualityOfLife.breathnessea),
+  //       },
+  //       dizziness: {
+  //         frequency: breathlessness.dizziness.frequency,
+  //         severity: getOutputNumber(labelValues2),
+  //         quality_of_life: getLifeValue(qualityOfLife.dizziness),
+  //       },
+  //       col_swet: {
+  //         frequency: breathlessness.col_swet.frequency,
+  //         severity: getOutputNumber(labelValues3),
+  //         quality_of_life: getLifeValue(qualityOfLife.col_swet),
+  //       },
+  //       p_tiredness: {
+  //         frequency: breathlessness.p_tiredness.frequency,
+  //         severity: getOutputNumber(labelValues4),
+  //         quality_of_life: getLifeValue(qualityOfLife.p_tiredness),
+  //       },
+  //       chest_pain: {
+  //         frequency: breathlessness.chest_pain.frequency,
+  //         severity: getOutputNumber(labelValues5),
+  //         quality_of_life: getLifeValue(qualityOfLife.chest_pain),
+  //       },
+  //       pressurechest: {
+  //         frequency: breathlessness.pressurechest.frequency,
+  //         severity: getOutputNumber(labelValues6),
+  //         quality_of_life: getLifeValue(qualityOfLife.pressurechest),
+  //       },
+  //       worry: {
+  //         frequency: breathlessness.worry.frequency,
+  //         severity: getOutputNumber(labelValues7),
+  //         quality_of_life: getLifeValue(qualityOfLife.worry),
+  //       },
+  //       weakness: {
+  //         frequency: breathlessness.weakness.frequency,
+  //         severity: getOutputNumber(labelValues8),
+  //         quality_of_life: getLifeValue(qualityOfLife.weakness),
+  //       },
+  //       infirmity: {
+  //         frequency: breathlessness.infirmity.frequency,
+  //         severity: getOutputNumber(labelValues9),
+  //         quality_of_life: getLifeValue(qualityOfLife.infirmity),
+  //       },
+  //       nsynacpe: {
+  //         frequency: breathlessness.nsynacpe.frequency,
+  //         severity: getOutputNumber(labelValues10),
+  //         quality_of_life: getLifeValue(qualityOfLife.nsynacpe),
+  //       },
+  //       syncope: {
+  //         frequency: breathlessness.syncope.frequency,
+  //         severity: getOutputNumber(labelValues11),
+  //         quality_of_life: getLifeValue(qualityOfLife.syncope),
+  //       },
+  //       tirednessafterwards: {
+  //         frequency: breathlessness.tirednessafterwards.frequency,
+  //         severity: getOutputNumber(labelValues12),
+  //         quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
+  //       },
+  //     };
+  //     setIsShowconfirm(!data);
+  //     AxiosInstance("application/json")
+  //       .post(`/add_symptoms`, newData)
+  //       .then((res) => {
+  //         if (res && res.data && res.status === 200) {
+  //           if (res.data?.statuscode === 200) {
+  //             toast(res.data?.message, {
+  //               position: "top-right",
+  //               type: "success",
+  //             });
+  //             changeStatus();
+  //             setTab("4");
+  //             getPatientDetails();
+  //           } else {
+  //             toast(res.data?.message, {
+  //               position: "top-right",
+  //               type: "error",
+  //             });
+  //           }
+  //         }
+  //       })
+  //       .catch((er) => {
+  //         toast(er?.response?.data?.message, {
+  //           position: "top-right",
+  //           type: "error",
+  //         });
+  //       });
+  //   }
+  // };
   // const shownextStep = () => {
   //   setShowconfirm(!showconfirm);
   //   if (showconfirm) {
@@ -822,13 +815,13 @@ export default function Home() {
   return (
     <>
       <ConfirmationAction
-        newFun={
-          isShowconfirm
-            ? handleSubmit
-            : show1
-              ? handlehealthHub
-              : show2 && handleHeathDetails
-        }
+        // newFun={
+        //   isShowconfirm
+        //     ? handleSubmit
+        //     : show1
+        //       ? handlehealthHub
+        //       : show2 && handleHeathDetails
+        // }
         open={isShowconfirm || show1 || show2}
       />
       {isLoading && <Loading />}
@@ -948,151 +941,7 @@ export default function Home() {
               </Nav>
               <TabContent activeTab={tab}>
                 <TabPane tabId="1">
-                  <p>Knowing about AF will reduce the risk</p>
-                  <Row>
-                    <Col lg="7" sm="12">
-                      <Row>
-                        <Col sm="6">
-                          <div className="mb-4">
-                            <h6>Understand Atrial fibrillation(AF)</h6>
-                            <img
-                              src={atrialfib}
-                              alt=""
-                              style={{ height: "120px", objectFit: "contain" }}
-                            />
-                            <p className="mt-3">
-                              Atrial fibrillation (AF) is a type of arrhythmia,
-                              which means that the heart beats fast and
-                              irregularly. The risk of AF increases markedly
-                              with age. Some of the known causes of AF include
-                              chronic high blood pressure, heart valve diseases
-                              and hyperthyroidism.
-                            </p>
-                          </div>
-                        </Col>
-                        <Col sm="6">
-                          <div className="mb-4">
-                            <h6>Why treatment?</h6>
-                            <img
-                              src={whytreatment}
-                              alt=""
-                              style={{ height: "120px", objectFit: "contain" }}
-                            />
-                            <p className="mt-3">
-                              The way the heart beats in atrial fibrillation
-                              means there's a risk of blood clots forming in the
-                              heart chambers. If these enter the bloodstream,
-                              they can cause a stroke. Your doctor will assess
-                              and discuss your risk with you, and try to
-                              minimise your chance of having a stroke.
-                            </p>
-                          </div>
-                        </Col>
-                        <Col sm="6">
-                          <div className="mb-4">
-                            <h6>Rhythm</h6>
-                            <img
-                              src={rhythm}
-                              alt=""
-                              style={{ height: "120px", objectFit: "contain" }}
-                            />
-                            <p className="mt-3">
-                              Atrial fibrillation (Afib) is an irregular and
-                              often very rapid heart rhythm. An irregular heart
-                              rhythm is called an arrhythmia. Afib can lead to
-                              blood clots in the heart. The condition also
-                              increases the risk of stroke, heart failure and
-                              other heart-related complications.
-                            </p>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col lg="5" sm="12">
-                      <Card
-                        className="al_cardnoborder"
-                        style={{
-                          backgroundColor: "#F7F7F7",
-                          boxShadow: "none",
-                        }}
-                      >
-                        <CardBody>
-                          <h6>Videos</h6>
-                          <Row className="mt-3 al_knowldgebank">
-                            <Col sm="6" className="mb-3">
-                              <Card className="al_cardnoborder h-100">
-                                <CardBody>
-                                  <iframe
-                                    width="100%"
-                                    height="130"
-                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                    title="YouTube video player"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                  ></iframe>
-                                  <div className="mt-2">
-                                    Text of the printing and typesetting
-                                    industry.Text of the printing and
-                                    typesetting industry.
-                                  </div>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                            <Col sm="6" className="mb-3">
-                              <Card className="al_cardnoborder h-100">
-                                <CardBody>
-                                  <iframe
-                                    width="100%"
-                                    height="130"
-                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                    title="YouTube video player"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                  ></iframe>
-                                  <div className="mt-2">
-                                    Text of the printing and typesetting
-                                    industry.
-                                  </div>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                            <Col sm="6" className="mb-3">
-                              <Card className="al_cardnoborder h-100">
-                                <CardBody>
-                                  <iframe
-                                    width="100%"
-                                    height="130"
-                                    src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV"
-                                    title="YouTube video player"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowFullScreen
-                                  ></iframe>
-                                  <div className="mt-2">
-                                    Text of the printing and typesetting
-                                    industry.
-                                  </div>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="al_savebtn"
-                      onClick={() => {
-                        setShow1(true);
-                      }}
-                    >
-                      Proceed
-                    </button>
-                  </div>
+                  <HealthHub />
                 </TabPane>
                 <TabPane tabId="2">
                   <div className="d-flex justify-content-between mb-2">
@@ -1543,1579 +1392,17 @@ export default function Home() {
                     </Col>
                   </Row>
                 </TabPane>
+
                 <TabPane tabId="3">
-                  <p>Select the symptoms range listed below</p>
-                  <div className="al_symptoms">
-                    <Row>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Breathlessness during activity</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.breathnessda.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="breathnessda"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.breathnessda
-                                          .frequency === frequency
-                                      }
-                                      onChange={(e) => {
-                                        handleFrequencyChange(
-                                          "breathnessda",
-                                          e.target.value
-                                        );
-                                      }}
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues}
-                                onChange={handleValueChangeSlider}
-                                onChangeComplete={handleValueChangeEndSlider}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="breathnessda"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.breathnessda
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "breathnessda",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Breathlessness even at rest</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.breathnessea.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="breathnessea"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.breathnessea
-                                          .frequency === frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "breathnessea",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues1}
-                                onChange={handleValueChangeSlider1}
-                                onChangeComplete={handleValueChangeEndSlider1}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="breathnessea"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.breathnessea
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "breathnessea",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Dizziness</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.dizziness.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="dizziness"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.dizziness.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "dizziness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues2}
-                                onChange={handleValueChangeSlider2}
-                                onChangeComplete={handleValueChangeEndSlider2}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="dizziness"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.dizziness
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "dizziness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Cold sweat</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.col_swet.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="col_swet"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.col_swet.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "col_swet",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues3}
-                                onChange={handleValueChangeSlider3}
-                                onChangeComplete={handleValueChangeEndSlider3}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="col_swet"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.col_swet
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "col_swet",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Pronounced tiredness</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.p_tiredness.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="p_tiredness"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.p_tiredness.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "p_tiredness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues4}
-                                onChange={handleValueChangeSlider4}
-                                onChangeComplete={handleValueChangeEndSlider4}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="p_tiredness"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.p_tiredness
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "p_tiredness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Chest pain</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.chest_pain.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="chest_pain"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.chest_pain.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "chest_pain",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues5}
-                                onChange={handleValueChangeSlider5}
-                                onChangeComplete={handleValueChangeEndSlider5}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="chest_pain"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.chest_pain
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "chest_pain",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Pressure / discomfort in chest</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.pressurechest.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="pressurechest"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.pressurechest
-                                          .frequency === frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "pressurechest",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues6}
-                                onChange={handleValueChangeSlider6}
-                                onChangeComplete={handleValueChangeEndSlider6}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="pressurechest"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.pressurechest
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "pressurechest",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Worry</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.worry.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="worry"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.worry.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "worry",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues7}
-                                onChange={handleValueChangeSlider7}
-                                onChangeComplete={handleValueChangeEndSlider7}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="worry"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.worry.quality_of_life ===
-                                        life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "worry",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Weakness</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.weakness.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="weakness"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.weakness.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "weakness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues8}
-                                onChange={handleValueChangeSlider8}
-                                onChangeComplete={handleValueChangeEndSlider8}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="weakness"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.weakness
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "weakness",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Infirmity</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.infirmity.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="infirmity"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.infirmity.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "infirmity",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues9}
-                                onChange={handleValueChangeSlider9}
-                                onChangeComplete={handleValueChangeEndSlider9}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="infirmity"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.infirmity
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "infirmity",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Near syncope</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.nsynacpe.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="nsynacpe"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.nsynacpe.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "nsynacpe",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues10}
-                                onChange={handleValueChangeSlider10}
-                                onChangeComplete={handleValueChangeEndSlider10}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="nsynacpe"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.nsynacpe
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "nsynacpe",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Syncope</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.syncope.frequency ===
-                                      frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="syncope"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.syncope.frequency ===
-                                        frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "syncope",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues11}
-                                onChange={handleValueChangeSlider11}
-                                onChangeComplete={handleValueChangeEndSlider11}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="syncope"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.syncope
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "syncope",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                      <Col lg="4" md="6" sm="12">
-                        <div className="mb-4">
-                          <h6>Tiredness afterwards</h6>
-                          <Card className="mb-0 al_cardnoborder">
-                            <CardBody>
-                              <strong>Frequency</strong>
-                              <div
-                                className="btn-group btn-group-toggle al_frequencylist"
-                                data-toggle="buttons"
-                              >
-                                {[
-                                  "Never",
-                                  "Occasionally",
-                                  "Often",
-                                  "Always",
-                                ].map((frequency) => (
-                                  <label
-                                    key={frequency}
-                                    className={`btn ${breathlessness.tirednessafterwards
-                                      .frequency === frequency
-                                      ? "active"
-                                      : ""
-                                      }`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="tirednessafterwards"
-                                      value={frequency}
-                                      checked={
-                                        breathlessness.tirednessafterwards
-                                          .frequency === frequency
-                                      }
-                                      onChange={(e) =>
-                                        handleFrequencyChange(
-                                          "tirednessafterwards",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    {frequency.charAt(0).toUpperCase() +
-                                      frequency.slice(1)}
-                                  </label>
-                                ))}
-                              </div>
-                              <strong>Severity</strong>
-                              <Slider
-                                range
-                                min={0}
-                                max={100}
-                                marks={horizontalLabels}
-                                tooltip={false}
-                                value={labelValues12}
-                                onChange={handleValueChangeSlider12}
-                                onChangeComplete={handleValueChangeEndSlider12}
-                              />
-                              <br />
-                              <strong className="mb-2">
-                                Effecting quality of life (limiting them to do
-                                stuff)
-                              </strong>
-
-                              <FormGroup
-                                check
-                                inline
-                                className="d-flex me-0 ps-0 flex-wrap"
-                              >
-                                {["Yes", "No"].map((life) => (
-                                  <Label
-                                    key={life}
-                                    className="d-flex align-center me-3"
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="tirednessafterwards"
-                                      value={life}
-                                      checked={
-                                        qualityOfLife.tirednessafterwards
-                                          .quality_of_life === life
-                                      }
-                                      onChange={(e) =>
-                                        handleQualityOfLifeChange(
-                                          "tirednessafterwards",
-                                          e.target.value
-                                        )
-                                      }
-                                    />{" "}
-                                    &nbsp;
-                                    {life.charAt(0).toUpperCase() +
-                                      life.slice(1)}
-                                  </Label>
-                                ))}
-                              </FormGroup>
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="al_grey_borderbtn"
-                      onClick={() => {
-                        setTab("2");
-                      }}
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="button"
-                      className="al_savebtn mx-3"
-                      onClick={() => setIsShowconfirm(true)}
-                    >
-                      Proceed
-                    </button>
-                  </div>
+                  <SymptomsListForm />
                 </TabPane>
-                {<TabPane tabId="4">
-                  <p>Select where you want to be coached in</p>
-                  <div className="w-100">
-                    <Row className="al_goalslist mb-4">
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Diet</span>
-                          <input type="checkbox" name="diet" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Exercise</span>
-                          <input type="checkbox" name="exercise" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Weight</span>
-                          <input type="checkbox" name="weight" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Blood pressure</span>
-                          <input type="checkbox" name="bloodpressure" />
-                        </Label>
-                      </Col>
-                    </Row>
-                    <hr />
-                    <div className="mt-4">
-                      <Row className="mb-3">
-                        <Col lg="4" sm="6">
-                          <p className="al_note">Your Details</p>
-                          <h5 className="mb-2 text-capitalize">
-                            Hello,{" "}
-                            {patientAndSymptomsDetails?.patientDetails
-                              ?.username || "N/A"}
-                            !
-                          </h5>
-                          <div>
-                            <strong>Age: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.age || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Gender: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.gender || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Residence type: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.rtype || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Education: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.education || "N?A"}
-                            </span>
-                          </div>
-                        </Col>
-                        <Col lg="8" sm="6">
-                          <h6 className="mt-3 mb-2">Your Medication</h6>
-                          <Row>
-                            <Col lg="6" sm="12">
-                              <Table borderless responsive>
-                                <thead>
-                                  <tr>
-                                    <th>Symptoms</th>
-                                    <th className="w-25">Range</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
-                                return (
-                                  <>
-                                    <tr>
-                                      <td>{lifeStyleGoalSymptomsKeys[key]}</td>
-                                      <td className="text-warning">{patientAndSymptomsDetails?.symptomsDetails[key]?.severity}</td>
-                                    </tr>
-                                  </>
-                                )
-                              })} */}
-                                  <tr>
-                                    <td>Breathlessness even at rest</td>
-                                    <td className="text-warning">Moderate</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Dizziness</td>
-                                    <td className="text-success">Mild</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
 
-                      <hr />
-                      <h6 className="mt-3">
-                        Choose the time period to set your goal
-                      </h6>
-
-                      <Row className="mb-4">
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.WEEKWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
-                            }
-                          >
-                            Create goal for <strong>1 week</strong>
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.DAYSWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
-                            }
-                          >
-                            Create goal for <strong>15 days</strong>
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.MONTHWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
-                            }
-                          >
-                            Create goal for <strong>1 month</strong>
-                          </div>
-                        </Col>
-                      </Row>
-                      <p className="al_note mb-3">
-                        Disclaimer: Goal will be created based on the list of
-                        symptoms you have selected and the data you have
-                        provided in this application{" "}
-                      </p>
-
-                      <button
-                        type="button"
-                        className="al_savebtn"
-                        onClick={() => setTab("5")}
-                      >
-                        OK
-                      </button>
-                      {/* <LayoutAlertMessage /> */}
-                    </div>
-                  </div>
+                <TabPane tabId="4">
+                  <LifeStyleGoal />
                 </TabPane>
-                }
+
                 <TabPane tabId="5">
-                  <Row className="mt-4">
-                    <Col xl="4" md="6" sm="12" className="mb-3">
-                      <div className="flip-card card al_cardnoborder">
-                        <div className="flip-card-inner">
-                          <div className="flip-card-front">
-                            <img src={riskmanagement} alt="" />
-                            <div className="p-3">
-                              <p>
-                                Refer to your managing my AF and risk of stroke
-                                guide if you get an episode of AF
-                              </p>
-                              <div className="text-info text-end fw-medium">
-                                Know more
-                                <i
-                                  className="icon_alfred_right_arrow ms-1"
-                                  style={{
-                                    verticalAlign: "middle",
-                                    fontSize: "10px",
-                                  }}
-                                ></i>
-                              </div>
-                            </div>
-                          </div>
-                          <ul className="standardPlans p-4 ps-5 flip-card-back">
-                            <li>
-                              Refer to your managing my AF and risk of stroke
-                              guide if you get an episode of AF
-                            </li>
-                            <li>Learn about your AF medicines</li>
-                            <li>Feel your pulse every morning and evening</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col xl="4" md="6" sm="12" className="mb-3">
-                      <div className="flip-card card al_cardnoborder">
-                        <div className="flip-card-inner">
-                          <div className="flip-card-front">
-                            <img src={riskmanagement2} alt="" />
-                            <div className="p-3">
-                              <p>
-                                Take your AF medications the way doctor tells
-                                you, and do not run out of medication
-                              </p>
-                              <div className="text-info text-end fw-medium">
-                                Know more
-                                <i
-                                  className="icon_alfred_right_arrow ms-1"
-                                  style={{
-                                    verticalAlign: "middle",
-                                    fontSize: "10px",
-                                  }}
-                                ></i>
-                              </div>
-                            </div>
-                          </div>
-                          <ul className="standardPlans p-4 ps-5 flip-card-back">
-                            <li>
-                              Take your AF medications the way doctor tells you,
-                              and do not run out of medication
-                            </li>
-                            <li>
-                              Visit your doctors regularly and ask questions if
-                              you have any concerns
-                            </li>
-                            <li>
-                              Keep an up-to-date list of all medications which
-                              you are using
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col xl="4" md="6" sm="12" className="mb-3">
-                      <div className="flip-card card al_cardnoborder">
-                        <div className="flip-card-inner">
-                          <div className="flip-card-front">
-                            <img src={riskmanagement3} alt="" />
-                            <div className="p-3">
-                              <p>
-                                Know your stroke risk factors and keep a record
-                                of your CHADS score in this booklet
-                              </p>
-                              <div className="text-info text-end fw-medium">
-                                Know more
-                                <i
-                                  className="icon_alfred_right_arrow ms-1"
-                                  style={{
-                                    verticalAlign: "middle",
-                                    fontSize: "10px",
-                                  }}
-                                ></i>
-                              </div>
-                            </div>
-                          </div>
-                          <ul className="standardPlans p-4 ps-5 flip-card-back">
-                            <li>
-                              Know your stroke risk factors and keep a record of
-                              your CHADS score in this booklet
-                            </li>
-                            <li>
-                              Reduce your risk of more frequent or severe AF and
-                              risk of stroke by choosing a healthy lifestyle
-                            </li>
-                            <li>
-                              If you take Warfarin, make sure that you have
-                              regular blood tests and keep a record of your
-                              results
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
+                  <RiskOptimization />
                 </TabPane>
               </TabContent>
             </Col>

@@ -1,9 +1,11 @@
 import { all } from 'redux-saga/effects';
-import watchAddImageSaga from './Profile/saga';
+import watchProfileSaga from './Profile/saga';
+import watchHomePageSaga from './Home/saga';
 
 function* rootSaga() {
   yield all([
-    watchAddImageSaga()
+    watchProfileSaga(),
+    watchHomePageSaga()
   ]);
 }
 

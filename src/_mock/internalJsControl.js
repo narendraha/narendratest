@@ -40,7 +40,7 @@ export const getProfileTabs = {
 // custom pattens for custom validations
 export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
-{ type: 'alphaspace', pattern: /^[a-zA-Z ]*$/, message: 'alphaspace', alowChar: null },
+{ type: 'alphaspace', pattern: /^[a-zA-Z ]*$/, message: 'alphaspace', alowChar: '^[a-zA-Z {spacial}]*$' },
 { type: 'number', pattern: /^[0-9]{1,20}$/, message: 'number', alowChar: null },
 
 ]
@@ -48,19 +48,19 @@ export const customPatterns = [{},
 
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {
-    infirmity: "Infirmity",
-    nsynacpe: "Near Syncope",
-    tirednessafterwards: "Tiredness afterwards",
-    syncope: "syncope",
-    p_tiredness: "Pronounced tiredness",
     breathnessda: "Breathlessness during Physical activity",
     breathnessea: "Breathlessness even at rest",
-    dizziness: "Dizziness",
+    dizziness: "Dizziness", 
     col_swet: "Cold Sweat",
+    p_tiredness: "Pronounced tiredness",
     chest_pain: "Chest pain",
     pressurechest: "Pressure / Discomfort in chest",
     worry: "Worry",
-    weakness: "Weakness"
+    weakness: "Weakness",
+    infirmity: "Infirmity",
+    nsynacpe: "Near Syncope",
+    syncope: "syncope", 
+    tirednessafterwards: "Tiredness afterwards",
 }
 
 // Profile complition summary

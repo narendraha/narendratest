@@ -46,20 +46,7 @@ export default function Home() {
   const [tab, setTab] = useState(
     location?.state?.activeTab ? location?.state?.activeTab : "1"
   );
-  // const [labelValues, setLabelValues] = useState(0);
-  // const [labelValues1, setLabelValues1] = useState(0);
-  // const [labelValues2, setLabelValues2] = useState(0);
-  // const [labelValues3, setLabelValues3] = useState(0);
-  // const [labelValues4, setLabelValues4] = useState(0);
-  // const [labelValues5, setLabelValues5] = useState(0);
-  // const [labelValues6, setLabelValues6] = useState(0);
-  // const [labelValues7, setLabelValues7] = useState(0);
-  // const [labelValues8, setLabelValues8] = useState(0);
-  // const [labelValues9, setLabelValues9] = useState(0);
-  // const [labelValues10, setLabelValues10] = useState(0);
-  // const [labelValues11, setLabelValues11] = useState(0);
-  // const [labelValues12, setLabelValues12] = useState(0);
-  // const [showconfirm, setShowconfirm] = useState(false);
+  
   const [isShowconfirm, setIsShowconfirm] = useState(false);
   const [resource, setResource] = useState(null);
   const [getLastUpdated, setgetLastUpdated] = useState("");
@@ -74,56 +61,14 @@ export default function Home() {
   // const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(
   //   EGoalTimePeriod.WEEKWISE
   // );
-  // symptoms
-  // const [breathlessness, setBreathlessness] = useState({
-  //   breathnessda: { frequency: "" },
-  //   breathnessea: { frequency: "" },
-  //   dizziness: { frequency: "" },
-  //   col_swet: { frequency: "" },
-  //   p_tiredness: { frequency: "" },
-  //   chest_pain: { frequency: "" },
-  //   pressurechest: { frequency: "" },
-  //   worry: { frequency: "" },
-  //   weakness: { frequency: "" },
-  //   infirmity: { frequency: "" },
-  //   nsynacpe: { frequency: "" },
-  //   syncope: { frequency: "" },
-  //   tirednessafterwards: { frequency: "" },
-  // });
+  
   const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({
     patientDetails: null,
     symptomsDetails: null,
   });
 
-  // const handleFrequencyChange = (category, value) => {
-  //   setBreathlessness((prevState) => ({
-  //     ...prevState,
-  //     [category]: { frequency: value },
-  //   }));
-  // };
 
-  // const [qualityOfLife, setQualityOfLife] = useState({
-  //   breathnessda: { quality_of_life: "" },
-  //   breathnessea: { quality_of_life: "" },
-  //   dizziness: { quality_of_life: "" },
-  //   col_swet: { quality_of_life: "" },
-  //   p_tiredness: { quality_of_life: "" },
-  //   chest_pain: { quality_of_life: "" },
-  //   pressurechest: { quality_of_life: "" },
-  //   worry: { quality_of_life: "" },
-  //   weakness: { quality_of_life: "" },
-  //   infirmity: { quality_of_life: "" },
-  //   nsynacpe: { quality_of_life: "" },
-  //   syncope: { quality_of_life: "" },
-  //   tirednessafterwards: { quality_of_life: "" },
-  // });
 
-  // const handleQualityOfLifeChange = (category, value) => {
-  //   setQualityOfLife((prevState) => ({
-  //     ...prevState,
-  //     [category]: { quality_of_life: value },
-  //   }));
-  // };
 
   // health hub
   const [show1, setShow1] = useState(false);
@@ -131,270 +76,7 @@ export default function Home() {
   // heath details
   const [show2, setShow2] = useState(false);
   const [healthDetails, setHealthDetails] = useState();
-  // const horizontalLabels = {
-  //   0: "None",
-  //   20: "Mild",
-  //   45: "Moderate",
-  //   70: "Severe",
-  //   90: "Extreme",
-  // };
-  // const handleValueChange = (value, setValue) => {
-  //   setValue(value);
-  // };
-  // const handleValueChangeEnd = (value, setValue) => {
-  //   if (value <= 30 && value > 10) {
-  //     setValue(20);
-  //   } else if (value <= 55 && value > 35) {
-  //     setValue(45);
-  //   } else if (value <= 80 && value > 55) {
-  //     setValue(70);
-  //   } else if (value <= 100 && value > 80) {
-  //     setValue(90);
-  //   } else {
-  //     setValue(0);
-  //   }
-  // };
-
-  // // For the first slider
-  // const handleValueChangeSlider = (value) => {
-  //   handleValueChange(value, setLabelValues);
-  // };
-
-  // const handleValueChangeEndSlider = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues);
-  // };
-
-  // // For the second slider
-  // const handleValueChangeSlider1 = (value) => {
-  //   handleValueChange(value, setLabelValues1);
-  // };
-
-  // const handleValueChangeEndSlider1 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues1);
-  // };
-  // // For the third slider
-  // const handleValueChangeSlider2 = (value) => {
-  //   handleValueChange(value, setLabelValues2);
-  // };
-
-  // const handleValueChangeEndSlider2 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues2);
-  // };
-  // // For the 4 slider
-  // const handleValueChangeSlider3 = (value) => {
-  //   handleValueChange(value, setLabelValues3);
-  // };
-
-  // const handleValueChangeEndSlider3 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues3);
-  // };
-  // // For the 5 slider
-  // const handleValueChangeSlider4 = (value) => {
-  //   handleValueChange(value, setLabelValues4);
-  // };
-
-  // const handleValueChangeEndSlider4 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues4);
-  // };
-  // // For the 6 slider
-  // const handleValueChangeSlider5 = (value) => {
-  //   handleValueChange(value, setLabelValues5);
-  // };
-
-  // const handleValueChangeEndSlider5 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues5);
-  // };
-  // // For the 7 slider
-  // const handleValueChangeSlider6 = (value) => {
-  //   handleValueChange(value, setLabelValues6);
-  // };
-
-  // const handleValueChangeEndSlider6 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues6);
-  // };
-  // // For the 8 slider
-  // const handleValueChangeSlider7 = (value) => {
-  //   handleValueChange(value, setLabelValues7);
-  // };
-
-  // const handleValueChangeEndSlider7 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues7);
-  // };
-  // // For the 9 slider
-  // const handleValueChangeSlider8 = (value) => {
-  //   handleValueChange(value, setLabelValues8);
-  // };
-
-  // const handleValueChangeEndSlider8 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues8);
-  // };
-  // // For the 10 slider
-  // const handleValueChangeSlider9 = (value) => {
-  //   handleValueChange(value, setLabelValues9);
-  // };
-
-  // const handleValueChangeEndSlider9 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues9);
-  // };
-  // // For the 11 slider
-  // const handleValueChangeSlider10 = (value) => {
-  //   handleValueChange(value, setLabelValues10);
-  // };
-
-  // const handleValueChangeEndSlider10 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues10);
-  // };
-  // // For the 11 slider
-  // const handleValueChangeSlider11 = (value) => {
-  //   handleValueChange(value, setLabelValues11);
-  // };
-
-  // const handleValueChangeEndSlider11 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues11);
-  // };
-  // // For the 11 slider
-  // const handleValueChangeSlider12 = (value) => {
-  //   handleValueChange(value, setLabelValues12);
-  // };
-
-  // const handleValueChangeEndSlider12 = (value) => {
-  //   handleValueChangeEnd(value, setLabelValues12);
-  // };
-
-  // const getOutputNumber = (value) => {
-  //   return horizontalLabels[value];
-  // };
-
-  // const lifeMappings = {
-  //   Yes: "true",
-  //   No: "false",
-  // };
-
-  // const getLifeValue = (value) => {
-  //   return lifeMappings[value.quality_of_life] !== undefined
-  //     ? lifeMappings[value.quality_of_life]
-  //     : ""; // If value.quality_of_life is not found in lifeMappings, return an empty string
-  // };
-
-  // const handleSubmit = (data) => {
-  //   setIsShowconfirm(data);
-  //   if (data) {
-  //     const output = `${getOutputNumber(labelValues)}
-  //     ${getOutputNumber(labelValues1)}
-  //     ${getOutputNumber(labelValues2)}
-  //     ${getOutputNumber(labelValues3)}
-  //     ${getOutputNumber(labelValues4)}
-  //     ${getOutputNumber(labelValues5)}
-  //     ${getOutputNumber(labelValues6)}
-  //     ${getOutputNumber(labelValues7)}
-  //     ${getOutputNumber(labelValues8)}
-  //     ${getOutputNumber(labelValues9)}
-  //     ${getOutputNumber(labelValues10)}
-  //     ${getOutputNumber(labelValues11)}
-  //     ${getOutputNumber(labelValues12)}`;
-
-  //     let newData = {
-  //       breathnessda: {
-  //         frequency: breathlessness.breathnessda.frequency,
-  //         severity: getOutputNumber(labelValues),
-  //         quality_of_life: getLifeValue(qualityOfLife.breathnessda),
-  //       },
-  //       breathnessea: {
-  //         frequency: breathlessness.breathnessea.frequency,
-  //         severity: getOutputNumber(labelValues1),
-  //         quality_of_life: getLifeValue(qualityOfLife.breathnessea),
-  //       },
-  //       dizziness: {
-  //         frequency: breathlessness.dizziness.frequency,
-  //         severity: getOutputNumber(labelValues2),
-  //         quality_of_life: getLifeValue(qualityOfLife.dizziness),
-  //       },
-  //       col_swet: {
-  //         frequency: breathlessness.col_swet.frequency,
-  //         severity: getOutputNumber(labelValues3),
-  //         quality_of_life: getLifeValue(qualityOfLife.col_swet),
-  //       },
-  //       p_tiredness: {
-  //         frequency: breathlessness.p_tiredness.frequency,
-  //         severity: getOutputNumber(labelValues4),
-  //         quality_of_life: getLifeValue(qualityOfLife.p_tiredness),
-  //       },
-  //       chest_pain: {
-  //         frequency: breathlessness.chest_pain.frequency,
-  //         severity: getOutputNumber(labelValues5),
-  //         quality_of_life: getLifeValue(qualityOfLife.chest_pain),
-  //       },
-  //       pressurechest: {
-  //         frequency: breathlessness.pressurechest.frequency,
-  //         severity: getOutputNumber(labelValues6),
-  //         quality_of_life: getLifeValue(qualityOfLife.pressurechest),
-  //       },
-  //       worry: {
-  //         frequency: breathlessness.worry.frequency,
-  //         severity: getOutputNumber(labelValues7),
-  //         quality_of_life: getLifeValue(qualityOfLife.worry),
-  //       },
-  //       weakness: {
-  //         frequency: breathlessness.weakness.frequency,
-  //         severity: getOutputNumber(labelValues8),
-  //         quality_of_life: getLifeValue(qualityOfLife.weakness),
-  //       },
-  //       infirmity: {
-  //         frequency: breathlessness.infirmity.frequency,
-  //         severity: getOutputNumber(labelValues9),
-  //         quality_of_life: getLifeValue(qualityOfLife.infirmity),
-  //       },
-  //       nsynacpe: {
-  //         frequency: breathlessness.nsynacpe.frequency,
-  //         severity: getOutputNumber(labelValues10),
-  //         quality_of_life: getLifeValue(qualityOfLife.nsynacpe),
-  //       },
-  //       syncope: {
-  //         frequency: breathlessness.syncope.frequency,
-  //         severity: getOutputNumber(labelValues11),
-  //         quality_of_life: getLifeValue(qualityOfLife.syncope),
-  //       },
-  //       tirednessafterwards: {
-  //         frequency: breathlessness.tirednessafterwards.frequency,
-  //         severity: getOutputNumber(labelValues12),
-  //         quality_of_life: getLifeValue(qualityOfLife.tirednessafterwards),
-  //       },
-  //     };
-  //     setIsShowconfirm(!data);
-  //     AxiosInstance("application/json")
-  //       .post(`/add_symptoms`, newData)
-  //       .then((res) => {
-  //         if (res && res.data && res.status === 200) {
-  //           if (res.data?.statuscode === 200) {
-  //             toast(res.data?.message, {
-  //               position: "top-right",
-  //               type: "success",
-  //             });
-  //             changeStatus();
-  //             setTab("4");
-  //             getPatientDetails();
-  //           } else {
-  //             toast(res.data?.message, {
-  //               position: "top-right",
-  //               type: "error",
-  //             });
-  //           }
-  //         }
-  //       })
-  //       .catch((er) => {
-  //         toast(er?.response?.data?.message, {
-  //           position: "top-right",
-  //           type: "error",
-  //         });
-  //       });
-  //   }
-  // };
-  // const shownextStep = () => {
-  //   setShowconfirm(!showconfirm);
-  //   if (showconfirm) {
-  //     setTab("3");
-  //   }
-  // };
+  
   const fetchData = async (data) => {
     let graphData = {
       start_date: data?.start_date,
@@ -666,45 +348,6 @@ export default function Home() {
     }, 4000);
   }, [tab, getLastUpdated]);
 
-  const handleHeathDetails = async (data) => {
-    setShow2(data);
-    if (data) {
-      let finalData = {
-        ...healthDetails,
-        tdate: moment(healthDetails?.tdate).format("YYYY-MM-DD"),
-        bloodp: `${healthDetails?.systolic}/${healthDetails?.diastolic}`,
-      };
-      delete finalData?.isCheckMedicalRecords;
-      delete finalData?.systolic;
-      delete finalData?.diastolic;
-      setShow2(!data);
-      await AxiosInstance("application/json")
-        .post("/health_details", finalData)
-        .then((res) => {
-          if (res && res.data && res.status == 200) {
-            if (res.data?.statuscode === 200) {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "success",
-              });
-              changeStatus();
-              setTab("3");
-            } else {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "error",
-              });
-            }
-          }
-        })
-        .catch((er) => {
-          toast(er?.response?.data?.message || er?.message, {
-            position: "top-right",
-            type: "error",
-          });
-        });
-    }
-  };
 
   const getTabListStatus = async () => {
     setIsLoading(true);
@@ -812,18 +455,9 @@ export default function Home() {
     setTab(location?.state?.activeTab ? location?.state?.activeTab : "1");
   }, [location]);
 
+
   return (
     <>
-      <ConfirmationAction
-        // newFun={
-        //   isShowconfirm
-        //     ? handleSubmit
-        //     : show1
-        //       ? handlehealthHub
-        //       : show2 && handleHeathDetails
-        // }
-        open={isShowconfirm || show1 || show2}
-      />
       {isLoading && <Loading />}
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">

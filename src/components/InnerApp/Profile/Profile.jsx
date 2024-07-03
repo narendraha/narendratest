@@ -4,19 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 import { getActionTypes, getProfileTabs } from '../../../_mock/helperIndex';
 import { getPatientDetailsRequest } from "../../../store/Profile/slice";
-import Loading from "../../InnerApp/LoadingComponent";
+import Loading from "../LoadingComponent";
 import { ProfileSettings } from "./ProfileSettings";
 import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
 import { ProfileEditAction } from "./profileEditAction";
 import ProfileImageUpload from './profileImageUpload';
 import { ProfileViewDetails } from './profileViewDetails';
-
-export const EProfileButton = {
-  CHANGEPASSWORD: 1,
-  BANKDETAILS: 2,
-  SETTINGS: 3
-}
 
 export default function Profile() {
   const dispatch = useDispatch();

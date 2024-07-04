@@ -39,6 +39,8 @@ import whytreatment from "../../../images/whytreatment.png";
 import Loading from "../../InnerApp/LoadingComponent";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { createResource } from "../createResource";
+import nodata from '../../../images/nodata.svg';
+import nosearchdata from '../../../images/nosearchdata.svg';
 // import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
 export const EGoalTimePeriod = {
   WEEKWISE: 0,
@@ -1538,7 +1540,10 @@ export default function Home() {
                           </CardBody>
                         </Card>
                       ) : (
-                        <div>No date found!!</div>
+                        <div className="d-flex flex-column align-items-center pt-5">
+                          <img src={nodata} width={220} alt="" />
+                          <h6 className="mt-3 mb-0">No data found!</h6>
+                        </div>
                       )}
                     </Col>
                   </Row>

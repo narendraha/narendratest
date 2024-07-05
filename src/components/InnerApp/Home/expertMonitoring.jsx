@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setActiveTabRequest, setActionTypeAndActionData } from "../../../store/Home/slice";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
 import { getActionTypes } from "../../../_mock/internalJsControl";
+import nodata from '../../../images/nodata.svg';
+import nosearchdata from '../../../images/nosearchdata.svg';
 
 export const ExpertMonitoring = () => {
     const dispatch = useDispatch();
@@ -509,7 +511,10 @@ export const ExpertMonitoring = () => {
                             </CardBody>
                         </Card>
                     ) : (
-                        <div>No date found!!</div>
+                        <div className="d-flex flex-column align-items-center pt-5">
+                            <img src={nodata} width={220} alt="" />
+                            <h6 className="mt-3 mb-0">No data found!</h6>
+                        </div>
                     )}
                 </Col>
             </Row>

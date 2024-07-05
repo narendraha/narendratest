@@ -5,7 +5,6 @@ import { getActivetab } from "../../../_mock/internalJsControl";
 import { setActiveTabRequest } from "../../../store/Home/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
 import Loading from "../../InnerApp/LoadingComponent";
-<<<<<<< HEAD
 import { ExpertMonitoring } from "./expertMonitoring";
 import { HealthHub } from "./healthHub";
 import { LifeStyleGoal } from "./lifeStyleGoal";
@@ -20,18 +19,6 @@ let navItemsList = [
   { key: getActivetab.LIFEGOAL, navLink: "Lifestyle Goals" },
   { key: getActivetab.ORMANAGEMENT, navLink: "Optimal Risk Management" },
 ];
-=======
-import ConfirmationAction from "../MainLayout/ConfirmationAction";
-import { createResource } from "../createResource";
-import nodata from '../../../images/nodata.svg';
-import nosearchdata from '../../../images/nosearchdata.svg';
-// import { lifeStyleGoalSymptomsKeys } from '../../../_mock/helperIndex'
-export const EGoalTimePeriod = {
-  WEEKWISE: 0,
-  DAYSWISE: 1,
-  MONTHWISE: 2,
-};
->>>>>>> 1dd46031d94093312e764ce4d62c71e6f8409f5b
 
 export default function Home() {
   const dispatch = useDispatch();

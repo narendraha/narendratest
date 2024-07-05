@@ -358,7 +358,7 @@ export default function ApproveUsers() {
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Andrew</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Richard</td>
@@ -370,7 +370,7 @@ export default function ApproveUsers() {
                                                     <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>Andrew</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -444,7 +444,7 @@ export default function ApproveUsers() {
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>James</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Richard</td>
@@ -456,7 +456,7 @@ export default function ApproveUsers() {
                                                     <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>James</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td><button type="button" className='al_button_sm al_savebtn'>Approve</button></td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                             </tbody>
                                         </Table>

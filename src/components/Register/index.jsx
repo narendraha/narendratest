@@ -156,8 +156,8 @@ export default function Register() {
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
                     {/* <>
-                      <div className="w-80 mx-auto wflexLayout">
-                        <h5 className="mb-2">Type of Account</h5>
+                      <div className="w-80 mx-auto wflexLayout wflex-items-center">
+                        <h5 className="mb-3">Type of Account</h5>
                         <div className="al_login-form al_registrationform wflexScroll">
                           <div className="al_accounttype mb-3">
                             <h6 className="mb-0 fw-medium">I am a</h6>
@@ -165,10 +165,10 @@ export default function Register() {
                           </div>
                           <div className="al_accounttype">
                             <h6 className="mb-0 fw-medium">I am a</h6>
-                            <h4 className="mb-0">Physician</h4>
+                            <h4 className="mb-0">Healthcare<br />Provider</h4>
                           </div>
                         </div>
-                        <div className="mt-3 text-medium">
+                        <div className="mt-4 text-medium">
                           Already have an account?{" "}
                           <Link
                             to="/signin"
@@ -180,7 +180,7 @@ export default function Register() {
                       </div>
                     </> */}
                     <>
-                      <h5 className="mb-2">Personal Details</h5>
+                      <h6 className="mb-2">Personal Details</h6>
                       <div className="al_login-form al_registrationform wflexScroll">
                         <FormGroup>
                           <Label>

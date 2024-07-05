@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getActionTypes } from "../../_mock/internalJsControl";
+import { getActionTypes, getActivetab } from "../../_mock/internalJsControl";
 
 const initialState = {
     actionType: getActionTypes.UNSELECT,
     isLoading: false,
+    activeTab: getActivetab.HEALTHHUB,
+    getCurrentTab: "",
 }
 
 const homePageSlice = createSlice({
@@ -15,13 +17,27 @@ const homePageSlice = createSlice({
             state.actionData = action.payload?.actionData
 
         },
-        addSymptomsDetailRequest: (state, action) => {
+        addSymptomsDetailRequest: (state) => {
             state.isLoading = true;
             state.actionType = getActionTypes.UNSELECT;
         },
-        addSymptomsDetailResponse: (state, action) => {
+        addSymptomsDetailResponse: (state) => {
             state.isLoading = false
         },
+        setActiveTabRequest: (state) => {
+            state.isLoading = true
+        },
+        setActiveTabResponse: (state, action) => {
+            state.isLoading = false;
+            state.activeTab = action.payload
+        },
+        getActiveTabRequest: (state) => {
+            state.isLoading = true
+        },
+        getActiveTabResponse: (state, action) => {
+            state.isLoading = false;
+            state.activeTab = action.payload
+        }
     }
 });
 
@@ -29,9 +45,10 @@ const homePageSlice = createSlice({
 export const {
 
     setActionTypeAndActionData,
-    getPatientDetailsRequest, getPatientDetailsResponse,
     addSymptomsDetailRequest, addSymptomsDetailResponse,
-    getSymptomsDetailsRequest, getSymptomsDetailsResponse
+    getSymptomsDetailsRequest, getSymptomsDetailsResponse,
+    setActiveTabRequest, setActiveTabResponse,
+    getActiveTabRequest, getActiveTabResponse
 
 } = homePageSlice.actions;
 

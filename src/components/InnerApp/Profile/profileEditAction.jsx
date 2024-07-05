@@ -8,10 +8,10 @@ import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
 import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
-import { getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
+import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
+import Loading from '../LoadingComponent';
 import ConfirmationAction from '../MainLayout/ConfirmationAction';
-import { customContentValidation, allowedNumbersOnField } from '../../../_mock/helperIndex';
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -35,7 +35,7 @@ const bloodTypes = [
 export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails, profilePicture, actionData, isConfirmModel, uploadedProfileImage } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails, profilePicture, actionData, isConfirmModel, uploadedProfileImage, isLoading } = useSelector((state) => state?.profileSlice);
 
     const handleSubmit = () => {
         dispatch(profileDetailsAndProfileImageUpdateRequest(actionData))
@@ -43,6 +43,7 @@ export const ProfileEditAction = () => {
 
     return (
         <React.Fragment>
+            {isLoading && <Loading />}
             <ConfirmationAction newFun={handleSubmit} open={isConfirmModel} />
             <Formik
                 enableReinitialize

@@ -1,10 +1,18 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Card, CardBody, Col, Row } from "reactstrap";
+import { getActivetab } from "../../../_mock/internalJsControl";
 import atrialfib from "../../../images/atrialfib.png";
-import whytreatment from "../../../images/whytreatment.png";
 import rhythm from "../../../images/rhythm.png";
+import whytreatment from "../../../images/whytreatment.png";
+import { setActiveTabRequest } from "../../../store/Home/slice";
 
 export const HealthHub = () => {
+    const dispatch = useDispatch();
+
+    const handleSetTabs = () => {
+        dispatch(setActiveTabRequest({ setTab: getActivetab.HEALTHHUB, nextOrBackTab: getActivetab.EXPTMONITORING }))
+    }
     return (
         <React.Fragment>
             <p>Knowing about AF will reduce the risk</p>
@@ -144,10 +152,8 @@ export const HealthHub = () => {
             <div className="mt-4">
                 <button
                     type="button"
-                    className="al_savebtn"
-                    onClick={() => {
-                        // setShow1(true);
-                    }}
+                    className="al_savebtn" handleSetTabs
+                    onClick={handleSetTabs}
                 >
                     Proceed
                 </button>

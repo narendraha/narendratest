@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Col, Label, Row, Table } from "reactstrap";
+import { getActivetab } from "../../../_mock/internalJsControl";
+import { setActiveTabRequest } from "../../../store/Home/slice";
+import LifeStyleGoalTabs from "./lifeStyleGoalTabs";
 
-export const EGoalTimePeriod = {
+export const getGoalTimePeriod = {
     WEEKWISE: 0,
     DAYSWISE: 1,
     MONTHWISE: 2,
 };
 
 export const LifeStyleGoal = () => {
+    const dispatch = useDispatch();
 
-    const [getActiveLifestyleGoal, setActiveLifestleGoal] = useState(
-        EGoalTimePeriod.WEEKWISE
-    );
+    const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
 
-    const [patientAndSymptomsDetails, setPatientAndSymptomsDetails] = useState({
-        patientDetails: null,
-        symptomsDetails: null,
-    });
+    const handleSetTabs = (isBack = null) => {
+        dispatch(setActiveTabRequest({ setTab: getActivetab.LIFEGOAL, nextOrBackTab: isBack ? isBack : getActivetab.ORMANAGEMENT }))
+    }
+
     return (
         <React.Fragment>
             <p>Select where you want to be coached in</p>
@@ -65,38 +68,23 @@ export const LifeStyleGoal = () => {
                         <Col lg="4" sm="6">
                             <p className="al_note">Your Details</p>
                             <h5 className="mb-2 text-capitalize">
-                                Hello,{" "}
-                                {patientAndSymptomsDetails?.patientDetails
-                                    ?.username || "N/A"}
-                                !
+                                Hello,{getProfileDetails?.username || "N/A"}!
                             </h5>
                             <div>
                                 <strong>Age: </strong>
-                                <span>
-                                    {patientAndSymptomsDetails?.patientDetails
-                                        ?.age || "N/A"}
-                                </span>
+                                <span>{getProfileDetails?.age || "N/A"}</span>
                             </div>
                             <div>
                                 <strong>Gender: </strong>
-                                <span>
-                                    {patientAndSymptomsDetails?.patientDetails
-                                        ?.gender || "N/A"}
-                                </span>
+                                <span>{getProfileDetails?.gender || "N/A"}</span>
                             </div>
                             <div>
                                 <strong>Residence type: </strong>
-                                <span>
-                                    {patientAndSymptomsDetails?.patientDetails
-                                        ?.rtype || "N/A"}
-                                </span>
+                                <span>{getProfileDetails?.rtype || "N/A"}</span>
                             </div>
                             <div>
                                 <strong>Education: </strong>
-                                <span>
-                                    {patientAndSymptomsDetails?.patientDetails
-                                        ?.education || "N?A"}
-                                </span>
+                                <span>{getProfileDetails?.education || "N/A"}</span>
                             </div>
                         </Col>
                         <Col lg="8" sm="6">
@@ -111,16 +99,6 @@ export const LifeStyleGoal = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
-                                return (
-                                  <>
-                                    <tr>
-                                      <td>{lifeStyleGoalSymptomsKeys[key]}</td>
-                                      <td className="text-warning">{patientAndSymptomsDetails?.symptomsDetails[key]?.severity}</td>
-                                    </tr>
-                                  </>
-                                )
-                              })} */}
                                             <tr>
                                                 <td>Breathlessness even at rest</td>
                                                 <td className="text-warning">Moderate</td>
@@ -141,64 +119,28 @@ export const LifeStyleGoal = () => {
                         Choose the time period to set your goal
                     </h6>
 
-                    <Row className="mb-4">
-                        <Col lg="3" sm="6">
-                            <div
-                                className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                    EGoalTimePeriod.WEEKWISE
-                                    ? "active"
-                                    : ""
-                                    }`}
-                                onClick={() =>
-                                    setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
-                                }
-                            >
-                                Create goal for <strong>1 week</strong>
-                            </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                            <div
-                                className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                    EGoalTimePeriod.DAYSWISE
-                                    ? "active"
-                                    : ""
-                                    }`}
-                                onClick={() =>
-                                    setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
-                                }
-                            >
-                                Create goal for <strong>15 days</strong>
-                            </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                            <div
-                                className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                                    EGoalTimePeriod.MONTHWISE
-                                    ? "active"
-                                    : ""
-                                    }`}
-                                onClick={() =>
-                                    setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
-                                }
-                            >
-                                Create goal for <strong>1 month</strong>
-                            </div>
-                        </Col>
-                    </Row>
+                    <LifeStyleGoalTabs />
                     <p className="al_note mb-3">
                         Disclaimer: Goal will be created based on the list of
                         symptoms you have selected and the data you have
                         provided in this application{" "}
                     </p>
-
-                    <button
-                        type="button"
-                        className="al_savebtn"
-                        // onClick={() => setTab("5")}
-                    >
-                        OK
-                    </button>
-                    {/* <LayoutAlertMessage /> */}
+                    <div className="mt-4">
+                        <button
+                            type="button"
+                            className="al_grey_borderbtn"
+                            onClick={() => handleSetTabs(getActivetab.SYMPTOMSLIST)}
+                        >
+                            Back
+                        </button>
+                        <button
+                            type="button"
+                            className="al_savebtn"
+                            onClick={() => handleSetTabs()}
+                        >
+                            OK
+                        </button>
+                    </div>
                 </div>
             </div>
         </React.Fragment>

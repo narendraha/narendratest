@@ -4,10 +4,9 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
-import { getActionTypes } from "../../../_mock/internalJsControl";
-import { addSymptomsDetailRequest, setActionTypeAndActionData } from "../../../store/Home/slice";
+import { getActionTypes, getActivetab } from "../../../_mock/internalJsControl";
+import { addSymptomsDetailRequest, setActionTypeAndActionData, setActiveTabRequest } from "../../../store/Home/slice";
 import ConfirmationAction from "../MainLayout/ConfirmationAction";
-import Loading from "../LoadingComponent";
 
 const horizontalLabels = {
     0: "None",
@@ -19,108 +18,26 @@ const horizontalLabels = {
 
 let frequencyList = ["Never", "Occasionally", "Often", "Always"];
 
+let lsitOfSymptoms = [
+    { key: "breathnessda", symptomName: "Breathlessness during activity", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "breathnessea", symptomName: "Breathlessness even at rest", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "dizziness", symptomName: "Dizziness", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "col_swet", symptomName: "Cold sweat", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "chest_pain", symptomName: "Chest pain", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "pressurechest", symptomName: "Pressure / discomfort in chest", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "worry", symptomName: "Worry", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "weakness", symptomName: "Weakness", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "infirmity", symptomName: "Infirmity", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "nsynacpe", symptomName: "Near syncope", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "syncope", symptomName: "Syncope", frequency: "", serverity: "", isAffectingLife: "" },
+    { key: "tirednessafterwards", symptomName: "Tiredness afterwards", frequency: "", serverity: "", isAffectingLife: "" }
+];
+
 export const SymptomsListForm = () => {
-    
+
     const dispatch = useDispatch();
 
     const { actionType, actionData, isLoading } = useSelector((state) => state?.homePageSlice)
-
-    let getInitialValues = () => ({
-        ListOfSymptomsCapturingData: [
-            {
-                key: "breathnessda",
-                symptomName: "Breathlessness during activity",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "breathnessea",
-                symptomName: "Breathlessness even at rest",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "dizziness",
-                symptomName: "Dizziness",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "col_swet",
-                symptomName: "Cold sweat",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "p_tiredness",
-                symptomName: "Pronounced tiredness",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "chest_pain",
-                symptomName: "Chest pain",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "pressurechest",
-                symptomName: "Pressure / discomfort in chest",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "worry",
-                symptomName: "Worry",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "weakness",
-                symptomName: "Weakness",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "infirmity",
-                symptomName: "Infirmity",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "nsynacpe",
-                symptomName: "Near syncope",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "syncope",
-                symptomName: "Syncope",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-            {
-                key: "tirednessafterwards",
-                symptomName: "Tiredness afterwards",
-                frequency: "",
-                serverity: "",
-                isAffectingLife: ""
-            },
-
-        ]
-    });
 
     const handleFieldOnchange = (e, i, setFieldValue, field) => {
         let value = field === 'serverity' ? ((e <= 30 && e > 10) ? 20 : (e <= 55 && e > 35) ? 45 : (e <= 80 && e > 55) ? 70 : (e <= 100 && e > 80) ? 90 : 0) : e
@@ -131,23 +48,27 @@ export const SymptomsListForm = () => {
         dispatch(addSymptomsDetailRequest(actionData))
     }
 
+    const handleSetTabs = (isBack = null) => {
+        dispatch(setActiveTabRequest({ setTab: getActivetab.SYMPTOMSLIST, nextOrBackTab: isBack ? isBack : getActivetab.LIFEGOAL }))
+    }
+
     return (
         <React.Fragment>
-            {isLoading && <Loading />}
             <ConfirmationAction newFun={handleSubmitForm} open={actionType === getActionTypes.ISCONFIRM} />
             <p>Select the symptoms range listed below</p>
             <Formik
-                initialValues={getInitialValues()}
+                initialValues={{
+                    ListOfSymptomsCapturingData: lsitOfSymptoms
+                }}
                 // validationSchema={{}}
                 onSubmit={(values) => {
                     console.log("values=>", values)
-                    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ISCONFIRM, actionData: values }))
+                    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ISCONFIRM, actionData: values }));
                 }}
             >{({ values, setFieldValue }) => (
                 <>
                     <Form>
                         <div className="al_symptoms">
-                            {console.log("99999999999999", values)}
                             <Row>
                                 {values?.ListOfSymptomsCapturingData?.map((sympt, index) => {
                                     return (
@@ -223,24 +144,19 @@ export const SymptomsListForm = () => {
                                 })}
                             </Row>
                         </div>
-                        <div className="mt-4">
-                            <button
-                                type="button"
-                                className="al_grey_borderbtn"
-                                onClick={() => {
-                                    // setTab("2");
-                                }}
-                            >
-                                Back
-                            </button>
-                            <button
-                                type="submit"
-                                className="al_savebtn mx-3"
-                            // onClick={() => setIsShowconfirm(true)}
-                            >
-                                Proceed
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            className="al_grey_borderbtn"
+                            onClick={() => handleSetTabs(getActivetab.EXPTMONITORING)}
+                        >
+                            Back
+                        </button>
+                        <button
+                            type="submit"
+                            className="al_savebtn mx-3"
+                        >
+                            Proceed
+                        </button>
                     </Form>
                 </>
             )}

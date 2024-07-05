@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 import { getActionTypes, getProfileTabs } from '../../../_mock/helperIndex';
 import { getPatientDetailsRequest } from "../../../store/Profile/slice";
-import Loading from "../LoadingComponent";
 import { ProfileSettings } from "./ProfileSettings";
 import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
@@ -15,7 +14,7 @@ import { ProfileViewDetails } from './profileViewDetails';
 export default function Profile() {
   const dispatch = useDispatch();
 
-  const { isLoading, actionType, actionData } = useSelector((state) => state?.profileSlice)
+  const { actionType, actionData } = useSelector((state) => state?.profileSlice)
 
   useEffect(() => {
     dispatch(getPatientDetailsRequest())
@@ -23,7 +22,6 @@ export default function Profile() {
 
   return (
     <>
-      {isLoading && <Loading />}
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-3">Profile</h3>

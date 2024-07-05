@@ -37,6 +37,15 @@ export const getProfileTabs = {
     SETTINGS: "settings"
 }
 
+// Home page tabs
+export const getActivetab = {
+    HEALTHHUB: "health_hub",
+    EXPTMONITORING: "expert_monitoring",
+    SYMPTOMSLIST: "list_your_symptoms",
+    LIFEGOAL: "lifestyle_goals",
+    ORMANAGEMENT: "optimal_risk_managemment"
+}
+
 // custom pattens for custom validations
 export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
@@ -50,7 +59,7 @@ export const customPatterns = [{},
 export const lifeStyleGoalSymptomsKeys = {
     breathnessda: "Breathlessness during Physical activity",
     breathnessea: "Breathlessness even at rest",
-    dizziness: "Dizziness", 
+    dizziness: "Dizziness",
     col_swet: "Cold Sweat",
     p_tiredness: "Pronounced tiredness",
     chest_pain: "Chest pain",
@@ -59,7 +68,7 @@ export const lifeStyleGoalSymptomsKeys = {
     weakness: "Weakness",
     infirmity: "Infirmity",
     nsynacpe: "Near Syncope",
-    syncope: "syncope", 
+    syncope: "syncope",
     tirednessafterwards: "Tiredness afterwards",
 }
 

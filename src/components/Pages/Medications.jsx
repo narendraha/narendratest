@@ -1,8 +1,8 @@
 import React from 'react';
-import { Row, Col, Card, CardBody } from 'reactstrap';
+import { Card, CardBody, Col, Row } from 'reactstrap';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 export default function Medications() {
   pageTitle('Medications');

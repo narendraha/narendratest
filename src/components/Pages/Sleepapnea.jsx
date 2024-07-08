@@ -1,8 +1,8 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
+import Section from '../DeafaultPages/Section';
 import { Row, Col } from 'reactstrap';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 import sleepapnea from "../../images/sleepapnea.jpg";
 
 export default function Sleepapnea() {

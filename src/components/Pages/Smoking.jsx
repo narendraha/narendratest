@@ -1,7 +1,7 @@
 import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
+import Section from '../DeafaultPages/Section';
 import { Row, Col } from 'reactstrap';
 import smoking from '../../images/smoking.png';
 

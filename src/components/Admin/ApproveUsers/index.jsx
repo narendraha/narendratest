@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, TabContent, Nav, NavItem, NavLink, TabPane, FormGroup, Modal, ModalBody } from 'reactstrap';
 import Select from "react-select";
-import Pagination from '../../Pagination';
+import Pagination from '../../DeafaultPages/Pagination';
 
 export default function ApproveUsers() {
     const [tab, setTab] = useState("1");

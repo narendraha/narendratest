@@ -1,9 +1,9 @@
 import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import { Col, Row } from 'reactstrap';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
 import alcohol from '../../images/alcohol.png';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 export default function Alcohol() {
   pageTitle('Alcohol');

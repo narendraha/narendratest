@@ -1,8 +1,8 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import Accordion from '../Accordion';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
+import Accordion from '../DeafaultPages/Accordion';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 const faqData = [
   {

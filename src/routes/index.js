@@ -5,8 +5,8 @@ import About from "../components/Pages/About";
 import { useEffect, useState } from "react";
 import ErrorPage from "../components/Pages/ErrorPage";
 import Appointments from "../components/Pages/Appointments";
-import Signin from "../components/Signin";
-import Register from "../components/Register";
+import Signin from "../components/Auth/Signin";
+import Register from "../components/Auth/Register";
 import Dashboard from "../components/InnerApp/Dashboard/Dashboard";
 import MainLayout from "../components/InnerApp/MainLayout";
 import Profile from "../components/InnerApp/Profile/Profile";
@@ -34,7 +34,7 @@ import Affaq from "../components/Pages/Affaq";
 import Chat from "../components/Pages/Chat";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForgotPassword from "../components/ForgotPassword";
+import ForgotPassword from "../components/Auth/ForgotPassword";
 import BotQuestionnaire from "../components/Admin/BotQuestionnaire";
 import HealthcareConsultant from "../components/Pages/HealthcareConsultant";
 import HistoryChat from "../components/Pages/HistoryChat";
@@ -42,76 +42,76 @@ import HeartValves from "../components/Pages/HeartValves";
 import Congestive from "../components/Pages/Congestive";
 import HistoryChatNew from "../components/Pages/HistoryChatNew";
 import Loading from "../components/InnerApp/LoadingComponent";
-import Terms from "../components/Terms/Terms";
-import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
+import Terms from "../components/DeafaultPages/Terms/Terms";
+import PrivacyPolicy from "../components/DeafaultPages/Terms/PrivacyPolicy";
 import ApproveUsers from "../components/Admin/ApproveUsers";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
-  const { pathname } = useLocation();
-  const [loading, setLoading] = useState(true);
+    const { pathname } = useLocation();
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // window.scrollTo(0, 0);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000); // Adjust the timeout as needed
-  }, [pathname]);
+    useEffect(() => {
+        // window.scrollTo(0, 0);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000); // Adjust the timeout as needed
+    }, [pathname]);
 
-  if (loading) {
-    return <Loading />;
-  }
+    if (loading) {
+        return <Loading />;
+    }
 
-  return (
-    <>
-      <ToastContainer theme="light" />
-      <Routes>
-        {authenticated ? (
-          <>
-            <Route path="/" element={<MainLayout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="home" element={<Home />} />
-              <Route path="transcriptsummary" element={<HistorySummary />} />
-              <Route path="botquestionnaire" element={<BotQuestionnaire />} />
-              <Route path="approveusers" element={<ApproveUsers />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="chat" element={<Chat />} />
-              {/* <Route path="historychat" element={<HistoryChat />} /> */}
-              <Route path="historychat" element={<HistoryChatNew />} />
-              <Route path="*" element={<ErrorPage />} />
-            </Route>
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<Layout3 />}>
-              <Route index element={<HomeStyle3 />} />
-              <Route path="about" element={<About />} />
-              <Route path="personomics" element={<Personomics />} />
-              <Route path="affaq" element={<Affaq />} />
-              <Route path="symptoms" element={<Symptoms />} />
-              <Route path="medications" element={<Medications />} />
-              <Route path="ablation" element={<Ablation />} />
-              <Route path="devicepacemaker" element={<DevicePacemaker />} />
-              <Route path="obesity" element={<Obesity />} />
-              <Route path="sleepapnea" element={<Sleepapnea />} />
-              <Route path="alocohol" element={<Alcohol />} />
-              <Route path="smoking" element={<Smoking />} />
-              <Route path="exercise" element={<Exercise />} />
-              <Route path="coronary" element={<Coronary />} />
-              <Route path="heartvalves" element={<HeartValves />} />
-              <Route path="congestive" element={<Congestive />} />
-              <Route path="vascular" element={<Vascular />} />
-              <Route path="appointments" element={<Appointments />} />
-              <Route path="pharmacy" element={<Pharmacy />} />
-              <Route
-                path="communityresources"
-                element={<CommunityResources />}
-              />
-              <Route path="healthplan" element={<HealthPlan />} />
-              <Route path="aco" element={<ACO />} />
-              <Route path="ecopharmacy" element={<EcoPharmacy />} />
-              <Route path="dietician" element={<Dietician />} />
-              <Route path="healthcare" element={<HealthcareConsultant />} />
-              {/* <Route path="doctors" element={<Doctors />} />
+    return (
+        <>
+            <ToastContainer theme="light" />
+            <Routes>
+                {authenticated ? (
+                    <>
+                        <Route path="/" element={<MainLayout />}>
+                            <Route path="dashboard" element={<Dashboard />} />
+                            <Route path="home" element={<Home />} />
+                            <Route path="transcriptsummary" element={<HistorySummary />} />
+                            <Route path="botquestionnaire" element={<BotQuestionnaire />} />
+                            <Route path="approveusers" element={<ApproveUsers />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="chat" element={<Chat />} />
+                            {/* <Route path="historychat" element={<HistoryChat />} /> */}
+                            <Route path="historychat" element={<HistoryChatNew />} />
+                            <Route path="*" element={<ErrorPage />} />
+                        </Route>
+                    </>
+                ) : (
+                    <>
+                        <Route path="/" element={<Layout3 />}>
+                            <Route index element={<HomeStyle3 />} />
+                            <Route path="about" element={<About />} />
+                            <Route path="personomics" element={<Personomics />} />
+                            <Route path="affaq" element={<Affaq />} />
+                            <Route path="symptoms" element={<Symptoms />} />
+                            <Route path="medications" element={<Medications />} />
+                            <Route path="ablation" element={<Ablation />} />
+                            <Route path="devicepacemaker" element={<DevicePacemaker />} />
+                            <Route path="obesity" element={<Obesity />} />
+                            <Route path="sleepapnea" element={<Sleepapnea />} />
+                            <Route path="alocohol" element={<Alcohol />} />
+                            <Route path="smoking" element={<Smoking />} />
+                            <Route path="exercise" element={<Exercise />} />
+                            <Route path="coronary" element={<Coronary />} />
+                            <Route path="heartvalves" element={<HeartValves />} />
+                            <Route path="congestive" element={<Congestive />} />
+                            <Route path="vascular" element={<Vascular />} />
+                            <Route path="appointments" element={<Appointments />} />
+                            <Route path="pharmacy" element={<Pharmacy />} />
+                            <Route
+                                path="communityresources"
+                                element={<CommunityResources />}
+                            />
+                            <Route path="healthplan" element={<HealthPlan />} />
+                            <Route path="aco" element={<ACO />} />
+                            <Route path="ecopharmacy" element={<EcoPharmacy />} />
+                            <Route path="dietician" element={<Dietician />} />
+                            <Route path="healthcare" element={<HealthcareConsultant />} />
+                            {/* <Route path="doctors" element={<Doctors />} />
                 <Route path="doctors/:doctorId" element={<DoctorDetails />} />
                 <Route path="blog" element={<Blog />} />
                 <Route path="blog/:blogId" element={<BlogDetails />} />
@@ -125,18 +125,18 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
                 <Route path="gallery" element={<Gallery />} />
                 <Route path="timetable" element={<Timetable />} />
                 <Route path="contact" element={<Contact />} /> */}
-            </Route>
-            <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
-            <Route path="terms" element={<Terms />} />
-            <Route path="privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="registration" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="*" element={<ErrorPage />} />
-          </>
-        )}
-      </Routes>
-    </>
-  );
+                        </Route>
+                        <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
+                        <Route path="terms" element={<Terms />} />
+                        <Route path="privacypolicy" element={<PrivacyPolicy />} />
+                        <Route path="registration" element={<Register />} />
+                        <Route path="forgot-password" element={<ForgotPassword />} />
+                        <Route path="*" element={<ErrorPage />} />
+                    </>
+                )}
+            </Routes>
+        </>
+    );
 };
 
 export default AllRoutes;

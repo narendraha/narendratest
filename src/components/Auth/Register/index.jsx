@@ -14,14 +14,14 @@ import {
   allowsOnlyNumeric,
   passwordReg,
   phoneNumberReg,
-} from "../../_mock/RegularExp";
-import { AxiosInstance } from "../../_mock/utilities";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import successImg from "../../images/sucessimg.svg";
+} from "../../../_mock/RegularExp";
+import { AxiosInstance } from "../../../_mock/utilities";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import successImg from "../../../images/sucessimg.svg";
 import OTPComponent from "../ForgotPassword/OTP";
-import Loading from "../InnerApp/LoadingComponent";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField } from "../../_mock/helperIndex";
+import Loading from "../../InnerApp/LoadingComponent";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField } from "../../../_mock/helperIndex";
 
 export default function Register() {
   const navigate = useNavigate();

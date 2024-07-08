@@ -6,12 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { passwordReg } from "../../_mock/RegularExp";
-import { AxiosInstance } from "../../_mock/utilities";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import successImg from "../../images/sucessimg.svg";
-import Loading from "../InnerApp/LoadingComponent";
+import { passwordReg } from "../../../_mock/RegularExp";
+import { AxiosInstance } from "../../../_mock/utilities";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import successImg from "../../../images/sucessimg.svg";
+import Loading from "../../InnerApp/LoadingComponent";
 import OTPComponent from "./OTP";
 
 export default function ForgotPassword() {

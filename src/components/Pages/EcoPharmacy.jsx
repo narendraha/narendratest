@@ -1,6 +1,6 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 export default function EcoPharmacy() {
   pageTitle('Health Partners - Pharmacy');

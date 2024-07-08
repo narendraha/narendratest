@@ -1,9 +1,9 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import TestimonialCarouselStyle2 from '../Slider/TestimonialCarouselStyle2';
-import Spacing from '../Spacing';
 import animation from '../../images/animation.mp4';
+import Section from '../DeafaultPages/Section';
+import TestimonialCarouselStyle2 from '../DeafaultPages/Slider/TestimonialCarouselStyle2';
+import Spacing from '../DeafaultPages/Spacing';
 
 const personomicsData = [
   {

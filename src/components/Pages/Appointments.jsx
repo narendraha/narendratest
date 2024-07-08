@@ -1,10 +1,10 @@
 import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
-import { pageTitle } from '../../helpers/PageTitle';
-import { Row, Col } from 'reactstrap';
-import loginto from '../../images/loginto.svg';
 import { Link } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../helpers/PageTitle';
+import loginto from '../../images/loginto.svg';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 export default function Appointments() {
   pageTitle('Appointments');

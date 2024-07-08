@@ -1,9 +1,9 @@
 import React from 'react';
+import { Col, Row } from 'reactstrap';
 import { pageTitle } from '../../helpers/PageTitle';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
 import pacemaker from '../../images/pacemaker.jpg';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
 
 export default function DevicePacemaker() {
   pageTitle('Device/Pacemaker');

@@ -1,20 +1,19 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import { useState } from "react";
-import { AxiosInstance } from "../../_mock/utilities";
-import { toast } from "react-toastify";
-import { auth, provider } from "../Firebase";
-import { signInWithPopup } from "firebase/auth";
-import Loading from "../InnerApp/LoadingComponent";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import handwave from '../../images/handwave.png';
-import google from '../../images/google.svg';
-import apple from '../../images/apple.svg';
+import { signInWithPopup } from "firebase/auth";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import * as Yup from "yup";
+import { AxiosInstance } from "../../../_mock/utilities";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import apple from '../../../images/apple.svg';
+import google from '../../../images/google.svg';
+import handwave from '../../../images/handwave.png';
+import { auth, provider } from "../../Firebase";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   const navigate = useNavigate();

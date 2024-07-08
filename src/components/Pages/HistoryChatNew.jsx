@@ -332,6 +332,8 @@ export default function HistoryChatBot() {
     setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
   }
 
+  let data = "<p><strong>Atrial fibrillation (AF)</strong> is an irregular and often rapid heart rate. It occurs when the electrical signals in the atria (the top chambers of the heart) are rapid and disorganized, resulting in an irregular heartbeat.</p><p>AF can lead to serious consequences such as <strong>stroke</strong> and <strong>heart failure</strong>. About 1 in 4 adults develop AF during their lifetime, and the risk increases with age.</p><p>Other risk factors include:</p><ol><li><strong>Heart failure</strong></li><li><strong>Excessive alcohol consumption</strong></li><li><strong>Obstructive sleep apnea</strong></li><li><strong>Obesity</strong></li><li><strong>High blood pressure</strong></li><li><strong>Chronic kidney disease</strong></li><li><strong>Heart valve problems</strong></li><li><strong>Thyroid disease</strong></li></ol><p>Some people may experience AF that comes and goes, lasting for minutes to weeks.</p>"
+
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
     <>
@@ -365,6 +367,7 @@ export default function HistoryChatBot() {
                 </div>
               </div>
             </div>
+            <div dangerouslySetInnerHTML={{ __html: data }} />
             {isChatOneActive ? (
               <div className="wflexLayout">
                 <div className="flex-grow-1 my-3">

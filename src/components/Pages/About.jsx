@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
+import { Card, CardBody, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { pageTitle } from '../../helpers/PageTitle';
-import whoweare from '../../images/whoweare.jpg';
-import whatwedo from '../../images/whatwedo.png';
-import phistory from '../../images/phistory.svg';
-import peducation from '../../images/peducation.svg';
-import pbehaviour from '../../images/pbehaviour.svg';
+import { default as accuratehealth, default as additionalvalue, default as assesssymptoms, default as costeffective } from '../../images/costeffective.png';
 import facebook from '../../images/facebook.svg';
-import twitter from '../../images/twitter.svg';
 import linkedin from '../../images/linkedin.svg';
+import pbehaviour from '../../images/pbehaviour.svg';
+import peducation from '../../images/peducation.svg';
+import phistory from '../../images/phistory.svg';
+import twitter from '../../images/twitter.svg';
+import whatwedo from '../../images/whatwedo.png';
+import whoweare from '../../images/whoweare.jpg';
 import youtube from '../../images/youtube.svg';
-import assesssymptoms from '../../images/costeffective.png';
-import costeffective from '../../images/costeffective.png';
-import accuratehealth from '../../images/costeffective.png';
-import additionalvalue from '../../images/costeffective.png';
-import { Row, Col, Card, CardBody, TabContent, TabPane, NavLink, Nav, NavItem } from 'reactstrap';
-import Spacing from '../Spacing';
+import Section from '../DeafaultPages/Section';
+import BannerSectionStyle3 from '../DeafaultPages/Section/BannerSection/BannerSectionStyle3';
+import Spacing from '../DeafaultPages/Spacing';
 
 export default function About() {
   pageTitle('About');

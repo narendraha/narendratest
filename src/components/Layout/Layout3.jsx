@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import FooterStyle3 from '../Footer/FooterStyle3';
-import Header from '../Header';
+import FooterStyle3 from '../DeafaultPages/Footer/FooterStyle3';
+import Header from '../DeafaultPages/Header';
 import Loading from '../InnerApp/LoadingComponent';
 
 export default function Layout3() {

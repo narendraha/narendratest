@@ -11,7 +11,7 @@ export const RiskOptimization = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: null }))
+        dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: getActivetab.ORMANAGEMENT }))
     }, []);
 
     return (

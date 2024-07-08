@@ -60,7 +60,6 @@ export const SymptomsListForm = () => {
                 initialValues={{
                     ListOfSymptomsCapturingData: lsitOfSymptoms
                 }}
-                // validationSchema={{}}
                 onSubmit={(values) => {
                     console.log("values=>", values)
                     dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ISCONFIRM, actionData: values }));

@@ -5,7 +5,9 @@ const initialState = {
     actionType: getActionTypes.UNSELECT,
     isLoading: false,
     activeTab: getActivetab.HEALTHHUB,
-    getCurrentTab: "",
+    isNavRedirection: false,
+    lastUpdatedHealthDetails: "",
+    getVitalsForHealthDetailGraph: ""
 }
 
 const homePageSlice = createSlice({
@@ -24,8 +26,9 @@ const homePageSlice = createSlice({
         addSymptomsDetailResponse: (state) => {
             state.isLoading = false
         },
-        setActiveTabRequest: (state) => {
+        setActiveTabRequest: (state, action) => {
             state.isLoading = true
+            state.isNavRedirection = action.payload?.isNavRedirection
         },
         setActiveTabResponse: (state, action) => {
             state.isLoading = false;
@@ -37,6 +40,20 @@ const homePageSlice = createSlice({
         getActiveTabResponse: (state, action) => {
             state.isLoading = false;
             state.activeTab = action.payload
+        },
+        getHealthDetailsLastUpdateRequest: (state) => {
+            state.isLoading = true
+        },
+        getHealthDetailsLastUpdateResponse: (state, action) => {
+            state.isLoading = false
+            state.lastUpdatedHealthDetails = action?.payload
+        },
+        getHealthDetailsGraphRequest: (state) => {
+            state.isLoading = true
+        },
+        getHealthDetailsGraphResponse: (state, action) => {
+            state.isLoading = false
+            state.getVitalsForHealthDetailGraph = action?.payload
         }
     }
 });
@@ -48,7 +65,9 @@ export const {
     addSymptomsDetailRequest, addSymptomsDetailResponse,
     getSymptomsDetailsRequest, getSymptomsDetailsResponse,
     setActiveTabRequest, setActiveTabResponse,
-    getActiveTabRequest, getActiveTabResponse
+    getActiveTabRequest, getActiveTabResponse,
+    getHealthDetailsLastUpdateRequest, getHealthDetailsLastUpdateResponse,
+    getHealthDetailsGraphRequest, getHealthDetailsGraphResponse
 
 } = homePageSlice.actions;
 

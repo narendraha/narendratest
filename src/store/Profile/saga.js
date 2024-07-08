@@ -1,13 +1,13 @@
 import { toast } from 'react-toastify';
-import { call, put, select, takeLeading, all } from 'redux-saga/effects';
+import { all, call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI } from '../../_mock/internalJsControl';
 import {
+    changeProfilePasswordRequest,
+    changeProfilePasswordResponse,
     getPatientDetailsRequest,
     getPatientDetailsResponse,
     profileDetailsAndProfileImageUpdateRequest,
-    profileDetailsAndProfileImageUpdateResponse,
-    changeProfilePasswordRequest,
-    changeProfilePasswordResponse
+    profileDetailsAndProfileImageUpdateResponse
 } from './slice';
 
 // TO GET PATIENT DETAILS

@@ -22,7 +22,6 @@ const utilityCallFunctionSlice = createSlice({
                 profilePicture: ((action.payload?.profile_url === "NA") ? (action.payload.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : action.payload?.profile_url),
                 isUtilityLoading: false
             }
-            console.log("statestate", state)
             return state
         },
     },

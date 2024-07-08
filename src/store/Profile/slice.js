@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getActionTypes } from '../../_mock/internalJsControl';
-import maleuserImg from "../../images/userprofile.jpg";
 import femaleuserImg from "../../images/femaleuserImg.jpg";
+import maleuserImg from "../../images/userprofile.jpg";
 
 const initialState = {
     isLoading: false,

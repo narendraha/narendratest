@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Col, Row } from "reactstrap";
+import { getActivetab } from '../../../_mock/internalJsControl';
 import riskmanagement from "../../../images/riskmanagement.png";
 import riskmanagement2 from "../../../images/riskmanagement2.jpg";
 import riskmanagement3 from "../../../images/riskmanagement3.jpg";
+import { setActiveTabRequest } from '../../../store/Home/slice';
 
 export const RiskOptimization = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: null }))
+    }, []);
+
     return (
         <React.Fragment>
             <Row className="mt-4">

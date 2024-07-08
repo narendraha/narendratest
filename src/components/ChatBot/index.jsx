@@ -5,6 +5,7 @@ import { AxiosInstance } from "../../_mock/utilities";
 import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../images/userprofile.jpg";
+import { toast } from "react-toastify";
 
 export default function ChatBot(props) {
   const inputRef = useRef(null);
@@ -44,15 +45,20 @@ export default function ChatBot(props) {
         if (res && res.data && res.status === 200) {
           setIsShow(true);
           setIsInputShow(false);
+          setIsLoading(false);
           if (res.data.statuscode === 200) {
             const responseData = res.data.data;
             // Convert responseData to an array of objects
-            setIsLoading(false);
+            // setIsLoading(false);
             setChatHistory((prevHistory) => [
               ...prevHistory,
               { alfred: responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
+            toast(res?.data?.message, {
+              position: "top-right",
+              type: "error",
+            });
           }
         }
       })

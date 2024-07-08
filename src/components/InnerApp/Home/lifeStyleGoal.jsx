@@ -135,7 +135,7 @@ export const LifeStyleGoal = () => {
                         </button>
                         <button
                             type="button"
-                            className="al_savebtn"
+                            className="al_savebtn mx-3"
                             onClick={() => handleSetTabs()}
                         >
                             OK

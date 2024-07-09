@@ -1808,7 +1808,7 @@ ul.standardPlans {
 .al_outerparentwp {
     .al_button_info {
         background: $white;
-        padding: 8px 25px;
+        padding: 7px 25px;
         border-radius: 5px;
         color: #FAB12B;
         font-weight: 500;
@@ -1822,7 +1822,7 @@ ul.standardPlans {
 
     .al_button_add {
         background: #2C2C37;
-        padding: 9px 25px;
+        padding: 7px 25px;
         border: 1px solid #2C2C37;
         border-radius: 5px;
         color: $white;
@@ -1836,7 +1836,7 @@ ul.standardPlans {
 
     .al_button_cancel {
         background: $white;
-        padding: 8px 25px;
+        padding: 7px 25px;
         border-radius: 5px;
         color: #F85E5E;
         font-weight: 500;
@@ -1846,6 +1846,10 @@ ul.standardPlans {
             background: #F85E5E;
             color: #ffffff;
             border-color: #F85E5E;
+
+            i {
+                color: #ffffff;
+            }
         }
     }
 
@@ -1856,6 +1860,21 @@ ul.standardPlans {
 
         &:last-child {
             margin-right: 0;
+        }
+    }
+
+    button.al_roundbtn {
+        min-width: auto;
+        width: 41px;
+        height: 41px;
+        padding: 8px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            font-size: 16px;
         }
     }
 

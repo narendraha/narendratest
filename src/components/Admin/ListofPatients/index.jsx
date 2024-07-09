@@ -273,7 +273,7 @@ export default function ListofPatients() {
                         </TabPane>
                     </TabContent>
 
-                    <Modal className='modal-md detailsModal' isOpen={secondaryDoctor}>
+                    <Modal className='modal-md detailsModal' isOpen={secondaryDoctor} wrapClassName="al_outerparentwp">
                         <div className='d-flex align-items-center justify-content-between p-4'>
                             <h6 className='mb-0'>Secondary Doctor</h6>
                             <i className="icon_alfred_close pointer" title="Close" onClick={() => setSecondaryDoctor(false)}></i>
@@ -376,6 +376,18 @@ export default function ListofPatients() {
                                         </FormGroup>
                                     </Col>
                                 </Row>
+                                <div className='mt-2'>
+                                    <button
+                                        type="submit"
+                                        className="al_button_add"
+                                    >Save
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="al_button_cancel al_roundbtn"
+                                    ><i className='icon_alfred_trashbin'></i>
+                                    </button>
+                                </div>
                             </div>
                         </ModalBody>
                     </Modal>

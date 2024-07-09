@@ -519,7 +519,7 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                           Hold By
+                                                            Hold By
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
@@ -527,7 +527,7 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                           Hold Date
+                                                            Hold Date
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
@@ -668,7 +668,7 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                           Rejected By
+                                                            Rejected By
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
@@ -676,7 +676,7 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                           Rejected Date
+                                                            Rejected Date
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
@@ -718,7 +718,7 @@ export default function ApproveUsers() {
                         </TabPane>
                     </TabContent>
 
-                    <Modal className='modal-sm detailsModal' isOpen={showHoldModal}>
+                    <Modal className='modal-sm detailsModal' isOpen={showHoldModal} wrapClassName="al_outerparentwp">
                         <div className='d-flex align-items-center justify-content-between p-4'>
                             <h6 className='mb-0'>Hold Reason</h6>
                             <i className="icon_alfred_close pointer" title="Close" onClick={() => setShowHoldModal(false)}></i>
@@ -754,6 +754,13 @@ export default function ApproveUsers() {
                                         className='form-control'
                                     />
                                 </FormGroup>
+                                <div className='mt-2'>
+                                    <button
+                                        type="submit"
+                                        className="al_button_add"
+                                    >Submit
+                                    </button>
+                                </div>
                             </div>
                         </ModalBody>
                     </Modal>

@@ -100,14 +100,70 @@ export default function ApproveUsers() {
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
-                                                    <th>User Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile</th>
-                                                    <th>Date of Birth</th>
-                                                    <th>Residence Type</th>
-                                                    <th>Insurance</th>
-                                                    <th>Requested Date</th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            User Name
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Gender
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Email
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Mobile
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Date of Birth
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Residence Type
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Insurance
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Requested Date
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -201,7 +257,7 @@ export default function ApproveUsers() {
                                         </Table>
                                     </div>
                                 </div>
-                                <div className='px-3 pb-3'>
+                                <div className='px-3 pb-3 mx-auto'>
                                     <Pagination />
                                 </div>
                             </div>
@@ -249,16 +305,86 @@ export default function ApproveUsers() {
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
-                                                    <th>User Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile</th>
-                                                    <th>Date of Birth</th>
-                                                    <th>Residence Type</th>
-                                                    <th>Insurance</th>
-                                                    <th>Approved By</th>
-                                                    <th>Approved Date</th>
-                                                    <th>Remarks</th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            User Name
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Gender
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Email
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Mobile
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Date of Birth
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Residence Type
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Insurance
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Approved By
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Approved Date
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Remarks
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -335,15 +461,78 @@ export default function ApproveUsers() {
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
-                                                    <th>User Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile</th>
-                                                    <th>Date of Birth</th>
-                                                    <th>Residence Type</th>
-                                                    <th>Insurance</th>
-                                                    <th>Hold By</th>
-                                                    <th>Hold Date</th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            User Name
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Gender
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Email
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Mobile
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Date of Birth
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Residence Type
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Insurance
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                           Hold By
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                           Hold Date
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -421,15 +610,78 @@ export default function ApproveUsers() {
                                         <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
-                                                    <th>User Name</th>
-                                                    <th>Gender</th>
-                                                    <th>Email</th>
-                                                    <th>Mobile</th>
-                                                    <th>Date of Birth</th>
-                                                    <th>Residence Type</th>
-                                                    <th>Insurance</th>
-                                                    <th>Rejected By</th>
-                                                    <th>Rejected Date</th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            User Name
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Gender
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Email
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Mobile
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Date of Birth
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Residence Type
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Insurance
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                           Rejected By
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                           Rejected Date
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>

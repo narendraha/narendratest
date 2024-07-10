@@ -436,7 +436,11 @@ export default function Home() {
   }, []);
   useEffect(() => {
     if (tab === "2") {
-      fetchData();
+      let data = {
+        start_date: "",
+        end_date: "",
+      };
+      fetchData(data);
     }
   }, [tab]);
   // Format dates in YYYY-MM-DD format
@@ -469,23 +473,42 @@ export default function Home() {
         name: "Diastolic",
         data: [],
       };
+      const weightSeries = {
+        name: "Weight",
+        data: [],
+      };
+
+      const pulseSeries = {
+        name: "Pulse",
+        data: [],
+      };
 
       data.forEach((item) => {
         if (item.tdate !== null) {
           systolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.systolic_p,
-            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b><br/>`,
+            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/> Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b>`,
           });
           diastolicSeries.data.push({
             x: formattedDates.indexOf(item.tdate),
             y: item.diastolic_p,
-            customTooltip: `Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b><br/>`,
+            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/>Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b>`,
+          });
+          weightSeries.data.push({
+            x: formattedDates.indexOf(item.tdate),
+            y: Number(item.weight),
+            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/> Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b>`,
+          });
+          pulseSeries.data.push({
+            x: formattedDates.indexOf(item.tdate),
+            y: Number(item.pulse),
+            customTooltip: `Systolic: <b>${item.systolic_p}</b> mmHg <br/>Diastolic: <b>${item.diastolic_p}</b> mmHg <br/>Pulse: <b>${item.pulse}</b> BPM<br/>Weight: <b>${item.weight}</b>`,
           });
         }
       });
 
-      return [systolicSeries, diastolicSeries];
+      return [systolicSeries, diastolicSeries, weightSeries, pulseSeries];
     };
     const series = prepareSeries(symptomData);
 
@@ -497,7 +520,7 @@ export default function Home() {
         },
       },
       title: {
-        text: "Blood Pressure Records",
+        text: "Health Details",
         style: {
           fontSize: "16px",
           fontWeight: "500",
@@ -511,7 +534,7 @@ export default function Home() {
       },
       yAxis: {
         title: {
-          text: "Blood Pressure (BPM)",
+          text: "Health Details",
         },
       },
       credits: {
@@ -1138,10 +1161,12 @@ export default function Home() {
                           systolic: Yup.number()
                             .max(370, "Systolic is too high!")
                             .required("Systolic is required"),
-                          diastolic: Yup.number().when('systolic', {
+                          diastolic: Yup.number().when("systolic", {
                             is: (systolic) => systolic <= 370,
-                            then: Yup.number().max(360, "Diastolic is Too high!").required("Diastolic is required"),
-                            otherWise: Yup.number().optional()
+                            then: Yup.number()
+                              .max(360, "Diastolic is Too high!")
+                              .required("Diastolic is required"),
+                            otherWise: Yup.number().optional(),
                           }),
                           // diastolic: Yup.number()
                           //   .max(120, "Diastolic is Too high!")
@@ -1463,6 +1488,7 @@ export default function Home() {
                                       showMonthDropdown
                                       showYearDropdown
                                       dropdownMode="select"
+                                      // disabled={symptomData?.length ===0}
                                     />
                                     <ErrorMessage
                                       name="start_date"
@@ -1509,6 +1535,7 @@ export default function Home() {
                                       showMonthDropdown
                                       showYearDropdown
                                       dropdownMode="select"
+                                      // disabled={symptomData?.length ===0}
                                     />
                                     <ErrorMessage
                                       name="end_date"
@@ -1518,7 +1545,11 @@ export default function Home() {
                                   </FormGroup>
                                 </Col>
                                 <div className="mt-4 pt-2 w-auto">
-                                  <button type="submit" className="al_savebtn">
+                                  <button
+                                    type="submit"
+                                    className="al_savebtn"
+                                    //  disabled={symptomData?.length ===0}
+                                  >
                                     Submit
                                   </button>
                                 </div>
@@ -2821,100 +2852,169 @@ export default function Home() {
                     </button>
                   </div>
                 </TabPane>
-                {<TabPane tabId="4">
-                  <p>Select where you want to be coached in</p>
-                  <div className="w-100">
-                    <Row className="al_goalslist mb-4">
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Diet</span>
-                          <input type="checkbox" name="diet" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Exercise</span>
-                          <input type="checkbox" name="exercise" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Weight</span>
-                          <input type="checkbox" name="weight" />
-                        </Label>
-                      </Col>
-                      <Col lg="3">
-                        <Label
-                          check
-                          className="d-flex align-items-center justify-content-between"
-                        >
-                          <span>Blood pressure</span>
-                          <input type="checkbox" name="bloodpressure" />
-                        </Label>
-                      </Col>
-                    </Row>
-                    <hr />
-                    <div className="mt-4">
-                      <Row className="mb-3">
-                        <Col lg="4" sm="6">
-                          <p className="al_note">Your Details</p>
-                          <h5 className="mb-2 text-capitalize">
-                            Hello,{" "}
-                            {patientAndSymptomsDetails?.patientDetails
-                              ?.username || "N/A"}
-                            !
-                          </h5>
-                          <div>
-                            <strong>Age: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.age || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Gender: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.gender || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Residence type: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.rtype || "N/A"}
-                            </span>
-                          </div>
-                          <div>
-                            <strong>Education: </strong>
-                            <span>
-                              {patientAndSymptomsDetails?.patientDetails
-                                ?.education || "N?A"}
-                            </span>
-                          </div>
+                {
+                  <TabPane tabId="4">
+                    <p>Select where you want to be coached in</p>
+                    <div className="w-100">
+                      <Row className="al_goalslist mb-4">
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Diet</span>
+                            <input type="checkbox" name="diet" />
+                          </Label>
                         </Col>
-                        <Col lg="8" sm="6">
-                          <h6 className="mt-3 mb-2">Your Medication</h6>
-                          <Row>
-                            <Col lg="6" sm="12">
-                              <Table borderless responsive>
-                                <thead>
-                                  <tr>
-                                    <th>Symptoms</th>
-                                    <th className="w-25">Range</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Exercise</span>
+                            <input type="checkbox" name="exercise" />
+                          </Label>
+                        </Col>
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Weight</span>
+                            <input type="checkbox" name="weight" />
+                          </Label>
+                        </Col>
+                        <Col lg="3">
+                          <Label
+                            check
+                            className="d-flex align-items-center justify-content-between"
+                          >
+                            <span>Blood pressure</span>
+                            <input type="checkbox" name="bloodpressure" />
+                          </Label>
+                        </Col>
+                      </Row>
+                      <hr />
+                      <div className="mt-4">
+                        <Row className="mb-3">
+                          <Col lg="4" sm="6">
+                            <p className="al_note">Your Details</p>
+                            <h5 className="mb-2 text-capitalize">
+                              Hello,{" "}
+                              {patientAndSymptomsDetails?.patientDetails
+                                ?.username || "N/A"}
+                              !
+                            </h5>
+                            <div>
+                              <strong>Age: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.age || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Gender: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.gender || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Residence type: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.rtype || "N/A"}
+                              </span>
+                            </div>
+                            <div>
+                              <strong>Education: </strong>
+                              <span>
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.education || "N/A"}
+                              </span>
+                            </div>
+                          </Col>
+                          <Col lg="3">
+                            <Label
+                              check
+                              className="d-flex align-items-center justify-content-between"
+                            >
+                              <span>Exercise</span>
+                              <input type="checkbox" name="exercise" />
+                            </Label>
+                          </Col>
+                          <Col lg="3">
+                            <Label
+                              check
+                              className="d-flex align-items-center justify-content-between"
+                            >
+                              <span>Weight</span>
+                              <input type="checkbox" name="weight" />
+                            </Label>
+                          </Col>
+                          <Col lg="3">
+                            <Label
+                              check
+                              className="d-flex align-items-center justify-content-between"
+                            >
+                              <span>Blood pressure</span>
+                              <input type="checkbox" name="bloodpressure" />
+                            </Label>
+                          </Col>
+                        </Row>
+                        <hr />
+                        <div className="mt-4">
+                          <Row className="mb-3">
+                            <Col lg="4" sm="6">
+                              <p className="al_note">Your Details</p>
+                              <h5 className="mb-2 text-capitalize">
+                                Hello,{" "}
+                                {patientAndSymptomsDetails?.patientDetails
+                                  ?.username || "N/A"}
+                                !
+                              </h5>
+                              <div>
+                                <strong>Age: </strong>
+                                <span>
+                                  {patientAndSymptomsDetails?.patientDetails
+                                    ?.age || "N/A"}
+                                </span>
+                              </div>
+                              <div>
+                                <strong>Gender: </strong>
+                                <span>
+                                  {patientAndSymptomsDetails?.patientDetails
+                                    ?.gender || "N/A"}
+                                </span>
+                              </div>
+                              <div>
+                                <strong>Residence type: </strong>
+                                <span>
+                                  {patientAndSymptomsDetails?.patientDetails
+                                    ?.rtype || "N/A"}
+                                </span>
+                              </div>
+                              <div>
+                                <strong>Education: </strong>
+                                <span>
+                                  {patientAndSymptomsDetails?.patientDetails
+                                    ?.education || "N?A"}
+                                </span>
+                              </div>
+                            </Col>
+                            <Col lg="8" sm="6">
+                              <h6 className="mt-3 mb-2">Your Medication</h6>
+                              <Row>
+                                <Col lg="6" sm="12">
+                                  <Table borderless responsive>
+                                    <thead>
+                                      <tr>
+                                        <th>Symptoms</th>
+                                        <th className="w-25">Range</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {/* {patientAndSymptomsDetails.symptomsDetails && Object.keys(patientAndSymptomsDetails.symptomsDetails)?.map((key, index) => {
                                 return (
                                   <>
                                     <tr>
@@ -2924,87 +3024,99 @@ export default function Home() {
                                   </>
                                 )
                               })} */}
-                                  <tr>
-                                    <td>Breathlessness even at rest</td>
-                                    <td className="text-warning">Moderate</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Dizziness</td>
-                                    <td className="text-success">Mild</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
+                                      <tr>
+                                        <td>Breathlessness even at rest</td>
+                                        <td className="text-warning">
+                                          Moderate
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Dizziness</td>
+                                        <td className="text-success">Mild</td>
+                                      </tr>
+                                    </tbody>
+                                  </Table>
+                                </Col>
+                              </Row>
                             </Col>
                           </Row>
-                        </Col>
-                      </Row>
 
-                      <hr />
-                      <h6 className="mt-3">
-                        Choose the time period to set your goal
-                      </h6>
+                          <hr />
+                          <h6 className="mt-3">
+                            Choose the time period to set your goal
+                          </h6>
 
-                      <Row className="mb-4">
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.WEEKWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.WEEKWISE)
-                            }
-                          >
-                            Create goal for <strong>1 week</strong>
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.DAYSWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.DAYSWISE)
-                            }
-                          >
-                            Create goal for <strong>15 days</strong>
-                          </div>
-                        </Col>
-                        <Col lg="3" sm="6">
-                          <div
-                            className={`al_lightbgbutton ${getActiveLifestyleGoal ===
-                              EGoalTimePeriod.MONTHWISE
-                              ? "active"
-                              : ""
-                              }`}
-                            onClick={() =>
-                              setActiveLifestleGoal(EGoalTimePeriod.MONTHWISE)
-                            }
-                          >
-                            Create goal for <strong>1 month</strong>
-                          </div>
-                        </Col>
-                      </Row>
-                      <p className="al_note mb-3">
-                        Disclaimer: Goal will be created based on the list of
-                        symptoms you have selected and the data you have
-                        provided in this application{" "}
-                      </p>
+                          <Row className="mb-4">
+                            <Col lg="3" sm="6">
+                              <div
+                                className={`al_lightbgbutton ${
+                                  getActiveLifestyleGoal ===
+                                  EGoalTimePeriod.WEEKWISE
+                                    ? "active"
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  setActiveLifestleGoal(
+                                    EGoalTimePeriod.WEEKWISE
+                                  )
+                                }
+                              >
+                                Create goal for <strong>1 week</strong>
+                              </div>
+                            </Col>
+                            <Col lg="3" sm="6">
+                              <div
+                                className={`al_lightbgbutton ${
+                                  getActiveLifestyleGoal ===
+                                  EGoalTimePeriod.DAYSWISE
+                                    ? "active"
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  setActiveLifestleGoal(
+                                    EGoalTimePeriod.DAYSWISE
+                                  )
+                                }
+                              >
+                                Create goal for <strong>15 days</strong>
+                              </div>
+                            </Col>
+                            <Col lg="3" sm="6">
+                              <div
+                                className={`al_lightbgbutton ${
+                                  getActiveLifestyleGoal ===
+                                  EGoalTimePeriod.MONTHWISE
+                                    ? "active"
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  setActiveLifestleGoal(
+                                    EGoalTimePeriod.MONTHWISE
+                                  )
+                                }
+                              >
+                                Create goal for <strong>1 month</strong>
+                              </div>
+                            </Col>
+                          </Row>
+                          <p className="al_note mb-3">
+                            Disclaimer: Goal will be created based on the list
+                            of symptoms you have selected and the data you have
+                            provided in this application{" "}
+                          </p>
 
-                      <button
-                        type="button"
-                        className="al_savebtn"
-                        onClick={() => setTab("5")}
-                      >
-                        OK
-                      </button>
-                      {/* <LayoutAlertMessage /> */}
+                          <button
+                            type="button"
+                            className="al_savebtn"
+                            onClick={() => setTab("5")}
+                          >
+                            OK
+                          </button>
+                          {/* <LayoutAlertMessage /> */}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </TabPane>
+                  </TabPane>
                 }
                 <TabPane tabId="5">
                   <Row className="mt-4">

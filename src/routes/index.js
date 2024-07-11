@@ -75,8 +75,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="transcriptsummary" element={<HistorySummary />} />
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="approveusers" element={<ApproveUsers />} />
-              <Route path="patientslist" element={<ListofPatients />} />
-              <Route path="doctorslist" element={<DoctorsList />} />
+              {/* <Route path="patientslist" element={<ListofPatients />} />
+              <Route path="doctorslist" element={<DoctorsList />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
               {/* <Route path="historychat" element={<HistoryChat />} /> */}

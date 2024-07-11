@@ -1,27 +1,34 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, ModalBody } from "reactstrap";
+import { getActionTypes } from "../../../_mock/internalJsControl";
+import { setConfirmationClose } from "../../../store/UtilityCallFunction/slice";
 
-// const actionClasses = [
-//     { name: 'Yes', className: ' al_button_add' },
-//     { name: 'No', className: ' al_button_cancel' },
-//     { name: 'copy', className: ' al_button_info' },
-//     { name: 'cancel', className: ' al_button_cancel' },
-// ];
+export default function ConfirmationAction() {
+  const dispatch = useDispatch();
 
-export default function ConfirmationAction(props) {
-  const newFunction = (item) => {
-    props?.newFun(item);
-  };
+  const { confirmationData } = useSelector((state) => (state?.utilityCallFunctionSlice));
 
-  const handleCancel = (item) => {
-    props?.newFun(item);
-  };
+  const handleConfirmationYesOrNo = (isYes) => {
+    if (isYes) {
+      let confimOptions = {
+        ...confirmationData,
+        actionType: getActionTypes.UNSELECT
+      }
+      confirmationData?.callApi(confirmationData?.actionData)
+      dispatch(setConfirmationClose(confimOptions))
+    } else {
+      dispatch(setConfirmationClose({}))
+    }
+  }
+
+  console.log("ConfirmationAction=>", confirmationData)
 
   return (
     <>
-      {props?.open && (
+      {confirmationData && (
         <Modal
-          isOpen={props?.open ? true : false}
+          isOpen={confirmationData?.actionType === getActionTypes.ISCONFIRM ? true : false}
           className="al_confirm_modal"
           wrapClassName="al_outerparentwp"
         >
@@ -38,14 +45,14 @@ export default function ConfirmationAction(props) {
             <Button
               type="button"
               className="text-capitalize btn al_button_add"
-              onClick={() => newFunction(true)}
+              onClick={() => handleConfirmationYesOrNo(true)}
             >
               OK
             </Button>
             <Button
               type="button"
               className="text-capitalize btn al_button_cancel"
-              onClick={() => handleCancel(false)}
+              onClick={() => handleConfirmationYesOrNo(false)}
             >
               Cancel
             </Button>

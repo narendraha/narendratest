@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getActionTypes } from '../../_mock/internalJsControl';
-import maleuserImg from "../../images/userprofile.jpg";
 import femaleuserImg from "../../images/femaleuserImg.jpg";
+import maleuserImg from "../../images/userprofile.jpg";
 
 const initialState = {
     isLoading: false,
@@ -57,9 +57,7 @@ const profileSlice = createSlice({
             state.uploadedProfileImage = action.payload
         },
         profileDetailsAndProfileImageUpdateRequest: (state, action) => {
-            state.isConfirmModel = false
             state.isLoading = true
-            state.actionData = action.payload
         },
         profileDetailsAndProfileImageUpdateResponse: (state, action) => {
             let { profileDetails, errorMessages } = action.payload;

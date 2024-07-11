@@ -8,10 +8,10 @@ import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
 import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
-import { getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
+import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
-import ConfirmationAction from '../MainLayout/ConfirmationAction';
-import { customContentValidation, allowedNumbersOnField } from '../../../_mock/helperIndex';
+import Loading from '../LoadingComponent';
+import { setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -35,15 +35,15 @@ const bloodTypes = [
 export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails, profilePicture, actionData, isConfirmModel, uploadedProfileImage } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails, profilePicture, uploadedProfileImage, isLoading } = useSelector((state) => state?.profileSlice);
 
-    const handleSubmit = () => {
-        dispatch(profileDetailsAndProfileImageUpdateRequest(actionData))
+    const handleSubmit = (data) => {
+        dispatch(profileDetailsAndProfileImageUpdateRequest(data))
     }
 
     return (
         <React.Fragment>
-            <ConfirmationAction newFun={handleSubmit} open={isConfirmModel} />
+            {isLoading && <Loading />}
             <Formik
                 enableReinitialize
                 initialValues={{
@@ -125,7 +125,8 @@ export const ProfileEditAction = () => {
                         dob: moment(values.dob).format("YYYY-MM-DD"),
                         nationality: "United State"
                     };
-                    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
+                    dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, actionData: data, callApi: handleSubmit }))
+                    // dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
                 }}
             >
                 {({

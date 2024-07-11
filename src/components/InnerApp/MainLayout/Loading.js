@@ -1,24 +1,16 @@
 import React from 'react';
+import loading from '../../../images/loadinganim.gif';
 import { useSelector } from 'react-redux';
-import TopBarProgress from "react-topbar-progress-indicator";
 
-function Loading() {
-    const layoutloading = useSelector(state => state.Layout?.loading);
+export default function Loading() {
 
-    TopBarProgress.config({
-        barColors: {
-            "0": "#666666"
-        },
-        shadowBlur: 1,
-        shadowColor: "#000"
-    });
-
-    return (
-        <>
-            <div className="al_mainLoading">
-                <TopBarProgress />
-            </div>
-        </>
-    )
+  const layOutLoading = useSelector((state) => state?.utilityCallFunctionSlice?.isLoading);
+  
+  return (
+    <>
+      {layOutLoading && < div className="al_mainLoading" >
+        <img src={loading} alt="loading" />
+      </div >}
+    </>
+  )
 }
-export default Loading;

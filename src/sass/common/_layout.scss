@@ -299,6 +299,11 @@ section:not(.cs_banner) {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
     height: 100%;
 
+    &.active {
+        border: 1px solid #04C1D6;
+        box-shadow: 0 2px 12px rgba(4, 193, 214, 0.29);
+    }
+
     .card-body {
         padding: 22px;
     }
@@ -326,6 +331,25 @@ section:not(.cs_banner) {
 
         &:last-child {
             margin-right: 0;
+        }
+    }
+
+    .al_roundbtn {
+        border: 1px solid #6B778F;
+        background-color: transparent;
+
+        i {
+            color: #6B778F;
+            font-size: 10px;
+        }
+
+        &:hover {
+            background-color: #00c4d8;
+            border: 1px solid #00c4d8;
+
+            i {
+                color: #ffffff;
+            }
         }
     }
 }
@@ -722,6 +746,25 @@ section:not(.cs_banner) {
     }
 }
 
+button.al_roundbtn {
+    min-width: auto;
+    width: 43px;
+    height: 43px;
+    padding: 8px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 16px;
+    }
+
+    &_sm {
+        width: 26px;
+        height: 26px;
+    }
+}
 
 @media (min-width: 1025px) and (max-width: 1600px) {
 
@@ -1863,21 +1906,6 @@ ul.standardPlans {
         }
     }
 
-    button.al_roundbtn {
-        min-width: auto;
-        width: 41px;
-        height: 41px;
-        padding: 8px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        i {
-            font-size: 16px;
-        }
-    }
-
     .al_confirm_modal {
         display: flex;
         align-items: center;
@@ -2205,6 +2233,19 @@ button.al_upgrade_btn {
             margin-bottom: 0;
             max-width: max-content;
         }
+    }
+}
+
+.al_useravatarimg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 50%;
     }
 }
 

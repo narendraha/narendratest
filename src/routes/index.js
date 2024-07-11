@@ -46,6 +46,7 @@ import Terms from "../components/Terms/Terms";
 import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
 import ApproveUsers from "../components/Admin/ApproveUsers";
 import ListofPatients from "../components/Admin/ListofPatients";
+import DoctorsList from "../components/InnerApp/DoctorsList";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -75,6 +76,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="approveusers" element={<ApproveUsers />} />
               <Route path="patientslist" element={<ListofPatients />} />
+              <Route path="doctorslist" element={<DoctorsList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
               {/* <Route path="historychat" element={<HistoryChat />} /> */}

@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function ListofPatients() {
     const [tab, setTab] = useState("1");
+    const [showPatientDetails, setShowPatientDetails] = useState(false);
     const [secondaryDoctor, setSecondaryDoctor] = useState(false);
     const doctorsList = [
         { value: "Dr. George", label: "Dr. George" },
@@ -111,7 +112,7 @@ export default function ListofPatients() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
@@ -125,7 +126,7 @@ export default function ListofPatients() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -139,7 +140,7 @@ export default function ListofPatients() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -153,7 +154,7 @@ export default function ListofPatients() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -234,7 +235,7 @@ export default function ListofPatients() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block'>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
@@ -242,7 +243,7 @@ export default function ListofPatients() {
                                                     <td>27-6-2024, 9:45 am</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -250,7 +251,7 @@ export default function ListofPatients() {
                                                     <td>27-6-2024, 9:45 am</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -258,7 +259,7 @@ export default function ListofPatients() {
                                                     <td>27-6-2024, 9:45 am</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block'>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
@@ -281,7 +282,30 @@ export default function ListofPatients() {
                         <ModalBody className="wflexLayout p-0">
                             <div className='wflexScroll px-4 mb-4'>
                                 <Row>
-                                    <Col sm="4">
+                                    <Col sm="6">
+                                        <FormGroup>
+                                            <Label><span className='requiredLabel'>*</span>Hospital/Group</Label>
+                                            <Select
+                                                className="inputSelect"
+                                                options={doctorsList}
+                                                menuPortalTarget={document.body}
+                                                styles={{
+                                                    menu: styles => ({ ...styles, zIndex: "3", boxShadow: "0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 11px hsla(0, 0%, 0%, 0.1);", marginTop: 0 }),
+                                                    menuList: styles => ({
+                                                        ...styles, maxHeight: '180px', msOverflowStyle: "auto", wordBreak: "break-word", border: "1px solid #efefef", borderRadius: "4px",
+                                                        color: "#333333", fontSize: "0.8em", padding: 0, margin: 0,
+                                                    }),
+                                                    menuPortal: styles => ({
+                                                        ...styles,
+                                                        zIndex: 9999,
+                                                    }),
+                                                }}
+                                                name="hospitalsList"
+                                                onChange={() => { }}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col sm="6">
                                         <FormGroup>
                                             <Label><span className='requiredLabel'>*</span>Doctor</Label>
                                             <Select
@@ -304,7 +328,7 @@ export default function ListofPatients() {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col sm="4">
+                                    <Col sm="6">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>
@@ -340,7 +364,7 @@ export default function ListofPatients() {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col sm="4">
+                                    <Col sm="6">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>

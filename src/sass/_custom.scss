@@ -27,6 +27,10 @@ a.al_text_link,
 a {
   color: #1C77CA;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .pointer {

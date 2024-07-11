@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Topbar from './Topbar';
-import SideNav from './SideNav';
-import ChatBot from '../../ChatBot';
-import { Popover, PopoverBody, Button } from 'reactstrap';
+import { Button, Popover, PopoverBody } from 'reactstrap';
 import chatBot from '../../../images/chatboticon.svg';
-// import Loading from '../../InnerApp/LoadingComponent';
+import ChatBot from '../../ChatBot';
+import ConfirmationAction from './ConfirmationAction';
+import Loading from './Loading';
+import SideNav from './SideNav';
+import Topbar from './Topbar';
 
 export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
@@ -19,7 +20,7 @@ export default function MainLayout() {
         {/* <Suspense fallback={<Loading />}> */}
         <div className='al_site_container'>
             {/* <LayoutAlertMessage /> */}
-            {/* <ConfirmationAction /> */}
+            <ConfirmationAction />
             <div className='wflexLayout flex-row position-relative'>
                 <SideNav isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
                 <div className='al_right_container'>
@@ -46,12 +47,13 @@ export default function MainLayout() {
                     modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                 >
                     <PopoverBody>
-                        Hello, I am Alfred! How can i assist you today?
+                        Hello, I am Alfred! How can I assist you today?
                         <i className='icon_alfred_closecircle' onClick={() => setPopOverClose(false)}></i>
                     </PopoverBody>
                 </Popover>
             }
         </div>
+        <Loading />
         {/* </Suspense> */}
     </React.Fragment >
 }

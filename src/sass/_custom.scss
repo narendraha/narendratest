@@ -431,8 +431,8 @@ textarea:has(+ div.text-danger),
 .input-group:has(+ div.text-danger),
 .inputSelect:has(+ div.text-danger) div[class$=-control],
 div.position-relative:has(~ div.text-danger) input,
-.al_vitalunits .d-flex.gap-2:has(+ div.systolic.text-danger) input[name="systolic"],
-.al_vitalunits .d-flex.gap-2:has(+ div.diastolic.text-danger) input[name="diastolic"] {
+.al_vitalunits .d-flex.gap-2:has(+ div div.systolic.text-danger) input[name="systolic"],
+.al_vitalunits .d-flex.gap-2:has(+ div div.diastolic.text-danger) input[name="diastolic"] {
   border: 1px solid #ff9c9c !important;
   border-radius: 7px;
 }

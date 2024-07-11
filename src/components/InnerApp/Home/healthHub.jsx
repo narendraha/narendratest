@@ -152,7 +152,7 @@ export const HealthHub = () => {
             <div className="mt-4">
                 <button
                     type="button"
-                    className="al_savebtn" handleSetTabs
+                    className="al_savebtn"
                     onClick={handleSetTabs}
                 >
                     Proceed

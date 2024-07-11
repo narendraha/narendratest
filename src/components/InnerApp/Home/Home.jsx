@@ -4,8 +4,7 @@ import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap
 import { getActivetab } from "../../../_mock/internalJsControl";
 import { getActiveTabRequest, setActiveTabRequest } from "../../../store/Home/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
-import Loading from "../../InnerApp/LoadingComponent";
-import { ExpertMonitoring } from "./expertMonitoring";
+import { ExpertMonitoring } from './expertMonitoring';
 import { HealthHub } from "./healthHub";
 import { LifeStyleGoal } from "./lifeStyleGoal";
 import { RiskOptimization } from "./riskOptimization";
@@ -22,14 +21,15 @@ let navItemsList = [
 export default function Home() {
   const dispatch = useDispatch();
 
-  const { getProfileDetails, isUtilityLoading } = useSelector((state) => state?.utilityCallFunctionSlice);
-  const { activeTab, isLoading, isNavRedirection } = useSelector((state) => state?.homePageSlice);
+  const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
+  const { activeTab, isNavRedirection } = useSelector((state) => state?.homePageSlice);
 
   useEffect(() => {
     dispatch(getPatientDetailsRequest())
+    /* eslint-disable*/
     if (!isNavRedirection)
       dispatch(getActiveTabRequest())
-  }, [!isNavRedirection]);
+  }, []);
 
   const changeActiveTabHandle = (setTab) => {
     dispatch(setActiveTabRequest({ setTab: null, nextOrBackTab: setTab }))
@@ -41,7 +41,6 @@ export default function Home() {
 
   return (
     <>
-      {(isUtilityLoading || isLoading) && <Loading />}
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
           <h3 className="bc_main_text mb-1 text-capitalize">
@@ -51,42 +50,40 @@ export default function Home() {
             <Col sm="12">
               <Nav tabs className="mb-3">
                 {navItemsList?.map((item) => (
-                  <>
-                    <NavItem>
-                      <NavLink
-                        className={getIsActiveTabClassName(item?.key)}
-                        onClick={() => changeActiveTabHandle(item?.key)}
-                      >
-                        <div>
-                          <span className={getIsActiveTabClassName(item?.key)}>{item?.navLink?.[0]}</span>
-                          <span className="d-none d-sm-block">{item?.navLink}</span>
-                        </div>
-                      </NavLink>
-                    </NavItem>
-                  </>
+                  <NavItem key={item?.key}>
+                    <NavLink
+                      className={getIsActiveTabClassName(item?.key)}
+                      onClick={() => changeActiveTabHandle(item?.key)}
+                    >
+                      <div>
+                        <span className={getIsActiveTabClassName(item?.key)}>{item?.navLink?.[0]}</span>
+                        <span className="d-none d-sm-block">{item?.navLink}</span>
+                      </div>
+                    </NavLink>
+                  </NavItem>
                 ))}
               </Nav>
 
               <TabContent activeTab={activeTab}>
 
                 <TabPane tabId={getActivetab.HEALTHHUB}>
-                  <HealthHub />
+                  {activeTab === getActivetab.HEALTHHUB && <HealthHub />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.EXPTMONITORING}>
-                  <ExpertMonitoring />
+                  {activeTab === getActivetab.EXPTMONITORING && <ExpertMonitoring />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.SYMPTOMSLIST}>
-                  <SymptomsListForm />
+                  {activeTab === getActivetab.SYMPTOMSLIST && <SymptomsListForm />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.LIFEGOAL}>
-                  <LifeStyleGoal />
+                  {activeTab === getActivetab.LIFEGOAL && <LifeStyleGoal />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.ORMANAGEMENT}>
-                  <RiskOptimization />
+                  {activeTab === getActivetab.ORMANAGEMENT && <RiskOptimization />}
                 </TabPane>
 
               </TabContent>

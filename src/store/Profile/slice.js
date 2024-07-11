@@ -57,9 +57,7 @@ const profileSlice = createSlice({
             state.uploadedProfileImage = action.payload
         },
         profileDetailsAndProfileImageUpdateRequest: (state, action) => {
-            state.isConfirmModel = false
             state.isLoading = true
-            state.actionData = action.payload
         },
         profileDetailsAndProfileImageUpdateResponse: (state, action) => {
             let { profileDetails, errorMessages } = action.payload;

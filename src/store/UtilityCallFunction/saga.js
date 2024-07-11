@@ -15,7 +15,7 @@ function* getPatientDetails(action) {
             data: null,
             contentType: 'application/json',
         });
-        if (response?.status === true && response?.statuscode === 200)
+        if (response?.status && response?.statuscode === 200)
             profileDetails = response?.data
     } catch (error) {
         toast(error?.response?.data?.detail, {

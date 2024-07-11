@@ -1,74 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getActionTypes, getActivetab } from "../../_mock/internalJsControl";
+import { getActivetab } from "../../_mock/internalJsControl";
 
 const initialState = {
-    actionType: getActionTypes.UNSELECT,
-    isLoading: false,
     activeTab: getActivetab.HEALTHHUB,
     isNavRedirection: false,
     lastUpdatedHealthDetails: "",
-    getVitalsForHealthDetailGraph: ""
+    getVitalsForHealthDetailGraph: "",
+    symptomsData: "",
+    lastUpdatedSymptomsDetails: "",
 }
 
 const homePageSlice = createSlice({
     name: "homePageSlice",
     initialState,
     reducers: {
-        setActionTypeAndActionData: (state, action) => {
-            state.actionType = action.payload?.actionType;
-            state.actionData = action.payload?.actionData
-
-        },
-        addSymptomsDetailRequest: (state) => {
-            state.isLoading = true;
-            state.actionType = getActionTypes.UNSELECT;
-        },
-        addSymptomsDetailResponse: (state) => {
-            state.isLoading = false
-        },
+        addSymptomsDetailRequest: () => { },
+        addSymptomsDetailResponse: () => { },
         setActiveTabRequest: (state, action) => {
-            state.isLoading = true
             state.isNavRedirection = action.payload?.isNavRedirection
         },
         setActiveTabResponse: (state, action) => {
-            state.isLoading = false;
             state.activeTab = action.payload
         },
-        getActiveTabRequest: (state) => {
-            state.isLoading = true
-        },
+        getActiveTabRequest: () => { },
         getActiveTabResponse: (state, action) => {
-            state.isLoading = false;
             state.activeTab = action.payload
         },
-        getHealthDetailsLastUpdateRequest: (state) => {
-            state.isLoading = true
-        },
+        getHealthDetailsLastUpdateRequest: () => { },
         getHealthDetailsLastUpdateResponse: (state, action) => {
-            state.isLoading = false
             state.lastUpdatedHealthDetails = action?.payload
         },
-        getHealthDetailsGraphRequest: (state) => {
-            state.isLoading = true
-        },
+        getHealthDetailsGraphRequest: () => { },
         getHealthDetailsGraphResponse: (state, action) => {
-            state.isLoading = false
             state.getVitalsForHealthDetailGraph = action?.payload
-        }
+        },
+        updateHealthDetailsRequest: () => { },
+        updateHealthDetailsResponse: () => { },
+        getSymptomsDetailsRequest: () => { },
+        getSymptomsDetailsResponse: (state, action) => {
+            state.symptomsData = action?.payload
+        },
+        getSymptomsDetailsLastUpdateRequest: (state, action) => {
+            state.lastUpdatedSymptomsDetails = action?.payload
+        },
+        getSymptomsDetailsLastUpdateResponse: () => { }
     }
 });
 
 
+export const { actions, reducer } = homePageSlice;
 export const {
 
-    setActionTypeAndActionData,
     addSymptomsDetailRequest, addSymptomsDetailResponse,
     getSymptomsDetailsRequest, getSymptomsDetailsResponse,
     setActiveTabRequest, setActiveTabResponse,
     getActiveTabRequest, getActiveTabResponse,
     getHealthDetailsLastUpdateRequest, getHealthDetailsLastUpdateResponse,
-    getHealthDetailsGraphRequest, getHealthDetailsGraphResponse
+    updateHealthDetailsRequest, updateHealthDetailsResponse,
+    getHealthDetailsGraphRequest, getHealthDetailsGraphResponse,
+    getSymptomsDetailsLastUpdateRequest, getSymptomsDetailsLastUpdateResponse,
 
-} = homePageSlice.actions;
+} = actions;
 
-export default homePageSlice.reducer;
+export default reducer;

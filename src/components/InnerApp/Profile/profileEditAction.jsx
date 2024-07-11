@@ -11,7 +11,7 @@ import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4D
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
 import Loading from '../LoadingComponent';
-import ConfirmationAction from '../MainLayout/ConfirmationAction';
+import { setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -35,16 +35,15 @@ const bloodTypes = [
 export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails, profilePicture, actionData, isConfirmModel, uploadedProfileImage, isLoading } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails, profilePicture, uploadedProfileImage, isLoading } = useSelector((state) => state?.profileSlice);
 
-    const handleSubmit = () => {
-        dispatch(profileDetailsAndProfileImageUpdateRequest(actionData))
+    const handleSubmit = (data) => {
+        dispatch(profileDetailsAndProfileImageUpdateRequest(data))
     }
 
     return (
         <React.Fragment>
             {isLoading && <Loading />}
-            <ConfirmationAction newFun={handleSubmit} open={isConfirmModel} />
             <Formik
                 enableReinitialize
                 initialValues={{
@@ -126,7 +125,8 @@ export const ProfileEditAction = () => {
                         dob: moment(values.dob).format("YYYY-MM-DD"),
                         nationality: "United State"
                     };
-                    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
+                    dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, actionData: data, callApi: handleSubmit }))
+                    // dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
                 }}
             >
                 {({

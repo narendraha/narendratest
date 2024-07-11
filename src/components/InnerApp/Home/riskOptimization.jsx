@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from "reactstrap";
 import { getActivetab } from '../../../_mock/internalJsControl';
 import riskmanagement from "../../../images/riskmanagement.png";
@@ -10,9 +10,12 @@ import { setActiveTabRequest } from '../../../store/Home/slice';
 export const RiskOptimization = () => {
     const dispatch = useDispatch();
 
+    const { activeTab } = useSelector((state) => state?.homePageSlice);
+
     useEffect(() => {
-        dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: getActivetab.ORMANAGEMENT }))
-    }, []);
+        if (activeTab === getActivetab.ORMANAGEMENT)
+            dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: getActivetab.ORMANAGEMENT }))
+    }, [activeTab, dispatch]);
 
     return (
         <React.Fragment>

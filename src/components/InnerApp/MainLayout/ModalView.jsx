@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Modal, ModalBody } from "reactstrap";
+import { getActivetab } from "../../../_mock/internalJsControl";
+import { setActiveTabRequest } from '../../../store/Home/slice';
 
 export default function ModalView(props) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClose = () => {
     props?.handleClose(!props?.isModalVisible);
@@ -11,7 +15,8 @@ export default function ModalView(props) {
   const handleRedirect = () => {
     let { link, route } = props?.path;
     if (route === "home") {
-      navigate(`/${route}`, { state: { activeTab: "3" }, replace: true })
+      navigate(`/${route}`, { state: { activeTab: getActivetab.SYMPTOMSLIST }, replace: true })
+      dispatch(setActiveTabRequest({ setTab: null, nextOrBackTab: getActivetab.SYMPTOMSLIST, isNavRedirection: true }))
       props?.handleClose(!props?.isModalVisible);
     } else if ((route === "historychat" && link === "transcriptsummary") || (route === "historychat" && link === "chat")) {
       props?.modelVisibleProp({ isModalVisible: true, path: route })

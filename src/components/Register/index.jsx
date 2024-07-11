@@ -106,7 +106,7 @@ export default function Register() {
           .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
           .required("Email is required"),
-        mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10),
+        mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10, 10),
         dob: Yup.date()
           .max(
             new Date(Date.now() - 567648000000),

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, ModalBody } from 'reactstrap';
 import { getActionTypes } from '../../../_mock/internalJsControl';
-import { setActionTypeAndActionData } from '../../../store/Profile/slice';
+import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
 
 export const ProfileSettings = () => {
     const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
 import { getActionTypes, getProfileTabs } from '../../../_mock/helperIndex';
-import { getPatientDetailsRequest } from "../../../store/Profile/slice";
+import { getPatientDetailsRequest } from "../../../store/UtilityCallFunction/slice";
 import { ProfileSettings } from "./ProfileSettings";
 import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
@@ -14,7 +14,7 @@ import { ProfileViewDetails } from './profileViewDetails';
 export default function Profile() {
   const dispatch = useDispatch();
 
-  const { actionType, actionData } = useSelector((state) => state?.profileSlice)
+  const { actionType, actionData } = useSelector((state) => state?.utilityCallFunctionSlice)
 
   useEffect(() => {
     dispatch(getPatientDetailsRequest())

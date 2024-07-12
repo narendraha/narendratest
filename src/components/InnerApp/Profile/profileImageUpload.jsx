@@ -37,7 +37,7 @@ const ProfileImageUpload = () => {
     return (
         <React.Fragment>
             <div className={"al_profile_photo "}>
-                <img src={profilePictureData} alt="profilePhoto" />
+                <img src={profilePictureData} alt="profilePhoto" loading='eager'/>
             </div>
             {actionType === getActionTypes.EDIT && (
                 <>

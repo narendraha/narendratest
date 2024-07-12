@@ -16,7 +16,7 @@ import costeffective from '../../images/costeffective.png';
 import accuratehealth from '../../images/costeffective.png';
 import additionalvalue from '../../images/costeffective.png';
 import { Row, Col, Card, CardBody, TabContent, TabPane, NavLink, Nav, NavItem } from 'reactstrap';
-import Spacing from '../Spacing';
+import Spacing from '../DefaultPages/Spacing';
 
 export default function About() {
   pageTitle('About');

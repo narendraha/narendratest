@@ -1,6 +1,6 @@
 import React from 'react';
 import { pageTitle } from '../../helpers/PageTitle';
-import Accordion from '../Accordion';
+import Accordion from '../DefaultPages/Accordin';
 import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
 import Section from '../Section';
 

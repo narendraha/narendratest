@@ -12,7 +12,7 @@ import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import incompleteprofile from "../../images/incompleteprofile.png";
 import ChatMaleuser from "../../images/userprofile.jpg";
 import Loading from "../InnerApp/LoadingComponent";
-import ModalView from "../InnerApp/MainLayout/ModalView";
+import ModalView from "../Utilities/ModalView";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 
 export default function HistoryChatBot() {

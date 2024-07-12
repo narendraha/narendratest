@@ -9,7 +9,7 @@ import webicon from '../../../images/websiteicon.svg';
 import footerbg from '../../../images/footerbg.svg';
 import watermark from '../../../images/watermark.png';
 import { Link } from 'react-router-dom';
-import ModalView from "../../InnerApp/MainLayout/ModalView";
+import ModalView from "../../Utilities/ModalView";
 import { getProfileCmpDetails } from '../../../_mock/helperIndex';
 import { useNavigate } from "react-router";
 

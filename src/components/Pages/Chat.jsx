@@ -7,7 +7,7 @@ import { pageTitle } from "../../helpers/PageTitle";
 import Chatbot from "../../images/alfredicon.svg";
 import ChatFemaleuser from "../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../images/userprofile.jpg";
-import ModalView from "../InnerApp/MainLayout/ModalView";
+import ModalView from "../Utilities/ModalView";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 import Loading from "../InnerApp/LoadingComponent";
 

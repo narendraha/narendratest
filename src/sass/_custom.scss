@@ -29,6 +29,13 @@ a {
   cursor: pointer;
 }
 
+.al_text_link,
+a.al_text_link {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -111,9 +118,13 @@ a {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       height: 40px;
-      padding-right: 0 !important;
+      padding-right: 8px !important;
       font-size: 14px;
       color: #212529;
+    }
+
+    +input {
+      padding-left: 0.4rem;
     }
   }
 
@@ -390,6 +401,27 @@ textarea {
 
   &:focus-visible {
     outline: none;
+  }
+}
+
+input:not([id$="-input"]),
+input:not([name="mobile"]),
+textarea,
+.react-datepicker-wrapper input,
+.input-group,
+.inputSelect div[class$=-control] {
+  &:focus {
+    border: 1px solid #73d8e4 !important;
+    box-shadow: 2px 2px 3px rgba(15, 151, 175, 0.17) !important;
+    background-color: #ffffff !important;
+  }
+}
+
+.inputSelect input {
+  &:focus {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
   }
 }
 

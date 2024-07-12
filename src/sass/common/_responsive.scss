@@ -154,7 +154,9 @@
         }
     }
 
-    .modal-md, .modal-lg, .modal-xl {
+    .modal-md,
+    .modal-lg,
+    .modal-xl {
         max-width: 75% !important;
     }
 
@@ -206,7 +208,9 @@
         width: 80% !important;
     }
 
-    .modal-md, .modal-lg, .modal-xl {
+    .modal-md,
+    .modal-lg,
+    .modal-xl {
         max-width: 85% !important;
     }
 
@@ -317,7 +321,10 @@
         margin-bottom: 0 !important;
     }
 
-    .modal-sm, .modal-md, .modal-lg, .modal-xl {
+    .modal-sm,
+    .modal-md,
+    .modal-lg,
+    .modal-xl {
         max-width: 98% !important;
     }
 }
@@ -465,5 +472,14 @@
     .al_symptoms .al_frequencylist label.btn {
         padding: 8px !important;
         font-size: 10px !important;
+    }
+}
+
+@media screen and (min-width: 1650px) and (max-width: 3500px) {
+    .al_doctorwidth {
+        .col-lg-6 {
+            width: 33.3%;
+            flex: 0 0 33.3%;
+        }
     }
 }

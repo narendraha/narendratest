@@ -299,6 +299,11 @@ section:not(.cs_banner) {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
     height: 100%;
 
+    &.active {
+        border: 1px solid #04C1D6;
+        box-shadow: 0 2px 12px rgba(4, 193, 214, 0.29);
+    }
+
     .card-body {
         padding: 22px;
     }
@@ -328,6 +333,25 @@ section:not(.cs_banner) {
             margin-right: 0;
         }
     }
+
+    .al_roundbtn {
+        border: 1px solid #6B778F;
+        background-color: transparent;
+
+        i {
+            color: #6B778F;
+            font-size: 10px;
+        }
+
+        &:hover {
+            background-color: #00c4d8;
+            border: 1px solid #00c4d8;
+
+            i {
+                color: #ffffff;
+            }
+        }
+    }
 }
 
 .card.al_cardbg {
@@ -354,30 +378,50 @@ section:not(.cs_banner) {
         font-size: 12px;
         line-height: normal;
         vertical-align: middle;
-        padding: 10px 18px;
+        padding: 10px 13px;
+
+        div {
+            display: inline-block;
+            cursor: pointer;
+
+            i {
+                vertical-align: middle;
+                margin-left: 3px;
+                font-size: 10px;
+
+                &.icon_alfred_tablesortup,
+                &.icon_alfred_tablesortdown {
+                    font-size: 5px;
+                }
+            }
+        }
     }
 
     tbody {
         tr {
-            border: 1px solid #F6F6FA;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(145, 150, 177, 0.1);
 
             td {
                 color: #2A2F35;
-                padding: 12px 18px;
+                padding: 13px;
                 vertical-align: middle;
                 line-height: normal;
                 font-size: 12px;
+                border: 1px solid #f0f0ff;
+                border-left: 0;
+                border-right: 0;
 
                 &:first-child {
                     border-top-left-radius: 12px;
                     border-bottom-left-radius: 12px;
+                    border-left: 1px solid #f4f4ff;
                 }
 
                 &:last-child {
                     border-top-right-radius: 12px;
                     border-bottom-right-radius: 12px;
+                    border-right: 1px solid #f4f4ff;
                 }
             }
         }
@@ -427,6 +471,23 @@ section:not(.cs_banner) {
         &:nth-child(6),
         &:nth-last-of-type(2) {
             width: 11%;
+        }
+    }
+}
+
+.al_patientslisttable {
+
+    th,
+    td {
+        width: 16%;
+
+        &:last-child {
+            width: 20%;
+        }
+
+        &:nth-child(2),
+        &:nth-child(5) {
+            width: 8%;
         }
     }
 }
@@ -685,6 +746,25 @@ section:not(.cs_banner) {
     }
 }
 
+button.al_roundbtn {
+    min-width: auto;
+    width: 43px;
+    height: 43px;
+    padding: 8px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 16px;
+    }
+
+    &_sm {
+        width: 26px;
+        height: 26px;
+    }
+}
 
 @media (min-width: 1025px) and (max-width: 1600px) {
 
@@ -1771,7 +1851,7 @@ ul.standardPlans {
 .al_outerparentwp {
     .al_button_info {
         background: $white;
-        padding: 8px 25px;
+        padding: 7px 25px;
         border-radius: 5px;
         color: #FAB12B;
         font-weight: 500;
@@ -1785,7 +1865,7 @@ ul.standardPlans {
 
     .al_button_add {
         background: #2C2C37;
-        padding: 9px 25px;
+        padding: 7px 25px;
         border: 1px solid #2C2C37;
         border-radius: 5px;
         color: $white;
@@ -1799,7 +1879,7 @@ ul.standardPlans {
 
     .al_button_cancel {
         background: $white;
-        padding: 8px 25px;
+        padding: 7px 25px;
         border-radius: 5px;
         color: #F85E5E;
         font-weight: 500;
@@ -1809,6 +1889,10 @@ ul.standardPlans {
             background: #F85E5E;
             color: #ffffff;
             border-color: #F85E5E;
+
+            i {
+                color: #ffffff;
+            }
         }
     }
 
@@ -2011,6 +2095,50 @@ button.al_upgrade_btn {
     }
 }
 
+.icon_alfred_circle_plus {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.al_docavatar {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: contain;
+        cursor: pointer;
+    }
+
+    div {
+        color: #ffffff;
+        font-weight: 500;
+        font-size: 18px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        cursor: pointer;
+
+        &:nth-child(1) {
+            background-color: #21AFFF;
+        }
+
+        &:nth-child(2) {
+            background-color: #EBB90B;
+        }
+
+        &:nth-child(3) {
+            background-color: #05d439;
+        }
+    }
+}
+
 .al_profile_manage {
     h2 {
         font-size: 24px;
@@ -2105,6 +2233,19 @@ button.al_upgrade_btn {
             margin-bottom: 0;
             max-width: max-content;
         }
+    }
+}
+
+.al_useravatarimg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 50%;
     }
 }
 

@@ -93,6 +93,7 @@ export const ExpertMonitoringRightView = () => {
         const options = {
             chart: {
                 type: "line",
+                height: "320",
                 style: {
                     fontFamily: "Poppins",
                 },

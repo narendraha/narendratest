@@ -235,7 +235,7 @@ export default function Signin({ setIsAuthenticated }) {
                           <div className="mt-3 text-medium">
                             Don’t have an account?{" "}
                             <Link
-                              to="/registration"
+                              to="/registration-info"
                               className="al_text_link cs_medium"
                             >
                               Signup

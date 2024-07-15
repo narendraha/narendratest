@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const ErrorPage = React.lazy(() => import("./components/Pages/ErrorPage"));
 const Loading = React.lazy(() => import("./components/MainLayout/Loading"));
 const MainLayout = React.lazy(() => import("./components/MainLayout/index"));
@@ -53,8 +52,11 @@ const HistorySummary = React.lazy(() => import("./components/InnerApp/HistorySum
 // Admin
 const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/index"));
 const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
-
-
+const ListofPatients = React.lazy(() => import("./components/Admin/ListofPatients/index"));
+const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/index"));
+const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
+const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
+const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -83,11 +85,13 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="transcriptsummary" element={<HistorySummary />} />
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="approveusers" element={<ApproveUsers />} />
-              {/* <Route path="patientslist" element={<ListofPatients />} />
-              <Route path="doctorslist" element={<DoctorsList />} /> */}
+              <Route path="patientslist" element={<ListofPatients />} />
+              <Route path="doctorslist" element={<DoctorsList />} />
+              <Route path="users" element={<UserManagement />} />
+              <Route path="roles" element={<RoleManagement />} />
+              <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="profile" element={<Profile />} />
               <Route path="chat" element={<Chat />} />
-              {/* <Route path="historychat" element={<HistoryChat />} /> */}
               <Route path="historychat" element={<HistoryChatNew />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>

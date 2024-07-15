@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, TabContent, Nav, NavItem, NavLink, TabPane, FormGroup, Modal, ModalBody } from 'reactstrap';
 import Select from "react-select";
-import Pagination from '../../Utilities/Pagination';
+import Pagination from '../../Pagination';
+import nodata from '../../../images/nodata.svg';
 
 export default function ApproveUsers() {
     const [tab, setTab] = useState("1");
@@ -17,7 +18,7 @@ export default function ApproveUsers() {
     return (
         <>
             <div className="wflexLayout">
-                <div className='al-pad'>
+                <div className='al-pad pb-1'>
                     <h3 className='bc_main_text mb-0'>User Requests</h3>
                 </div>
                 <div className="wflexLayout">
@@ -255,6 +256,158 @@ export default function ApproveUsers() {
                                                 </tr>
                                             </tbody>
                                         </Table>
+                                        {/* Doctor List */}
+                                        {/* <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
+                                            <thead className='sticky_header'>
+                                                <tr>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Doctor Name
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Email
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Mobile
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Education
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Area of Specialization
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Provider ID Number
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Medical license number
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Country
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            State
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div onClick={() => { }}>
+                                                            Requested Date
+                                                            {false ? (
+                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
+                                                            ) : <i className="icon_alfred_tablesort" />}
+                                                        </div>
+                                                    </th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Charlotte</td>
+                                                    <td>Charlotte@test.com</td>
+                                                    <td>9855432568</td>
+                                                    <td>MD, DM</td>
+                                                    <td>Cardiology</td>
+                                                    <td>457896543456</td>
+                                                    <td>656HGFHKJ647879</td>
+                                                    <td>USA</td>
+                                                    <td>Texas</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td>
+                                                        <div className='d-flex gap-2'>
+                                                            <button type="button" className='al_button_sm al_savebtn'>Approve</button>
+                                                            <button type="button" className='al_button_sm al_testbtn' onClick={() => setShowHoldModal(true)}>Hold</button>
+                                                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Richard</td>
+                                                    <td>Richard@gmail.com</td>
+                                                    <td>9855432568</td>
+                                                    <td>MD, DM</td>
+                                                    <td>Cardiology</td>
+                                                    <td>457896543456</td>
+                                                    <td>656HGFHKJ647879</td>
+                                                    <td>USA</td>
+                                                    <td>Texas</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td>
+                                                        <div className='d-flex gap-2'>
+                                                            <button type="button" className='al_button_sm al_savebtn'>Approve</button>
+                                                            <button type="button" className='al_button_sm al_testbtn' onClick={() => setShowHoldModal(true)}>Hold</button>
+                                                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Richard</td>
+                                                    <td>Richard@gmail.com</td>
+                                                    <td>9855432568</td>
+                                                    <td>MD, DM</td>
+                                                    <td>Cardiology</td>
+                                                    <td>457896543456</td>
+                                                    <td>656HGFHKJ647879</td>
+                                                    <td>USA</td>
+                                                    <td>Texas</td>
+                                                    <td>27-6-2024, 9:45 am</td>
+                                                    <td>
+                                                        <div className='d-flex gap-2'>
+                                                            <button type="button" className='al_button_sm al_savebtn'>Approve</button>
+                                                            <button type="button" className='al_button_sm al_testbtn' onClick={() => setShowHoldModal(true)}>Hold</button>
+                                                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </Table> */}
+                                        {/* No Records */}
+                                        {/* <div className="d-flex flex-column align-items-center pt-5">
+                                            <img src={nodata} width={220} alt="" />
+                                            <h6 className="mt-3 mb-0">No data found!</h6>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className='px-3 pb-3 mx-auto'>
@@ -398,7 +551,7 @@ export default function ApproveUsers() {
                                                     <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Anthony</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td>Insurance not verified</td>
+                                                    <td>-</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Richard</td>

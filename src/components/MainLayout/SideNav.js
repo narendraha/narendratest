@@ -56,6 +56,12 @@ export default function SideNav(props) {
           link: "historychat",
           icon: "icon_alfred_botquestionnaire",
         },
+        // {
+        //   id: "3",
+        //   name: "Upload Document",
+        //   link: "uploaddocument",
+        //   icon: "icon_alfred_uploaddocument",
+        // }
       ],
     },
     {
@@ -73,7 +79,7 @@ export default function SideNav(props) {
       ],
     },
     // {
-    //   moduleId: '4',
+    //   moduleId: '6',
     //   name: 'User Management',
     //   link: 'roles',
     //   icon: 'icon_alfred_roles',
@@ -81,7 +87,8 @@ export default function SideNav(props) {
     //     { id: "1", name: "Role Management", link: 'roles', icon: 'icon_alfred_roles' },
     //     { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' },
     //     { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
-    //     { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' }
+    //     { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' },
+    //     { id: "5", name: "Approve Users", link: 'approveusers', icon: 'icon_alfred_approveusers' }
     //   ]
     // },
     // {

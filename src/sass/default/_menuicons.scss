@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_unmap:before {
+  content: "\e958";
+}
 .icon_alfred_circle_plus:before {
   content: "\e957";
 }

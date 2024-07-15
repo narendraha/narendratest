@@ -28,7 +28,7 @@ export const ExpertMonitoring = () => {
                                 <span style={{ color: "#3bc0c3" }}>
                                     {lastUpdatedHealthDetails?.difference}
                                 </span>
-                                days ago
+                                days ago{" "}
                             </>}
                         on
                         <span style={{ color: "#3bc0c3" }}>

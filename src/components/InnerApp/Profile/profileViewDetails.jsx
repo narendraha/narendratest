@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Label, Row, UncontrolledTooltip } from "reactstrap";
 import { getActionTypes, getProfileTabs } from '../../../_mock/internalJsControl';
-import { setActionTypeAndActionData } from '../../../store/Profile/slice';
+import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
 
 export const ProfileViewDetails = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
 
     function maskssn(input) {
         if (input !== "NA" && input !== undefined && input?.length < 2) {

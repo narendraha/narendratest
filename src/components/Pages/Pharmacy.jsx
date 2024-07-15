@@ -1,16 +1,16 @@
 import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
-import loginto from '../../images/loginto.svg';
 import { Link } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
+import loginto from '../../images/loginto.svg';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Pharmacy() {
   pageTitle('Pharmacy');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
         imgUrl="/images/pharmacybg.png"
         title="Health & wellness are in bloom"

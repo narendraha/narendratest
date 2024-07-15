@@ -6,13 +6,13 @@ import { FormGroup, Label, Modal, ModalBody } from 'reactstrap';
 import * as Yup from 'yup';
 import { passwordReg } from "../../../_mock/RegularExp";
 import { getActionTypes } from "../../../_mock/internalJsControl";
-import { changeProfilePasswordRequest, setActionTypeAndActionData } from "../../../store/Profile/slice";
-import Loading from "../../InnerApp/LoadingComponent";
+import { changeProfilePasswordRequest } from "../../../store/Profile/slice";
+import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
 
 export const ChangeProfilePassword = ({ props }) => {
     const dispatch = useDispatch();
 
-    const { isLoading, error } = useSelector((state) => (state?.profileSlice));
+    const { error } = useSelector((state) => (state?.profileSlice));
 
     const handleSubmit = (formData) => {
         let reqObj = {
@@ -56,7 +56,6 @@ export const ChangeProfilePassword = ({ props }) => {
                             }}
                         >{({ values, setFieldValue }) => (
                             <Form>
-                                {isLoading && <Loading />}
                                 <h5>Change Password</h5>
                                 <FormGroup>
                                     <Label>
@@ -99,7 +98,7 @@ export const ChangeProfilePassword = ({ props }) => {
                                         <span className="requiredLabel">*</span>
                                         Confirm Password
                                     </Label>
-                                    <Field name="confirmPassword" type="password" className="form-control" />
+                                    <Field name="confirmPassword" type="password" className="form-control" placeholder="e.g.****" />
                                     <ErrorMessage name="confirmPassword" component={"div"} className="text-danger" placeholder="e.g.Pass@123" />
                                 </FormGroup>
                                 <div className="mt-4">

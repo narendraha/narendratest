@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
-import { allowsOnlyNumeric, allowsOnlyNumericOnly2Digit, allowsOnlyNumericOnly4Digit, allowsOnlyNumericOnlysingleDigit, phoneNumberReg } from "../../../_mock/RegularExp";
+import { phoneNumberReg } from "../../../_mock/RegularExp";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
-import { profileDetailsAndProfileImageUpdateRequest, setActionTypeAndActionData } from '../../../store/Profile/slice';
-import Loading from '../LoadingComponent';
-import { setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
+import { addProfileImageRequest, profileDetailsAndProfileImageUpdateRequest } from '../../../store/Profile/slice';
+import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -35,25 +34,26 @@ const bloodTypes = [
 export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
-    const { getProfileDetails, profilePicture, uploadedProfileImage, isLoading } = useSelector((state) => state?.profileSlice);
+    const { uploadedProfileImage } = useSelector((state) => state?.profileSlice);
+    const { getProfileDetails, profilePicture } = useSelector((state) => state?.utilityCallFunctionSlice);
 
     const handleSubmit = (data) => {
         dispatch(profileDetailsAndProfileImageUpdateRequest(data))
     }
 
+    const handleCancel = () => {
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
+        dispatch(addProfileImageRequest(""))
+    }
+
     return (
         <React.Fragment>
-            {isLoading && <Loading />}
             <Formik
                 enableReinitialize
                 initialValues={{
                     username: getProfileDetails?.username !== "NA" ? getProfileDetails?.username : "",
                     email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email : "",
-                    dob:
-                        getProfileDetails?.dob !== "NA"
-                            ? getProfileDetails?.dob
-                            : new Date(),
-                    // gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
+                    dob: getProfileDetails?.dob !== "NA" ? getProfileDetails?.dob : new Date(),
                     gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                     mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                     rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
@@ -62,19 +62,11 @@ export const ProfileEditAction = () => {
                     feet: getProfileDetails?.feet !== "NA" ? getProfileDetails?.feet : '',
                     inch: getProfileDetails?.inch !== "NA" ? getProfileDetails?.inch : '',
                     weight: getProfileDetails?.weight !== "NA" ? getProfileDetails?.weight : "",
-                    // age: getProfileDetails?.age || "",
                     bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
                     nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : "",
                     profile_url: profilePicture || ""
                 }}
                 validationSchema={Yup.object().shape({
-                    // username: Yup.string()
-                    //     .min(2, "Too Short!")
-                    //     .max(50, "Too Long!")
-                    //     .required("Name is required"),
-                    // email: Yup.string()
-                    //   .email("Invalid email")
-                    //   .required("This field is required"),
                     username: customContentValidation('Full Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
                     mobile: Yup.string()
                         .matches(phoneNumberReg, "Invalid phone number")
@@ -99,7 +91,7 @@ export const ProfileEditAction = () => {
                     education: Yup.string().required(
                         "Education is required"
                     ),
-                    ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9),
+                    ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
                     feet: Yup.string()
                         .test(
                             'is-greater-than-one',
@@ -113,10 +105,6 @@ export const ProfileEditAction = () => {
                         .min(22, "Weight must be at least 22 lbs")
                         .max(1400, "Weight is too high!")
                         .required("Weight is required"),
-                    // age: Yup.string()
-                    //   .min(1, "Too Short!")
-                    //   .max(3, "Too Long!")
-                    //   .required("This field is required"),
                 })}
                 onSubmit={(values) => {
                     // Handle form submission here
@@ -126,14 +114,11 @@ export const ProfileEditAction = () => {
                         nationality: "United State"
                     };
                     dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, actionData: data, callApi: handleSubmit }))
-                    // dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: data, isConfirmModel: true }))
                 }}
             >
                 {({
                     values,
                     setFieldValue,
-                    errors,
-                    touched,
                     setFieldTouched,
                     dirty
                 }) => {
@@ -154,9 +139,7 @@ export const ProfileEditAction = () => {
                                                         name="feet"
                                                         placeholder="e.g.9"
                                                         className="form-control"
-                                                        onKeyPress={(e) =>
-                                                            allowsOnlyNumericOnlysingleDigit(e)
-                                                        }
+                                                        onKeyPress={(e) => allowedNumbersOnField(1, e)}
                                                     />
                                                     <ErrorMessage
                                                         name="feet"
@@ -171,9 +154,7 @@ export const ProfileEditAction = () => {
                                                         name="inch"
                                                         placeholder="e.g.0"
                                                         className="form-control"
-                                                        onKeyPress={(e) =>
-                                                            allowsOnlyNumericOnly2Digit(e)
-                                                        }
+                                                        onKeyPress={(e) => allowedNumbersOnField(2, e)}
                                                     />
                                                     <ErrorMessage
                                                         name="inch"
@@ -195,9 +176,7 @@ export const ProfileEditAction = () => {
                                                 name="weight"
                                                 placeholder="e.g. 40"
                                                 className="form-control"
-                                                onKeyPress={(e) =>
-                                                    allowsOnlyNumericOnly4Digit(e)
-                                                }
+                                                onKeyPress={(e) => allowedNumbersOnField(4, e)}
                                             />
                                             <ErrorMessage
                                                 name="weight"
@@ -221,14 +200,9 @@ export const ProfileEditAction = () => {
                                                         option.value === values?.bloodtype
                                                 )}
                                                 onChange={(selectedOption) =>
-                                                    setFieldValue(
-                                                        "bloodtype",
-                                                        selectedOption?.value
-                                                    )
+                                                    setFieldValue("bloodtype", selectedOption?.value)
                                                 }
-                                                onBlur={() =>
-                                                    setFieldTouched("bloodtype", true)
-                                                }
+                                                onBlur={() => setFieldTouched("bloodtype", true)}
                                             />
                                             <ErrorMessage
                                                 name="bloodtype"
@@ -257,25 +231,6 @@ export const ProfileEditAction = () => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    {/* <Col md="4" sm="12">
-                                <FormGroup>
-                                  <Label>
-                                    <span className="requiredLabel">*</span>Age
-                                  </Label>
-                                  <Field
-                                    type="text"
-                                    name="age"
-                                    placeholder="Enter Age"
-                                    className="form-control"
-                                    onKeyPress={(e) => allowsOnlyNumeric(e)}
-                                  />
-                                  <ErrorMessage
-                                    name="age"
-                                    component={"div"}
-                                    className="text-danger"
-                                  />
-                                </FormGroup>
-                              </Col> */}
                                     <Col md="4" sm="12">
                                         <FormGroup>
                                             <Label>
@@ -290,14 +245,9 @@ export const ProfileEditAction = () => {
                                                         option.value === values?.gender
                                                 )}
                                                 onChange={(selectedOption) =>
-                                                    setFieldValue(
-                                                        "gender",
-                                                        selectedOption?.value
-                                                    )
+                                                    setFieldValue("gender", selectedOption?.value)
                                                 }
-                                                onBlur={() =>
-                                                    setFieldTouched("gender", true)
-                                                }
+                                                onBlur={() => setFieldTouched("gender", true)}
                                                 className="inputSelect"
                                             />
                                             <ErrorMessage
@@ -371,7 +321,6 @@ export const ProfileEditAction = () => {
                                                     className="form-control"
                                                     name="mobile"
                                                     placeholder="e.g.123-4567-8901"
-                                                    // onKeyPress={(e) => allowsOnlyNumeric(e)}
                                                     onKeyPress={(e) => allowedNumbersOnField(10, e)}
                                                     aria-describedby="basic-addon1"
                                                 />
@@ -393,7 +342,7 @@ export const ProfileEditAction = () => {
                                                 name="ssn"
                                                 placeholder="e.g.xxx-xxx-xxx"
                                                 className="form-control"
-                                                onKeyPress={(e) => allowsOnlyNumeric(e)}
+                                                onKeyPress={(e) => allowedNumbersOnField(9, e)}
                                             />
                                             <ErrorMessage
                                                 name="ssn"
@@ -415,15 +364,8 @@ export const ProfileEditAction = () => {
                                                 value={residenceoptions?.find(
                                                     (option) => option.value === values?.rtype
                                                 )}
-                                                onChange={(selectedOption) =>
-                                                    setFieldValue(
-                                                        "rtype",
-                                                        selectedOption?.value
-                                                    )
-                                                }
-                                                onBlur={() =>
-                                                    setFieldTouched("rtype", true)
-                                                }
+                                                onChange={(selectedOption) => setFieldValue("rtype", selectedOption?.value)}
+                                                onBlur={() => setFieldTouched("rtype", true)}
                                             />
                                             <ErrorMessage
                                                 name="rtype"
@@ -446,10 +388,7 @@ export const ProfileEditAction = () => {
                                                     (option) => option.value === values.education
                                                 )}
                                                 onChange={(selectedOption) => {
-                                                    setFieldValue(
-                                                        "education",
-                                                        selectedOption ? selectedOption.value : ""
-                                                    );
+                                                    setFieldValue("education", selectedOption ? selectedOption.value : "");
                                                 }}
                                             />
                                             <ErrorMessage
@@ -459,25 +398,6 @@ export const ProfileEditAction = () => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    {/* <Col md="4" sm="12">
-                                <FormGroup>
-                                  <Label>
-                                    <span className="requiredLabel">*</span>
-                                    Email
-                                  </Label>
-                                  <Field
-                                    type="text"
-                                    name="email"
-                                    placeholder="Enter Email"
-                                    className="form-control"
-                                  />
-                                  <ErrorMessage
-                                    name="email"
-                                    component={"div"}
-                                    className="text-danger"
-                                  />
-                                </FormGroup>
-                              </Col> */}
                                     <Col md="8" sm="12">
                                         <FormGroup>
                                             <Label>Name of Insurance Provider</Label>
@@ -520,9 +440,7 @@ export const ProfileEditAction = () => {
                                     <button
                                         type="button"
                                         className="al_cancelbgbutton mx-3"
-                                        onClick={() => {
-                                            dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
-                                        }}
+                                        onClick={handleCancel}
                                     >
                                         Cancel
                                     </button>

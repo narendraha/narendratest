@@ -453,7 +453,7 @@ section:not(.cs_banner) {
 }
 
 .al_approveusers {
-    width: 130%;
+    width: 150%;
 
     th,
     td {
@@ -747,11 +747,11 @@ section:not(.cs_banner) {
 }
 
 button.al_roundbtn {
-    min-width: auto;
+    min-width: auto !important;
     width: 43px;
     height: 43px;
-    padding: 8px;
-    border-radius: 50%;
+    padding: 8px !important;
+    border-radius: 50% !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -872,6 +872,7 @@ button.al_roundbtn {
         img {
             background-color: #ededed;
             border: 1px solid #ededed;
+            border-radius: 50%;
         }
     }
 
@@ -886,7 +887,6 @@ button.al_roundbtn {
 
     img {
         width: 32px !important;
-        border-radius: 50%;
         height: 32px;
     }
 
@@ -1180,7 +1180,8 @@ ul.standardPlans {
     }
 }
 
-.al_site_container {
+.al_site_container,
+.alnotification_panel {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -1188,6 +1189,7 @@ ul.standardPlans {
     box-sizing: border-box;
     word-break: break-word;
     font-size: $font_13;
+    font-family: 'Poppins', sans-serif;
 
     .al_chatbot {
         width: 33%;
@@ -1777,6 +1779,11 @@ ul.standardPlans {
     }
 }
 
+.alnotification_panel .al_button_sm {
+    padding: 3px 10px !important;
+    min-width: 50px !important;
+}
+
 .sweet-alert.al_msgAlert {
     left: 0 !important;
     right: 0 !important;
@@ -2274,9 +2281,13 @@ button.al_upgrade_btn {
 }
 
 .alnotification_panel {
+
     .popover {
         max-width: 25vw;
         min-width: 25vw;
+        font-family: "Poppins";
+        font-size: 11px;
+        font-weight: 400;
     }
 
     .popover-inner {
@@ -2284,6 +2295,26 @@ button.al_upgrade_btn {
             min-height: 60vh;
             max-height: 65vh;
             overflow: auto;
+        }
+    }
+
+    .al_nudegeitem {
+        >div {
+            border-radius: 8px;
+            margin-top: 10px;
+            padding: 15px;
+
+            &:nth-of-type(3n+1) {
+                background-color: #eff6ff;
+            }
+
+            &:nth-of-type(3n+2) {
+                background-color: #FFEBEB;
+            }
+
+            &:nth-of-type(3n+3) {
+                background-color: #fffbeb;
+            }
         }
     }
 }

@@ -1,14 +1,14 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import { Row, Col, Card, CardBody } from 'reactstrap';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import { Card, CardBody, Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Ablation() {
   pageTitle('Ablation');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/faq.png"
         title="Don’t Let Your Health<br/> Take a Backseat!"

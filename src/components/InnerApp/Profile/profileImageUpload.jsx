@@ -8,7 +8,8 @@ import { addProfileImageRequest } from '../../../store/Profile/slice';
 const ProfileImageUpload = () => {
     const dispatch = useDispatch();
 
-    const { actionType, profilePicture, uploadedProfileImage } = useSelector((state) => state?.profileSlice);
+    const { uploadedProfileImage } = useSelector((state) => state?.profileSlice);
+    const { profilePicture, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
     const profilePictureData = (!uploadedProfileImage && uploadedProfileImage === "") ? profilePicture : uploadedProfileImage?.file;
 
     const getFileSizeInMb = (fileSize = 0) => (fileSize ? fileSize / 1024 / 1024 : 0);
@@ -36,7 +37,7 @@ const ProfileImageUpload = () => {
     return (
         <React.Fragment>
             <div className={"al_profile_photo "}>
-                <img src={profilePictureData} alt="profilePhoto" />
+                <img src={profilePictureData} alt="profilePhoto" loading='eager'/>
             </div>
             {actionType === getActionTypes.EDIT && (
                 <>

@@ -1,15 +1,15 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
 import heartvalves from '../../images/heartvalves.png';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function HeartValves() {
   pageTitle('Heart Valves');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
         imgUrl="/images/heartvalvesbg.png"
         title="Don’t Let Your Health<br/>Take a Backseat!"

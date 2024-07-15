@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, TabContent, Nav, NavItem, NavLink, TabPane, FormGroup, Modal, ModalBody } from 'reactstrap';
 import Select from "react-select";
-import Pagination from '../../Pagination';
+import Pagination from '../../../components/Utilities/Pagination';
 import userImg from '../../../images/docimg.png';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,7 +20,7 @@ export default function ListofPatients() {
     return (
         <>
             <div className="wflexLayout">
-                <div className='al-pad d-flex align-items-center pb-2'>
+                <div className='al-pad d-flex align-items-center pb-1'>
                     <Col>
                         <h3 className='bc_main_text mb-0'>List of Patients</h3>
                     </Col>
@@ -121,6 +121,7 @@ export default function ListofPatients() {
                                                     <td>
                                                         <div className='d-flex gap-2 align-items-center'>
                                                             <i className='icon_alfred_circle_plus pointer' onClick={() => setSecondaryDoctor(true)}></i>
+                                                            <i className='icon_alfred_unmap pointer text-danger' style={{fontSize: "20px"}}></i>
                                                             <div className='al_docavatar'><img src={userImg} className='' onClick={() => setSecondaryDoctor(true)} alt="" /></div>
                                                         </div>
                                                     </td>
@@ -135,6 +136,7 @@ export default function ListofPatients() {
                                                     <td>
                                                         <div className='d-flex gap-2 align-items-center'>
                                                             <i className='icon_alfred_circle_plus pointer' onClick={() => setSecondaryDoctor(true)}></i>
+                                                            <i className='icon_alfred_unmap pointer text-danger' style={{fontSize: "20px"}}></i>
                                                             <div className='al_docavatar'><img src={userImg} className='' onClick={() => setSecondaryDoctor(true)} alt="" /></div>
                                                         </div>
                                                     </td>
@@ -149,6 +151,7 @@ export default function ListofPatients() {
                                                     <td>
                                                         <div className='d-flex gap-2 align-items-center'>
                                                             <i className='icon_alfred_circle_plus pointer' onClick={() => setSecondaryDoctor(true)}></i>
+                                                            <i className='icon_alfred_unmap pointer text-danger' style={{fontSize: "20px"}}></i>
                                                             <div className='al_docavatar'><div>N</div><div>A</div></div>
                                                         </div>
                                                     </td>
@@ -163,6 +166,7 @@ export default function ListofPatients() {
                                                     <td>
                                                         <div className='d-flex gap-2 align-items-center'>
                                                             <i className='icon_alfred_circle_plus pointer' onClick={() => setSecondaryDoctor(true)}></i>
+                                                            <i className='icon_alfred_unmap pointer text-danger' style={{fontSize: "20px"}}></i>
                                                             <div className='al_docavatar'><img src={userImg} className='' onClick={() => setSecondaryDoctor(true)} alt="" /></div>
                                                         </div>
                                                     </td>

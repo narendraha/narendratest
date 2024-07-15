@@ -57,21 +57,21 @@ export const SymptomsListForm = () => {
         <React.Fragment>
             <div className="d-flex justify-content-between mb-2">
                 <p>Select the symptoms range listed below</p>
-                {/* {lastUpdatedSymptomsDetails?.difference >= 0 ? */}
-                {/* ( */}
-                <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
-                    <img src={bulb} alt="" width={20} />
-                    You, Last gave your symptoms
-                    <span style={{ color: "#3bc0c3" }}>
-                        {lastUpdatedSymptomsDetails?.difference}
-                    </span>
-                    days ago on
-                    <span style={{ color: "#3bc0c3" }}>
-                        {lastUpdatedSymptomsDetails?.date}
-                    </span>
-                </div>
-                {/* )  */}
-                {/* : null} */}
+                {/* {lastUpdatedSymptomsDetails?.difference >= 0 ?
+                    (
+                        <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
+                            <img src={bulb} alt="" width={20} />
+                            You, Last gave your symptoms
+                            <span style={{ color: "#3bc0c3" }}>
+                                {lastUpdatedSymptomsDetails?.difference}
+                            </span>
+                            days ago on
+                            <span style={{ color: "#3bc0c3" }}>
+                                {lastUpdatedSymptomsDetails?.date}
+                            </span>
+                        </div>
+                    )
+                    : null} */}
             </div>
             <Formik
                 initialValues={{

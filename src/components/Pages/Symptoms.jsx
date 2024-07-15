@@ -1,19 +1,19 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
 import chestpain from '../../images/chestpain.png';
-import shortnessbreath from '../../images/shortnessbreath.png';
+import diziness from '../../images/diziness.png';
 import fatigue from '../../images/fatigue.png';
 import headedness from '../../images/headedness.png';
-import diziness from '../../images/diziness.png';
+import shortnessbreath from '../../images/shortnessbreath.png';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Symptoms() {
   pageTitle('Symptoms');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/symptomsbg.png"
         title="Don’t Let Your Health<br/> Take a Backseat!"

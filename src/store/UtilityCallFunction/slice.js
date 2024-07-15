@@ -44,15 +44,12 @@ const utilityCallFunctionSlice = createSlice({
     },
 });
 
+const { actions, reducer } = utilityCallFunctionSlice;
 export const {
     setLoading,
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,
-} = utilityCallFunctionSlice.actions;
+} = actions;
 
-export default utilityCallFunctionSlice.reducer;
-
-export const updateSlice2Data = (data) => (dispatch) => {
-    dispatch(setLoading(data));
-  };
+export default reducer;

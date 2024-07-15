@@ -1,15 +1,15 @@
 import React from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
 import exercise from '../../images/exercise.png';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Exercise() {
   pageTitle('Exercise');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/exercisebg.png"
         title="Don’t Let Your Health<br/> Take a Backseat!"

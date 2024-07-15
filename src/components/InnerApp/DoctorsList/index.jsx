@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
-import Switch from "react-switch";
-import { Card, CardBody, Col, Label, Row } from 'reactstrap';
+import { Card, CardBody, Col, Label, Row, FormGroup, Modal, ModalBody } from 'reactstrap';
 import doctorImg from '../../../images/docimg.png';
+import Select from "react-select";
 
 export default function DoctorsList() {
-    const [view, setView] = useState("view");
-
+    const [view, setView] = useState(false);
+    const hospitalsList = [
+        { value: "Hospital1", label: "Hospital1" },
+        { value: "Hospital2", label: "Hospital2" },
+        { value: "Hospital3", label: "Hospital3" },
+        { value: "Hospital4", label: "Hospital4" }
+    ];
+    const doctorsList = [
+        { value: "Dr. George", label: "Dr. George" },
+        { value: "Dr. Ali Razaq", label: "Dr. Ali Razaq" },
+        { value: "Dr. James", label: "Dr. James" },
+        { value: "Dr. Adem", label: "Dr. Adem" }
+    ];
     return (
         <>
             <div className="wflexLayout">
                 <div className='al-pad d-flex align-items-center pb-1'>
-                    <Col>
-                        <h3 className='bc_main_text mb-0'>Your Doctors</h3>
+                    <Col className='d-flex align-items-center'>
+                        <h3 className='bc_main_text mb-0 me-4'>Your Doctors</h3>
+                        <button type="button" className="al_add_dashed_button mb-0" onClick={() => setView("add")}>
+                            <i className='icon_alfred_plus me-2'></i>
+                            Add Doctor
+                        </button>
                     </Col>
                     <div className='w-auto'>
                         <div className="al_searchleft px-0">
@@ -51,7 +66,6 @@ export default function DoctorsList() {
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
-                                                            <i className='icon_alfred_trashbin'></i>
                                                             <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
                                                         </div>
                                                     </Row>
@@ -76,14 +90,13 @@ export default function DoctorsList() {
                                                     <Row>
                                                         <Col>
                                                             <Label>Doctor Type</Label>
-                                                            <div className='fw-medium'>Primary Doctor</div>
+                                                            <div className='fw-medium'>Secondary Doctor</div>
                                                         </Col>
                                                         <Col className='w-auto'>
                                                             <Label>From</Label>
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
-                                                            <i className='icon_alfred_trashbin'></i>
                                                             <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
                                                         </div>
                                                     </Row>
@@ -108,14 +121,14 @@ export default function DoctorsList() {
                                                     <Row>
                                                         <Col>
                                                             <Label>Doctor Type</Label>
-                                                            <div className='fw-medium'>Primary Doctor</div>
+                                                            <div className='fw-medium'>Secondary Doctor</div>
                                                         </Col>
                                                         <Col className='w-auto'>
                                                             <Label>From</Label>
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
-                                                            <i className='icon_alfred_trashbin'></i>
+                                                            {/* <i className='icon_alfred_trashbin'></i> */}
                                                             <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
                                                         </div>
                                                     </Row>
@@ -170,6 +183,78 @@ export default function DoctorsList() {
                         </Card>
                     </Col>
                 </Row>
+
+                <Modal className='modal-sm detailsModal' isOpen={view} wrapClassName="al_outerparentwp">
+                    <div className='d-flex align-items-center justify-content-between p-4'>
+                        <h6 className='mb-0'>Add Primary Doctor</h6>
+                        <i className="icon_alfred_close pointer" title="Close" onClick={() => setView(false)}></i>
+                    </div>
+                    <ModalBody className="wflexLayout p-0">
+                        <div className='wflexScroll px-4 mb-4'>
+                            <Row>
+                                <Col sm="6">
+                                    <FormGroup>
+                                        <Label><span className='requiredLabel'>*</span>Hospital/Group</Label>
+                                        <Select
+                                            className="inputSelect"
+                                            options={hospitalsList}
+                                            menuPortalTarget={document.body}
+                                            styles={{
+                                                menu: styles => ({ ...styles, zIndex: "3", boxShadow: "0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 11px hsla(0, 0%, 0%, 0.1);", marginTop: 0 }),
+                                                menuList: styles => ({
+                                                    ...styles, maxHeight: '180px', msOverflowStyle: "auto", wordBreak: "break-word", border: "1px solid #efefef", borderRadius: "4px",
+                                                    color: "#333333", fontSize: "0.8em", padding: 0, margin: 0,
+                                                }),
+                                                menuPortal: styles => ({
+                                                    ...styles,
+                                                    zIndex: 9999,
+                                                }),
+                                            }}
+                                            name="hospitalsList"
+                                            onChange={() => { }}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col sm="6">
+                                    <FormGroup>
+                                        <Label><span className='requiredLabel'>*</span>Doctor</Label>
+                                        <Select
+                                            className="inputSelect"
+                                            options={doctorsList}
+                                            menuPortalTarget={document.body}
+                                            styles={{
+                                                menu: styles => ({ ...styles, zIndex: "3", boxShadow: "0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 11px hsla(0, 0%, 0%, 0.1);", marginTop: 0 }),
+                                                menuList: styles => ({
+                                                    ...styles, maxHeight: '180px', msOverflowStyle: "auto", wordBreak: "break-word", border: "1px solid #efefef", borderRadius: "4px",
+                                                    color: "#333333", fontSize: "0.8em", padding: 0, margin: 0,
+                                                }),
+                                                menuPortal: styles => ({
+                                                    ...styles,
+                                                    zIndex: 9999,
+                                                }),
+                                            }}
+                                            name="doctorsList"
+                                            onChange={() => { }}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                            <div className='mt-2'>
+                                <button
+                                    type="button"
+                                    className="al_button_cancel me-3"
+                                    onClick={() => setView(false)}
+                                >Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="al_button_add"
+                                >Save
+                                </button>
+                            </div>
+                        </div>
+                    </ModalBody>
+                </Modal>
             </div>
         </>
     )

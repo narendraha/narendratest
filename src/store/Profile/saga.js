@@ -1,43 +1,19 @@
 import { toast } from 'react-toastify';
 import { all, call, put, select, takeLeading } from 'redux-saga/effects';
-import { callAPI } from '../../_mock/internalJsControl';
+import { callAPI, getActionTypes } from '../../_mock/internalJsControl';
+import { getPatientDetailsRequest, setLoading, setActionTypeAndActionData } from '../UtilityCallFunction/slice';
+import store from '../store';
 import {
     changeProfilePasswordRequest,
     changeProfilePasswordResponse,
-    getPatientDetailsRequest,
-    getPatientDetailsResponse,
     profileDetailsAndProfileImageUpdateRequest,
     profileDetailsAndProfileImageUpdateResponse
 } from './slice';
 
-// TO GET PATIENT DETAILS
-function* getPatientDetails(action) {
-    let profileDetails = ""
-    try {
-        const response = yield call(callAPI, {
-            url: '/userdetails',
-            method: 'GET',
-            data: null,
-            contentType: 'application/json',
-        });
-        if (response?.status === true && response?.statuscode === 200)
-            profileDetails = response?.data
-    } catch (error) {
-        toast(error?.response?.data?.detail, {
-            position: "top-right",
-            type: "error",
-        });
-    }
-
-    yield put(getPatientDetailsResponse(profileDetails))
-    if (action)
-        return profileDetails
-}
-
 // TO UPDATE PROFILE DETAILS AND PROFILE IMAGE
 function* updateProfileDetailsAndProfileImage(action) {
+    store.dispatch(setLoading(true))
     let errorMessages = "";
-    let profileDetails = "";
     let isUpdated = false;
 
     const uploadedProfileImageData = (yield select())['profileSlice']?.uploadedProfileImage?.formData || "";
@@ -83,7 +59,7 @@ function* updateProfileDetailsAndProfileImage(action) {
             if (!uploadProfileImageResponse || (uploadProfileImageResponse && uploadProfileImageResponse?.data && uploadProfileImageResponse?.status && uploadProfileImageResponse?.statuscode === 200)) {
                 if (updateProfileDetailsResponse && updateProfileDetailsResponse?.status && updateProfileDetailsResponse.statuscode === 200) {
                     if (!uploadProfileImageResponse)
-                        profileDetails = yield call(getPatientDetails, true)
+                        store.dispatch(getPatientDetailsRequest())
                     toast(updateProfileDetailsResponse?.message, {
                         position: "top-right",
                         type: "success",
@@ -112,13 +88,18 @@ function* updateProfileDetailsAndProfileImage(action) {
         });
     }
 
-    if (isUpdated)
-        yield put(profileDetailsAndProfileImageUpdateResponse(profileDetails, errorMessages))
+    if (isUpdated) {
+        yield put(profileDetailsAndProfileImageUpdateResponse(errorMessages))
+        store.dispatch(setLoading(false))
+        if (!errorMessages)
+            store.dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
+    }
 }
 
 // TO CHANGE PROFILE PASSWORD
 function* changeProfilePassword(action) {
-    let error = ""
+    store.dispatch(setLoading(true))
+    let errorMessages = ""
     try {
         let response = yield call(callAPI, {
             url: '/change-password',
@@ -132,7 +113,7 @@ function* changeProfilePassword(action) {
                 type: "success",
             });
         } else {
-            error = response?.message
+            errorMessages = response?.message
             // toast(response?.message, {
             //     position: "top-right",
             //     type: "error",
@@ -144,14 +125,17 @@ function* changeProfilePassword(action) {
             type: "error",
         });
     }
-    yield put(changeProfilePasswordResponse(error))
+    yield put(changeProfilePasswordResponse(errorMessages));
+    store.dispatch(setLoading(false))
+    if (!errorMessages) {
+        store.dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
+    }
 }
 
 
 function* watchProfileSaga() {
     yield takeLeading(changeProfilePasswordRequest.type, changeProfilePassword)
     yield takeLeading(profileDetailsAndProfileImageUpdateRequest.type, updateProfileDetailsAndProfileImage)
-    yield takeLeading(getPatientDetailsRequest.type, getPatientDetails);
 }
 
 export default watchProfileSaga;

@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { pageTitle } from "../../helpers/PageTitle";
+import { Icon } from "@iconify/react";
+import { Col, Row } from "reactstrap";
+import { v4 as uuidv4 } from 'uuid';
+import { pageTitle } from "../../_mock/PageTitle";
 import { AxiosInstance } from "../../_mock/utilities";
-import Chatuser from "../../images/usericon.svg";
 import Chatbot from "../../images/alfredicon.svg";
-import { Row, Col } from "reactstrap";
 import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
-import { Icon } from "@iconify/react";
-import { v4 as uuidv4 } from 'uuid';
+import Chatuser from "../../images/usericon.svg";
 
-export default function HomeStyle3() {
+export default function HomeEducationalBot() {
   pageTitle("Home");
   const inputRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
@@ -75,7 +75,8 @@ export default function HomeStyle3() {
     };
     // api integration
     await AxiosInstance("application/json")
-      .post(`/history`, data)
+      // .post(`/history`, data)
+      .post(`/education_bot_home`, data)
       .then((res) => {
         if (res && res.data && res.status === 200) {
           setIsInputShow(false);
@@ -84,9 +85,36 @@ export default function HomeStyle3() {
             const responseData = res.data.data;
             // Convert responseData to an array of objects
             setIsLoading(false);
+            // setChatHistory((prevHistory) => [
+            //   ...prevHistory,
+            //   { Alfred: responseData?.alfred },
+            // ]); /* Add new item to end of array */
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              { Alfred: responseData?.alfred },
+              {
+                alfred:
+                  `<html>
+                    <head>
+                      <style>
+                        body {
+                          font - family: Poppins;
+                        font-size: 13px;
+                        line-height: 1.8;}
+                        ol {
+                          margin - top: 5px;}
+                        ol li {
+                          margin - bottom: 6px;}
+                        ul {
+                          margin - top: 5px;}
+                        ul li {
+                          margin - bottom: 6px;}
+                      </style>
+                    </head>
+                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
+                      ${responseData?.alfred}
+                    </body>
+                  </html>`
+              }
             ]); /* Add new item to end of array */
           } else {
           }
@@ -127,7 +155,10 @@ export default function HomeStyle3() {
                         </div>
                         <Col>
                           <h6 className="mb-0">{key}</h6>
-                          <div>{value}</div>
+                          {/* <div>{value}</div> */}
+                          {key === "user" ?
+                            <div>{value}</div> :
+                            <div dangerouslySetInnerHTML={{ __html: value }} />}
                           {key === "Alfred" && (
                             <>
                               <Icon

@@ -1,9 +1,9 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';
-import Spacing from '../DefaultPages/Spacing';
+import { pageTitle } from '../../_mock/PageTitle';
 import animation from '../../images/animation.mp4';
+import Spacing from '../DefaultPages/Spacing';
+import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';
+import Section from './Section';
 
 const personomicsData = [
   {

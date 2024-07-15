@@ -1,8 +1,8 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
+import { pageTitle } from '../../_mock/PageTitle';
 import Accordion from '../DefaultPages/Accordin';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 const faqData = [
   {
@@ -55,7 +55,7 @@ export default function Affaq() {
   pageTitle('Affaq');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/faq.png"
         title="Welcome to HelloAlfred<br/>Your AI Health companion"

@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { Col, Row } from "reactstrap";
-import { AxiosInstance } from "../../_mock/utilities";
-import { pageTitle } from "../../helpers/PageTitle";
-import Chatbot from "../../images/alfredicon.svg";
-import ChatFemaleuser from "../../images/femaleuserImg.jpg";
-import ChatMaleuser from "../../images/userprofile.jpg";
-import ModalView from "../Utilities/ModalView";
-import { getProfileCmpDetails } from '../../_mock/helperIndex';
-import Loading from "../InnerApp/LoadingComponent";
+import { pageTitle } from "../../../_mock/PageTitle";
+import { getProfileCmpDetails } from '../../../_mock/helperIndex';
+import { AxiosInstance } from "../../../_mock/utilities";
+import Chatbot from "../../../images/alfredicon.svg";
+import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
+import ChatMaleuser from "../../../images/userprofile.jpg";
+import ModalView from "../../Utilities/ModalView";
+import Loading from "../LoadingComponent";
 
-export default function Chat() {
+export default function BehaviouralBotManager() {
   pageTitle("Behavioural chat");
   const navigate = useNavigate();
   const inputRef = useRef(null);

@@ -4,16 +4,16 @@ import { useNavigate } from "react-router";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
-import { allowsOnlyNumeric } from "../../_mock/RegularExp";
-import { AxiosInstance } from "../../_mock/utilities";
-import { pageTitle } from "../../helpers/PageTitle";
-import Chatbot from "../../images/alfredicon.svg";
-import ChatFemaleuser from "../../images/femaleuserImg.jpg";
-import incompleteprofile from "../../images/incompleteprofile.png";
-import ChatMaleuser from "../../images/userprofile.jpg";
-import Loading from "../InnerApp/LoadingComponent";
-import ModalView from "../Utilities/ModalView";
-import { getProfileCmpDetails } from '../../_mock/helperIndex';
+import { pageTitle } from "../../../_mock/PageTitle";
+import { allowsOnlyNumeric } from "../../../_mock/RegularExp";
+import { getProfileCmpDetails } from '../../../_mock/helperIndex';
+import { AxiosInstance } from "../../../_mock/utilities";
+import Chatbot from "../../../images/alfredicon.svg";
+import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
+import incompleteprofile from "../../../images/incompleteprofile.png";
+import ChatMaleuser from "../../../images/userprofile.jpg";
+import Loading from "../../InnerApp/LoadingComponent";
+import ModalView from "../../Utilities/ModalView";
 
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");

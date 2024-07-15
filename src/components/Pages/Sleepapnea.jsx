@@ -1,15 +1,15 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import { Row, Col } from 'reactstrap';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import { Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
 import sleepapnea from "../../images/sleepapnea.jpg";
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Sleepapnea() {
   pageTitle('Sleep apnea');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/sleepapneabg.png"
         title="Don’t Let Your Health<br/> Take a Backseat!"

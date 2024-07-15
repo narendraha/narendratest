@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Button, Popover, PopoverBody } from 'reactstrap';
 import chatBot from '../../images/chatboticon.svg';
-import ChatBot from '../ChatBot';
+import EducationalChatBot from '../InnerApp/EducationalChatBot/EducationalChatBot';
 import ConfirmationAction from './ConfirmationAction';
 import Loading from './Loading';
 import SideNav from './SideNav';
@@ -18,7 +18,6 @@ export default function MainLayout() {
     }, []);
     return <React.Fragment>
         <div className='al_site_container'>
-            {/* <LayoutAlertMessage /> */}
             <Suspense fallback={<Loading />}>
                 <ConfirmationAction />
                 <div className='wflexLayout flex-row position-relative'>
@@ -29,7 +28,7 @@ export default function MainLayout() {
                             <Outlet />
                         </main>
                     </div>
-                    {botisOpen && <ChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
+                    {botisOpen && <EducationalChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
                 </div>
             </Suspense>
             <Button id="homechatpopover" type="button" className='p-0 al_chat'>

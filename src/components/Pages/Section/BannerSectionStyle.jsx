@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import Button from '../../DefaultPages/Button';
 import Spacing from '../../DefaultPages/Spacing';
 
-export default function BannerSectionStyle3({
+export default function BannerSectionStyle({
   bgUrl,
   imgUrl,
   title,

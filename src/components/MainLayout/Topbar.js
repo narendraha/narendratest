@@ -40,32 +40,75 @@ export default function Topbar(props) {
 
   const menuData = [
     {
-      moduleId: '1',
-      name: 'Dashboard',
-      link: 'dashboard',
-      icon: 'icon_alfred_dashboard',
+      moduleId: "2",
+      name: "Home",
+      link: "home",
+      icon: "icon_alfred_home",
       subModules: [
-        { id: "1", name: "Dashboard", link: 'dashboard', icon: 'icon_alfred_dashboard' }
-      ]
+        { id: "1", name: "Home", link: "home", icon: "icon_alfred_home" },
+      ],
     },
     {
-      moduleId: '2',
-      name: 'Home',
-      link: 'home',
-      icon: 'icon_alfred_home',
+      moduleId: "3",
+      name: "Behavioural",
+      link: "chat",
+      icon: "icon_alfred_bot",
       subModules: [
-        { id: "1", name: "Home", link: 'home', icon: 'icon_alfred_home' }
-      ]
+        {
+          id: "1",
+          name: "Behavioural Chat",
+          link: "chat",
+          icon: "icon_alfred_bot",
+        },
+      ],
     },
     {
-      moduleId: '3',
-      name: 'Reports',
-      link: 'transcriptsummary',
-      icon: 'icon_alfred_reports',
+      moduleId: "4",
+      name: "Bot Manager",
+      link: "historychat",
+      icon: "icon_alfred_botquestionnaire",
       subModules: [
-        { id: "1", name: "History Transcript Summary", link: 'transcriptsummary', icon: 'icon_alfred_reports' }
+        {
+          id: "2",
+          name: "History Bot",
+          link: "historychat",
+          icon: "icon_alfred_botquestionnaire",
+        },
+        {
+          id: "3",
+          name: "Upload Document",
+          link: "uploaddocument",
+          icon: "icon_alfred_uploaddocument",
+        }
+      ],
+    },
+    {
+      moduleId: "5",
+      name: "Reports",
+      link: "transcriptsummary",
+      icon: "icon_alfred_reports",
+      subModules: [
+        {
+          id: "1",
+          name: "History Transcript Summary",
+          link: "transcriptsummary",
+          icon: "icon_alfred_reports",
+        },
+      ],
+    },
+    {
+      moduleId: '6',
+      name: 'User Management',
+      link: 'roles',
+      icon: 'icon_alfred_roles',
+      subModules: [
+        { id: "1", name: "Role Management", link: 'roles', icon: 'icon_alfred_roles' },
+        { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' },
+        { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
+        { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' },
+        { id: "5", name: "Approve Users", link: 'approveusers', icon: 'icon_alfred_approveusers' }
       ]
-    }
+    },
   ]
   const lPathName = useLocation().pathname;
   const sideMenu = menuData.find(s => '/' + s.link === lPathName?.replace('/*', '') || s.subModules.findIndex(y => '/' + y.link === lPathName?.replace('/*', '')) !== -1);
@@ -105,6 +148,20 @@ export default function Topbar(props) {
                       <img src={noNotifications} alt="" width={60} />
                       <div className='mt-3'>Clear notifications, just like a steady pulse—nothing new!</div>
                     </div>
+
+                    {/* <div className='al_nudegeitem'>
+                      <div>Dr. George has accepted your request to be as your primary doctor</div>
+                      <div>Dr. George has been removed as a primary doctor for you. Please choose your primary doctor from <Link to="/doctorslist" className='text-decoration-underline'>Your Doctors</Link> page</div>
+                      <div>
+                        <Row className='align-items-center'>
+                          <Col>John smith wants you to be his primary doctor.</Col>
+                          <div className='w-auto'>
+                            <button type="button" className='al_button_sm al_savebtn me-2'>Accept</button>
+                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
+                          </div>
+                        </Row>
+                      </div>
+                    </div> */}
                   </div>
                 </PopoverBody>
               </UncontrolledPopover>

@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// Layouts
-import Layout3 from "./components/MainLayout/Layout3";
-import MainLayout from "./components/MainLayout/index";
-import NonAuthLayout from "./components/MainLayout/nonAuthLayout";
-import Loading from "./components/InnerApp/LoadingComponent";
-// Non-AUth-Layouts
 import ErrorPage from "./components/Pages/ErrorPage";
-import Signin from './components/Auth/SignIn';
-import Register from './components/Auth/Register';
-import Terms from './components/Auth/Terms&Confition';
-import PrivacyPolicy from './components/Auth/PrivacyPolicy';
-import ForgotPassword from './components/Auth/ForgotPassword';
+import Loading from "./components/MainLayout/Loading";
+import MainLayout from "./components/MainLayout/index";
+import Layout from "./components/MainLayout/Layout";
+import NonAuthLayout from './components/MainLayout/nonAuthLayout';
+
+// auth
+import Register from "./components/Auth/Register";
+import Signin from "./components/Auth/SignIn";
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import Terms from "./components/Auth/Terms&Confition";
+import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -22,7 +22,6 @@ const ACO = React.lazy(() => import("./components/Pages/Aco"));
 const Affaq = React.lazy(() => import("./components/Pages/Affaq"));
 const Alcohol = React.lazy(() => import("./components/Pages/Alcohol"));
 const Appointments = React.lazy(() => import("./components/Pages/Appointments"));
-const Chat = React.lazy(() => import("./components/Pages/Chat"));
 const CommunityResources = React.lazy(() => import("./components/Pages/CommunityResources"));
 const Congestive = React.lazy(() => import("./components/Pages/Congestive"));
 const Coronary = React.lazy(() => import("./components/Pages/Coronary"));
@@ -32,8 +31,7 @@ const EcoPharmacy = React.lazy(() => import("./components/Pages/EcoPharmacy"));
 const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
 const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
 const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
-const HistoryChatNew = React.lazy(() => import("./components/Pages/HistoryChatNew"));
-const HomeStyle3 = React.lazy(() => import("./components/Pages/HomeStyle3"));
+const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
 const Medications = React.lazy(() => import("./components/Pages/Medications"));
 const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));
 const Obesity = React.lazy(() => import("./components/Pages/Obesity"));
@@ -49,12 +47,17 @@ const Home = React.lazy(() => import("./components/InnerApp/Home/HomeManager"));
 const Profile = React.lazy(() => import("./components/InnerApp/Profile/ProfileManager"));
 const Dashboard = React.lazy(() => import("./components/InnerApp/Dashboard/Dashboard"));
 const HistorySummary = React.lazy(() => import("./components/InnerApp/HistorySummary/HistorySummary"));
+const HistoryChat = React.lazy(() => import("./components/InnerApp/HistoryChatBot/HistoryChatBot"));
+const BehavioralChat = React.lazy(() => import("./components/InnerApp/BehaviouralChatBot/BehaviouralChatBot"));
 
 // Admin
 const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/index"));
 const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
-
-
+const ListofPatients = React.lazy(() => import("./components/Admin/ListofPatients/index"));
+const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/index"));
+const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
+const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
+const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -78,24 +81,26 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
         {authenticated ? (
           <>
             <Route path="/" element={<MainLayout />}>
+              <Route path="profile" element={<Profile />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="home" element={<Home />} />
+              <Route path="chat" element={<BehavioralChat />} />
+              <Route path="historychat" element={<HistoryChat />} />
               <Route path="transcriptsummary" element={<HistorySummary />} />
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="approveusers" element={<ApproveUsers />} />
-              {/* <Route path="patientslist" element={<ListofPatients />} />
-              <Route path="doctorslist" element={<DoctorsList />} /> */}
-              <Route path="profile" element={<Profile />} />
-              <Route path="chat" element={<Chat />} />
-              {/* <Route path="historychat" element={<HistoryChat />} /> */}
-              <Route path="historychat" element={<HistoryChatNew />} />
+              <Route path="patientslist" element={<ListofPatients />} />
+              <Route path="doctorslist" element={<DoctorsList />} />
+              <Route path="users" element={<UserManagement />} />
+              <Route path="roles" element={<RoleManagement />} />
+              <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </>
         ) : (
           <>
-            <Route path="/" element={<Layout3 />}>
-              <Route index element={<HomeStyle3 />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<HomeEducationalBot />} />
               <Route path="about" element={<About />} />
               <Route path="personomics" element={<Personomics />} />
               <Route path="affaq" element={<Affaq />} />
@@ -114,14 +119,17 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="vascular" element={<Vascular />} />
               <Route path="appointments" element={<Appointments />} />
               <Route path="pharmacy" element={<Pharmacy />} />
-              <Route path="communityresources" element={<CommunityResources />} />
+              <Route
+                path="communityresources"
+                element={<CommunityResources />}
+              />
               <Route path="healthplan" element={<HealthPlan />} />
               <Route path="aco" element={<ACO />} />
               <Route path="ecopharmacy" element={<EcoPharmacy />} />
               <Route path="dietician" element={<Dietician />} />
               <Route path="healthcare" element={<HealthcareConsultant />} />
             </Route>
-            <Route path="/" element={<NonAuthLayout />} >
+            <Route path="/" element={<NonAuthLayout />}>
               <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="terms" element={<Terms />} />
               <Route path="privacypolicy" element={<PrivacyPolicy />} />

@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
-import Section from '../Section';
-import { pageTitle } from '../../helpers/PageTitle';
-import whoweare from '../../images/whoweare.jpg';
-import whatwedo from '../../images/whatwedo.png';
-import phistory from '../../images/phistory.svg';
-import peducation from '../../images/peducation.svg';
-import pbehaviour from '../../images/pbehaviour.svg';
+import { Card, CardBody, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
+import { default as accuratehealth, default as additionalvalue, default as assesssymptoms, default as costeffective } from '../../images/costeffective.png';
 import facebook from '../../images/facebook.svg';
-import twitter from '../../images/twitter.svg';
 import linkedin from '../../images/linkedin.svg';
+import pbehaviour from '../../images/pbehaviour.svg';
+import peducation from '../../images/peducation.svg';
+import phistory from '../../images/phistory.svg';
+import twitter from '../../images/twitter.svg';
+import whatwedo from '../../images/whatwedo.png';
+import whoweare from '../../images/whoweare.jpg';
 import youtube from '../../images/youtube.svg';
-import assesssymptoms from '../../images/costeffective.png';
-import costeffective from '../../images/costeffective.png';
-import accuratehealth from '../../images/costeffective.png';
-import additionalvalue from '../../images/costeffective.png';
-import { Row, Col, Card, CardBody, TabContent, TabPane, NavLink, Nav, NavItem } from 'reactstrap';
 import Spacing from '../DefaultPages/Spacing';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function About() {
   pageTitle('About');
   const [tab, setTab] = useState("1");
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/about/banner_img.png"
         title="Welcome to HelloAlfred<br/>Your AI Health companion"

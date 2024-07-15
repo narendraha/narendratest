@@ -1,14 +1,14 @@
 import React from 'react';
-import { Row, Col, Card, CardBody } from 'reactstrap';
-import { pageTitle } from '../../helpers/PageTitle';
-import Section from '../Section';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import { Card, CardBody, Col, Row } from 'reactstrap';
+import { pageTitle } from '../../_mock/PageTitle';
+import Section from './Section';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function Medications() {
   pageTitle('Medications');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
         imgUrl="/images/medicationbg.png"
         title="Rhythm control is considered<br/> to treat atrial fibrillation"

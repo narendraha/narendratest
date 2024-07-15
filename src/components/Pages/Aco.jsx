@@ -1,12 +1,12 @@
 import React from 'react';
-import { pageTitle } from '../../helpers/PageTitle';
-import BannerSectionStyle3 from '../Section/BannerSection/BannerSectionStyle3';
+import { pageTitle } from '../../_mock/PageTitle';
+import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function ACO() {
   pageTitle('Accountable Care Organization');
   return (
     <>
-      <BannerSectionStyle3
+      <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
         imgUrl="/images/comingsoon.png"
         title="We are coming soon"

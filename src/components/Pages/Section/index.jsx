@@ -1,5 +1,5 @@
 import React from 'react';
-import Spacing from '../DefaultPages/Spacing';
+import Spacing from '../../DefaultPages/Spacing';
 
 export default function Section({
   topMd = '_',

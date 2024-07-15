@@ -145,7 +145,7 @@ video {
 .popover {
   --bs-popover-zindex: 9;
   --bs-popover-max-width: 210px;
-  --bs-popover-font-size: 0.875rem;
+  --bs-popover-font-size: 0.75rem;
   --bs-popover-bg: #fff;
   --bs-popover-border-width: 1px;
   --bs-popover-border-color: var(--bs-border-color-translucent);
@@ -166,7 +166,7 @@ video {
   z-index: var(--bs-popover-zindex);
   display: block;
   max-width: var(--bs-popover-max-width);
-  font-family: var(--bs-font-sans-serif);
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -294,8 +294,8 @@ video {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   scrollbar-color: #cccccc;
 }
 
@@ -309,6 +309,14 @@ video {
   background: #ddd;
   border-radius: 10px;
   opacity: 0.5;
+}
+
+.al_menu_navigator ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.al_menu_navigator ::-webkit-scrollbar-thumb {
+  background: #496581;
 }
 
 @supports (-moz-appearance: none) {
@@ -404,8 +412,8 @@ textarea {
   }
 }
 
-input:not([id$="-input"]),
-input:not([name="mobile"]),
+input[type="text"],
+input[type="password"],
 textarea,
 .react-datepicker-wrapper input,
 .input-group,
@@ -592,30 +600,71 @@ button#notificationpopover {
     &:nth-child(1) {
       .nav-link {
         background-color: #C1DCEB;
+
+        &.active {
+          background-color: #0C8BD2;
+
+          &::after {
+            background-color: #0C8BD2;
+          }
+        }
       }
     }
 
     &:nth-child(2) {
       .nav-link {
         background-color: #EBD6D6;
+
+        &.active {
+          background-color: #EC5858;
+
+          &::after {
+            background-color: #EC5858;
+          }
+        }
       }
     }
 
     &:nth-child(3) {
       .nav-link {
         background-color: #FCF4E1;
+
+        &.active {
+          background-color: #F0BE47;
+
+          &::after {
+            background-color: #F0BE47;
+          }
+        }
       }
     }
 
     &:nth-child(4) {
       .nav-link {
         background-color: #E2FCE1;
+
+        &.active {
+          background-color: #52B74E;
+
+          &::after {
+            background-color: #52B74E;
+          }
+        }
       }
     }
 
     &:nth-child(5) {
       .nav-link {
         background-color: #F0E1FC;
+
+        &.active {
+          background-color: #9C67C6;
+
+          &::after {
+            background-color: #9C67C6;
+          }
+        }
+
         margin-right: 0;
       }
     }
@@ -624,7 +673,6 @@ button#notificationpopover {
       position: relative;
 
       &.active {
-        background-color: #47474C;
         opacity: 1;
 
         &::after {
@@ -637,7 +685,6 @@ button#notificationpopover {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background-color: #47474C;
         }
 
         span:last-child {

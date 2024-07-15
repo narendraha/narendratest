@@ -40,7 +40,7 @@ export default function ChatBot(props) {
     };
     // api integration
     await AxiosInstance("application/json")
-      .post(`/ask_gpt`, data)
+      .post(`/educational_bot`, data)
       .then((res) => {
         if (res && res.data && res.status === 200) {
           setIsShow(true);
@@ -52,7 +52,31 @@ export default function ChatBot(props) {
             // setIsLoading(false);
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              { alfred: responseData?.alfred },
+              {
+                alfred:
+                  `<html>
+                    <head>
+                      <style>
+                        body {
+                          font - family: Poppins;
+                        font-size: 13px;
+                        line-height: 1.8;}
+                        ol {
+                          margin - top: 5px;}
+                        ol li {
+                          margin - bottom: 6px;}
+                        ul {
+                          margin - top: 5px;}
+                        ul li {
+                          margin - bottom: 6px;}
+                      </style>
+                    </head>
+                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
+                      ${responseData?.alfred}
+                    </body>
+                  </html>`
+              }
+              // responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
             toast(res?.data?.message, {
@@ -151,7 +175,9 @@ export default function ChatBot(props) {
                           <h6 className="mb-0 text-capitalize">
                             {key === "user" ? getProfileDetails?.username : key}
                           </h6>
-                          <div>{value}</div>
+                          {key === "user" ?
+                            <div>{value}</div> :
+                            <div dangerouslySetInnerHTML={{ __html: value }} />}
                           {key === "alfred" && (
                             <>
                               <Icon

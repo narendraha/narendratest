@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const ErrorPage = React.lazy(() => import("./components/Pages/ErrorPage"));
-const Loading = React.lazy(() => import("./components/MainLayout/Loading"));
-const MainLayout = React.lazy(() => import("./components/MainLayout/index"));
-const Layout3 = React.lazy(() => import("./components/MainLayout/Layout3"));
+// Layouts
+import Layout3 from "./components/MainLayout/Layout3";
+import MainLayout from "./components/MainLayout/index";
+import NonAuthLayout from "./components/MainLayout/nonAuthLayout";
+import Loading from "./components/InnerApp/LoadingComponent";
+// Non-AUth-Layouts
+import ErrorPage from "./components/Pages/ErrorPage";
+import Signin from './components/Auth/SignIn';
+import Register from './components/Auth/Register';
+import Terms from './components/Auth/Terms&Confition';
+import PrivacyPolicy from './components/Auth/PrivacyPolicy';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -36,13 +43,6 @@ const Smoking = React.lazy(() => import("./components/Pages/Smoking"));
 const Sleepapnea = React.lazy(() => import("./components/Pages/Sleepapnea"));
 const Symptoms = React.lazy(() => import("./components/Pages/Symptoms"));
 const Vascular = React.lazy(() => import("./components/Pages/Vascular"));
-
-// auth
-const Register = React.lazy(() => import("./components/Auth/Register"));
-const Signin = React.lazy(() => import("./components/Auth/SignIn"));
-const PrivacyPolicy = React.lazy(() => import("./components/Auth/PrivacyPolicy"));
-const Terms = React.lazy(() => import("./components/Auth/Terms&Confition"));
-const ForgotPassword = React.lazy(() => import("./components/Auth/ForgotPassword"));
 
 // auth-user
 const Home = React.lazy(() => import("./components/InnerApp/Home/HomeManager"));
@@ -114,22 +114,21 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="vascular" element={<Vascular />} />
               <Route path="appointments" element={<Appointments />} />
               <Route path="pharmacy" element={<Pharmacy />} />
-              <Route
-                path="communityresources"
-                element={<CommunityResources />}
-              />
+              <Route path="communityresources" element={<CommunityResources />} />
               <Route path="healthplan" element={<HealthPlan />} />
               <Route path="aco" element={<ACO />} />
               <Route path="ecopharmacy" element={<EcoPharmacy />} />
               <Route path="dietician" element={<Dietician />} />
               <Route path="healthcare" element={<HealthcareConsultant />} />
             </Route>
-            <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
-            <Route path="terms" element={<Terms />} />
-            <Route path="privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="registration" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="*" element={<ErrorPage />} />
+            <Route path="/" element={<NonAuthLayout />} >
+              <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="registration" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
           </>
         )}
       </Routes>

@@ -40,26 +40,32 @@ import Sleepapnea from "../components/Pages/Sleepapnea";
 import Smoking from "../components/Pages/Smoking";
 import Symptoms from "../components/Pages/Symptoms";
 import Vascular from "../components/Pages/Vascular";
-import Register from "../components/Register";
 import Signin from "../components/Signin";
 import PrivacyPolicy from "../components/Terms/PrivacyPolicy";
 import Terms from "../components/Terms/Terms";
+import RegisterInfo from "../components/Register/RegisterInfo";
+import DoctorRegister from "../components/Register/DoctorRegisterComponent";
+import PatientRegisterBasicInfoComponent from "../components/Register/PatientRegister";
+import OTPComponent from "../components/Register/OTPForm";
+import PasswordResetComponent from "../components/Register/PasswordResetComponent";
+import PasswordSuccessComponent from "../components/Register/PasswordSuccessComponent";
+import SubscriptionFormComponent from "../components/Register/SubscriptionForm";
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(true);
-
+ 
   useEffect(() => {
     // window.scrollTo(0, 0);
     setTimeout(() => {
       setLoading(false);
     }, 1000); // Adjust the timeout as needed
   }, [pathname]);
-
+ 
   if (loading) {
     return <Loading />;
   }
-
+ 
   return (
     <>
       <ToastContainer theme="light" />
@@ -130,7 +136,13 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="terms" element={<Terms />} />
             <Route path="privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="registration" element={<Register />} />
+            <Route path="registration-info" element={<RegisterInfo />} />
+            <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} />
+            <Route path="patient/OTP" element={<OTPComponent />} />
+            <Route path="passwordReset" element={<PasswordResetComponent />} />
+            <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
+            <Route path="subscription" element={<SubscriptionFormComponent />} />
+            <Route path="doctor/registration" element={<DoctorRegister />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<ErrorPage />} />
           </>
@@ -139,5 +151,5 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
     </>
   );
 };
-
+ 
 export default AllRoutes;

@@ -340,7 +340,18 @@ video {
   width: 100%;
   height: 100%;
 }
+.al_accounttype {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
 
+.al_accounttype.selected {
+  background-color: #04C1D6;
+  border-color: #04C1D6;
+}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

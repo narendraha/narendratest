@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, TabContent, Nav, NavItem, NavLink, TabPane, FormGroup, Modal, ModalBody } from 'reactstrap';
 import Select from "react-select";
-import Pagination from '../../Pagination';
+import Pagination from '../../../components/Utilities/Pagination';
 import userImg from '../../../images/docimg.png';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

@@ -9,11 +9,17 @@ import Layout from "./components/MainLayout/Layout";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 
 // auth
-import Register from "./components/Auth/Register";
 import Signin from "./components/Auth/SignIn";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import Terms from "./components/Auth/Terms&Confition";
 import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
+import RegisterInfo from "./components/Auth/RegisterInfo";
+import DoctorRegister from "./components/Auth/DoctorRegisterComponent";
+import PatientRegisterBasicInfoComponent from "./components/Auth/PatientRegister";
+import OTPComponent from "./components/Auth/OTPForm";
+import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
+import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
+import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -133,7 +139,13 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="terms" element={<Terms />} />
               <Route path="privacypolicy" element={<PrivacyPolicy />} />
-              <Route path="registration" element={<Register />} />
+              <Route path="registration-info" element={<RegisterInfo />} />
+              <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} />
+              <Route path="patient/OTP" element={<OTPComponent />} />
+              <Route path="passwordReset" element={<PasswordResetComponent />} />
+              <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
+              <Route path="subscription" element={<SubscriptionFormComponent />} />
+              <Route path="doctor/registration" element={<DoctorRegister />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>

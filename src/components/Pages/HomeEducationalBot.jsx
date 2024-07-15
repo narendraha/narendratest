@@ -149,17 +149,17 @@ export default function HomeEducationalBot() {
                         <div>
                           {key === "User" ? (
                             <img src={Chatuser} alt="chat user" />
-                          ) : key === "Alfred" ? (
+                          ) : key === "alfred" ? (
                             <img src={Chatbot} alt="Bot" />
                           ) : null}
                         </div>
                         <Col>
                           <h6 className="mb-0">{key}</h6>
                           {/* <div>{value}</div> */}
-                          {key === "user" ?
+                          {key === "User" ?
                             <div>{value}</div> :
                             <div dangerouslySetInnerHTML={{ __html: value }} />}
-                          {key === "Alfred" && (
+                          {key === "alfred" && (
                             <>
                               <Icon
                                 icon="iconamoon:like-light"

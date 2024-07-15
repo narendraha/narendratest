@@ -25,6 +25,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_circle_plus:before {
+  content: "\e957";
+}
+.icon_alfred_doctors:before {
+  content: "\e950";
+}
+.icon_alfred_patientslist:before {
+  content: "\e952";
+}
+.icon_alfred_approveusers:before {
+  content: "\e956";
+}
 .icon_alfred_history-chat:before {
   content: "\e94d";
 }

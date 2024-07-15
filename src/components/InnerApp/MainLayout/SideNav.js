@@ -79,7 +79,9 @@ export default function SideNav(props) {
     //   icon: 'icon_alfred_roles',
     //   subModules: [
     //     { id: "1", name: "Role Management", link: 'roles', icon: 'icon_alfred_roles' },
-    //     { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' }
+    //     { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' },
+    //     { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
+    //     { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' }
     //   ]
     // },
     // {

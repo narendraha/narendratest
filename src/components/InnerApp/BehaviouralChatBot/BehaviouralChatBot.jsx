@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { Col, Row } from "reactstrap";
+import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { pageTitle } from "../../../_mock/PageTitle";
 import { getProfileCmpDetails } from '../../../_mock/helperIndex';
 import { AxiosInstance } from "../../../_mock/utilities";
@@ -202,7 +202,12 @@ export default function BehaviouralBotManager() {
               <div className="scrolldiv">
                 <Row className="mb-4 al_chatcontent">
                   <div>
-                    <img src={Chatbot} alt="Bot" />
+                    <img src={Chatbot} alt="Bot" id="botinitialimage" />
+                    <UncontrolledTooltip
+                      modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                      placement='bottom' target="botinitialimage">
+                      Alfred
+                    </UncontrolledTooltip>
                   </div>
                   <Col>
                     {/* <h6 className="mb-0">Alfred</h6> */}
@@ -243,15 +248,27 @@ export default function BehaviouralBotManager() {
                     <React.Fragment key={index}>
                       <Row className={"mb-4 al_chatcontent" + (message.user ? " al_usermsg" : "")} key={index}>
                         <div>
-                          {message.user ? (
+                          {message.user ? (<>
                             <img
                               src={profilePicture}
                               alt="chat user"
                               className="al_chatimg"
+                              id="userimage"
                             />
-                          ) : message.alfred ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="userimage">
+                              {message.user ? getProfileDetails?.username : message.user}
+                            </UncontrolledTooltip>
+                          </>) : message.alfred ? (<>
+                            <img src={Chatbot} alt="Bot" id="botimage" />
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="botimage">
+                              Alfred
+                            </UncontrolledTooltip>
+                          </>) : null}
+
                         </div>
                         <Col>
                           {message.alfred && (
@@ -262,7 +279,7 @@ export default function BehaviouralBotManager() {
                           {message.user !== undefined && (
                             <>
                               {/* <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> */}
-                               <div>{message.user}</div>
+                              <div>{message.user}</div>
                             </>
                           )}
                         </Col>

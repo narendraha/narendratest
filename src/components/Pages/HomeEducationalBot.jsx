@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { v4 as uuidv4 } from 'uuid';
 import { pageTitle } from "../../_mock/PageTitle";
 import { AxiosInstance } from "../../_mock/utilities";
@@ -93,7 +93,7 @@ export default function HomeEducationalBot() {
               ...prevHistory,
               {
                 alfred:
-                `<html>
+                  `<html>
                     <head>
                       <style>
                         body {
@@ -152,11 +152,21 @@ export default function HomeEducationalBot() {
                     {Object.entries(message).map(([key, value]) => (
                       <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
                         <div>
-                          {key === "User" ? (
-                            <img src={Chatuser} alt="chat user" />
-                          ) : key === "alfred" ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
+                          {key === "User" ? (<>
+                            <img src={Chatuser} alt="chat user" id="userimagehomeed" />
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="userimagehomeed">
+                              User
+                            </UncontrolledTooltip>
+                          </>) : key === "alfred" ? (<>
+                            <img src={Chatbot} alt="Bot" id="botimagehomeed" />
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="botimagehomeed">
+                              Alfred
+                            </UncontrolledTooltip>
+                          </>) : null}
                         </div>
                         <Col>
                           {/* <h6 className="mb-0">{key}</h6> */}

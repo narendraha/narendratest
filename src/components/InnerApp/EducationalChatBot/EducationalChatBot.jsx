@@ -55,26 +55,31 @@ export default function EducationalChatBot(props) {
                             {
                                 alfred:
                                     `<html>
-                    <head>
-                      <style>
-                        body {
-                          font - family: Poppins;
-                        font-size: 13px;
-                        line-height: 1.8;}
-                        ol {
-                          margin - top: 5px;}
-                        ol li {
-                          margin - bottom: 6px;}
-                        ul {
-                          margin - top: 5px;}
-                        ul li {
-                          margin - bottom: 6px;}
-                      </style>
-                    </head>
-                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                      ${responseData?.alfred}
-                    </body>
-                  </html>`
+                                        <head>
+                                            <style>
+                                                body {
+                                                    font-family: Poppins;
+                                                    font-size: 13px;
+                                                    line-height: 1.8;
+                                                }
+                                                ol {
+                                                    margin - top: 5px;
+                                                }
+                                                ol li {
+                                                    margin - bottom: 6px;
+                                                }
+                                                ul {
+                                                    margin - top: 5px;
+                                                }
+                                                ul li {
+                                                    margin - bottom: 6px;
+                                                }
+                                            </style>
+                                        </head>
+                                        <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
+                                        ${responseData?.alfred}
+                                        </body>
+                                    </html>`
                             }
                             // responseData?.alfred },
                         ]); /* Add new item to end of array */
@@ -154,7 +159,7 @@ export default function EducationalChatBot(props) {
                                         <img src={Chatbot} alt="Bot" />
                                     </div>
                                     <Col>
-                                        <h6 className="mb-0">Alfred</h6>
+                                        {/* <h6 className="mb-0">Alfred</h6> */}
                                         <div>Hello, I am Alfred! How can i assist you today?</div>
                                     </Col>
                                 </Row>
@@ -172,14 +177,14 @@ export default function EducationalChatBot(props) {
                                                     ) : null}
                                                 </div>
                                                 <Col>
-                                                    <h6 className="mb-0 text-capitalize">
+                                                    {/* <h6 className="mb-0 text-capitalize">
                                                         {key === "user" ? getProfileDetails?.username : key}
-                                                    </h6>
+                                                    </h6> */}
                                                     {key === "user" ?
                                                         <div>{value}</div> :
                                                         <div dangerouslySetInnerHTML={{ __html: value }} />}
                                                     {key === "alfred" && (
-                                                        <>
+                                                        <p className="mb-0 mt-1">
                                                             <Icon
                                                                 icon="iconamoon:like-light"
                                                                 width="1.5em"
@@ -201,7 +206,7 @@ export default function EducationalChatBot(props) {
                                                                     color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
                                                                 }}
                                                             />
-                                                        </>
+                                                        </p>
                                                     )}
                                                 </Col>
                                             </Row>

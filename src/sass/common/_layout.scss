@@ -860,12 +860,14 @@ button.al_roundbtn {
 
 .al_chatcontent {
     display: flex;
+    align-items: flex-start;
     font-size: 13px;
     line-height: normal;
     color: #2C2C37;
     margin: 0;
 
     &.al_usermsg {
+
         text-align: right;
         flex-direction: row-reverse;
 
@@ -873,6 +875,14 @@ button.al_roundbtn {
             background-color: #ededed;
             border: 1px solid #ededed;
             border-radius: 50%;
+            width: 38px !important;
+            height: 38px;
+        }
+
+        .col {
+            >div {
+                background-color: #e4fbf9 !important;
+            }
         }
     }
 
@@ -883,6 +893,17 @@ button.al_roundbtn {
 
     .col {
         max-width: 85%;
+
+        >div {
+            background-color: #f5f5f5;
+            padding: 11px 15px;
+            border-radius: 15px;
+            display: inline-block;
+
+            p:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 
     img {
@@ -958,10 +979,25 @@ button.al_roundbtn {
                 overflow-y: auto;
 
                 .scrolldiv {
-                    // height: 55vh;
                     margin-top: 20px;
                     padding: 0 20px 20px;
-                    // overflow-y: auto;
+
+                    .al_chatcontent {
+                        .col {
+                            max-width: 85%;
+
+                            >div {
+                                background-color: #ffffff;
+                                padding: 11px 15px;
+                                border-radius: 15px;
+                                display: inline-block;
+
+                                p:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1073,7 +1109,7 @@ button#chatpopover {
     }
 
     .al_chatbotauth {
-        padding-top: 80px;
+        padding-top: 30px;
         height: 100%;
 
         .chatbtn {
@@ -2038,6 +2074,7 @@ ul.standardPlans {
             line-height: normal;
             color: #959CA7;
             font-weight: 300;
+            width: max-content;
 
             &:first-child {
                 left: 2% !important;

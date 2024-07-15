@@ -205,7 +205,7 @@ export default function BehaviouralBotManager() {
                     <img src={Chatbot} alt="Bot" />
                   </div>
                   <Col>
-                    <h6 className="mb-0">Alfred</h6>
+                    {/* <h6 className="mb-0">Alfred</h6> */}
                     <div>
                       Welcome to the Patient Personality Questionnaire, my name
                       Alfred and I'll be leading you through a series of 17
@@ -256,12 +256,13 @@ export default function BehaviouralBotManager() {
                         <Col>
                           {message.alfred && (
                             <>
-                              <h6 className="mb-0">Alfred:</h6> <div>{message.alfred}</div>
+                              <div>{message.alfred}</div>
                             </>
                           )}
                           {message.user !== undefined && (
                             <>
-                              <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> <div>{message.user}</div>
+                              {/* <h6 className="mb-0 text-capitalize">{message.user ? getProfileDetails?.username : message.user}</h6> */}
+                               <div>{message.user}</div>
                             </>
                           )}
                         </Col>

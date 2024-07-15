@@ -383,9 +383,9 @@ export default function HistoryChatBot() {
                               ) : null}
                             </div>
                             <Col>
-                              <h6 className="mb-0 text-capitalize">
+                              {/* <h6 className="mb-0 text-capitalize">
                                 {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
-                              </h6>
+                              </h6> */}
                               <div style={{ whiteSpace: "pre-wrap" }}>{message.text}</div>
                             </Col>
                           </Row>

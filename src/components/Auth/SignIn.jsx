@@ -147,7 +147,6 @@ export default function Signin({ setIsAuthenticated }) {
                     <div className="al_homemenu" id="backtohome">
                       <i className="icon_alfred_home"></i>
                       <UncontrolledTooltip
-                        placementPrefix="al_bs_tooltip"
                         modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                         placement='left' target="backtohome">
                         Back to Home

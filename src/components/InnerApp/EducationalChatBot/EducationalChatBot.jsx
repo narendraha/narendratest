@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
-import { Button, Card, CardBody, Col, Row } from "reactstrap";
+import { Button, Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import Chatbot from "../../../images/alfredicon.svg";
 import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
@@ -55,26 +55,31 @@ export default function EducationalChatBot(props) {
                             {
                                 alfred:
                                     `<html>
-                    <head>
-                      <style>
-                        body {
-                          font - family: Poppins;
-                        font-size: 13px;
-                        line-height: 1.8;}
-                        ol {
-                          margin - top: 5px;}
-                        ol li {
-                          margin - bottom: 6px;}
-                        ul {
-                          margin - top: 5px;}
-                        ul li {
-                          margin - bottom: 6px;}
-                      </style>
-                    </head>
-                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                      ${responseData?.alfred}
-                    </body>
-                  </html>`
+                                        <head>
+                                            <style>
+                                                body {
+                                                    font-family: Poppins;
+                                                    font-size: 13px;
+                                                    line-height: 1.8;
+                                                }
+                                                ol {
+                                                    margin - top: 5px;
+                                                }
+                                                ol li {
+                                                    margin - bottom: 6px;
+                                                }
+                                                ul {
+                                                    margin - top: 5px;
+                                                }
+                                                ul li {
+                                                    margin - bottom: 6px;
+                                                }
+                                            </style>
+                                        </head>
+                                        <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
+                                        ${responseData?.alfred}
+                                        </body>
+                                    </html>`
                             }
                             // responseData?.alfred },
                         ]); /* Add new item to end of array */
@@ -151,10 +156,15 @@ export default function EducationalChatBot(props) {
                             <div className="scrolldiv">
                                 <Row className="mb-4 al_chatcontent">
                                     <div>
-                                        <img src={Chatbot} alt="Bot" />
+                                        <img src={Chatbot} alt="Bot" id="botinitialimage" />
+                                        <UncontrolledTooltip
+                                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                                            placement='bottom' target="botinitialimage">
+                                            Alfred
+                                        </UncontrolledTooltip>
                                     </div>
                                     <Col>
-                                        <h6 className="mb-0">Alfred</h6>
+                                        {/* <h6 className="mb-0">Alfred</h6> */}
                                         <div>Hello, I am Alfred! How can i assist you today?</div>
                                     </Col>
                                 </Row>
@@ -163,23 +173,34 @@ export default function EducationalChatBot(props) {
                                         {Object.entries(message).map(([key, value]) => (
                                             <Row className={"mb-4 al_chatcontent" + (key === "user" ? " al_usermsg" : "")} key={key}>
                                                 <div>
-                                                    {key === "user" ? (
+                                                    {key === "user" ? (<>
                                                         <img
                                                             src={profilePicture}
-                                                            alt="chat user" />
-                                                    ) : key === "alfred" ? (
-                                                        <img src={Chatbot} alt="Bot" />
-                                                    ) : null}
+                                                            alt="chat user"
+                                                            id="userimageed" />
+                                                        <UncontrolledTooltip
+                                                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                                                            placement='bottom' target="userimageed">
+                                                            {message.user ? getProfileDetails?.username : message.user}
+                                                        </UncontrolledTooltip>
+                                                    </>) : key === "alfred" ? (<>
+                                                        <img src={Chatbot} alt="Bot" id="botimageed" />
+                                                        <UncontrolledTooltip
+                                                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                                                            placement='bottom' target="botimageed">
+                                                            Alfred
+                                                        </UncontrolledTooltip>
+                                                    </>) : null}
                                                 </div>
                                                 <Col>
-                                                    <h6 className="mb-0 text-capitalize">
+                                                    {/* <h6 className="mb-0 text-capitalize">
                                                         {key === "user" ? getProfileDetails?.username : key}
-                                                    </h6>
+                                                    </h6> */}
                                                     {key === "user" ?
                                                         <div>{value}</div> :
                                                         <div dangerouslySetInnerHTML={{ __html: value }} />}
                                                     {key === "alfred" && (
-                                                        <>
+                                                        <p className="mb-0 mt-1">
                                                             <Icon
                                                                 icon="iconamoon:like-light"
                                                                 width="1.5em"
@@ -201,7 +222,7 @@ export default function EducationalChatBot(props) {
                                                                     color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
                                                                 }}
                                                             />
-                                                        </>
+                                                        </p>
                                                     )}
                                                 </Col>
                                             </Row>

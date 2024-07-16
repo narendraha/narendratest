@@ -87,9 +87,9 @@ export const SymptomsListForm = () => {
                         <div className="al_symptoms">
                             <Row>
                                 {values?.ListOfSymptomsCapturingData?.map((sympt, index) => (
-                                    <Col lg="4" md="6" sm="12" key={sympt?.key}>
+                                    <Col lg="4" md="6" sm="12" key={sympt?.key} className="mb-4">
                                         <h6>{sympt.symptomName}</h6>
-                                        <Card className="mb-0 al_cardnoborder">
+                                        <Card className="al_cardnoborder">
                                             <CardBody>
                                                 <strong>Frequency</strong>
                                                 <div

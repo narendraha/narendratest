@@ -978,7 +978,7 @@ button.al_roundbtn {
 .al_chatbot {
     height: 100%;
     font-size: 14px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 12px rgba(120, 120, 120, 0.1);
     border-left: 1px solid #f6f6f6;
 
     h6 {
@@ -1017,6 +1017,18 @@ button.al_roundbtn {
                                 p:last-child {
                                     margin-bottom: 0;
                                 }
+                            }
+                        }
+
+                        img {
+                            width: 20px !important;
+                            height: 20px !important;
+                        }
+
+                        &.al_usermsg {
+                            img {
+                                width: 30px !important;
+                                height: 30px !important;
                             }
                         }
                     }

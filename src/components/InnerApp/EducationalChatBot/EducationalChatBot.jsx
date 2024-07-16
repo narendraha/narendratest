@@ -142,8 +142,14 @@ export default function EducationalChatBot(props) {
             <div className="al_chatbot">
                 <Card>
                     <CardBody className="d-flex flex-column">
-                        <div className="d-flex align-items-center pb-1" style={{ backgroundColor: "#ffffff" }}>
-                            <h6 className="mb-0 ps-3">ChatBot</h6>
+                        <div className="d-flex align-items-center py-1" style={{ backgroundColor: "#ffffff" }}>
+                            <div className="d-flex align-items-center">
+                                <img src={Chatbot} alt="botimage" className="ps-3" />
+                                <div className="ps-2" style={{lineHeight: 1.1}}>
+                                    <div className="fw-medium">ChatBot</div>
+                                    <small className="text-success text-small">Online</small>
+                                </div>
+                            </div>
                             <Button
                                 id="homechatclose"
                                 type="button"

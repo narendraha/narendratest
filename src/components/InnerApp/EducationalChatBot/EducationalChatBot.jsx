@@ -59,7 +59,10 @@ export default function EducationalChatBot(props) {
                                             <style>
                                                 body {
                                                     font-family: Poppins;
+<<<<<<< Updated upstream
                                                     line-height: 1.8;
+=======
+>>>>>>> Stashed changes
                                                 }
                                                 ol {
                                                     margin - top: 5px;

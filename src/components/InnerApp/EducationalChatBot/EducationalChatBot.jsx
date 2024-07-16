@@ -142,14 +142,17 @@ export default function EducationalChatBot(props) {
             <div className="al_chatbot">
                 <Card>
                     <CardBody className="d-flex flex-column">
-                        <Button
-                            id="homechatclose"
-                            type="button"
-                            onClick={() => props.setBotIsOpen(!props.botisOpen)}
-                            className="mt-2"
-                        >
-                            <i className="icon_alfred_close"></i>
-                        </Button>
+                        <div className="d-flex align-items-center pb-1" style={{backgroundColor: "#ffffff"}}>
+                            <h6 className="mb-0 ps-3">ChatBot</h6>
+                            <Button
+                                id="homechatclose"
+                                type="button"
+                                onClick={() => props.setBotIsOpen(!props.botisOpen)}
+                                className="mt-2"
+                            >
+                                <i className="icon_alfred_close"></i>
+                            </Button>
+                        </div>
                         <div className="flex-grow-1">
                             <div className="scrolldiv">
                                 <Row className="mb-4 al_chatcontent">

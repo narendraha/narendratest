@@ -18,7 +18,7 @@ import store from '../store'
 function* RegisterUser({ payload }) {
   // const navigate= useNavigate()
   console.log("payload: ", payload);
-  store.dispatch(setLoading(true))
+  // store.dispatch(setLoading(true))
   yield put(getRegisterResponseData({ ...payload, isLoading: true }));
 
   let response;

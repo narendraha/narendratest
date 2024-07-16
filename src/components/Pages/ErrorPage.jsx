@@ -1,8 +1,8 @@
 import React from 'react';
-import { pageTitle } from '../../_mock/PageTitle';
-import Button from '../DefaultPages/Button';
 import SectionHeading from '../DefaultPages/SectionHeading';
 import Spacing from '../DefaultPages/Spacing';
+import Button from '../DefaultPages/Button';
+import { pageTitle } from '../../_mock/PageTitle';
 
 export default function ErrorPage() {
   pageTitle('Error');

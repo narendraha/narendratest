@@ -54,27 +54,50 @@ export default function EducationalChatBot(props) {
                             ...prevHistory,
                             {
                                 alfred:
-                                    `<html>
-                    <head>
-                      <style>
-                        body {
-                          font - family: Poppins;
-                        font-size: 13px;
-                        line-height: 1.8;}
-                        ol {
-                          margin - top: 5px;}
-                        ol li {
-                          margin - bottom: 6px;}
-                        ul {
-                          margin - top: 5px;}
-                        ul li {
-                          margin - bottom: 6px;}
-                      </style>
-                    </head>
-                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                      ${responseData?.alfred}
-                    </body>
-                  </html>`
+                                    `
+                            <!DOCTYPE html>
+                            <html>
+                                <head>
+                                  <style>
+                                    body {
+                                      font - family: Poppins;
+                                      font-size: 13px;
+                                      line-height: 1.8;
+                                    }
+                                
+                                    ol {
+                                      margin - top: 5px;
+                                    }
+                                
+                                    ol li {
+                                      margin - bottom: 6px;
+                                    }
+                                
+                                    ul {
+                                      margin - top: 5px;
+                                    }
+                                
+                                    ul li {
+                                      list - style - type: disc;
+                                      margin - bottom: 6px;
+                                    }
+                                
+                                    h1,
+                                    h2,
+                                    h3,
+                                    h4,
+                                    h5,
+                                    h6 {
+                                      font - size: 13.5px;
+                                    }
+                                  </style>
+                                </head>
+                                
+                                <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
+                                  ${responseData?.alfred}
+                                </body>
+                                
+                                </html>`
                             }
                             // responseData?.alfred },
                         ]); /* Add new item to end of array */

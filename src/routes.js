@@ -2,24 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ErrorPage from "./components/Pages/ErrorPage";
+import Layout from "./components/MainLayout/Layout";
 import Loading from "./components/MainLayout/Loading";
 import MainLayout from "./components/MainLayout/index";
-import Layout from "./components/MainLayout/Layout";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
+import ErrorPage from "./components/Pages/ErrorPage";
 
 // auth
-import Signin from "./components/Auth/SignIn";
-import ForgotPassword from "./components/Auth/ForgotPassword";
-import Terms from "./components/Auth/Terms&Confition";
-import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
-import RegisterInfo from "./components/Auth/RegisterInfo";
 import DoctorRegister from "./components/Auth/DoctorRegisterComponent";
-import PatientRegisterBasicInfoComponent from "./components/Auth/PatientRegister";
+import ForgotPassword from "./components/Auth/ForgotPassword";
 import OTPComponent from "./components/Auth/OTPForm";
 import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
 import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
+import PatientRegisterBasicInfoComponent from "./components/Auth/PatientRegister";
+import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
+import RegisterInfo from "./components/Auth/RegisterInfo";
+import Signin from "./components/Auth/SignIn";
 import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
+import Terms from "./components/Auth/Terms&Confition";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));

@@ -211,7 +211,6 @@ export default function SideNav(props) {
                               </div>
                               {props.isShowmenu && (
                                 <UncontrolledTooltip
-                                  placementPrefix="al_bs_tooltip"
                                   modifiers={[{
                                     preventOverflow: {
                                       boundariesElement: "window",

@@ -133,7 +133,6 @@ export const ProfileViewDetails = () => {
                         <div>{getProfileDetails?.bmi || "N/A"}</div>
                         <Label>BMI<i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="bmiinfo"></i></Label>
                         <UncontrolledTooltip
-                            placementPrefix="al_bs_tooltip"
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='bottom' target="bmiinfo">
                             BMI will be updated automatically when height and weight are changed

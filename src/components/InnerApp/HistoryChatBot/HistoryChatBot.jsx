@@ -3,7 +3,7 @@ import { Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import Select from "react-select";
 import { toast } from "react-toastify";
-import { Col, FormGroup, Label, Row } from "reactstrap";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import { pageTitle } from "../../../_mock/PageTitle";
 import { allowsOnlyNumeric } from "../../../_mock/RegularExp";
 import { getProfileCmpDetails } from '../../../_mock/helperIndex';
@@ -374,18 +374,28 @@ export default function HistoryChatBot() {
                         <React.Fragment key={index}>
                           <Row className={"mb-4 al_chatcontent" + (message.sender === "user" ? " al_usermsg" : "")} key={index}>
                             <div>
-                              {message.sender === "user" ? (
+                              {message.sender === "user" ? (<>
                                 <img
                                   src={profilePicture}
-                                  alt="chat user" className='al_chatimg' />
-                              ) : message.sender === "alfred" ? (
-                                <img src={Chatbot} alt="Bot" />
-                              ) : null}
+                                  alt="chat user" className='al_chatimg' id="userimagehis" />
+                                <UncontrolledTooltip
+                                  modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                                  placement='bottom' target="userimagehis">
+                                  {message.user ? getProfileDetails?.username : message.user}
+                                </UncontrolledTooltip>
+                              </>) : message.sender === "alfred" ? (<>
+                                <img src={Chatbot} alt="Bot" id="botimagehis" />
+                                <UncontrolledTooltip
+                                  modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                                  placement='bottom' target="botimagehis">
+                                  Alfred
+                                </UncontrolledTooltip>
+                              </>) : null}
                             </div>
                             <Col>
-                              <h6 className="mb-0 text-capitalize">
+                              {/* <h6 className="mb-0 text-capitalize">
                                 {message.sender === "alfred" ? "Alfred" : getProfileDetails?.username}
-                              </h6>
+                              </h6> */}
                               <div style={{ whiteSpace: "pre-wrap" }}>{message.text}</div>
                             </Col>
                           </Row>

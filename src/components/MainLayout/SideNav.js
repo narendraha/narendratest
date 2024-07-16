@@ -209,7 +209,7 @@ export default function SideNav(props) {
                                 <i className={subModules.icon}></i>
                                 <span>{subModules.name}</span>
                               </div>
-                              {props.isShowmenu && (
+                              {props.isShowmenu && subModules.link + subModules.id && (
                                 <UncontrolledTooltip
                                   modifiers={[{
                                     preventOverflow: {

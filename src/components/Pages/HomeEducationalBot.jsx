@@ -9,6 +9,7 @@ import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
 import Chatuser from "../../images/usericon.svg";
+import EducationalBotHTMLcontent from "../Utilities/EducationalBotHTMLcontent";
 
 export default function HomeEducationalBot() {
   pageTitle("Home");
@@ -85,59 +86,9 @@ export default function HomeEducationalBot() {
             const responseData = res.data.data;
             // Convert responseData to an array of objects
             setIsLoading(false);
-            // setChatHistory((prevHistory) => [
-            //   ...prevHistory,
-            //   { Alfred: responseData?.alfred },
-            // ]); /* Add new item to end of array */
             setChatHistory((prevHistory) => [
               ...prevHistory,
-              {
-                alfred:
-                `
-                <!DOCTYPE html>
-                <html>
-                    <head>
-                      <style>
-                        body {
-                          font - family: Poppins;
-                          font-size: 13px;
-                          line-height: 1.8;
-                        }
-                    
-                        ol {
-                          margin - top: 5px;
-                        }
-                    
-                        ol li {
-                          margin - bottom: 6px;
-                        }
-                    
-                        ul {
-                          margin - top: 5px;
-                        }
-                    
-                        ul li {
-                          list - style - type: disc;
-                          margin - bottom: 6px;
-                        }
-                    
-                        h1,
-                        h2,
-                        h3,
-                        h4,
-                        h5,
-                        h6 {
-                          font - size: 13.5px;
-                        }
-                      </style>
-                    </head>
-                    
-                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                    ${responseData?.alfred}
-                    </body>
-                    
-                    </html>`
-              }
+              { Alfred: responseData?.alfred },
             ]); /* Add new item to end of array */
           } else {
           }
@@ -157,6 +108,10 @@ export default function HomeEducationalBot() {
     setInputValue(value); // update the value of input field with user's typing text
   };
 
+  let getIsUser = (key) => {
+    return key === "User"
+  }
+
   return (
     <div className="cs_homepage">
       {isShow ? (
@@ -169,30 +124,23 @@ export default function HomeEducationalBot() {
                   <React.Fragment key={index}>
                     {Object.entries(message).map(([key, value]) => (
                       <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
-                        <div>
-                          {key === "User" ? (<>
-                            <img src={Chatuser} alt="chat user" id="userimagehomeed" />
-                            <UncontrolledTooltip
-                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                              placement='bottom' target="userimagehomeed">
-                              User
-                            </UncontrolledTooltip>
-                          </>) : key === "alfred" ? (<>
-                            <img src={Chatbot} alt="Bot" id="botimagehomeed" />
-                            <UncontrolledTooltip
-                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                              placement='bottom' target="botimagehomeed">
-                              Alfred
-                            </UncontrolledTooltip>
-                          </>) : null}
-                        </div>
+                        {["User", "Alfred"]?.includes(key) ? <div>
+                          <img
+                            src={getIsUser(key) ? Chatuser : Chatbot}
+                            alt={getIsUser(key) ? "chat user" : "Bot"}
+                            id={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}
+                          />
+                          <UncontrolledTooltip
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                            placement='bottom' target={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}>
+                            {getIsUser(key) ? "User" : "Alfred"}
+                          </UncontrolledTooltip>
+                        </div> : null}
                         <Col>
-                          {/* <h6 className="mb-0">{key}</h6> */}
-                          {/* <div>{value}</div> */}
                           {key === "User" ?
                             <div>{value}</div> :
-                            <div dangerouslySetInnerHTML={{ __html: value }} />}
-                          {key === "alfred" && (
+                            <EducationalBotHTMLcontent props={value} />}
+                          {key === "Alfred" && (
                             <p className="mb-0 mt-1">
                               <Icon
                                 icon="iconamoon:like-light"

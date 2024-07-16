@@ -886,6 +886,10 @@ button.al_roundbtn {
         }
     }
 
+    p {
+        font-family: "Poppins" !important;
+    }
+
     >div:first-child {
         width: auto;
         padding: 0;
@@ -1042,7 +1046,7 @@ button#chatpopover {
         width: 55px;
         position: relative;
     }
-    
+
     .card {
         border: none;
         border-radius: 20px;

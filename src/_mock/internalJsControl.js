@@ -134,3 +134,8 @@ export const allowedNumbersOnField = (fieldLength, e) => {
         e.preventDefault();
     }
 }
+
+// for page title 
+export const pageTitle = (title) => {
+    return (document.title = title);
+};

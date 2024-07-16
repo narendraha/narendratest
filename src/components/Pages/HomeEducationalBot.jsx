@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { v4 as uuidv4 } from 'uuid';
-import { pageTitle } from "../../_mock/PageTitle";
+import { pageTitle } from "../../_mock/helperIndex";
 import { AxiosInstance } from "../../_mock/utilities";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
@@ -12,7 +12,7 @@ import Chatuser from "../../images/usericon.svg";
 import EducationalBotHTMLcontent from "../Utilities/EducationalBotHTMLcontent";
 
 export default function HomeEducationalBot() {
-  pageTitle("Home");
+  pageTitle("HelloAlfred - Medical and Healthcare App");
   const inputRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state

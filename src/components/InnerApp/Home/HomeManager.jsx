@@ -9,6 +9,7 @@ import { HealthHub } from "./healthHub";
 import { LifeStyleGoal } from "./lifeStyleGoal";
 import { RiskOptimization } from "./riskOptimization";
 import { SymptomsListForm } from "./symptomsListForm";
+import { pageTitle } from "../../../_mock/internalJsControl";
 
 let navItemsList = [
   { key: getActivetab.HEALTHHUB, navLink: "Health Hub" },
@@ -38,6 +39,14 @@ export default function HomeManager() {
   const getIsActiveTabClassName = (currentTab) => {
     return activeTab === currentTab ? "active" : ""
   }
+
+  let currentHometab = activeTab === getActivetab.HEALTHHUB ? "Health Hub" :
+    activeTab === getActivetab.EXPTMONITORING ? "Expert Monitoring" :
+      activeTab === getActivetab.SYMPTOMSLIST ? "List Of Symptoms" :
+        activeTab === getActivetab.LIFEGOAL ? "Lifestyle Goal" :
+          "Optimal Risk Management";
+
+  pageTitle(`Home | ${currentHometab}`);
 
   return (
     <>

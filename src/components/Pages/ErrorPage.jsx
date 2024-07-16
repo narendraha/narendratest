@@ -2,7 +2,7 @@ import React from 'react';
 import SectionHeading from '../DefaultPages/SectionHeading';
 import Spacing from '../DefaultPages/Spacing';
 import Button from '../DefaultPages/Button';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 
 export default function ErrorPage() {
   pageTitle('Error');

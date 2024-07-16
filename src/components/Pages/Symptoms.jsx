@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'reactstrap';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 import chestpain from '../../images/chestpain.png';
 import diziness from '../../images/diziness.png';
 import fatigue from '../../images/fatigue.png';

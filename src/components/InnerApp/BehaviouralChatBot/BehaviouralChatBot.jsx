@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { Col, Row, UncontrolledTooltip } from "reactstrap";
-import { pageTitle } from "../../../_mock/PageTitle";
-import { getProfileCmpDetails } from '../../../_mock/helperIndex';
+import { getProfileCmpDetails, pageTitle } from '../../../_mock/helperIndex';
 import { AxiosInstance } from "../../../_mock/utilities";
 import Chatbot from "../../../images/alfredicon.svg";
 import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
@@ -12,7 +11,7 @@ import ModalView from "../../Utilities/ModalView";
 import Loading from "../LoadingComponent";
 
 export default function BehaviouralBotManager() {
-  pageTitle("Behavioural chat");
+  pageTitle("Behavioural Chat");
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
@@ -203,11 +202,11 @@ export default function BehaviouralBotManager() {
                 <Row className="mb-4 al_chatcontent">
                   <div>
                     <img src={Chatbot} alt="Bot" id="botinitialimage" />
-                    <UncontrolledTooltip
+                    {/* <UncontrolledTooltip
                       modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                       placement='bottom' target="botinitialimage">
                       Alfred
-                    </UncontrolledTooltip>
+                    </UncontrolledTooltip> */}
                   </div>
                   <Col>
                     {/* <h6 className="mb-0">Alfred</h6> */}

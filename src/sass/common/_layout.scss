@@ -902,6 +902,24 @@ button.al_roundbtn {
         }
     }
 
+    .al_chatfeedbackactions {
+        i {
+            color: #b1b1b1;
+            font-size: 18px;
+            transition: transform .2s;
+            display: inline-flex;
+            width: 15px;
+
+            &:hover {
+                transform: scale(1.3);
+            }
+
+            &.like {
+                color: #3bc0c3;
+            }
+        }
+    }
+
     p {
         font-family: "Poppins" !important;
     }

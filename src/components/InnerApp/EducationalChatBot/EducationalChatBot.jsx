@@ -142,7 +142,7 @@ export default function EducationalChatBot(props) {
             <div className="al_chatbot">
                 <Card>
                     <CardBody className="d-flex flex-column">
-                        <div className="d-flex align-items-center pb-1" style={{backgroundColor: "#ffffff"}}>
+                        <div className="d-flex align-items-center pb-1" style={{ backgroundColor: "#ffffff" }}>
                             <h6 className="mb-0 ps-3">ChatBot</h6>
                             <Button
                                 id="homechatclose"
@@ -230,9 +230,16 @@ export default function EducationalChatBot(props) {
                                         ))}
                                     </React.Fragment>
                                 ))}
-                                {(isLoading || (isLoading && !isShow)) && (
-                                    <div className="al_chatloading"></div>
-                                )}
+                                {(isLoading || (isLoading && !isShow)) && (<Row className="mb-4 al_chatcontent">
+                                    <div>
+                                        <img src={Chatbot} alt="Bot" id="botimageed" />
+                                    </div>
+                                    <Col>
+                                        <div>
+                                            <div className="al_chatloading my-1"></div>
+                                        </div>
+                                    </Col>
+                                </Row>)}
                                 <div ref={messagesEndRef} />
                             </div>
                         </div>

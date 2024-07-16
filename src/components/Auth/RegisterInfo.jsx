@@ -55,7 +55,6 @@ export default function RegisterInfo() {
               </div>
             </Col>
             <Col lg="5" sm="6" className="al_login-right h-100">
-              <div className="d-flex justify-content-center">
                 <div className="wflex-items-center wflexLayout">
                   <div className="w-80 mx-auto wflexLayout wflex-items-center">
                     <h5 className="mb-3">Type of Account</h5>
@@ -67,7 +66,7 @@ export default function RegisterInfo() {
                         onClick={() => setFieldValue("accountType", "Patient")}
                       >
                         <h6 className="mb-0 fw-medium">I am a</h6>
-                        <h4 className="mb-0">Patient</h4>
+                        <h5 className="mb-0 lh-normal pe-5" style={{lineHeight: 1.25}}>Patient</h5>
                       </div>
                       <div
                         className={`al_accounttype ${
@@ -78,7 +77,7 @@ export default function RegisterInfo() {
                         }
                       >
                         <h6 className="mb-0 fw-medium">I am a</h6>
-                        <h4 className="mb-0">Healthcare<br/> Provider</h4>
+                        <h5 className="mb-0 me-4 pe-5" style={{lineHeight: 1.25}}>Healthcare Provider</h5>
                       </div>
                     </div>
                     <ErrorMessage
@@ -86,7 +85,7 @@ export default function RegisterInfo() {
                       component="div"
                       className="text-danger"
                     />
-                    <div className="mt-4 text-medium">
+                    <div className="mt-3 text-medium">
                       Already have an account?{" "}
                       <Link to="/signin" className="al_text_link cs_medium">
                         Sign in
@@ -94,7 +93,7 @@ export default function RegisterInfo() {
                     </div>
                     <Button
                       type="submit"
-                      className="al_login_button mt-3"
+                      className="al_login_button mt-4"
                       // disabled={isSubmitting || !dirty}
                       variant="contained"
                     >
@@ -102,7 +101,6 @@ export default function RegisterInfo() {
                     </Button>
                   </div>
                 </div>
-              </div>
             </Col>
           </Row>
         </Form>

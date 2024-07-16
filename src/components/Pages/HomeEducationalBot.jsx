@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { v4 as uuidv4 } from 'uuid';
 import { pageTitle } from "../../_mock/PageTitle";
 import { AxiosInstance } from "../../_mock/utilities";
@@ -97,23 +97,28 @@ export default function HomeEducationalBot() {
                     <head>
                       <style>
                         body {
-                          font - family: Poppins;
-                        font-size: 13px;
-                        line-height: 1.8;}
+                            font-family: Poppins;
+                            font-size: 13px;
+                            line-height: 1.8;
+                        }
                         ol {
-                          margin - top: 5px;}
+                            margin - top: 5px;
+                        }
                         ol li {
-                          margin - bottom: 6px;}
+                            margin - bottom: 6px;
+                        }
                         ul {
-                          margin - top: 5px;}
+                            margin - top: 5px;
+                        }
                         ul li {
-                          margin - bottom: 6px;}
+                            margin - bottom: 6px;
+                        }
                       </style>
                     </head>
                     <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                      ${responseData?.alfred}
+                    ${responseData?.alfred}
                     </body>
-                  </html>`
+                </html>`
               }
             ]); /* Add new item to end of array */
           } else {
@@ -147,20 +152,30 @@ export default function HomeEducationalBot() {
                     {Object.entries(message).map(([key, value]) => (
                       <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
                         <div>
-                          {key === "User" ? (
-                            <img src={Chatuser} alt="chat user" />
-                          ) : key === "alfred" ? (
-                            <img src={Chatbot} alt="Bot" />
-                          ) : null}
+                          {key === "User" ? (<>
+                            <img src={Chatuser} alt="chat user" id="userimagehomeed" />
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="userimagehomeed">
+                              User
+                            </UncontrolledTooltip>
+                          </>) : key === "alfred" ? (<>
+                            <img src={Chatbot} alt="Bot" id="botimagehomeed" />
+                            <UncontrolledTooltip
+                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                              placement='bottom' target="botimagehomeed">
+                              Alfred
+                            </UncontrolledTooltip>
+                          </>) : null}
                         </div>
                         <Col>
-                          <h6 className="mb-0">{key}</h6>
+                          {/* <h6 className="mb-0">{key}</h6> */}
                           {/* <div>{value}</div> */}
                           {key === "User" ?
                             <div>{value}</div> :
                             <div dangerouslySetInnerHTML={{ __html: value }} />}
                           {key === "alfred" && (
-                            <>
+                            <p className="mb-0 mt-1">
                               <Icon
                                 icon="iconamoon:like-light"
                                 width="1.5em"
@@ -182,7 +197,7 @@ export default function HomeEducationalBot() {
                                   color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
                                 }}
                               />
-                            </>
+                            </p>
                           )}
                         </Col>
                       </Row>

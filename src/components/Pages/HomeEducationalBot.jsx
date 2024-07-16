@@ -170,8 +170,11 @@ export default function HomeEducationalBot() {
                           {/* <h6 className="mb-0">{key}</h6> */}
                           {/* <div>{value}</div> */}
                           {key === "User" ?
-                            <div>{value}</div> :
-                            <div dangerouslySetInnerHTML={{ __html: value }} />}
+                            <div>{value}</div> : <>
+                              <div dangerouslySetInnerHTML={{ __html: value }} />
+                              {isLoading && <div className="al_chatloading"></div>}
+                            </>
+                          }
                           {key === "alfred" && (
                             <p className="mb-0 mt-1">
                               <Icon
@@ -202,7 +205,6 @@ export default function HomeEducationalBot() {
                     ))}
                   </React.Fragment>
                 ))}
-                {isLoading && <div className="al_chatloading"></div>}
                 <div ref={messagesEndRef} />
               </div>
             </div>

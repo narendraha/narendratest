@@ -98,7 +98,6 @@ export default function HomeEducationalBot() {
                       <style>
                         body {
                             font-family: Poppins;
-                            line-height: 1.8;
                         }
                         ol {
                             margin - top: 5px;

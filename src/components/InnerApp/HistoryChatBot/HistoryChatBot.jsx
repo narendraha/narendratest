@@ -400,7 +400,16 @@ export default function HistoryChatBot() {
                           </Row>
                         </React.Fragment>
                       ))}
-                      {isLoading && <div className="al_chatloading"></div>}
+                      {isLoading && <Row className="mb-4 al_chatcontent">
+                        <div>
+                          <img src={Chatbot} alt="Bot" id="botimageed" />
+                        </div>
+                        <Col>
+                          <div>
+                            <div className="al_chatloading my-1"></div>
+                          </div>
+                        </Col>
+                      </Row>}
                       <div ref={messagesEndRef} />
                     </div>}
                   {(responseStatus || questions?.length === 0) && (

@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
+import { Card, CardBody, Col, FormGroup, Label, Row, Modal, ModalBody, Table } from "reactstrap";
 import { getActionTypes, getActivetab } from "../../../_mock/internalJsControl";
 import bulb from "../../../images/idea.png";
 import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest } from "../../../store/Home/slice";
@@ -75,6 +75,46 @@ export const SymptomsListForm = () => {
                         </span>
                     </div>
                 ) : null}
+                <Modal className='modal-md detailsModal' isOpen={false} wrapClassName="al_outerparentwp">
+                    <div className='d-flex align-items-center justify-content-between p-4'>
+                        <h6 className='mb-0'>Last Updated Symptoms (18-06-2024)</h6>
+                        <i className="icon_alfred_close pointer" title="Close" onClick={() => { }}></i>
+                    </div>
+                    <ModalBody className="wflexLayout p-0">
+                        <div className='wflexScroll mb-3'>
+                            <Table borderless className='al_listtable al-pad pt-0 mb-0 al_symtomdetails'>
+                                <thead className='sticky_header'>
+                                    <tr>
+                                        <th>Symptom</th>
+                                        <th>Frequency</th>
+                                        <th>Severity</th>
+                                        <th>Effecting quality of life</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Cold sweat</td>
+                                        <td>Occasionally</td>
+                                        <td>Extreme</td>
+                                        <td>Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chest Pain</td>
+                                        <td>Often</td>
+                                        <td>Moderate</td>
+                                        <td>Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pressure/Discomfort in chest</td>
+                                        <td>Always</td>
+                                        <td>Extreme</td>
+                                        <td>Yes</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    </ModalBody>
+                </Modal>
             </div>
             <Formik
                 initialValues={{

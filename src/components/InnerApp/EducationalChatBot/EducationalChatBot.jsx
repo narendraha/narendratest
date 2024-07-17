@@ -121,14 +121,23 @@ export default function EducationalChatBot(props) {
             <div className="al_chatbot">
                 <Card>
                     <CardBody className="d-flex flex-column">
-                        <Button
-                            id="homechatclose"
-                            type="button"
-                            onClick={() => props.setBotIsOpen(!props.botisOpen)}
-                            className="mt-2"
-                        >
-                            <i className="icon_alfred_close"></i>
-                        </Button>
+                        <div className="d-flex align-items-center py-1" style={{ backgroundColor: "#ffffff" }}>
+                            <div className="d-flex align-items-center">
+                                <img src={Chatbot} alt="botimage" className="ps-3" />
+                                <div className="ps-2" style={{ lineHeight: 1.1 }}>
+                                    <div className="fw-medium">ChatBot</div>
+                                    <small className="text-success text-small">Online</small>
+                                </div>
+                            </div>
+                            <Button
+                                id="homechatclose"
+                                type="button"
+                                onClick={() => props.setBotIsOpen(!props.botisOpen)}
+                                className="mt-2"
+                            >
+                                <i className="icon_alfred_close"></i>
+                            </Button>
+                        </div>
                         <div className="flex-grow-1">
                             <div className="scrolldiv">
                                 <Row className="mb-4 al_chatcontent">
@@ -167,28 +176,9 @@ export default function EducationalChatBot(props) {
                                                         <div>{value}</div> :
                                                         <EducationalBotHTMLcontent props={value} />}
                                                     {key === "alfred" && (
-                                                        <p className="mb-0 mt-1">
-                                                            <Icon
-                                                                icon="iconamoon:like-light"
-                                                                width="1.5em"
-                                                                height="1.5em"
-                                                                onClick={() => handleAction(index, 'like', value)} // Handle like action
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                    color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
-                                                                }}
-                                                            />
-                                                            <Icon
-                                                                icon="iconamoon:dislike-light"
-                                                                width="1.5em"
-                                                                height="1.5em"
-                                                                className="mx-2"
-                                                                onClick={() => handleAction(index, 'dislike', value)} // Handle dislike action
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                    color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
-                                                                }}
-                                                            />
+                                                        <p className="mb-0 mt-2 al_chatfeedbackactions">
+                                                            <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', value)}></i>
+                                                            <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', value)}></i>
                                                         </p>
                                                     )}
                                                 </Col>
@@ -196,9 +186,16 @@ export default function EducationalChatBot(props) {
                                         ))}
                                     </React.Fragment>
                                 ))}
-                                {(isLoading || (isLoading && !isShow)) && (
-                                    <div className="al_chatloading"></div>
-                                )}
+                                {(isLoading || (isLoading && !isShow)) && (<Row className="mb-4 al_chatcontent">
+                                    <div>
+                                        <img src={Chatbot} alt="Bot" id="botimageed" />
+                                    </div>
+                                    <Col>
+                                        <div>
+                                            <div className="al_chatloading my-1"></div>
+                                        </div>
+                                    </Col>
+                                </Row>)}
                                 <div ref={messagesEndRef} />
                             </div>
                         </div>

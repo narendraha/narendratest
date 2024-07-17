@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 import { Button, Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";

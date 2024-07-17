@@ -202,11 +202,11 @@ export default function BehaviouralBotManager() {
                 <Row className="mb-4 al_chatcontent">
                   <div>
                     <img src={Chatbot} alt="Bot" id="botinitialimage" />
-                    {/* <UncontrolledTooltip
+                    <UncontrolledTooltip
                       modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                       placement='bottom' target="botinitialimage">
                       Alfred
-                    </UncontrolledTooltip> */}
+                    </UncontrolledTooltip>
                   </div>
                   <Col>
                     {/* <h6 className="mb-0">Alfred</h6> */}

@@ -57,13 +57,23 @@ a.al_text_link {
   }
 }
 
-.bs_tooltip-auto .tooltip-inner {
+.tooltip {
+  pointer-events: none;
+}
+
+.tooltip-inner {
   max-width: 250px;
   padding: 0.25rem 0.375rem;
-  color: #C6C8D0;
+  color: #dddddd;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 0.375rem;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 300;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 .input-group {

@@ -98,8 +98,6 @@ export default function HomeEducationalBot() {
                       <style>
                         body {
                             font-family: Poppins;
-                            font-size: 13px;
-                            line-height: 1.8;
                         }
                         ol {
                             margin - top: 5px;
@@ -175,28 +173,9 @@ export default function HomeEducationalBot() {
                             <div>{value}</div> :
                             <div dangerouslySetInnerHTML={{ __html: value }} />}
                           {key === "alfred" && (
-                            <p className="mb-0 mt-1">
-                              <Icon
-                                icon="iconamoon:like-light"
-                                width="1.5em"
-                                height="1.5em"
-                                onClick={() => handleAction(index, 'like', value)} // Handle like action
-                                style={{
-                                  cursor: 'pointer',
-                                  color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
-                                }}
-                              />
-                              <Icon
-                                icon="iconamoon:dislike-light"
-                                width="1.5em"
-                                height="1.5em"
-                                className="mx-2"
-                                onClick={() => handleAction(index, 'dislike', value)} // Handle dislike action
-                                style={{
-                                  cursor: 'pointer',
-                                  color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
-                                }}
-                              />
+                            <p className="mb-0 mt-2 al_chatfeedbackactions">
+                              <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', value)}></i>
+                              <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', value)}></i>
                             </p>
                           )}
                         </Col>
@@ -204,7 +183,16 @@ export default function HomeEducationalBot() {
                     ))}
                   </React.Fragment>
                 ))}
-                {isLoading && <div className="al_chatloading"></div>}
+                {isLoading && <Row className="mb-4 al_chatcontent">
+                  <div>
+                    <img src={Chatbot} alt="Bot" id="botimageed" />
+                  </div>
+                  <Col>
+                    <div>
+                      <div className="al_chatloading my-1"></div>
+                    </div>
+                  </Col>
+                </Row>}
                 <div ref={messagesEndRef} />
               </div>
             </div>
@@ -310,8 +298,16 @@ export default function HomeEducationalBot() {
                 </p>
               )}
             </div>
-            {isLoading && !isShow && <div className="al_chatloading"></div>}
-
+            {isLoading && !isShow && <Row className="mb-4 al_chatcontent">
+              <div>
+                <img src={Chatbot} alt="Bot" id="botimageed" />
+              </div>
+              <Col>
+                <div>
+                  <div className="al_chatloading my-1"></div>
+                </div>
+              </Col>
+            </Row>}
           </Col>
         </Row>
       )}

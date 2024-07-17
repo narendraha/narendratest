@@ -411,6 +411,7 @@ section:not(.cs_banner) {
                 border: 1px solid #f0f0ff;
                 border-left: 0;
                 border-right: 0;
+                font-weight: 300;
 
                 &:first-child {
                     border-top-left-radius: 12px;
@@ -471,6 +472,19 @@ section:not(.cs_banner) {
         &:nth-child(6),
         &:nth-last-of-type(2) {
             width: 11%;
+        }
+    }
+}
+
+.al_symtomdetails {
+
+    th,
+    td {
+        width: 20%;
+
+        &:first-child,
+        &:last-child {
+            width: 30%;
         }
     }
 }
@@ -641,7 +655,7 @@ section:not(.cs_banner) {
     margin: 0 auto !important;
 
     .modal-content {
-        border-radius: 25px;
+        border-radius: 18px;
         border: none;
         box-shadow: none;
 
@@ -881,9 +895,33 @@ button.al_roundbtn {
 
         .col {
             >div {
-                background-color: #e4fbf9 !important;
+                background-color: #ddfffc !important;
+                border-top-right-radius: 4px !important;
+                border-top-left-radius: 20px !important;
             }
         }
+    }
+
+    .al_chatfeedbackactions {
+        i {
+            color: #b1b1b1;
+            font-size: 18px;
+            transition: transform .2s;
+            display: inline-flex;
+            width: 15px;
+
+            &:hover {
+                transform: scale(1.3);
+            }
+
+            &.like {
+                color: #3bc0c3;
+            }
+        }
+    }
+
+    p {
+        font-family: "Poppins" !important;
     }
 
     >div:first-child {
@@ -897,8 +935,9 @@ button.al_roundbtn {
         >div {
             background-color: #f5f5f5;
             padding: 11px 15px;
-            border-radius: 15px;
+            border-radius: 20px;
             display: inline-block;
+            border-top-left-radius: 4px;
 
             p:last-child {
                 margin-bottom: 0;
@@ -957,7 +996,7 @@ button.al_roundbtn {
 .al_chatbot {
     height: 100%;
     font-size: 14px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 12px rgba(120, 120, 120, 0.1);
     border-left: 1px solid #f6f6f6;
 
     h6 {
@@ -989,12 +1028,25 @@ button.al_roundbtn {
                             >div {
                                 background-color: #ffffff;
                                 padding: 11px 15px;
-                                border-radius: 15px;
+                                border-radius: 20px;
                                 display: inline-block;
+                                border-top-left-radius: 4px;
 
                                 p:last-child {
                                     margin-bottom: 0;
                                 }
+                            }
+                        }
+
+                        img {
+                            width: 20px !important;
+                            height: 20px !important;
+                        }
+
+                        &.al_usermsg {
+                            img {
+                                width: 30px !important;
+                                height: 30px !important;
                             }
                         }
                     }
@@ -1042,7 +1094,7 @@ button#chatpopover {
         width: 55px;
         position: relative;
     }
-    
+
     .card {
         border: none;
         border-radius: 20px;

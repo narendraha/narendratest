@@ -23,13 +23,10 @@ export const ExpertMonitoring = () => {
                     <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
                         <img src={bulb} alt="" width={20} />
                         You, Last gave your vital{" "}
-                        {lastUpdatedHealthDetails?.difference != 0 &&
-                            <>
-                                <span style={{ color: "#3bc0c3" }}>
-                                    {lastUpdatedHealthDetails?.difference}
-                                </span>
-                                days ago{" "}
-                            </>}
+                        <span style={{ color: "#3bc0c3" }}>
+                            {lastUpdatedHealthDetails?.difference === 0 ? "today " : lastUpdatedHealthDetails?.difference}
+                        </span>
+                        {lastUpdatedHealthDetails?.difference != 0 ? "days ago " : ""}
                         on
                         <span style={{ color: "#3bc0c3" }}>
                             {lastUpdatedHealthDetails?.date}

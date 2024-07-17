@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { UncontrolledTooltip } from "reactstrap";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 import smalllogo from "../../images/alfredlogoicon.svg";
 import logo from "../../images/alfredlogowhite.svg";
@@ -209,7 +208,7 @@ export default function SideNav(props) {
                                 <i className={subModules.icon}></i>
                                 <span>{subModules.name}</span>
                               </div>
-                              {props.isShowmenu && subModules?.link && subModules?.id && (
+                              {/* {props.isShowmenu && (
                                 <UncontrolledTooltip
                                   modifiers={[{
                                     preventOverflow: {
@@ -217,11 +216,11 @@ export default function SideNav(props) {
                                     },
                                   }]}
                                   placement="top"
-                                  target={(subModules.link + subModules.id) || ""}
+                                  target={subModules.link + subModules.id}
                                 >
                                   {subModules.name}
                                 </UncontrolledTooltip>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         ))}

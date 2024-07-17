@@ -264,7 +264,7 @@ function* getSymptomsDetailsLast() {
     let lastUpdatedSymptomsDetails = ""
     try {
         const response = yield call(callAPI, {
-            url: '/',
+            url: '/latest-symptoms-record-date',
             method: 'GET',
             data: null,
             contentType: 'application/json',

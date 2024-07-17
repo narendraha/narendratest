@@ -40,10 +40,10 @@ const homePageSlice = createSlice({
         getSymptomsDetailsResponse: (state, action) => {
             state.symptomsData = action?.payload
         },
-        getSymptomsDetailsLastUpdateRequest: (state, action) => {
+        getSymptomsDetailsLastUpdateRequest: () => { },
+        getSymptomsDetailsLastUpdateResponse: (state, action) => {
             state.lastUpdatedSymptomsDetails = action?.payload
-        },
-        getSymptomsDetailsLastUpdateResponse: () => { }
+        }
     }
 });
 

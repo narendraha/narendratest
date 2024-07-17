@@ -1,12 +1,12 @@
+import React, { useEffect } from "react";
 import { Form, Formik } from "formik";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
 import { getActionTypes, getActivetab } from "../../../_mock/internalJsControl";
 import bulb from "../../../images/idea.png";
-import { addSymptomsDetailRequest, setActiveTabRequest } from "../../../store/Home/slice";
+import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest } from "../../../store/Home/slice";
 import { setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const horizontalLabels = {
@@ -38,7 +38,11 @@ export const SymptomsListForm = () => {
 
     const dispatch = useDispatch();
 
-    const { lastUpdatedSymptomsDetails } = useSelector((state) => state?.homePageSlice)
+    const { lastUpdatedSymptomsDetails } = useSelector((state) => state?.homePageSlice);
+
+    useEffect(() => {
+        dispatch(getSymptomsDetailsLastUpdateRequest())
+    }, [])
 
     const handleFieldOnchange = (e, i, setFieldValue, field) => {
         let value = field === 'serverity' ? ((e <= 30 && e > 10) ? 20 : (e <= 55 && e > 35) ? 45 : (e <= 80 && e > 55) ? 70 : (e <= 100 && e > 80) ? 90 : 0) : e
@@ -57,21 +61,20 @@ export const SymptomsListForm = () => {
         <React.Fragment>
             <div className="d-flex justify-content-between mb-2">
                 <p>Select the symptoms range listed below</p>
-                {/* {lastUpdatedSymptomsDetails?.difference >= 0 ?
-                    (
-                        <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
-                            <img src={bulb} alt="" width={20} />
-                            You, Last gave your symptoms
-                            <span style={{ color: "#3bc0c3" }}>
-                                {lastUpdatedSymptomsDetails?.difference}
-                            </span>
-                            days ago on
-                            <span style={{ color: "#3bc0c3" }}>
-                                {lastUpdatedSymptomsDetails?.date}
-                            </span>
-                        </div>
-                    )
-                    : null} */}
+                {lastUpdatedSymptomsDetails?.difference >= 0 ? (
+                    <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
+                        <img src={bulb} alt="" width={20} />
+                        You, Last gave your symptoms{" "}
+                        <span style={{ color: "#3bc0c3" }}>
+                            {lastUpdatedSymptomsDetails?.difference === 0 ? "today " : lastUpdatedSymptomsDetails?.difference}
+                        </span>
+                        {lastUpdatedSymptomsDetails?.difference != 0 ? "days ago " : ""}
+                        on
+                        <span style={{ color: "#3bc0c3" }}>
+                            {lastUpdatedSymptomsDetails?.date}
+                        </span>
+                    </div>
+                ) : null}
             </div>
             <Formik
                 initialValues={{

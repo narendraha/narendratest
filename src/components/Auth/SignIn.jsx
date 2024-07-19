@@ -1,103 +1,48 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import { useState } from "react";
-import { AxiosInstance } from "../../_mock/utilities";
-import { toast } from "react-toastify";
-import { auth, provider } from "../Firebase";
-import { signInWithPopup } from "firebase/auth";
-import Loading from "../InnerApp/LoadingComponent";
 import { Icon } from "@iconify/react";
-import handwave from '../../images/handwave.png';
-import google from '../../images/google.svg';
-import apple from '../../images/apple.svg';
+import { signInWithPopup } from "firebase/auth";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import * as Yup from "yup";
 import { pageTitle } from "../../_mock/internalJsControl";
+import alferdlogomobile from "../../images/alfredlogo.svg";
+import alferdlogo from "../../images/alfredlogowhite.svg";
+import apple from '../../images/apple.svg';
+import google from '../../images/google.svg';
+import handwave from '../../images/handwave.png';
+import { getFlowForm, googleLogin, loginForm } from "../../store/PatientRegisterFlow/slice";
+import { auth, provider } from "../Firebase";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   pageTitle('Signin')
   const navigate = useNavigate();
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, activeForm, isAuthenticated } = useSelector((state) => state.patientRegisterSlice);
   const [showPassword, setShowPassword] = useState(false);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (activeForm) {
+      navigate(activeForm);
+    }
+  }, [activeForm]);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const handleSubmit = (values) => {
-    setIsLoading(true);
-    let data = {
-      username: values.username,
-      password: values.password,
-    };
-    AxiosInstance("application/json")
-      .post(`/login_account`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          setIsLoading(false);
-          if (res.data.statuscode == "200") {
-            localStorage.setItem("token", res.data?.data?.token);
-          }
-          if (res.data?.statuscode === 200) {
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "success",
-            });
-
-            setIsAuthenticated(true);
-            navigate("/home");
-          } else {
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "error",
-            });
-          }
-        }
-      })
-      .catch((er) => {
-        toast(er?.response?.data?.message, {
-          position: "top-right",
-          type: "error",
-        });
-      });
+    dispatch(loginForm({ actionData: values }));
+    if(isAuthenticated) {
+      setIsAuthenticated(true);
+    }
   };
 
   const handleClick = async () => {
     await signInWithPopup(auth, provider)
       .then((data) => {
-        let userData = {
-          email: data?.user?.email ?? "",
-          username: data?.user?.displayName ?? "",
-        };
-        AxiosInstance("application/json")
-          .post(`/googleauth`, userData)
-          .then((res) => {
-            if (res && res.data && (res.status == 200 || res.status == 201)) {
-              localStorage.setItem("token", res.data?.data?.token);
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "success",
-              });
-              setIsAuthenticated(true);
-              navigate("/profile");
-            } else {
-              toast(res.data?.message, {
-                position: "top-right",
-                type: "error",
-              });
-            }
-          })
-          .catch((er) => {
-            toast(er?.response?.data?.message || er?.message, {
-              position: "top-right",
-              type: "error",
-            });
-          });
+        dispatch(googleLogin({ actionData: data?.user }));
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
 
   return (
@@ -149,8 +94,12 @@ export default function Signin({ setIsAuthenticated }) {
                     <div className="al_homemenu" id="backtohome">
                       <i className="icon_alfred_home"></i>
                       <UncontrolledTooltip
-                        modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                        placement='left' target="backtohome">
+                        modifiers={[
+                          { preventOverflow: { boundariesElement: "window" } },
+                        ]}
+                        placement="left"
+                        target="backtohome"
+                      >
                         Back to Home
                       </UncontrolledTooltip>
                     </div>
@@ -158,12 +107,25 @@ export default function Signin({ setIsAuthenticated }) {
                   <div className="wflexLayout al_mx-auto align-items-center justify-content-center">
                     <div className="wflexScroll w-100">
                       <h5 className="mb-1">
-                        <span className="fw-medium">Welcome to </span><br />
+                        <span className="fw-medium">Welcome to </span>
+                        <br />
                         <span style={{ fontSize: "26px" }}>
-                          Hello<span className="text-info">Alfred.AI <img src={handwave} alt="" width={25} className="mb-2" /></span>
+                          Hello
+                          <span className="text-info">
+                            Alfred.AI{" "}
+                            <img
+                              src={handwave}
+                              alt=""
+                              width={25}
+                              className="mb-2"
+                            />
+                          </span>
                         </span>
                       </h5>
-                      <p className="cs_light text-grey text-italic mb-4" style={{ fontFamily: 'STIX Two Text' }}>
+                      <p
+                        className="cs_light text-grey text-italic mb-4"
+                        style={{ fontFamily: "STIX Two Text" }}
+                      >
                         "Let's take your wellness journey to new heights"
                       </p>
 
@@ -223,9 +185,23 @@ export default function Signin({ setIsAuthenticated }) {
                           </FormGroup>
                         </div>
                         <div className="al_login_footer">
-                          <Link to="/forgot-password" className="al_forgot_pw">
-                            Forgot password?
-                          </Link>
+                          <div
+                            onClick={() =>
+                              dispatch(
+                                getFlowForm({
+                                  activeForm: "",
+                                  flowForm: "forgotPassword",
+                                })
+                              )
+                            }
+                          >
+                            <Link
+                              to="/forgot-password"
+                              className="al_forgot_pw"
+                            >
+                              Forgot password?
+                            </Link>
+                          </div>
                           <button
                             type="submit"
                             // disabled={isSubmitting ? true : false}
@@ -257,10 +233,21 @@ export default function Signin({ setIsAuthenticated }) {
                         onClick={handleClick}
                         className="al_signinbuttons"
                       >
-                        <img src={google} alt="google" className="me-2" width={17} />Sign in / Sign up With Google
+                        <img
+                          src={google}
+                          alt="google"
+                          className="me-2"
+                          width={17}
+                        />
+                        Sign in / Sign up With Google
                       </button>
                       <button type="button" className="al_signinbuttons">
-                        <img src={apple} alt="apple" className="me-2" width={17} />
+                        <img
+                          src={apple}
+                          alt="apple"
+                          className="me-2"
+                          width={17}
+                        />
                         <span>Sign in / Sign up With Apple</span>
                       </button>
                     </div>

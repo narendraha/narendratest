@@ -8,6 +8,7 @@ import alferdlogo from "../../images/alfredlogowhite.svg";
 import { getActionTypes } from "../../_mock/helperIndex";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getForgorPasswordForm,
   getRegisterClear,
   getRegisterPasswordResponseData,
 } from "../../store/PatientRegisterFlow/slice";
@@ -17,7 +18,7 @@ export default function RegisterInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(null);
-  const { isLoading, activeForm, actionData } = useSelector(
+  const { isLoading, activeForm, actionData, flowForm } = useSelector(
     (state) => state.patientRegisterSlice
   );
   const [showPassword, setShowPassword] = useState(false);
@@ -35,15 +36,25 @@ export default function RegisterInfo() {
   };
   const handleFirstFormSubmit = (values) => {
     setFormData({ ...formData, ...values });
-    dispatch(
-      getRegisterPasswordResponseData({
-        actionType: getActionTypes.SELECT,
-        actionData: { ...actionData, ...values },
-      })
-    );
+    flowForm === "forgotPassword"
+      ? dispatch(
+          getForgorPasswordForm({
+            actionType: getActionTypes.SELECT,
+            actionData: { ...actionData, ...values },
+          })
+        )
+      : dispatch(
+          getRegisterPasswordResponseData({
+            actionType: getActionTypes.SELECT,
+            actionData: { ...actionData, ...values },
+          })
+        );
   };
-  const PasswordForm = ({ onSubmit }) => (
-    <Formik
+ 
+
+  return (
+    <div className="al_login_container">
+      <Formik
       initialValues={{
         password: "",
         reenterpassword: "",
@@ -196,11 +207,6 @@ export default function RegisterInfo() {
         );
       }}
     </Formik>
-  );
-
-  return (
-    <div className="al_login_container">
-      <PasswordForm onSubmit={handleFirstFormSubmit} />
     </div>
   );
 }

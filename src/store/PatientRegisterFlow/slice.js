@@ -7,6 +7,8 @@ const initialState = {
   actionData: null,
   activeForm: "",
   message: "",
+  flowForm:"",
+  isAuthenticated:localStorage.getItem("token") ? true : false,
 };
 
 const patientRegisterSlice = createSlice({
@@ -20,7 +22,6 @@ const patientRegisterSlice = createSlice({
       };
     },
     getRegisterResponseData: (state, action) => {
-      console.log("state, action: ", state, action);
       return {
         ...state,
         isLoading: action.payload.isLoading,
@@ -39,7 +40,6 @@ const patientRegisterSlice = createSlice({
       };
     },
     getRegisterOTPResponseData: (state, action) => {
-      console.log("state, action: ", state, action);
       return {
         ...state,
         isLoading: action.payload.isLoading,
@@ -47,7 +47,6 @@ const patientRegisterSlice = createSlice({
       };
     },
     getRegisterPasswordResponseData: (state, action) => {
-      console.log("state, action: ", state, action);
       return {
         ...state,
         isLoading: action.payload.isLoading,
@@ -55,7 +54,6 @@ const patientRegisterSlice = createSlice({
       };
     },
     getRegisterForwardToForm: (state, action) => {
-      console.log("state, action: ", state, action);
       return {
         ...state,
         isLoading: action.payload.isLoading,
@@ -63,7 +61,6 @@ const patientRegisterSlice = createSlice({
       };
     },
     getRegisterSubscriptionForm: (state, action) => {
-      console.log("state, action: ", state, action);
       return {
         ...state,
         isLoading: action.payload.isLoading,
@@ -77,6 +74,43 @@ const patientRegisterSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    getFlowForm: (state, action) => {
+      return {
+        activeForm: action.payload.activeForm,
+        flowForm: action.payload.flowForm,
+      };
+    },
+    getForgorPasswordForm: (state, action) => {
+      return {
+        ...state,
+        flowForm: action.payload.flowForm,
+        isLoading: action.payload.isLoading,
+        activeForm: action.payload.activeForm,
+        message: action.payload.message,
+      };
+    },
+    loginForm: (state, action) => {
+      return {
+        isAuthenticated: action.payload.isAuthenticated,
+        actionData: action.payload.actionData,
+        isLoading: action.payload.isLoading,
+        activeForm: action.payload.activeForm,
+      };
+    },
+    googleLogin: (state, action) => {
+      return {
+        isAuthenticated: action.payload.isAuthenticated,
+        actionData: action.payload.actionData,
+        isLoading: action.payload.isLoading,
+        activeForm: action.payload.activeForm,
+      };
+    },
+    logoutSlice: (state, action) => {
+      return {
+       ...initialState,
+        isAuthenticated: false,
+      }
+    }
   },
 });
 
@@ -89,7 +123,12 @@ export const {
   getRegisterPasswordResponseData,
   getRegisterForwardToForm,
   getRegisterSubscriptionForm,
-  getRegisterClear
+  getRegisterClear,
+  getFlowForm,
+  getForgorPasswordForm,
+  loginForm,
+  googleLogin,
+  logoutSlice
 } = actions;
 
 export default reducer;

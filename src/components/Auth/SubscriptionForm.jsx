@@ -55,6 +55,7 @@ export default function RegisterInfo() {
       }) => {
         return (
           <Form className="wflexLayout" onSubmit={handleSubmit}>
+            {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -366,7 +367,6 @@ export default function RegisterInfo() {
 
   return (
     <div className="al_login_container">
-      {isLoading && <Loading />}
       <SubscriptionForm onSubmit={handleFinalSubmit} />
     </div>
   );

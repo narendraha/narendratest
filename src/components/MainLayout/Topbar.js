@@ -7,10 +7,13 @@ import { AxiosInstance } from '../../_mock/utilities';
 import femaleuserImg from "../../images/femaleuserImg.jpg";
 import noNotifications from '../../images/noNotifications.svg';
 import maleuserImg from '../../images/userprofile.jpg';
+import { useDispatch } from 'react-redux';
+import { logoutSlice } from '../../store/PatientRegisterFlow/slice';
 
 export default function Topbar(props) {
   const [menu, setMenu] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [isOpenModel, setOpenModel] = useState(false);
 
@@ -35,6 +38,7 @@ export default function Topbar(props) {
   const handleLogOut = () => {
     localStorage.clear();
     sessionStorage.clear();
+    dispatch(logoutSlice())
     navigate('/signin')
   }
 

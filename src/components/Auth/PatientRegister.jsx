@@ -84,7 +84,7 @@ useEffect(()=>{
         gender: Yup.string().required("Gender is required"),
         rtype: Yup.string().required("Resident type is required"),
         education: Yup.string().required("Education field is required"),
-        ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9)
+        ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9)
       })}
       onSubmit={(values) => onSubmit({ ...values })}
     >

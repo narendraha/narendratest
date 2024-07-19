@@ -19,9 +19,11 @@ export default function RegisterInfo() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, activeForm, message, actionData } = useSelector(
+  const { isLoading, activeForm, message, actionData, flowForm } = useSelector(
     (state) => state.patientRegisterSlice
   );
+  console.log("isLoading: ", isLoading, flowForm);
+
   useEffect(() => {
     if (activeForm) {
       navigate(activeForm);
@@ -44,6 +46,25 @@ export default function RegisterInfo() {
       })
     );
   };
+  const handleBackButton = ()=>{
+    flowForm === "forgotPassword"
+      ? dispatch(
+          getRegisterBackToForm({
+            activeForm: "/forgot-password",
+          })
+        )
+      : flowForm === "doctor"
+      ? dispatch(
+          getRegisterBackToForm({
+            activeForm: "/doctor/registration",
+          })
+        )
+      : dispatch(
+          getRegisterBackToForm({
+            activeForm: "/patient/registration",
+          })
+        );
+  }
   const SecondForm = ({ onSubmit }) => (
     <Formik
       initialValues={{
@@ -124,13 +145,13 @@ export default function RegisterInfo() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                    0,
-                                                    index
-                                                  ) +
-                                                  updatedValue +
-                                                  values.otp.substring(
-                                                    index + 1
-                                                  ),
+                                                      0,
+                                                      index
+                                                    ) +
+                                                    updatedValue +
+                                                    values.otp.substring(
+                                                      index + 1
+                                                    ),
                                             },
                                           });
                                           if (
@@ -202,13 +223,7 @@ export default function RegisterInfo() {
                       <button
                         type="button"
                         className="al_login_button_back mt-3 py-2"
-                        onClick={() =>
-                          dispatch(
-                            getRegisterBackToForm({
-                              activeForm: "/patient/registration",
-                            })
-                          )
-                        }
+                        onClick={handleBackButton}
                       >
                         <i
                           className="icon_alfred_back-arrow me-2"

@@ -291,7 +291,7 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>Natiionak Provider Identification
+                          <span className="requiredLabel">*</span>National Provider Identification
                         </Label>
                         <Field
                           type="text"

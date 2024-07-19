@@ -414,6 +414,14 @@ textarea,
   }
 }
 
+.inputSelect {
+  div[class$="-menu"] {
+    box-shadow: none;
+    border: 1px solid #dddddd;
+    margin-top: 1px;
+  }
+}
+
 input:has(+ div.text-danger),
 textarea:has(+ div.text-danger),
 .react-datepicker-wrapper:has(+ div.text-danger) input,

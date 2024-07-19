@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { v4 as uuidv4 } from 'uuid';
 import { pageTitle } from "../../_mock/helperIndex";
@@ -9,7 +8,6 @@ import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
 import Chatuser from "../../images/usericon.svg";
-import EducationalBotHTMLcontent from "../Utilities/EducationalBotHTMLcontent";
 
 export default function HomeEducationalBot() {
   pageTitle("HelloAlfred - Medical and Healthcare App");
@@ -43,6 +41,7 @@ export default function HomeEducationalBot() {
       ...prevIcons,
       [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
     }));
+
     let reqObj = {
       message: alfredValue,
       preference: iconType === "like"
@@ -63,39 +62,72 @@ export default function HomeEducationalBot() {
   };
 
 
+  const [responseStream, setResponseStream] = useState("");
+
   const handleFormSubmit = async (e) => {
     setIsInputShow(true);
     e.preventDefault();
     if (!inputValue.trim()) return; // Do not submit empty input
-    setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
+    setChatHistory((prevHistory) => [...prevHistory, { content: inputValue, role: 'User' }]);
     setInputValue(""); // Clear input after submitting
     setIsLoading(true);
+    setIsShow(true);
     let data = {
       id: randomId,
-      message: inputValue,
+      messages: [{ content: inputValue, role: 'User' }],
     };
     // api integration
-    await AxiosInstance("application/json")
-      // .post(`/history`, data)
-      .post(`/education_bot_home`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          setIsInputShow(false);
-          setIsShow(true);
-          if (res.data.statuscode === 200) {
-            const responseData = res.data.data;
-            // Convert responseData to an array of objects
-            setIsLoading(false);
-            setChatHistory((prevHistory) => [
-              ...prevHistory,
-              { Alfred: responseData?.alfred },
-            ]); /* Add new item to end of array */
-          } else {
-          }
-        }
-      })
-      .catch((er) => {
+    const apiUrl = 'https://app-backend-ttztsypz4y5oi.azurewebsites.net/chat/stream';
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer YOUR_API_KEY`
+    };
+
+    try {
+      const responseStream = await fetch(apiUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data)
       });
+
+      if (responseStream) {
+        const reader = responseStream.body.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+        let tempStr = '';
+        let res = '';
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = decoder.decode(value, { stream: true });
+          tempStr += chunk;
+          // Split by newline and parse JSON objects
+          const lines = tempStr.split('\n');
+          for (let i = 0; i < lines.length - 1; i++) {
+            if (lines[i].trim()) {
+              const json = JSON.parse(lines[i]);
+              const content = json?.delta?.content || '';
+              res += content?.trim() + ' '
+              setResponseStream(prev => prev + content);
+              setIsLoading(false);
+            }
+          }
+          // Keep the last line if it is incomplete
+          tempStr = lines[lines.length - 1];
+        }
+        await setChatHistory((prevHistory) => [
+          ...prevHistory,
+          { content: res, role: 'Alfred' }
+        ]);
+        setResponseStream('')
+      }
+    } catch (error) {
+      console.error('Error streaming response:', error);
+    } finally {
+      setIsLoading(false);
+      setIsInputShow(false)
+    }
   };
 
   const handleInputChange = (e) => {
@@ -108,12 +140,12 @@ export default function HomeEducationalBot() {
     setInputValue(value); // update the value of input field with user's typing text
   };
 
-  let getIsUser = (key) => {
-    return key === "User"
+  const getIsUser = (key) => {
+    return key?.role === 'User'
   }
-
   return (
     <div className="cs_homepage">
+
       {isShow ? (
         <div className="w-50 al_chatbotauth">
           <div className="d-flex flex-column">
@@ -122,54 +154,54 @@ export default function HomeEducationalBot() {
                 {/* Chat need to be rendered here */}
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
-                    {Object.entries(message).map(([key, value]) => (
-                      <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
-                        {["User", "Alfred"]?.includes(key) ? <div>
-                          <img
-                            src={getIsUser(key) ? Chatuser : Chatbot}
-                            alt={getIsUser(key) ? "chat user" : "Bot"}
-                            id={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}
-                          />
+                    <Row className={"mb-4 al_chatcontent" + (getIsUser(message) ? " al_usermsg" : "")}>
+                      <div>
+                        {getIsUser(message) ? (<>
+                          <img src={Chatuser} alt="chat user" id="userimagehomeed" />
                           <UncontrolledTooltip
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                            placement='bottom' target={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}>
-                            {getIsUser(key) ? "User" : "Alfred"}
+                            placement='bottom' target="userimagehomeed">
+                            User
                           </UncontrolledTooltip>
-                        </div> : null}
-                        <Col>
-                          {key === "User" ?
-                            <div>{value}</div> :
-                            <EducationalBotHTMLcontent props={value} />}
-                          {key === "Alfred" && (
-                            <p className="mb-0 mt-1">
-                              <Icon
-                                icon="iconamoon:like-light"
-                                width="1.5em"
-                                height="1.5em"
-                                onClick={() => handleAction(index, 'like', value)} // Handle like action
-                                style={{
-                                  cursor: 'pointer',
-                                  color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
-                                }}
-                              />
-                              <Icon
-                                icon="iconamoon:dislike-light"
-                                width="1.5em"
-                                height="1.5em"
-                                className="mx-2"
-                                onClick={() => handleAction(index, 'dislike', value)} // Handle dislike action
-                                style={{
-                                  cursor: 'pointer',
-                                  color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
-                                }}
-                              />
-                            </p>
-                          )}
-                        </Col>
-                      </Row>
-                    ))}
-                  </React.Fragment>
-                ))}
+                        </>) : !getIsUser(message) ? (<>
+                          <img src={Chatbot} alt="Bot" id="botimagehomeed" />
+                          <UncontrolledTooltip
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                            placement='bottom' target="botimagehomeed">
+                            Alfred
+                          </UncontrolledTooltip>
+                        </>) : null}
+                      </div>
+                      <Col>
+                        <div>{message?.content}</div>
+                        {/* <EducationalBotHTMLcontent props={responseStream} /> */}
+                        {!getIsUser(message) && (
+                          <p className="mb-0 mt-2 al_chatfeedbackactions">
+                            <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', message?.content)}></i>
+                            <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', message?.content)}></i>
+                          </p>
+                        )}
+                      </Col>
+                    </Row>
+                  </React.Fragment>))}
+
+                {responseStream && <Row className={"mb-4 al_chatcontent"}>
+                  <div>
+                    <img
+                      src={Chatbot}
+                      alt="Bot"
+                      id="botimagehomeed"
+                    />
+                    <UncontrolledTooltip
+                      modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                      placement='bottom' target={"botimagehomeed"}>
+                      Alfred
+                    </UncontrolledTooltip>
+                  </div>
+                  <Col>
+                    <div>{responseStream}</div>
+                  </Col>
+                </Row>}
                 {isLoading && <Row className="mb-4 al_chatcontent">
                   <div>
                     <img src={Chatbot} alt="Bot" id="botimageed" />
@@ -276,7 +308,7 @@ export default function HomeEducationalBot() {
               </form>
             </div>
 
-            <div className="al_note text-end pt-3">
+            {/* <div className="al_note text-end pt-3">
               <strong>Disclaimer</strong>: Not a medical advice <br />
               {isShow && (
                 <p>
@@ -284,7 +316,7 @@ export default function HomeEducationalBot() {
                   <strong>health coach</strong>
                 </p>
               )}
-            </div>
+            </div> */}
             {isLoading && !isShow && <Row className="mb-4 al_chatcontent">
               <div>
                 <img src={Chatbot} alt="Bot" id="botimageed" />
@@ -297,7 +329,8 @@ export default function HomeEducationalBot() {
             </Row>}
           </Col>
         </Row>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }

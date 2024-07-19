@@ -15,8 +15,10 @@ import { Icon } from "@iconify/react";
 import handwave from '../../images/handwave.png';
 import google from '../../images/google.svg';
 import apple from '../../images/apple.svg';
+import { pageTitle } from "../../_mock/internalJsControl";
 
 export default function Signin({ setIsAuthenticated }) {
+  pageTitle('Signin')
   const navigate = useNavigate();
   // const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

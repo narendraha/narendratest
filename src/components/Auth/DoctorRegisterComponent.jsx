@@ -24,10 +24,11 @@ import alferdlogomobile from "../../images/alfredlogo.svg";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import successImg from "../../images/sucessimg.svg";
 import Loading from "../InnerApp/LoadingComponent";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField } from "../../_mock/helperIndex";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, pageTitle } from "../../_mock/helperIndex";
 import OTPForm from "./OTPForm"
 import SubscriptionForm from "./SubscriptionForm"
 export default function Register() {
+  pageTitle("Register | Doctor")
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
@@ -133,7 +134,8 @@ export default function Register() {
       })}
       onSubmit={(values) => {
         console.log('values: ', values);
-        onSubmit({ ...values })}
+        onSubmit({ ...values })
+      }
       }
     >
       {({
@@ -148,9 +150,9 @@ export default function Register() {
       }) => {
         const states = values.country
           ? State.getStatesOfCountry(values.country).map((state) => ({
-              value: state.isoCode,
-              label: state.name,
-            }))
+            value: state.isoCode,
+            label: state.name,
+          }))
           : [];
         return (
           <Form className="wflexLayout">
@@ -173,250 +175,250 @@ export default function Register() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                      <h6 className="mb-2">Healthcare Provider Registration</h6>
-                      <div className="al_login-form al_registrationform wflexScroll">
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Full Name
-                          </Label>
-                          <Field
-                            type="text"
-                            name="username"
-                            placeholder="Enter Full Name"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="username"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Email ID
-                          </Label>
-                          <Field
-                            type="text"
-                            name="email"
-                            placeholder="Enter Email ID"
-                            className="form-control"
-                            onChange={(e) => {
-                              const trimmedValue = e.target.value.trim();
-                              setFieldValue("email", trimmedValue);
-                            }}
-                          />
-                          <ErrorMessage
-                            name="email"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Mobile
-                          </Label>
-                          <div className="input-group">
-                            <div className="input-group-prepend">
-                              <span
-                                className="input-group-text"
-                                id="basic-addon1"
-                              >
-                                +1
-                              </span>
-                            </div>
-                            <Field
-                              type="text"
-                              className="form-control"
-                              name="mobile"
-                              placeholder="Enter Mobile Number"
-                              onKeyPress={(e) => allowsOnlyNumeric(e)}
-                              aria-describedby="basic-addon1"
-                            />
+                    <h6 className="mb-2">Healthcare Provider Registration</h6>
+                    <div className="al_login-form al_registrationform wflexScroll">
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Full Name
+                        </Label>
+                        <Field
+                          type="text"
+                          name="username"
+                          placeholder="Enter Full Name"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="username"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Email ID
+                        </Label>
+                        <Field
+                          type="text"
+                          name="email"
+                          placeholder="Enter Email ID"
+                          className="form-control"
+                          onChange={(e) => {
+                            const trimmedValue = e.target.value.trim();
+                            setFieldValue("email", trimmedValue);
+                          }}
+                        />
+                        <ErrorMessage
+                          name="email"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Mobile
+                        </Label>
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text"
+                              id="basic-addon1"
+                            >
+                              +1
+                            </span>
                           </div>
-                          <ErrorMessage
+                          <Field
+                            type="text"
+                            className="form-control"
                             name="mobile"
-                            component={"div"}
-                            className="text-danger"
+                            placeholder="Enter Mobile Number"
+                            onKeyPress={(e) => allowsOnlyNumeric(e)}
+                            aria-describedby="basic-addon1"
                           />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Highest Grade of Education
-                          </Label>
-                          <Select
-                            options={educationOptions}
-                            name="education"
-                            className="inputSelect"
-                            value={educationOptions.find(
-                              (option) => option.value === values.education
-                            )}
-                            onChange={(selectedOption) => {
-                              setFieldValue(
-                                "education",
-                                selectedOption ? selectedOption.value : ""
-                              );
-                            }}
-                          />
-                          <ErrorMessage
-                            name="education"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>State of Practice
-                          </Label>
-                          <Select
-                            options={educationOptions}
-                            name="specialization"
-                            className="inputSelect"
-                            value={educationOptions.find(
-                              (option) => option.value === values.education
-                            )}
-                            onChange={(selectedOption) => {
-                              setFieldValue(
-                                "specialization",
-                                selectedOption ? selectedOption.value : ""
-                              );
-                            }}
-                          />
-                          <ErrorMessage
-                            name="specialization"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Natiionak Provider Identification
-                          </Label>
-                          <Field
-                            type="text"
-                            name="nationalID"
-                            placeholder="Enter ID number"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="nationalID"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Medical License Number
-                          </Label>
-                          <Field
-                            type="text"
-                            name="licenseNo"
-                            placeholder="Enter Medical License number"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="licenseNo"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Country
-                          </Label>
-                          <Select
-                            name="country"
-                            className="inputSelect"
-                            value={countries.find(
-                              (option) => option.value === values.country
-                            )}
-                            options={countries}
-                            onChange={(option) => {
-                              setFieldValue("country", option.value);
-                              setFieldValue("state", ""); // Reset state value when country changes
-                            }}
-                          />
-                          <ErrorMessage
-                            name="country"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>State
-                          </Label>
-                          <Select
-                            name="state"
-                            placeholder="Select"
-                            className="inputSelect"
-                            options={states}
-                            onChange={(option) => setFieldValue("state", option.value)}
-                            value={states.find((option) => option.value === values.state)}
-                            isDisabled={!values.country}
-                          />
-                          <ErrorMessage
-                            name="state"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Name of the Hospital
-                          </Label>
-                          <Select
-                            options={educationOptions}
-                            name="hospital"
-                            className="inputSelect"
-                            value={educationOptions.find(
-                              (option) => option.value === values.education
-                            )}
-                            onChange={(selectedOption) => {
-                              setFieldValue(
-                                "hospital",
-                                selectedOption ? selectedOption.value : ""
-                              );
-                            }}
-                          />
-                          <ErrorMessage
-                            name="hospital"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Label>
-                            <span className="requiredLabel">*</span>Referral Code 
-                          </Label>
-                          <Field
-                            type="text"
-                            name="rCode"
-                            placeholder="Enter Referral"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="rCode"
-                            component={"div"}
-                            className="text-danger"
-                          />
-                        </FormGroup>
-                      </div>
-                      <div className="al_login_footer mt-3">
-                        <button
-                          type="submit"
-                          className="al_login_button"
-                        >
-                          Continue
-                        </button>
-                        <button
-                          type="button"
-                          className="al_login_button_back mt-3"
-                        >
-                          <Link to="/signin">
-                            Back to <strong>Sign in</strong>
-                          </Link>
-                        </button>
-                      </div>
+                        </div>
+                        <ErrorMessage
+                          name="mobile"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Highest Grade of Education
+                        </Label>
+                        <Select
+                          options={educationOptions}
+                          name="education"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "education",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
+                        />
+                        <ErrorMessage
+                          name="education"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>State of Practice
+                        </Label>
+                        <Select
+                          options={educationOptions}
+                          name="specialization"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "specialization",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
+                        />
+                        <ErrorMessage
+                          name="specialization"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Natiionak Provider Identification
+                        </Label>
+                        <Field
+                          type="text"
+                          name="nationalID"
+                          placeholder="Enter ID number"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="nationalID"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Medical License Number
+                        </Label>
+                        <Field
+                          type="text"
+                          name="licenseNo"
+                          placeholder="Enter Medical License number"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="licenseNo"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Country
+                        </Label>
+                        <Select
+                          name="country"
+                          className="inputSelect"
+                          value={countries.find(
+                            (option) => option.value === values.country
+                          )}
+                          options={countries}
+                          onChange={(option) => {
+                            setFieldValue("country", option.value);
+                            setFieldValue("state", ""); // Reset state value when country changes
+                          }}
+                        />
+                        <ErrorMessage
+                          name="country"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>State
+                        </Label>
+                        <Select
+                          name="state"
+                          placeholder="Select"
+                          className="inputSelect"
+                          options={states}
+                          onChange={(option) => setFieldValue("state", option.value)}
+                          value={states.find((option) => option.value === values.state)}
+                          isDisabled={!values.country}
+                        />
+                        <ErrorMessage
+                          name="state"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Name of the Hospital
+                        </Label>
+                        <Select
+                          options={educationOptions}
+                          name="hospital"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "hospital",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
+                        />
+                        <ErrorMessage
+                          name="hospital"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Referral Code
+                        </Label>
+                        <Field
+                          type="text"
+                          name="rCode"
+                          placeholder="Enter Referral"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="rCode"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                    </div>
+                    <div className="al_login_footer mt-3">
+                      <button
+                        type="submit"
+                        className="al_login_button"
+                      >
+                        Continue
+                      </button>
+                      <button
+                        type="button"
+                        className="al_login_button_back mt-3"
+                      >
+                        <Link to="/signin">
+                          Back to <strong>Sign in</strong>
+                        </Link>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </Col>
@@ -524,7 +526,7 @@ export default function Register() {
         });
       });
   };
-  
+
   return (
     <div className="al_login_container">
       {isLoading && <Loading />}
@@ -532,7 +534,7 @@ export default function Register() {
       {activeForm === 1 ? (
         <FirstFormPhysicain onSubmit={handleFirstFormSubmit} />
       ) : activeForm === 2 ? (
-        <OTPForm activeForm={activeForm} setActiveForm={setActiveForm} otpResponse={otpResponse} setOtpResponse={setOtpResponse} formData={formData} setFormData={setFormData}/>
+        <OTPForm activeForm={activeForm} setActiveForm={setActiveForm} otpResponse={otpResponse} setOtpResponse={setOtpResponse} formData={formData} setFormData={setFormData} />
       ) : activeForm === 3 ? (
         <Formik
           initialValues={{
@@ -669,7 +671,7 @@ export default function Register() {
                             type="submit"
                             className="al_login_button"
                             disabled={isSubmitting} // Disable button when submitting
-                            // onClick={() => handleThirdFormSubmit(values)}
+                          // onClick={() => handleThirdFormSubmit(values)}
                           >
                             Continue
                           </button>

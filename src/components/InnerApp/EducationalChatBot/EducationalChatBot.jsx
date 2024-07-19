@@ -52,10 +52,13 @@ export default function EducationalChatBot(props) {
                         // setIsLoading(false);
                         setChatHistory((prevHistory) => [
                             ...prevHistory,
-                            {
-                                alfred: responseData?.alfred
-                            }
+                            {alfred: responseData?.alfred}
                         ]); /* Add new item to end of array */
+                    } else if (res.data.statuscode === 500) {
+                        setChatHistory((prevHistory) => [
+                            ...prevHistory,
+                            { alfred: "Sorry Unable to reach server at that moment can you please try again!" }
+                        ]);
                     } else {
                         toast(res?.data?.message, {
                             position: "top-right",

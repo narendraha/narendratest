@@ -1,8 +1,7 @@
 import React from 'react';
 
 const EducationalBotHTMLcontent = ({ props }) => {
-    console.log("propsprops", props);
-    const htmlContent = `
+  const htmlContent = `
 <!DOCTYPE html>
 <html>
     <div class="scoped-content">
@@ -27,6 +26,9 @@ const EducationalBotHTMLcontent = ({ props }) => {
           list-style-type: disc;
           margin-bottom: 6px;
         }
+        .scoped-content p{
+        font-size: 13px
+        }
         .scoped-content h1, .scoped-content h2, .scoped-content h3, 
         .scoped-content h4, .scoped-content h5, .scoped-content h6 {
           font-size: 13.5px;
@@ -39,9 +41,9 @@ const EducationalBotHTMLcontent = ({ props }) => {
     </html
   `;
 
-    return (
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-    );
+  return (
+    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  );
 };
 
 export default EducationalBotHTMLcontent;

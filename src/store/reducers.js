@@ -9,7 +9,8 @@ const rootReducer = combineReducers({
   utilityCallFunctionSlice,
   profileSlice,
   homePageSlice,
-  patientRegisterSlice
+  patientRegisterSlice,
+  
 });
 
 export default rootReducer;

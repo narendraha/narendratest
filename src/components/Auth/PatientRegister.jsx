@@ -1,50 +1,51 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Col,
-    FormGroup,
-    Label,
-    Row,
-    UncontrolledTooltip,
-  } from "reactstrap";
-  import * as Yup from "yup";
+  Col,
+  FormGroup,
+  Label,
+  Row,
+  UncontrolledTooltip,
+} from "reactstrap";
+import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import alferdlogomobile from "../../images/alfredlogo.svg";
 import alferdlogo from "../../images/alfredlogowhite.svg";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, getActionTypes } from "../../_mock/helperIndex";
+import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, getActionTypes, pageTitle } from "../../_mock/helperIndex";
 import { useDispatch, useSelector } from "react-redux";
-import {getRegisterClear, getRegisterRequest, getRegisterResponseData} from "../../store/PatientRegisterFlow/slice"
+import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../store/PatientRegisterFlow/slice"
 import Loading from "../InnerApp/LoadingComponent";
 export default function RegisterInfo() {
+  pageTitle("Register | Patient")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData,setFormData] =useState(null)
-  const {isLoading, activeForm, actionData} = useSelector((state)=>state.patientRegisterSlice)
+  const [formData, setFormData] = useState(null)
+  const { isLoading, activeForm, actionData } = useSelector((state) => state.patientRegisterSlice)
   const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] =
     useState(true);
   const genderoptions = getGenderoptions;
   const residenceoptions = getResidenceoptions;
   const educationOptions = getEductaionOptions;
-useEffect(()=>{
-  console.log('activeForm: ', activeForm);
+  useEffect(() => {
+    console.log('activeForm: ', activeForm);
 
-  if(activeForm){
-    navigate(activeForm)
-   }
-}, [activeForm])
+    if (activeForm) {
+      navigate(activeForm)
+    }
+  }, [activeForm])
   const handleFirstFormSubmit = (values) => {
     setFormData({ ...formData, ...values });
-   dispatch(getRegisterResponseData({actionType: getActionTypes.SELECT,actionData: values}));
-  
+    dispatch(getRegisterResponseData({ actionType: getActionTypes.SELECT, actionData: values }));
+
   };
   const FirstForm = ({ onSubmit }) => (
     <Formik
       enableReinitialize
       initialValues={{
         username: formData?.username || actionData?.username || "",
-        email: formData?.email ||actionData?.email || "",
+        email: formData?.email || actionData?.email || "",
         dob: formData?.dob || actionData?.dob || "",
         gender: formData?.gender || actionData?.gender || "",
         mobile: formData?.mobile || actionData?.mobile || "",
@@ -100,7 +101,7 @@ useEffect(()=>{
       }) => {
         return (
           <Form className="wflexLayout">
-            {isLoading && <Loading/>}
+            {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -423,7 +424,7 @@ useEffect(()=>{
                         <button
                           type="button"
                           className="al_login_button_back mt-3"
-                          onClick={()=>dispatch(getRegisterClear())}
+                          onClick={() => dispatch(getRegisterClear())}
                         >
                           <Link to="/signin">
                             Back to <strong>Sign in</strong>
@@ -440,10 +441,10 @@ useEffect(()=>{
       }}
     </Formik>
   );
-  
+
   return (
     <div className="al_login_container">
-      <FirstForm onSubmit={handleFirstFormSubmit}/>
-      </div>
+      <FirstForm onSubmit={handleFirstFormSubmit} />
+    </div>
   );
 }

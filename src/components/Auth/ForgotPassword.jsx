@@ -13,8 +13,10 @@ import alferdlogo from "../../images/alfredlogowhite.svg";
 import successImg from "../../images/sucessimg.svg";
 import Loading from "../InnerApp/LoadingComponent";
 import OTPComponent from "./ResendOtp";
+import { pageTitle } from "../../_mock/internalJsControl";
 
 export default function ForgotPassword() {
+  pageTitle("ForgotPassword")
   const navigate = useNavigate();
   const [activeForm, setActiveForm] = useState(1);
   const [formData, setFormData] = useState(null);

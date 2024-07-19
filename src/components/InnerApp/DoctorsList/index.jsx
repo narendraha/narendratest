@@ -22,7 +22,7 @@ export default function DoctorsList() {
             <div className="wflexLayout">
                 <div className='al-pad d-flex align-items-center pb-1'>
                     <Col className='d-flex align-items-center'>
-                        <h3 className='bc_main_text mb-0 me-4'>Your Doctors</h3>
+                        <h3 className='bc_main_text mb-0 me-4'>Current Doctors</h3>
                         <button type="button" className="al_add_dashed_button mb-0" onClick={() => setView("add")}>
                             <i className='icon_alfred_plus me-2'></i>
                             Add Doctor
@@ -40,9 +40,109 @@ export default function DoctorsList() {
                         <div className='wflexLayout'>
                             <div className='wflexScroll d-flex flex-column al-pad pe-3'>
                                 <div className='flex-grow-1'>
-                                    <Row className='al_doctorwidth'>
+                                    <Row className='al_doctorwidth mb-2'>
                                         <Col lg="6" md="12" sm="12" className='mb-3'>
                                             <Card className='al_cardview active'>
+                                                <CardBody className='d-flex flex-column'>
+                                                    <div className='flex-grow-1'>
+                                                        <Row className='mx-0 align-items-center'>
+                                                            <div className='al_useravatarimg px-0'>
+                                                                <img src={doctorImg} alt="" />
+                                                            </div>
+                                                            <Col>
+                                                                <div className='fw-medium'>Dr. George</div>
+                                                                <small className='text-muted'>Cardiology, MD,DM</small>
+                                                            </Col>
+                                                            <i className='icon_alfred_trashbin w-auto px-0'></i>
+                                                        </Row>
+                                                    </div>
+                                                    <hr />
+                                                    <Row>
+                                                        <Col>
+                                                            <Label className="mb-1">Doctor Type</Label>
+                                                            <div className='fw-medium'>Primary Doctor</div>
+                                                        </Col>
+                                                        <Col className='w-auto'>
+                                                            <Label className="mb-1">From</Label>
+                                                            <div className='fw-medium'>09-06-2024</div>
+                                                        </Col>
+                                                        <div className='w-auto al_cardactions'>
+                                                            <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
+                                                        </div>
+                                                    </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col lg="6" md="12" sm="12" className='mb-3'>
+                                            <Card className='al_cardview'>
+                                                <CardBody className='d-flex flex-column'>
+                                                    <div className='flex-grow-1'>
+                                                        <Row className='mx-0 align-items-center'>
+                                                            <div className='al_useravatarimg px-0'>
+                                                                <img src={doctorImg} alt="" />
+                                                            </div>
+                                                            <Col>
+                                                                <div className='fw-medium'>Dr. Nicholas</div>
+                                                                <small className='text-muted'>Cardiology, MD,DM</small>
+                                                            </Col>
+                                                            <i className='icon_alfred_trashbin w-auto px-0'></i>
+                                                        </Row>
+                                                    </div>
+                                                    <hr />
+                                                    <Row>
+                                                        <Col>
+                                                            <Label className="mb-1">Doctor Type</Label>
+                                                            <div className='fw-medium'>Secondary Doctor</div>
+                                                        </Col>
+                                                        <Col className='w-auto'>
+                                                            <Label className="mb-1">From</Label>
+                                                            <div className='fw-medium'>09-06-2024</div>
+                                                        </Col>
+                                                        <div className='w-auto al_cardactions'>
+                                                            <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
+                                                        </div>
+                                                    </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col lg="6" md="12" sm="12" className='mb-3'>
+                                            <Card className='al_cardview'>
+                                                <CardBody className='d-flex flex-column'>
+                                                    <div className='flex-grow-1'>
+                                                        <Row className='mx-0 align-items-center'>
+                                                            <div className='al_useravatarimg px-0'>
+                                                                <img src={doctorImg} alt="" />
+                                                            </div>
+                                                            <Col>
+                                                                <div className='fw-medium'>Dr. Ali Razzak</div>
+                                                                <small className='text-muted'>Cardiology, MD,DM</small>
+                                                            </Col>
+                                                            <i className='icon_alfred_trashbin w-auto px-0'></i>
+                                                        </Row>
+                                                    </div>
+                                                    <hr />
+                                                    <Row>
+                                                        <Col>
+                                                            <Label className="mb-1">Doctor Type</Label>
+                                                            <div className='fw-medium'>Secondary Doctor</div>
+                                                        </Col>
+                                                        <Col className='w-auto'>
+                                                            <Label className="mb-1">From</Label>
+                                                            <div className='fw-medium'>09-06-2024</div>
+                                                        </Col>
+                                                        <div className='w-auto al_cardactions'>
+                                                            <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
+                                                        </div>
+                                                    </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                    <hr />
+                                    <h6 className='text-muted mt-3'>Past Doctors</h6>
+                                    <Row className='al_doctorwidth'>
+                                        <Col lg="6" md="12" sm="12" className='mb-3'>
+                                            <Card className='al_cardview'>
                                                 <CardBody className='d-flex flex-column'>
                                                     <div className='flex-grow-1'>
                                                         <Row className='mx-0 align-items-center'>
@@ -58,11 +158,11 @@ export default function DoctorsList() {
                                                     <hr />
                                                     <Row>
                                                         <Col>
-                                                            <Label>Doctor Type</Label>
+                                                            <Label className="mb-1">Doctor Type</Label>
                                                             <div className='fw-medium'>Primary Doctor</div>
                                                         </Col>
                                                         <Col className='w-auto'>
-                                                            <Label>From</Label>
+                                                            <Label className="mb-1">To</Label>
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
@@ -89,11 +189,11 @@ export default function DoctorsList() {
                                                     <hr />
                                                     <Row>
                                                         <Col>
-                                                            <Label>Doctor Type</Label>
+                                                            <Label className="mb-1">Doctor Type</Label>
                                                             <div className='fw-medium'>Secondary Doctor</div>
                                                         </Col>
                                                         <Col className='w-auto'>
-                                                            <Label>From</Label>
+                                                            <Label className="mb-1">To</Label>
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
@@ -120,15 +220,14 @@ export default function DoctorsList() {
                                                     <hr />
                                                     <Row>
                                                         <Col>
-                                                            <Label>Doctor Type</Label>
+                                                            <Label className="mb-1">Doctor Type</Label>
                                                             <div className='fw-medium'>Secondary Doctor</div>
                                                         </Col>
                                                         <Col className='w-auto'>
-                                                            <Label>From</Label>
+                                                            <Label className="mb-1">To</Label>
                                                             <div className='fw-medium'>09-06-2024</div>
                                                         </Col>
                                                         <div className='w-auto al_cardactions'>
-                                                            {/* <i className='icon_alfred_trashbin'></i> */}
                                                             <button type="button" className='al_roundbtn al_roundbtn_sm'><i className='icon_alfred_right_arrow'></i></button>
                                                         </div>
                                                     </Row>
@@ -152,7 +251,7 @@ export default function DoctorsList() {
                                             <Col>
                                                 <div className='fw-medium'>Dr. George</div>
                                                 <small className='text-muted'>Cardiology, MD,DM</small><br />
-                                                <span><Label>Experience :&nbsp;</Label><span className='fw-medium'>12 years</span></span>
+                                                <span><Label className="mb-1">Experience :&nbsp;</Label><span className='fw-medium'>12 years</span></span>
                                             </Col>
                                         </Row>
                                         <Card className='al_cardview me-0 h-auto mb-3' style={{ boxShadow: "none" }}>
@@ -169,11 +268,11 @@ export default function DoctorsList() {
                                         </div>
                                         <Row>
                                             <Col>
-                                                <Label>From</Label>
+                                                <Label className="mb-1">From</Label>
                                                 <div className='fw-medium'>09-06-2024</div>
                                             </Col>
                                             <Col>
-                                                <Label>To</Label>
+                                                <Label className="mb-1">To</Label>
                                                 <div className='fw-medium'>09-07-2024</div>
                                             </Col>
                                         </Row>

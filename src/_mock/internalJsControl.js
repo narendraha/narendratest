@@ -54,6 +54,12 @@ export const customPatterns = [{},
 
 ]
 
+// roles
+export const getBotRole = {
+    USER: 'User',
+    ALFRED: 'Alfred'
+}
+
 
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {

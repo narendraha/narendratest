@@ -61,6 +61,7 @@ export const ExpertMonitoringLeftView = () => {
                     }),
                     pulse: Yup.number()
                         .max(200, "BPM is Too high!")
+                        .min(27, "Pulse must be at least 27 BPM")
                         .required("BPM is required"),
                     tdate: Yup.date().nullable().required("This field is required"),
                     isCheckMedicalRecords: Yup.boolean()

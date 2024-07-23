@@ -5,17 +5,6 @@
     flex-direction: column;
     height: 100%;
 
-    &.al_landing_bg {
-        background: url('../../images/homebg.png') no-repeat center;
-
-        .cs_site_header.cs_style1.cs_active_sticky,
-        .cs_footer_bottom,
-        .cs_footer.cs_style_2 {
-            background-color: transparent;
-        }
-    }
-
-    // width: 100%;
     &.al_homechatopen {
         .cs_site_header {
             width: 75%;

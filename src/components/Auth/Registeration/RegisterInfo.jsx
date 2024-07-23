@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import { ErrorMessage, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Col, Row } from "reactstrap";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import Loading from "../InnerApp/LoadingComponent";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import { pageTitle } from "../../_mock/internalJsControl";
-import { getFlowForm } from "../../store/PatientRegisterFlow/slice";
-import { useDispatch } from "react-redux";
+import { pageTitle } from "../../../_mock/helperIndex";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import { getFlowForm } from "../../../store/PatientRegisterFlow/slice";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function RegisterInfo() {
   const dispatch = useDispatch();

@@ -9,7 +9,9 @@ const initialState = {
     confirmationData: null,
     isLoading: false,
     actionData: "",
-    actionType: getActionTypes.UNSELECT
+    actionType: getActionTypes.UNSELECT,
+    assetUrl: "",
+    ischatBotLoading: false
 };
 
 const utilityCallFunctionSlice = createSlice({
@@ -40,6 +42,10 @@ const utilityCallFunctionSlice = createSlice({
         },
         setLoading: (state, action) => {
             state.isLoading = action?.payload
+        },
+        getAssetsRequest: () => { },
+        getAssetsResponse: (state, action) => {
+            state.assetUrl = action.payload
         }
     },
 });
@@ -50,6 +56,7 @@ export const {
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,
+    getAssetsRequest, getAssetsResponse
 } = actions;
 
 export default reducer;

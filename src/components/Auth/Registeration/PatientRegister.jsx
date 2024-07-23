@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import DatePicker from "react-datepicker";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
 import {
   Col,
   FormGroup,
@@ -7,16 +12,12 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import * as Yup from "yup";
-import DatePicker from "react-datepicker";
-import Select from "react-select";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, getActionTypes, pageTitle } from "../../_mock/helperIndex";
-import { useDispatch, useSelector } from "react-redux";
-import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../store/PatientRegisterFlow/slice"
-import Loading from "../InnerApp/LoadingComponent";
+import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, pageTitle } from "../../../_mock/helperIndex";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
+import Loading from "../../InnerApp/LoadingComponent";
+
 export default function RegisterInfo() {
   pageTitle("Register | Patient")
   const dispatch = useDispatch();

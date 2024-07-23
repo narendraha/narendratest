@@ -1,32 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
+import { Country, State } from "country-state-city";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import moment from "moment"; // Import moment library
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
-import {
-  Col,
-  FormGroup,
-  Label,
-  Row,
-} from "reactstrap";
+import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { Country, State } from "country-state-city";
-import {
-  allowsOnlyNumeric,
-  passwordReg,
-  phoneNumberReg,
-} from "../../_mock/RegularExp";
-import { AxiosInstance } from "../../_mock/utilities";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import successImg from "../../images/sucessimg.svg";
-import Loading from "../InnerApp/LoadingComponent";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, pageTitle } from "../../_mock/helperIndex";
-import OTPForm from "./OTPForm"
-import SubscriptionForm from "./SubscriptionForm"
+import { allowsOnlyNumeric, passwordReg, phoneNumberReg } from "../../../_mock/RegularExp";
+import { getEductaionOptions, pageTitle } from "../../../_mock/helperIndex";
+import { AxiosInstance } from "../../../_mock/utilities";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import successImg from "../../../images/sucessimg.svg";
+import Loading from "../../InnerApp/LoadingComponent";
+import OTPForm from "../OTPForm";
+import SubscriptionForm from "../SubscriptionForm";
+
 export default function Register() {
   pageTitle("Register | Doctor")
   const navigate = useNavigate();

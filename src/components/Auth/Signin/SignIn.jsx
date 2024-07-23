@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import * as Yup from "yup";
-import { pageTitle } from "../../_mock/internalJsControl";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import apple from '../../images/apple.svg';
-import google from '../../images/google.svg';
-import handwave from '../../images/handwave.png';
-import { getFlowForm, googleLogin, loginForm } from "../../store/PatientRegisterFlow/slice";
-import { auth, provider } from "../Firebase";
-import Loading from "../InnerApp/LoadingComponent";
+import { pageTitle } from "../../../_mock/helperIndex";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import apple from '../../../images/apple.svg';
+import google from '../../../images/google.svg';
+import handwave from '../../../images/handwave.png';
+import { getFlowForm, googleLogin, loginForm } from "../../../store/PatientRegisterFlow/slice";
+import { auth, provider } from "../../Firebase";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
   pageTitle('Signin')

@@ -9,17 +9,17 @@ import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 import ErrorPage from "./components/Pages/ErrorPage";
 
 // auth
-import DoctorRegister from "./components/Auth/DoctorRegisterComponent";
+import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import OTPComponent from "./components/Auth/OTPForm";
 import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
 import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
-import PatientRegisterBasicInfoComponent from "./components/Auth/PatientRegister";
-import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
-import RegisterInfo from "./components/Auth/RegisterInfo";
-import Signin from "./components/Auth/SignIn";
+import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
+import PrivacyPolicy from "./components/Auth/Registeration/PrivacyPolicy";
+import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
+import Signin from "./components/Auth/Signin/SignIn";
 import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
-import Terms from "./components/Auth/Terms&Confition";
+import Terms from "./components/Auth/Registeration/Terms&Confition";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -38,6 +38,7 @@ const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
 const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
 const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
 const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
+// const HomeEducationalBot = React.lazy(() => import("./components/Pages/bot"));
 const Medications = React.lazy(() => import("./components/Pages/Medications"));
 const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));
 const Obesity = React.lazy(() => import("./components/Pages/Obesity"));

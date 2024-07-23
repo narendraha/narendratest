@@ -2127,6 +2127,17 @@ ul.standardPlans {
     }
 }
 
+.healthhubprogress {
+    .rc-slider {
+
+        .rc-slider-rail,
+        .rc-slider-track {
+            background: linear-gradient(to right, #dff9fc, #aff7ff, #7cf2ff, #3de9fc, #01d5ec);
+            height: 5px;
+        }
+    }
+}
+
 .al_popverchat {
     i {
         position: absolute;

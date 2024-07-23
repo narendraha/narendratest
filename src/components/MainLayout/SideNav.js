@@ -217,7 +217,7 @@ export default function SideNav(props) {
                                     },
                                   }]}
                                   placement="top"
-                                  trigger='hover'
+                                  trigger= 'hover'
                                   target={subModules.link + subModules.id}
                                 >
                                   {subModules.name}

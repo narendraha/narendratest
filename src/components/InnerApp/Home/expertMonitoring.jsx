@@ -35,10 +35,10 @@ export const ExpertMonitoring = () => {
                         </span>
                         {+lastUpdatedHealthDetails?.difference !== 0 ? "days ago " : ""}
                         on
-                        <span style={{ color: "#3bc0c3" }} onClick={handleSelect}>
+                        <span className="al_text_link" onClick={handleSelect}>
                             {lastUpdatedHealthDetails?.date}
                         </span>
-                        <i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="vitalInfo"></i>
+                        <i className="icon_alfred_info text-info ms-2" style={{ verticalAlign: "middle" }} id="vitalInfo"></i>
                         <UncontrolledTooltip
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='top' target="vitalInfo">

@@ -18,6 +18,7 @@ import successImg from "../../../images/sucessimg.svg";
 import Loading from "../../InnerApp/LoadingComponent";
 import OTPForm from "../OTPForm";
 import SubscriptionForm from "../SubscriptionForm";
+import { allowedNumbersOnField } from "../../../_mock/helperIndex";
 
 export default function Register() {
   pageTitle("Register | Doctor")
@@ -222,13 +223,61 @@ export default function Register() {
                             type="text"
                             className="form-control"
                             name="mobile"
-                            placeholder="Enter Mobile Number"
-                            onKeyPress={(e) => allowsOnlyNumeric(e)}
+                            placeholder="e.g.123-4567-8901"
+                            onKeyPress={(e) => allowedNumbersOnField(10, e)}
                             aria-describedby="basic-addon1"
                           />
                         </div>
                         <ErrorMessage
                           name="mobile"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>Highest Grade of Education
+                        </Label>
+                        <Select
+                          options={educationOptions}
+                          name="education"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "education",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
+                        />
+                        <ErrorMessage
+                          name="education"
+                          component={"div"}
+                          className="text-danger"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>
+                          <span className="requiredLabel">*</span>State of Practice
+                        </Label>
+                        <Select
+                          options={educationOptions}
+                          name="specialization"
+                          className="inputSelect"
+                          value={educationOptions.find(
+                            (option) => option.value === values.education
+                          )}
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "specialization",
+                              selectedOption ? selectedOption.value : ""
+                            );
+                          }}
+                        />
+                        <ErrorMessage
+                          name="specialization"
                           component={"div"}
                           className="text-danger"
                         />
@@ -415,10 +464,10 @@ export default function Register() {
                 </div>
               </Col>
             </Row>
-          </Form>
+          </Form >
         );
       }}
-    </Formik>
+    </Formik >
   );
 
 

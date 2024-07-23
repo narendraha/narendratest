@@ -154,6 +154,10 @@
         }
     }
 
+    .w-25 {
+        width: 50% !important;
+    }
+
     .modal-md,
     .modal-lg,
     .modal-xl {
@@ -332,6 +336,10 @@
 @media screen and (max-width: 767px) {
     .w-auto.ps-5 {
         padding-left: 15px !important;
+    }
+
+    .w-25 {
+        width: 100% !important;
     }
 
     .arialLetter span {

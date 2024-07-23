@@ -81,7 +81,7 @@ export const SymptomsListForm = () => {
                         <UncontrolledTooltip
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='top' target="vitalInfo">
-                            check you last updated Symptoms by clicking on Date
+                            check your last updated Symptoms by clicking on Date
                         </UncontrolledTooltip>
                     </div>
                 ) : null}

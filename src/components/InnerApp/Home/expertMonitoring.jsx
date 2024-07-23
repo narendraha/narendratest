@@ -42,7 +42,7 @@ export const ExpertMonitoring = () => {
                         <UncontrolledTooltip
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='top' target="vitalInfo">
-                            check you last updated vital by clicking on Date
+                            check your last updated vital by clicking on Date
                         </UncontrolledTooltip>
                     </div>
                 ) : null}

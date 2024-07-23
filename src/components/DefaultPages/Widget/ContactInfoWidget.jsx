@@ -10,10 +10,10 @@ export default function ContactInfoWidget() {
         </i>
         123 Anywhere St., Any City 12345
       </li> */}
-      <li className='me-4'>
+      {/* <li className='me-4'>
         <Icon icon="fluent:call-24-regular" />
         123-456-7890
-      </li>
+      </li> */}
       <li className='me-4'>
         <Icon icon="bi:envelope" />
         support@helloalfred.ai

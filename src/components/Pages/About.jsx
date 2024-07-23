@@ -214,7 +214,7 @@ export default function About() {
             <a href="/#"><img src={facebook} alt="facebook" /></a>
             <a href="/#"><img src={twitter} alt="X" /></a>
             <a href="/#"><img src={linkedin} alt="linkedin" /></a>
-            <a href="/#"><img src={youtube} alt="youtube" /></a>
+            <a href="https://www.youtube.com/@HelloAlfredAI" target="_blank"><img src={youtube} alt="youtube" /></a>
           </div>
         </div>
       </Section>

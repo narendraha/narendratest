@@ -4,6 +4,7 @@ import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 import { getBotRole } from '../../_mock/internalJsControl';
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from "../../images/usericon.svg";
+import EducationalBotHTMLcontent from './EducationalBotHTMLcontent';
 
 const ChatBotMsgInterface = ({ props }) => {
   const { chatHistory, index } = props;
@@ -33,7 +34,7 @@ const ChatBotMsgInterface = ({ props }) => {
           <Col>
             {isUser ?
               <div>{chatHistory?.content}</div> :
-              {/* <EducationalBotHTMLcontent props={responseStream} /> */ }
+              <EducationalBotHTMLcontent props={chatHistory?.content} />
             }
             {!isUser && (
               <p className="mb-0 mt-2 al_chatfeedbackactions">

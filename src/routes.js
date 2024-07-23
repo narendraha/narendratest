@@ -38,6 +38,7 @@ const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
 const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
 const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
 const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
+// const HomeEducationalBot = React.lazy(() => import("./components/Pages/educationalBotWIthStreaming"));
 // const HomeEducationalBot = React.lazy(() => import("./components/Pages/bot"));
 const Medications = React.lazy(() => import("./components/Pages/Medications"));
 const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));

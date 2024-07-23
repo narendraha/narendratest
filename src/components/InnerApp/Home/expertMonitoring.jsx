@@ -26,7 +26,7 @@ export const ExpertMonitoring = () => {
         <React.Fragment>
             <div className="d-flex justify-content-between mb-2">
                 <h5 className="mb-0">Health details </h5>
-                {lastUpdatedHealthDetails?.difference >= 0 ? (
+                {+lastUpdatedHealthDetails?.difference >= 0 ? (
                     <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
                         <img src={bulb} alt="" width={20} />
                         You, Last gave your vital{" "}

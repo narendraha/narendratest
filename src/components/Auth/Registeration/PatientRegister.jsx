@@ -17,6 +17,7 @@ import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
 import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
 import Loading from "../../InnerApp/LoadingComponent";
+import { phoneNumberReg } from "../../../_mock/RegularExp";
 
 export default function RegisterInfo() {
   pageTitle("Register | Patient")
@@ -59,20 +60,15 @@ export default function RegisterInfo() {
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
-        // username: Yup.string()
-        //   .min(2, "Too Short!")
-        //   .max(50, "Too Long!")
-        //   .required("Full Name is required"),
-        // mobile: Yup.string()
-        //   .matches(phoneNumberReg, "Invalid phone number")
-        //   .required("This field is required"),
         username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
           .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
           .required("Email is required"),
-        mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10),
+        mobile: Yup.string()
+          .matches(phoneNumberReg, "Invalid phone number")
+          .required("Mobile number is required"),
         dob: Yup.date()
           .max(
             new Date(Date.now() - 567648000000),
@@ -265,7 +261,6 @@ export default function RegisterInfo() {
                               className="form-control"
                               name="mobile"
                               placeholder="e.g.123-4567-8901"
-                              // onKeyPress={(e) => allowsOnlyNumeric(e)}
                               onKeyPress={(e) => allowedNumbersOnField(10, e)}
                               aria-describedby="basic-addon1"
                             />
@@ -335,6 +330,7 @@ export default function RegisterInfo() {
                             name="ssn"
                             placeholder="e.g.xxx-xxx-xxx"
                             className="form-control"
+                            onKeyPress={(e) => allowedNumbersOnField(9, e)}
                           />
                           <ErrorMessage
                             name="ssn"

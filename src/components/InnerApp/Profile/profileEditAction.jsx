@@ -53,7 +53,7 @@ export const ProfileEditAction = () => {
                 initialValues={{
                     username: getProfileDetails?.username !== "NA" ? getProfileDetails?.username : "",
                     email: getProfileDetails?.email !== "NA" ? getProfileDetails?.email : "",
-                    dob: getProfileDetails?.dob !== "NA" ? getProfileDetails?.dob : new Date(),
+                    dob: getProfileDetails?.dob !== "NA" ? getProfileDetails?.dob : "",
                     gender: getProfileDetails?.gender !== "NA" ? getProfileDetails?.gender : "",
                     mobile: getProfileDetails?.mobile !== "NA" ? getProfileDetails?.mobile : "",
                     rtype: getProfileDetails?.rtype !== "NA" ? getProfileDetails?.rtype : "",
@@ -82,7 +82,7 @@ export const ProfileEditAction = () => {
                             ),
                             "You must be below 120 years old"
                         )
-                        .required("Required"),
+                        .required("Dob is required").nullable(),
                     gender: Yup.string().required("This field is required"),
                     bloodtype: Yup.string().required(
                         "Blood Type is required"
@@ -95,11 +95,15 @@ export const ProfileEditAction = () => {
                     feet: Yup.string()
                         .test(
                             'is-greater-than-one',
-                            'Height must be greater than 1',
-                            value => value && parseFloat(value) >= 1
+                            'Height must be atleast 3feet',
+                            value => value && parseFloat(value) > 3
+                        ).test(
+                            'is-less-than-nine',
+                            "Height can not be more than 9feet",
+                            value => value && parseFloat(value) <= 9
                         )
-                        .min(1, "Too Short!") // Minimum length of 1 character
-                        .max(3, "Max 3 characters are  Long!")  // Maximum length of 3 characters
+                        // .min(1, "Too Short!") // Minimum length of 1 character
+                        // .max(1, "Max 3 characters are  Long!")  // Maximum length of 3 characters
                         .required("Height is required"),
                     weight: Yup.number()
                         .min(22, "Weight must be at least 22 lbs")
@@ -139,12 +143,15 @@ export const ProfileEditAction = () => {
                                                         name="feet"
                                                         placeholder="e.g.9"
                                                         className="form-control"
-                                                        onKeyPress={(e) => allowedNumbersOnField(1, e)}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="feet"
-                                                        component={"div"}
-                                                        className="text-danger"
+                                                        onKeyPress={(e) => {
+                                                            console.log("9999999999999999999", e?.target?.value)
+                                                            allowedNumbersOnField(1, e)
+                                                        }}
+                                                        onChange={(e) => {
+                                                            setFieldValue('feet', e?.target?.value)
+                                                            if (+e === 9)
+                                                                setFieldValue('inch', "00")
+                                                        }}
                                                     />
                                                 </div>
                                                 <div className="mt-2"></div>
@@ -155,14 +162,20 @@ export const ProfileEditAction = () => {
                                                         placeholder="e.g.0"
                                                         className="form-control"
                                                         onKeyPress={(e) => allowedNumbersOnField(2, e)}
+                                                        disabled={+values?.feet === 9}
                                                     />
-                                                    <ErrorMessage
+                                                    {/* <ErrorMessage
                                                         name="inch"
                                                         component={"div"}
                                                         className="text-danger"
-                                                    />
+                                                    /> */}
                                                 </div>
                                             </div>
+                                            <ErrorMessage
+                                                name="feet"
+                                                component={"div"}
+                                                className="text-danger"
+                                            />
                                         </FormGroup>
                                     </Col>
                                     <Col md="4" sm="12">
@@ -264,7 +277,7 @@ export const ProfileEditAction = () => {
                                                 of Birth
                                             </Label>
                                             <DatePicker
-                                                className="form-control al_calendarIcon"
+                                                className={'form-control ' + (values?.dob ? '' : 'al_calendarIcon')}
                                                 name="dob"
                                                 placeholderText="e.g.MM/DD/YYYY"
                                                 popperPlacement="auto"
@@ -276,13 +289,7 @@ export const ProfileEditAction = () => {
                                                         enabled: false,
                                                     },
                                                 }]}
-                                                selected={
-                                                    values?.dob
-                                                        ? new Date(values?.dob)
-                                                        : values?.dob == "NA"
-                                                            ? new Date()
-                                                            : new Date()
-                                                }
+                                                selected={new Date(values?.dob) || ""}
                                                 onChange={(e) => {
                                                     setFieldValue("dob", e);
                                                 }}
@@ -293,6 +300,7 @@ export const ProfileEditAction = () => {
                                                 showMonthDropdown
                                                 showYearDropdown
                                                 dropdownMode="select"
+                                                isClearable={true}
                                             />
                                             <ErrorMessage
                                                 name="dob"

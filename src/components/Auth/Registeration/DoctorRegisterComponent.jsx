@@ -19,6 +19,7 @@ import Loading from "../../InnerApp/LoadingComponent";
 import OTPForm from "../OTPForm";
 import SubscriptionForm from "../SubscriptionForm";
 import { allowedNumbersOnField } from "../../../_mock/helperIndex";
+import { customContentValidation } from "../../../_mock/helperIndex";
 
 export default function Register() {
   pageTitle("Register | Doctor")
@@ -106,24 +107,27 @@ export default function Register() {
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
-        username: Yup.string()
-          .min(2, "Too Short!")
-          .max(50, "Too Long!")
-          .required("This field is required"),
+        // username: Yup.string()
+        //   .min(2, "Too Short!")
+        //   .max(50, "Too Long!")
+        //   .required("User field is required"),
+        username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
+          .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
-          .required("This field is required"),
+          .required("Email is required"),
         mobile: Yup.string()
           .matches(phoneNumberReg, "Invalid phone number")
           .required("This field is required"),
-        specialization: Yup.string().required("This field is required"),
-        nationalID: Yup.string().required("This field is required"),
-        licenseNo: Yup.string().required("This field is required"),
+        specialization: Yup.string().required("Specialization field is required"),
+        nationalID: Yup.string().required("National ID is required"),
+        licenseNo: Yup.string().required("License No. is required"),
         rCode: Yup.string().required("This field is required"),
-        country: Yup.string().required("This field is required"),
-        state: Yup.string().required("This field is required"),
-        hospital: Yup.string().required("This field is required"),
+        country: Yup.string().required("Country is required"),
+        // state: Yup.string().required("State is required"),
+        // hospital: Yup.string().required("Hospital is required"),
+        education: Yup.string().required("Education is required"),
       })}
       onSubmit={(values) => {
         console.log('values: ', values);
@@ -284,54 +288,6 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>Highest Grade of Education
-                        </Label>
-                        <Select
-                          options={educationOptions}
-                          name="education"
-                          className="inputSelect"
-                          value={educationOptions.find(
-                            (option) => option.value === values.education
-                          )}
-                          onChange={(selectedOption) => {
-                            setFieldValue(
-                              "education",
-                              selectedOption ? selectedOption.value : ""
-                            );
-                          }}
-                        />
-                        <ErrorMessage
-                          name="education"
-                          component={"div"}
-                          className="text-danger"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>
-                          <span className="requiredLabel">*</span>State of Practice
-                        </Label>
-                        <Select
-                          options={educationOptions}
-                          name="specialization"
-                          className="inputSelect"
-                          value={educationOptions.find(
-                            (option) => option.value === values.education
-                          )}
-                          onChange={(selectedOption) => {
-                            setFieldValue(
-                              "specialization",
-                              selectedOption ? selectedOption.value : ""
-                            );
-                          }}
-                        />
-                        <ErrorMessage
-                          name="specialization"
-                          component={"div"}
-                          className="text-danger"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label>
                           <span className="requiredLabel">*</span>National Provider Identification
                         </Label>
                         <Field
@@ -386,7 +342,8 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>State
+                          {/* <span className="requiredLabel">*</span> */}
+                          State
                         </Label>
                         <Select
                           name="state"
@@ -405,7 +362,8 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>Name of the Hospital
+                          {/* <span className="requiredLabel">*</span> */}
+                          Name of the Hospital
                         </Label>
                         <Select
                           options={educationOptions}

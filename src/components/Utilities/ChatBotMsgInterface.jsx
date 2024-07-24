@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
-import { getBotRole } from '../../_mock/internalJsControl';
+import { getRole } from '../../_mock/internalJsControl';
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from "../../images/usericon.svg";
 import { updateChatPreferenceRequest } from '../../store/EducationaChatBot/slice';
@@ -16,7 +16,7 @@ const ChatBotMsgInterface = ({ props }) => {
   const [selectedIcons, setSelectedIcons,] = useState([]); // State to track selected icons
 
   const { chatBotLoadingIndex } = useSelector((state) => state?.utilityCallFunctionSlice);
-  const isUser = chatHistory?.role === getBotRole.USER;
+  const isUser = chatHistory?.role === getRole.USER;
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
     setSelectedIcons(prevIcons => ({

@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
-import { getActionTypes, getActivetab } from "../../../_mock/internalJsControl";
+import { getActionTypes, getActivetab, pageTitle } from "../../../_mock/internalJsControl";
 import { getActiveTabRequest, setActiveTabRequest } from "../../../store/Home/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
 import { ExpertMonitoring } from './expertMonitoring';
+import ExpertMonitoringLastUpdateView from "./expertMonitoringlastUpdateView";
 import { HealthHub } from "./healthHub";
+import { HealthHubOverview } from "./healthHubOverview";
 import { LifeStyleGoal } from "./lifeStyleGoal";
 import { RiskOptimization } from "./riskOptimization";
-import { SymptomsListForm } from "./symptomsListForm";
-import { pageTitle } from "../../../_mock/internalJsControl";
 import SymptomsListView from "./symptomsLastUpdatedView";
-import ExpertMonitoringLastUpdateView from "./expertMonitoringlastUpdateView";
+import { SymptomsListForm } from "./symptomsListForm";
 
 let navItemsList = [
   { key: getActivetab.HEALTHHUB, navLink: "Health Hub" },
@@ -79,6 +79,7 @@ export default function HomeManager() {
 
                 <TabPane tabId={getActivetab.HEALTHHUB}>
                   {activeTab === getActivetab.HEALTHHUB && <HealthHub />}
+                  {activeTab === getActivetab.HEALTHHUB && actionType === getActionTypes.SELECT && <HealthHubOverview />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.EXPTMONITORING}>

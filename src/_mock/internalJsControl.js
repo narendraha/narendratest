@@ -55,9 +55,11 @@ export const customPatterns = [{},
 ]
 
 // roles
-export const getBotRole = {
+export const getRole = {
     USER: 'User',
-    ALFRED: 'Alfred'
+    ALFRED: 'Alfred',
+    PATIENT: 'patient',
+    PHYSICIAN: 'doctor'
 }
 
 

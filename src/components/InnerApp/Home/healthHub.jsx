@@ -1,26 +1,34 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
-import { getActivetab } from "../../../_mock/internalJsControl";
-import atrialfib from "../../../images/atrialfib.png";
-import rhythm from "../../../images/rhythm.png";
-import whytreatment from "../../../images/whytreatment.png";
-import flecainiderisks from "../../../images/flecainiderisks.jpg";
-import nervepalsy from "../../../images/nervepalsy.jpg";
-import catheterrisk from "../../../images/catheterrisk.jpg";
-import cathetertypes from "../../../images/cathetertypes.jpg";
-import antiarrhythmicrisk from "../../../images/antiarrhythmicrisk.jpg";
-import antiarrhythmicmed from "../../../images/antiarrhythmicmed.png";
-import { setActiveTabRequest } from "../../../store/Home/slice";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { HealthHubOverview } from "./healthHubOverview";
+import { Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
+import { getActionTypes } from "../../../_mock/helperIndex";
+import { getActivetab } from "../../../_mock/internalJsControl";
+import antiarrhythmicmed from "../../../images/antiarrhythmicmed.png";
+import antiarrhythmicrisk from "../../../images/antiarrhythmicrisk.jpg";
+import atrialfib from "../../../images/atrialfib.png";
+import catheterrisk from "../../../images/catheterrisk.jpg";
+import cathetertypes from "../../../images/cathetertypes.jpg";
+import flecainiderisks from "../../../images/flecainiderisks.jpg";
+import nervepalsy from "../../../images/nervepalsy.jpg";
+import rhythm from "../../../images/rhythm.png";
+import whytreatment from "../../../images/whytreatment.png";
+import { setActiveTabRequest } from "../../../store/Home/slice";
+import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
+
+const weekoptions = [
+    { value: "Week 1", label: "Week 1" },
+    { value: "Week 2", label: "Week 2" },
+    { value: "Week 3", label: "Week 3" },
+    { value: "Week 4", label: "Week 4", disabled: true },
+    { value: "Week 5", label: "Week 5", disabled: true }
+];
 
 export const HealthHub = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState({ value: "Week 3", label: "Week 3" });
-    const [showOverview, setShowOverview] = useState(false);
 
     const handleSetTabs = () => {
         dispatch(setActiveTabRequest({ setTab: getActivetab.HEALTHHUB, nextOrBackTab: getActivetab.EXPTMONITORING }))
@@ -30,17 +38,13 @@ export const HealthHub = () => {
         setWeek(e);
     }
 
-    const weekoptions = [
-        { value: "Week 1", label: "Week 1" },
-        { value: "Week 2", label: "Week 2" },
-        { value: "Week 3", label: "Week 3" },
-        { value: "Week 4", label: "Week 4", disabled: true },
-        { value: "Week 5", label: "Week 5", disabled: true }
-    ];
+    const handleSelect = () => {
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
+    }
 
     return (
         <React.Fragment>
-            <Row>
+            <Row className="align-items-center">
                 <Col className="d-flex align-items-center mb-3">
                     <div className="w-25">
                         <Select
@@ -52,7 +56,7 @@ export const HealthHub = () => {
                             isOptionDisabled={(option) => option.disabled}
                         />
                     </div>
-                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" id="overviewtooltip" style={{ fontSize: "22px" }} onClick={() => setShowOverview(true)}></i>
+                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" id="overviewtooltip" style={{ fontSize: "22px" }} onClick={handleSelect}></i>
                     <UncontrolledTooltip
                         modifiers={[{
                             preventOverflow: {
@@ -65,6 +69,7 @@ export const HealthHub = () => {
                     >
                         Overview
                     </UncontrolledTooltip>
+                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" style={{ fontSize: "22px" }} onClick={handleSelect}></i>
                 </Col>
                 <Col lg="5" md="7" sm="8">
                     <Row className="align-items-center">

@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import { Row, Col, Label, FormGroup, UncontrolledTooltip } from "reactstrap";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import { useState } from "react";
-import { auth, provider } from "../Firebase";
-import { signInWithPopup } from "firebase/auth";
-import Loading from "../InnerApp/LoadingComponent";
 import { Icon } from "@iconify/react";
-import handwave from "../../images/handwave.png";
-import google from "../../images/google.svg";
-import apple from "../../images/apple.svg";
-import { getFlowForm, googleLogin, loginForm } from "../../store/PatientRegisterFlow/slice";
+import { signInWithPopup } from "firebase/auth";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import * as Yup from "yup";
+import { pageTitle } from "../../../_mock/helperIndex";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import apple from '../../../images/apple.svg';
+import google from '../../../images/google.svg';
+import handwave from '../../../images/handwave.png';
+import { getFlowForm, googleLogin, loginForm } from "../../../store/PatientRegisterFlow/slice";
+import { auth, provider } from "../../Firebase";
+import Loading from "../../InnerApp/LoadingComponent";
 
 export default function Signin({ setIsAuthenticated }) {
+  pageTitle('Signin')
   const navigate = useNavigate();
   const { isLoading, activeForm, isAuthenticated } = useSelector((state) => state.patientRegisterSlice);
   const [showPassword, setShowPassword] = useState(false);

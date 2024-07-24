@@ -1,50 +1,53 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-    Col,
-    FormGroup,
-    Label,
-    Row,
-    UncontrolledTooltip,
-  } from "reactstrap";
-  import * as Yup from "yup";
-import DatePicker from "react-datepicker";
-import Select from "react-select";
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import alferdlogomobile from "../../images/alfredlogo.svg";
-import alferdlogo from "../../images/alfredlogowhite.svg";
-import { getGenderoptions, getResidenceoptions, getEductaionOptions, customContentValidation, allowedNumbersOnField, getActionTypes } from "../../_mock/helperIndex";
+import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
-import {getRegisterClear, getRegisterRequest, getRegisterResponseData} from "../../store/PatientRegisterFlow/slice"
-import Loading from "../InnerApp/LoadingComponent";
+import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
+import {
+  Col,
+  FormGroup,
+  Label,
+  Row,
+  UncontrolledTooltip,
+} from "reactstrap";
+import * as Yup from "yup";
+import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, pageTitle } from "../../../_mock/helperIndex";
+import alferdlogomobile from "../../../images/alfredlogo.svg";
+import alferdlogo from "../../../images/alfredlogowhite.svg";
+import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
+import Loading from "../../InnerApp/LoadingComponent";
+import { phoneNumberReg } from "../../../_mock/RegularExp";
+
 export default function RegisterInfo() {
+  pageTitle("Register | Patient")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData,setFormData] =useState(null)
-  const {isLoading, activeForm, actionData} = useSelector((state)=>state.patientRegisterSlice)
+  const [formData, setFormData] = useState(null)
+  const { isLoading, activeForm, actionData } = useSelector((state) => state.patientRegisterSlice)
   const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] =
     useState(true);
   const genderoptions = getGenderoptions;
   const residenceoptions = getResidenceoptions;
   const educationOptions = getEductaionOptions;
-useEffect(()=>{
-  console.log('activeForm: ', activeForm);
+  useEffect(() => {
+    console.log('activeForm: ', activeForm);
 
-  if(activeForm){
-    navigate(activeForm)
-   }
-}, [activeForm])
+    if (activeForm) {
+      navigate(activeForm)
+    }
+  }, [activeForm])
   const handleFirstFormSubmit = (values) => {
     setFormData({ ...formData, ...values });
-   dispatch(getRegisterResponseData({actionType: getActionTypes.SELECT,actionData: values}));
-  
+    dispatch(getRegisterResponseData({ actionType: getActionTypes.SELECT, actionData: values }));
+
   };
   const FirstForm = ({ onSubmit }) => (
     <Formik
       enableReinitialize
       initialValues={{
         username: formData?.username || actionData?.username || "",
-        email: formData?.email ||actionData?.email || "",
+        email: formData?.email || actionData?.email || "",
         dob: formData?.dob || actionData?.dob || "",
         gender: formData?.gender || actionData?.gender || "",
         mobile: formData?.mobile || actionData?.mobile || "",
@@ -57,20 +60,15 @@ useEffect(()=>{
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
-        // username: Yup.string()
-        //   .min(2, "Too Short!")
-        //   .max(50, "Too Long!")
-        //   .required("Full Name is required"),
-        // mobile: Yup.string()
-        //   .matches(phoneNumberReg, "Invalid phone number")
-        //   .required("This field is required"),
         username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
           .max(50, "Maximum 50 characters are allowed")
           .email("Invalid email")
           .required("Email is required"),
-        mobile: customContentValidation('Mobile Number is required', { patternType: 'number', message: 'number' }, 10),
+        mobile: Yup.string()
+          .matches(phoneNumberReg, "Invalid phone number")
+          .required("Mobile number is required"),
         dob: Yup.date()
           .max(
             new Date(Date.now() - 567648000000),
@@ -100,7 +98,7 @@ useEffect(()=>{
       }) => {
         return (
           <Form className="wflexLayout">
-            {isLoading && <Loading/>}
+            {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">
@@ -263,7 +261,6 @@ useEffect(()=>{
                               className="form-control"
                               name="mobile"
                               placeholder="e.g.123-4567-8901"
-                              // onKeyPress={(e) => allowsOnlyNumeric(e)}
                               onKeyPress={(e) => allowedNumbersOnField(10, e)}
                               aria-describedby="basic-addon1"
                             />
@@ -333,6 +330,7 @@ useEffect(()=>{
                             name="ssn"
                             placeholder="e.g.xxx-xxx-xxx"
                             className="form-control"
+                            onKeyPress={(e) => allowedNumbersOnField(9, e)}
                           />
                           <ErrorMessage
                             name="ssn"
@@ -423,7 +421,7 @@ useEffect(()=>{
                         <button
                           type="button"
                           className="al_login_button_back mt-3"
-                          onClick={()=>dispatch(getRegisterClear())}
+                          onClick={() => dispatch(getRegisterClear())}
                         >
                           <Link to="/signin">
                             Back to <strong>Sign in</strong>
@@ -440,10 +438,10 @@ useEffect(()=>{
       }}
     </Formik>
   );
-  
+
   return (
     <div className="al_login_container">
-      <FirstForm onSubmit={handleFirstFormSubmit}/>
-      </div>
+      <FirstForm onSubmit={handleFirstFormSubmit} />
+    </div>
   );
 }

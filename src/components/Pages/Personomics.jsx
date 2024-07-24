@@ -1,5 +1,5 @@
 import React from 'react';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 import animation from '../../images/animation.mp4';
 import Spacing from '../DefaultPages/Spacing';
 import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';

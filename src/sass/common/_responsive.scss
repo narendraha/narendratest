@@ -1,3 +1,47 @@
+@media screen and (min-width: 767px) and (max-width: 1300px) {
+    .rc-slider-mark {
+        .rc-slider-mark-text {
+            font-size: 8px !important;
+        }
+    }
+
+    .al_login-right h5 {
+        font-size: 18px !important;
+    }
+
+    .al_accounttype {
+        background-size: 65px !important;
+    }
+
+    .al_hometabs {
+        .nav-item {
+            span {
+                font-size: 12px !important;
+
+                &:first-child {
+                    font-size: 16px !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                }
+            }
+        }
+    }
+
+    .al_symptoms .al_frequencylist label.btn {
+        padding: 8px !important;
+        font-size: 10px !important;
+    }
+}
+
+@media screen and (min-width: 1650px) and (max-width: 3500px) {
+    .al_doctorwidth {
+        .col-lg-6 {
+            width: 33.3%;
+            flex: 0 0 33.3%;
+        }
+    }
+}
+
 @media screen and (max-width: 600px) {
 
     body,
@@ -154,6 +198,10 @@
         }
     }
 
+    .w-25 {
+        width: 50% !important;
+    }
+
     .modal-md,
     .modal-lg,
     .modal-xl {
@@ -200,6 +248,7 @@
     }
 
     .w-80,
+    section .w-75,
     .w-50 {
         width: 90% !important;
     }
@@ -334,6 +383,10 @@
         padding-left: 15px !important;
     }
 
+    .w-25 {
+        width: 100% !important;
+    }
+
     .arialLetter span {
         font-size: 60px;
         line-height: 50px;
@@ -459,27 +512,5 @@
 @media screen and (min-width: 1200px) and (max-width: 4000px) {
     .mobileanim {
         height: 85%;
-    }
-}
-
-@media screen and (min-width: 767px) and (max-width: 1300px) {
-    .rc-slider-mark {
-        .rc-slider-mark-text {
-            font-size: 8px !important;
-        }
-    }
-
-    .al_symptoms .al_frequencylist label.btn {
-        padding: 8px !important;
-        font-size: 10px !important;
-    }
-}
-
-@media screen and (min-width: 1650px) and (max-width: 3500px) {
-    .al_doctorwidth {
-        .col-lg-6 {
-            width: 33.3%;
-            flex: 0 0 33.3%;
-        }
     }
 }

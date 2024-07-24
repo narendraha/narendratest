@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'reactstrap';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 import vascular from '../../images/vascular.png';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 import Section from './Section/index';

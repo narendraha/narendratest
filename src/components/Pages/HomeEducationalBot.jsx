@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Col, Row, UncontrolledTooltip } from "reactstrap";
 import { v4 as uuidv4 } from 'uuid';
-import { pageTitle } from "../../_mock/PageTitle";
+import { pageTitle } from "../../_mock/helperIndex";
 import { AxiosInstance } from "../../_mock/utilities";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
 import Chatuser from "../../images/usericon.svg";
+import EducationalBotHTMLcontent from "../Utilities/EducationalBotHTMLcontent";
 
 export default function HomeEducationalBot() {
-  pageTitle("Home");
+  pageTitle("HelloAlfred - Medical and Healthcare App");
   const inputRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([]); // stored the chat history get from API response
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
@@ -62,71 +63,107 @@ export default function HomeEducationalBot() {
   };
 
 
+  // const handleFormSubmit = async (e) => {
+  //   setIsInputShow(true);
+  //   e.preventDefault();
+  //   if (!inputValue.trim()) return; // Do not submit empty input
+  //   setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
+  //   setInputValue(""); // Clear input after submitting
+  //   setIsLoading(true);
+  //   setIsShow(true);
+  //   let data = {
+  //     id: randomId,
+  //     message: inputValue,
+  //   };
+  //   // api integration
+  //   await AxiosInstance("application/json")
+  //     // .post(`/history`, data)
+  //     .post(`/education_bot_home`, data)
+  //     .then((res) => {
+  //       if (res && res.data && res.status === 200) {
+  //         setIsInputShow(false);
+  //         // setIsShow(true);
+  //         if (res.data.statuscode === 200) {
+  //           const responseData = res.data.data;
+  //           // Convert responseData to an array of objects
+  //           setIsLoading(false);
+  //           setChatHistory((prevHistory) => [
+  //             ...prevHistory,
+  //             { Alfred: responseData?.alfred },
+  //           ]); /* Add new item to end of array */
+  //         } else {
+  //         }
+  //       }
+  //     })
+  //     .catch((er) => {
+  //     });
+  // };
+
+  const [loadingIndex, setLoadingIndex] = useState(null); // 
   const handleFormSubmit = async (e) => {
-    setIsInputShow(true);
     e.preventDefault();
-    if (!inputValue.trim()) return; // Do not submit empty input
-    setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
-    setInputValue(""); // Clear input after submitting
+    if (!inputValue.trim()) return; // Prevent empty input submission
+    setIsInputShow(true);
+    setChatHistory((prevHistory) => [...prevHistory, { content: inputValue, role: 'User' }]);
+    setInputValue(''); // Clear input after submitting
     setIsLoading(true);
-    let data = {
-      id: randomId,
+    setIsShow(true);
+
+    const currentMessageIndex = chatHistory.length;
+    setLoadingIndex(currentMessageIndex); // Set the loading index to the current message index
+
+    const data = {
+      id: '1234-9876-54321',
       message: inputValue,
     };
-    // api integration
-    await AxiosInstance("application/json")
-      // .post(`/history`, data)
-      .post(`/education_bot_home`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          setIsInputShow(false);
-          setIsShow(true);
-          if (res.data.statuscode === 200) {
-            const responseData = res.data.data;
-            // Convert responseData to an array of objects
-            setIsLoading(false);
-            // setChatHistory((prevHistory) => [
-            //   ...prevHistory,
-            //   { Alfred: responseData?.alfred },
-            // ]); /* Add new item to end of array */
-            setChatHistory((prevHistory) => [
-              ...prevHistory,
-              {
-                alfred:
-                  `<html>
-                    <head>
-                      <style>
-                        body {
-                            font-family: Poppins;
-                        }
-                        ol {
-                            margin - top: 5px;
-                        }
-                        ol li {
-                            margin - bottom: 6px;
-                        }
-                        ul {
-                            margin - top: 5px;
-                        }
-                        ul li {
-                            margin - bottom: 6px;
-                        }
-                      </style>
-                    </head>
-                    <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                    ${responseData?.alfred}
-                    </body>
-                </html>`
-              }
-            ]); /* Add new item to end of array */
-          } else {
-          }
-        }
-      })
-      .catch((er) => {
-      });
-  };
+    const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
+    try {
+      const responseStream = await fetch(apiUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
+      });
+      console.log("responseStream=>", responseStream)
+
+      if (responseStream) {
+        const reader = responseStream.body.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+        let tempStr = '';
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = decoder.decode(value, { stream: true });
+
+          console.log("chunk=>", chunk)
+          tempStr += chunk;
+          setChatHistory((prevHistory) => {
+            // Create a new message object with the received chunk
+            const updatedHistory = [...prevHistory];
+            const lastMessage = updatedHistory[updatedHistory.length - 1];
+            // Check if the last message is from 'Alfred' and update it
+            if (lastMessage && lastMessage.role === 'Alfred') {
+              updatedHistory[updatedHistory.length - 1].content += chunk;
+            } else {
+              updatedHistory.push({ content: chunk, role: 'Alfred' });
+            }
+            return updatedHistory;
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error streaming response:', error);
+    } finally {
+      setIsLoading(false);
+      setIsInputShow(false);
+      setLoadingIndex(null);
+    }
+  };
   const handleInputChange = (e) => {
     let { value } = e.target;
     value !== ""
@@ -136,6 +173,12 @@ export default function HomeEducationalBot() {
       ); /* Show send button when user enter something */
     setInputValue(value); // update the value of input field with user's typing text
   };
+
+  let getIsUser = (key) => {
+    return key === "User"
+  }
+
+  console.log("chatHistory", chatHistory)
 
   return (
     <div className="cs_homepage">
@@ -147,40 +190,35 @@ export default function HomeEducationalBot() {
                 {/* Chat need to be rendered here */}
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
-                    {Object.entries(message).map(([key, value]) => (
-                      <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
-                        <div>
-                          {key === "User" ? (<>
-                            <img src={Chatuser} alt="chat user" id="userimagehomeed" />
-                            <UncontrolledTooltip
-                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                              placement='bottom' target="userimagehomeed">
-                              User
-                            </UncontrolledTooltip>
-                          </>) : key === "alfred" ? (<>
-                            <img src={Chatbot} alt="Bot" id="botimagehomeed" />
-                            <UncontrolledTooltip
-                              modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                              placement='bottom' target="botimagehomeed">
-                              Alfred
-                            </UncontrolledTooltip>
-                          </>) : null}
-                        </div>
-                        <Col>
-                          {/* <h6 className="mb-0">{key}</h6> */}
-                          {/* <div>{value}</div> */}
-                          {key === "User" ?
-                            <div>{value}</div> :
-                            <div dangerouslySetInnerHTML={{ __html: value }} />}
-                          {key === "alfred" && (
-                            <p className="mb-0 mt-2 al_chatfeedbackactions">
-                              <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', value)}></i>
-                              <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', value)}></i>
-                            </p>
-                          )}
-                        </Col>
-                      </Row>
-                    ))}
+                    {/* {Object.entries(message).map(([key, value]) => ( */}
+                    <Row className={"mb-4 al_chatcontent" + (message?.role === "User" ? " al_usermsg" : "")} key={message?.role}>
+                      {["User", "Alfred"]?.includes(message?.role) ? <div>
+                        <img
+                          src={getIsUser(message?.role) ? Chatuser : Chatbot}
+                          alt={getIsUser(message?.role) ? "chat user" : "Bot"}
+                          id={getIsUser(message?.role) ? "userimagehomeed" : "botimagehomeed"}
+                        />
+                        <UncontrolledTooltip
+                          modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                          placement='bottom' target={getIsUser(message?.role) ? "userimagehomeed" : "botimagehomeed"}>
+                          {getIsUser(message?.role) ? "User" : "Alfred"}
+                        </UncontrolledTooltip>
+                      </div> : null}
+                      <Col>
+                        {console.log("loadingIndexloadingIndex", loadingIndex, index)}
+                        {message?.role === "User" ?
+                          <div>{message.content}</div> :
+                          // <div><EducationalBotHTMLcontent props={message.content} />{loadingIndex === index && <div key={index} className="al_chatloading my-1"></div>}</div>}
+                          <div><EducationalBotHTMLcontent props={message.content} /></div>}
+                        {message?.role === "Alfred" && (
+                          <p className="mb-0 mt-2 al_chatfeedbackactions">
+                            <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', message?.content)}></i>
+                            <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', message?.content)}></i>
+                          </p>
+                        )}
+                      </Col>
+                    </Row>
+                    {/* ))} */}
                   </React.Fragment>
                 ))}
                 {isLoading && <Row className="mb-4 al_chatcontent">

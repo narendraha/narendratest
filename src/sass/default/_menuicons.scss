@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_overview:before {
+  content: "\e95d";
+}
 .icon_alfred_dislike:before {
   content: "\e95a";
 }

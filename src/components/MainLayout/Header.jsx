@@ -35,6 +35,11 @@ export default function Header({ logoSrc, variant }) {
       link: ''
     },
     {
+      moduleId: '5',
+      name: 'About',
+      link: 'about'
+    },
+    {
       moduleId: '6',
       name: 'Personomics',
       link: '/personomics'
@@ -103,9 +108,9 @@ export default function Header({ logoSrc, variant }) {
       ]
     },
     {
-      moduleId: '5',
-      name: 'About',
-      link: 'about'
+      moduleId: '6',
+      name: 'Contact Us',
+      link: 'contactus'
     }
   ]
 
@@ -238,11 +243,11 @@ export default function Header({ logoSrc, variant }) {
           <Spacing md="35" lg="35" xl="35" />
           <hr />
           <Spacing md="35" lg="50" xl="35" />
-          <IconBoxStyle11
+          {/* <IconBoxStyle11
             title="Phone"
             subTitle="123-456-7890"
             iconSrc="/images/contact/icon_1.svg"
-          />
+          /> */}
           <Spacing md="30" lg="30" xl="30" />
           <IconBoxStyle11
             title="Email"

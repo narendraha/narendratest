@@ -2,27 +2,28 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ErrorPage from "./components/Pages/ErrorPage";
+import Layout from "./components/MainLayout/Layout";
 import Loading from "./components/MainLayout/Loading";
 import MainLayout from "./components/MainLayout/index";
-import Layout from "./components/MainLayout/Layout";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
+import ErrorPage from "./components/Pages/ErrorPage";
 
 // auth
-import Signin from "./components/Auth/SignIn";
+import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
 import ForgotPassword from "./components/Auth/ForgotPassword";
-import Terms from "./components/Auth/Terms&Confition";
-import PrivacyPolicy from "./components/Auth/PrivacyPolicy";
-import RegisterInfo from "./components/Auth/RegisterInfo";
-import DoctorRegister from "./components/Auth/DoctorRegisterComponent";
-import PatientRegisterBasicInfoComponent from "./components/Auth/PatientRegister";
 import OTPComponent from "./components/Auth/OTPForm";
 import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
 import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
+import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
+import PrivacyPolicy from "./components/Auth/Registeration/PrivacyPolicy";
+import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
+import Signin from "./components/Auth/Signin/SignIn";
 import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
+import Terms from "./components/Auth/Registeration/Terms&Confition";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
+const ContactUs = React.lazy(() => import("./components/Pages/ContactUs"));
 const Ablation = React.lazy(() => import("./components/Pages/Ablation"));
 const ACO = React.lazy(() => import("./components/Pages/Aco"));
 const Affaq = React.lazy(() => import("./components/Pages/Affaq"));
@@ -37,7 +38,9 @@ const EcoPharmacy = React.lazy(() => import("./components/Pages/EcoPharmacy"));
 const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
 const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
 const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
-const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
+// const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
+// const HomeEducationalBot = React.lazy(() => import("./components/Pages/educationalBotWIthStreaming"));
+const HomeEducationalBot = React.lazy(() => import("./components/Pages/bot"));
 const Medications = React.lazy(() => import("./components/Pages/Medications"));
 const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));
 const Obesity = React.lazy(() => import("./components/Pages/Obesity"));
@@ -108,6 +111,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             <Route path="/" element={<Layout />}>
               <Route index element={<HomeEducationalBot />} />
               <Route path="about" element={<About />} />
+              <Route path="contactus" element={<ContactUs />} />
               <Route path="personomics" element={<Personomics />} />
               <Route path="affaq" element={<Affaq />} />
               <Route path="symptoms" element={<Symptoms />} />

@@ -9,7 +9,9 @@ const initialState = {
     confirmationData: null,
     isLoading: false,
     actionData: "",
-    actionType: getActionTypes.UNSELECT
+    actionType: getActionTypes.UNSELECT,
+    assetUrl: "",
+    chatBotLoadingIndex: null
 };
 
 const utilityCallFunctionSlice = createSlice({
@@ -35,11 +37,18 @@ const utilityCallFunctionSlice = createSlice({
         setConfirmationOpen: (state, action) => {
             state.confirmationData = action.payload
         },
-        setConfirmationClose: (state, action) => {
+        setConfirmationClose: (state) => {
             state.confirmationData = null
         },
         setLoading: (state, action) => {
             state.isLoading = action?.payload
+        },
+        setChatBotLoadingIndex: (state, action) => {
+            state.chatBotLoadingIndex = action?.payload
+        },
+        getAssetsRequest: () => { },
+        getAssetsResponse: (state, action) => {
+            state.assetUrl = action.payload
         }
     },
 });
@@ -47,9 +56,11 @@ const utilityCallFunctionSlice = createSlice({
 const { actions, reducer } = utilityCallFunctionSlice;
 export const {
     setLoading,
+    setChatBotLoadingIndex,
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,
+    getAssetsRequest, getAssetsResponse
 } = actions;
 
 export default reducer;

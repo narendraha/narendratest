@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { UncontrolledTooltip } from "reactstrap";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 import smalllogo from "../../images/alfredlogoicon.svg";
 import logo from "../../images/alfredlogowhite.svg";
 import ModalView from "../Utilities/ModalView";
+import { UncontrolledTooltip } from "reactstrap";
 
 export default function SideNav(props) {
   const location = useLocation();
@@ -196,7 +196,7 @@ export default function SideNav(props) {
                           <div className="al_submenu w-100" key={index}>
                             <div
                               className={
-                                "menu-item " +
+                                "menu-item " +   
                                 (location.pathname === "/" + subModules.link
                                   ? "active"
                                   : "")
@@ -209,7 +209,7 @@ export default function SideNav(props) {
                                 <i className={subModules.icon}></i>
                                 <span>{subModules.name}</span>
                               </div>
-                              {props.isShowmenu && (
+                              {/* {props.isShowmenu && (
                                 <UncontrolledTooltip
                                   modifiers={[{
                                     preventOverflow: {
@@ -217,11 +217,12 @@ export default function SideNav(props) {
                                     },
                                   }]}
                                   placement="top"
+                                  trigger= 'hover'
                                   target={subModules.link + subModules.id}
                                 >
                                   {subModules.name}
                                 </UncontrolledTooltip>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         ))}

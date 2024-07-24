@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import store from '../store/store';
 
 let controleErrors = {
-    "min": "Minimum {min} characters are required",
-    "max": "Max {max} characters are allowed",
+    "min": "Minimum {min} {type} are required",
+    "max": "Max {max} {type} are allowed",
     "alphasp": "Allow only alpha and {spacial} but not allowed Space",
     "alphaspace": "Allow only alpha Characters "
 }
@@ -54,7 +54,7 @@ export var customContentValidation = (errorMsg, pattenObj, max = 0, min = 0) => 
     let patternMsg, pattenReg, minV, customPattern, reuiredF = Yup.string();
 
     return (errorMsg !== "" && (reuiredF = reuiredF.required(errorMsg)),
-        min !== 0 && (minV = controleErrors.min.replace("{min}", min + ""), reuiredF = reuiredF.min(min, minV).trim(minV)),
+        min !== 0 && (minV = controleErrors.min.replace("{min}", min + "").replace("{type}", pattenObj?.patternType === "number" ? 'numbers' : 'characters'), reuiredF = reuiredF.min(min, minV).trim(minV)),
         max !== 0 && (reuiredF = reuiredF.max(max, controleErrors.max.replace("{max}", max + ""))),
         pattenObj && (
             customPattern = pattenObj.patternType ? getCustomPatten(pattenObj.patternType) : "",

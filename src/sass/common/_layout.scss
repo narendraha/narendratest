@@ -5,17 +5,6 @@
     flex-direction: column;
     height: 100%;
 
-    &.al_landing_bg {
-        background: url('../../images/homebg.png') no-repeat center;
-
-        .cs_site_header.cs_style1.cs_active_sticky,
-        .cs_footer_bottom,
-        .cs_footer.cs_style_2 {
-            background-color: transparent;
-        }
-    }
-
-    // width: 100%;
     &.al_homechatopen {
         .cs_site_header {
             width: 75%;
@@ -732,9 +721,21 @@ section:not(.cs_banner) {
     a {
         margin-right: 20px;
 
+        &:first-child {
+            img {
+                width: 20px;
+            }
+        }
+
+        &:last-child {
+            img {
+                width: 28px;
+            }
+        }
+
         img {
             height: 25px;
-            width: 30px;
+            width: 24px;
         }
     }
 }
@@ -870,6 +871,22 @@ button.al_roundbtn {
     border-radius: 8px;
     color: #444444;
     font-size: 11px;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.al_bot-reply {
+    animation: slideIn 0.3s ease-out;
 }
 
 .al_chatcontent {
@@ -2103,6 +2120,14 @@ ul.standardPlans {
     }
 }
 
+.icon_alfred_info {
+    transition: transform .2s;
+
+    &:hover {
+        transform: scale(1.3);
+    }
+}
+
 .rc-slider {
     margin-bottom: 15px;
 
@@ -2135,6 +2160,32 @@ ul.standardPlans {
 
     .rc-slider-dot {
         display: none;
+    }
+}
+
+.healthhubprogress {
+    .rc-slider {
+        margin-bottom: 0;
+        height: 8px;
+        padding: 0;
+
+        .rc-slider-rail {
+            background: #e7f0f1;
+            height: 8px;
+        }
+
+        .rc-slider-track {
+            background: #04C1D6;
+            height: 8px;
+        }
+
+        .rc-slider-handle {
+            display: none;
+        }
+
+        .rc-slider-step {
+            height: 8px;
+        }
     }
 }
 

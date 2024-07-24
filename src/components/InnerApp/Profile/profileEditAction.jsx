@@ -143,10 +143,7 @@ export const ProfileEditAction = () => {
                                                         name="feet"
                                                         placeholder="e.g.9"
                                                         className="form-control"
-                                                        onKeyPress={(e) => {
-                                                            console.log("9999999999999999999", e?.target?.value)
-                                                            allowedNumbersOnField(1, e)
-                                                        }}
+                                                        onKeyPress={(e) => allowedNumbersOnField(1, e)}
                                                         onChange={(e) => {
                                                             setFieldValue('feet', e?.target?.value)
                                                             if (+e === 9)

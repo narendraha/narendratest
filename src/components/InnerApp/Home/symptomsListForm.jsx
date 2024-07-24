@@ -1,13 +1,13 @@
+import React, { useEffect } from "react";
 import { Form, Formik } from "formik";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardBody, Col, FormGroup, Label, Row, Modal, ModalBody, Table } from "reactstrap";
-import { getActionTypes, getActivetab } from "../../../_mock/internalJsControl";
+import { Card, CardBody, Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import { getActionTypes, getActivetab } from "../../../_mock/helperIndex";
 import bulb from "../../../images/idea.png";
-import { addSymptomsDetailRequest, setActiveTabRequest } from "../../../store/Home/slice";
-import { setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
+import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest, getSymptomsDetailsRequest } from "../../../store/Home/slice";
+import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const horizontalLabels = {
     0: "None",
@@ -38,7 +38,11 @@ export const SymptomsListForm = () => {
 
     const dispatch = useDispatch();
 
-    const { lastUpdatedSymptomsDetails } = useSelector((state) => state?.homePageSlice)
+    const { lastUpdatedSymptomsDetails } = useSelector((state) => state?.homePageSlice);
+
+    useEffect(() => {
+        dispatch(getSymptomsDetailsLastUpdateRequest())
+    }, [dispatch])
 
     const handleFieldOnchange = (e, i, setFieldValue, field) => {
         let value = field === 'serverity' ? ((e <= 30 && e > 10) ? 20 : (e <= 55 && e > 35) ? 45 : (e <= 80 && e > 55) ? 70 : (e <= 100 && e > 80) ? 90 : 0) : e
@@ -53,65 +57,35 @@ export const SymptomsListForm = () => {
         dispatch(setActiveTabRequest({ setTab: getActivetab.SYMPTOMSLIST, nextOrBackTab: getActivetab.EXPTMONITORING }))
     }
 
+    const handleSelect = () => {
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
+        dispatch(getSymptomsDetailsRequest())
+    }
+
     return (
         <React.Fragment>
             <div className="d-flex justify-content-between mb-2">
                 <p>Select the symptoms range listed below</p>
-                {lastUpdatedSymptomsDetails?.difference >= 0 ?
-                    (
-                        <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
-                            <img src={bulb} alt="" width={20} />
-                            You, Last gave your symptoms
-                            <span style={{ color: "#3bc0c3" }}>
-                                {lastUpdatedSymptomsDetails?.difference}
-                            </span>
-                            days ago on
-                            <span className="al_text_link" style={{ color: "#3bc0c3" }}>
-                                {lastUpdatedSymptomsDetails?.date}
-                            </span>
-                        </div>
-                    )
-                    : null}
-                <Modal className='modal-md detailsModal' isOpen={false} wrapClassName="al_outerparentwp">
-                    <div className='d-flex align-items-center justify-content-between p-4'>
-                        <h6 className='mb-0'>Last Updated Symptoms (18-06-2024)</h6>
-                        <i className="icon_alfred_close pointer" title="Close" onClick={() => { }}></i>
+                {+lastUpdatedSymptomsDetails?.difference >= 0 ? (
+                    <div className="d-flex align-items-center justify-content-end gap-1 al_note_content">
+                        <img src={bulb} alt="" width={20} />
+                        You, Last gave your symptoms{" "}
+                        <span style={{ color: "#3bc0c3" }}>
+                            {+lastUpdatedSymptomsDetails?.difference === 0 ? "today " : lastUpdatedSymptomsDetails?.difference}
+                        </span>
+                        {+lastUpdatedSymptomsDetails?.difference !== 0 ? "days ago " : ""}
+                        on
+                        <span className="al_text_link" onClick={handleSelect}>
+                            {lastUpdatedSymptomsDetails?.date}
+                        </span>
+                        <i className="icon_alfred_info text-info ms-2" style={{ verticalAlign: "middle" }} id="vitalInfo"></i>
+                        <UncontrolledTooltip
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                            placement='top' target="vitalInfo">
+                            check your last updated Symptoms by clicking on Date
+                        </UncontrolledTooltip>
                     </div>
-                    <ModalBody className="wflexLayout p-0">
-                        <div className='wflexScroll mb-3'>
-                            <Table borderless className='al_listtable al-pad pt-0 mb-0 al_symtomdetails'>
-                                <thead className='sticky_header'>
-                                    <tr>
-                                        <th>Symptom</th>
-                                        <th>Frequency</th>
-                                        <th>Severity</th>
-                                        <th>Effecting quality of life</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Cold sweat</td>
-                                        <td>Occasionally</td>
-                                        <td>Extreme</td>
-                                        <td>Yes</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chest Pain</td>
-                                        <td>Often</td>
-                                        <td>Moderate</td>
-                                        <td>Yes</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pressure/Discomfort in chest</td>
-                                        <td>Always</td>
-                                        <td>Extreme</td>
-                                        <td>Yes</td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
-                    </ModalBody>
-                </Modal>
+                ) : null}
             </div>
             <Formik
                 initialValues={{

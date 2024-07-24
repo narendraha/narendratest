@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 import loginto from '../../images/loginto.svg';
 import Section from './Section';
 import BannerSectionStyle from './Section/BannerSectionStyle';

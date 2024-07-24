@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 import { Button, Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { AxiosInstance } from "../../../_mock/utilities";
 import Chatbot from "../../../images/alfredicon.svg";
 import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../../images/userprofile.jpg";
+import EducationalBotHTMLcontent from "../../Utilities/EducationalBotHTMLcontent";
 
 export default function EducationalChatBot(props) {
     const inputRef = useRef(null);
@@ -52,35 +52,13 @@ export default function EducationalChatBot(props) {
                         // setIsLoading(false);
                         setChatHistory((prevHistory) => [
                             ...prevHistory,
-                            {
-                                alfred:
-                                    `<html>
-                                        <head>
-                                            <style>
-                                                body {
-                                                    font-family: Poppins;
-                                                }
-                                                ol {
-                                                    margin - top: 5px;
-                                                }
-                                                ol li {
-                                                    margin - bottom: 6px;
-                                                }
-                                                ul {
-                                                    margin - top: 5px;
-                                                }
-                                                ul li {
-                                                    margin - bottom: 6px;
-                                                }
-                                            </style>
-                                        </head>
-                                        <body style="font-family: Poppins; font-size: 13px; line-height: 1.8">
-                                        ${responseData?.alfred}
-                                        </body>
-                                    </html>`
-                            }
-                            // responseData?.alfred },
+                            {alfred: responseData?.alfred}
                         ]); /* Add new item to end of array */
+                    } else if (res.data.statuscode === 500) {
+                        setChatHistory((prevHistory) => [
+                            ...prevHistory,
+                            { alfred: "Sorry Unable to reach server at that moment can you please try again!" }
+                        ]);
                     } else {
                         toast(res?.data?.message, {
                             position: "top-right",
@@ -136,6 +114,9 @@ export default function EducationalChatBot(props) {
             .catch((er) => { });
     };
 
+    let getIsUser = (key) => {
+        return key === "user"
+    }
     const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
     return (
         <>
@@ -179,33 +160,23 @@ export default function EducationalChatBot(props) {
                                     <React.Fragment key={index}>
                                         {Object.entries(message).map(([key, value]) => (
                                             <Row className={"mb-4 al_chatcontent" + (key === "user" ? " al_usermsg" : "")} key={key}>
-                                                <div>
-                                                    {key === "user" ? (<>
+                                                {["user", "alfred"]?.includes(key) ?
+                                                    <div>
                                                         <img
-                                                            src={profilePicture}
-                                                            alt="chat user"
-                                                            id="userimageed" />
+                                                            src={getIsUser(key) ? profilePicture : Chatbot}
+                                                            alt={getIsUser(key) ? "chat user" : "Bot"}
+                                                            id={getIsUser(key) ? "userimageed" : "botimageed"}
+                                                        />
                                                         <UncontrolledTooltip
                                                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                                                            placement='bottom' target="userimageed">
-                                                            {message.user ? getProfileDetails?.username : message.user}
+                                                            placement='bottom' target={getIsUser(key) ? "userimageed" : "botimageed"}>
+                                                            {getIsUser ? (message.user ? getProfileDetails?.username : message.user) : "Alfred"}
                                                         </UncontrolledTooltip>
-                                                    </>) : key === "alfred" ? (<>
-                                                        <img src={Chatbot} alt="Bot" id="botimageed" />
-                                                        <UncontrolledTooltip
-                                                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                                                            placement='bottom' target="botimageed">
-                                                            Alfred
-                                                        </UncontrolledTooltip>
-                                                    </>) : null}
-                                                </div>
+                                                    </div> : null}
                                                 <Col>
-                                                    {/* <h6 className="mb-0 text-capitalize">
-                                                        {key === "user" ? getProfileDetails?.username : key}
-                                                    </h6> */}
                                                     {key === "user" ?
                                                         <div>{value}</div> :
-                                                        <div dangerouslySetInnerHTML={{ __html: value }} />}
+                                                        <EducationalBotHTMLcontent props={value} />}
                                                     {key === "alfred" && (
                                                         <p className="mb-0 mt-2 al_chatfeedbackactions">
                                                             <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', value)}></i>

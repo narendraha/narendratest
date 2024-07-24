@@ -1,5 +1,5 @@
 import React from 'react';
-import { pageTitle } from '../../_mock/PageTitle';
+import { pageTitle } from '../../_mock/helperIndex';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 
 export default function CommunityResources() {

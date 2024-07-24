@@ -54,6 +54,14 @@ export const customPatterns = [{},
 
 ]
 
+// roles
+export const getRole = {
+    USER: 'User',
+    ALFRED: 'Alfred',
+    PATIENT: 'patient',
+    PHYSICIAN: 'doctor'
+}
+
 
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {
@@ -134,3 +142,8 @@ export const allowedNumbersOnField = (fieldLength, e) => {
         e.preventDefault();
     }
 }
+
+// for page title 
+export const pageTitle = (title) => {
+    return (document.title = title);
+};

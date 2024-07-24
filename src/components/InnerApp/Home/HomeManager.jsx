@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
-import { getActivetab } from "../../../_mock/internalJsControl";
+import { getActionTypes, getActivetab, pageTitle } from "../../../_mock/internalJsControl";
 import { getActiveTabRequest, setActiveTabRequest } from "../../../store/Home/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
 import { ExpertMonitoring } from './expertMonitoring';
+import ExpertMonitoringLastUpdateView from "./expertMonitoringlastUpdateView";
 import { HealthHub } from "./healthHub";
+import { HealthHubOverview } from "./healthHubOverview";
 import { LifeStyleGoal } from "./lifeStyleGoal";
 import { RiskOptimization } from "./riskOptimization";
+import SymptomsListView from "./symptomsLastUpdatedView";
 import { SymptomsListForm } from "./symptomsListForm";
 
 let navItemsList = [
@@ -21,7 +24,7 @@ let navItemsList = [
 export default function HomeManager() {
   const dispatch = useDispatch();
 
-  const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
+  const { getProfileDetails, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
   const { activeTab, isNavRedirection } = useSelector((state) => state?.homePageSlice);
 
   useEffect(() => {
@@ -38,6 +41,14 @@ export default function HomeManager() {
   const getIsActiveTabClassName = (currentTab) => {
     return activeTab === currentTab ? "active" : ""
   }
+
+  let currentHometab = activeTab === getActivetab.HEALTHHUB ? "Health Hub" :
+    activeTab === getActivetab.EXPTMONITORING ? "Expert Monitoring" :
+      activeTab === getActivetab.SYMPTOMSLIST ? "List Of Symptoms" :
+        activeTab === getActivetab.LIFEGOAL ? "Lifestyle Goal" :
+          "Optimal Risk Management";
+
+  pageTitle(`Home | ${currentHometab}`);
 
   return (
     <>
@@ -68,14 +79,17 @@ export default function HomeManager() {
 
                 <TabPane tabId={getActivetab.HEALTHHUB}>
                   {activeTab === getActivetab.HEALTHHUB && <HealthHub />}
+                  {activeTab === getActivetab.HEALTHHUB && actionType === getActionTypes.SELECT && <HealthHubOverview />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.EXPTMONITORING}>
                   {activeTab === getActivetab.EXPTMONITORING && <ExpertMonitoring />}
+                  {(activeTab === getActivetab.EXPTMONITORING && actionType === getActionTypes.SELECT) ? <ExpertMonitoringLastUpdateView /> : ""}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.SYMPTOMSLIST}>
                   {activeTab === getActivetab.SYMPTOMSLIST && <SymptomsListForm />}
+                  {(activeTab === getActivetab.SYMPTOMSLIST && actionType === getActionTypes.SELECT) ? <SymptomsListView /> : ""}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.LIFEGOAL}>

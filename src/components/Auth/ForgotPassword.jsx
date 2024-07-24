@@ -1,19 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
+import { pageTitle } from "../../_mock/internalJsControl";
 import alferdlogomobile from "../../images/alfredlogo.svg";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import Loading from "../InnerApp/LoadingComponent";
 import { useDispatch, useSelector } from "react-redux";
+import { getActionTypes } from "../../_mock/internalJsControl";
 import {
   getRegisterClear,
   getRegisterResponseData,
 } from "../../store/PatientRegisterFlow/slice";
-import { getActionTypes } from "../../_mock/internalJsControl";
 
 export default function ForgotPassword() {
+  pageTitle("ForgotPassword")
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(null);

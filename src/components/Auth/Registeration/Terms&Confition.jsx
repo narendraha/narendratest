@@ -1,5 +1,5 @@
 import React from "react";
-import alfredlogo from "../../images/alfredlogo.svg";
+import alfredlogo from "../../../images/alfredlogo.svg";
 import { Link } from 'react-router-dom';
 
 export default function Terms() {

@@ -11,7 +11,7 @@ const ChatBotMsgInterface = ({ props }) => {
 
   const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
 
-  const { ischatBotLoading } = useSelector((state) => state?.utilityCallFunctionSlice);
+  const { isLoading } = useSelector((state) => state?.utilityCallFunctionSlice);
   const isUser = chatHistory?.role === getBotRole.USER;
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
@@ -19,6 +19,8 @@ const ChatBotMsgInterface = ({ props }) => {
       ...prevIcons,
       [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
     }));
+    
+    // dispatch(updateChatPreferenceRequest())
   }
 
   return (
@@ -45,7 +47,7 @@ const ChatBotMsgInterface = ({ props }) => {
           </Col>
         </Row>
 
-        {ischatBotLoading && <ChatBotLoading />}
+        {isLoading && <ChatBotLoading />}
         {/* <div ref={messagesEndRef} /> */}
       </div>
     </div>

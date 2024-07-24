@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { call, put, takeLeading } from 'redux-saga/effects';
+import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI } from "../../_mock/helperIndex";
 import {
     getChatStreamRequest,
@@ -37,66 +37,67 @@ function* updateChatPreference(action) {
 }
 
 const fetchChatStream = async (action) => {
+    let { payload, prevChatHistory } = action;
 
-    const botResponse = "";
-    const streamingBotResponse = "";
-    const apiUrl = 'http://192.168.7.214:3000/education-bot-home';
+    const updatedChatHistory = [];
+
+    const data = {
+        id: '1234-9876-54321',
+        message: payload || "",
+    };
+    const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer YOUR_API_KEY`
     };
 
     try {
         const responseStream = await fetch(apiUrl, {
             method: 'POST',
             headers,
-            body: JSON.stringify(action)
+            body: JSON.stringify(data),
         });
+        console.log("responseStream=>", responseStream)
 
         if (responseStream) {
             const reader = responseStream.body.getReader();
             const decoder = new TextDecoder();
             let done = false;
             let tempStr = '';
-            let res = '';
 
             while (!done) {
                 const { value, done: doneReading } = await reader.read();
                 done = doneReading;
                 const chunk = decoder.decode(value, { stream: true });
+
+                console.log("chunk=>", chunk)
                 tempStr += chunk;
-                // Split by newline and parse JSON objects
-                const lines = tempStr.split('\n');
-                for (let i = 0; i < lines.length - 1; i++) {
-                    if (lines[i].trim()) {
-                        const json = JSON.parse(lines[i]);
-                        const content = json?.delta?.content || '';
-                        res += content?.trim() + ' '
-                        // setResponseStream(prev => prev + content);
-                    }
+
+                updatedChatHistory = [...prevChatHistory];
+                const lastMessage = updatedChatHistory[updatedChatHistory.length - 1];
+                // Check if the last message is from 'Alfred' and update it
+                if (lastMessage && lastMessage.role === 'Alfred') {
+                    updatedChatHistory[updatedChatHistory.length - 1].content += chunk;
+                } else {
+                    updatedChatHistory.push({ content: chunk, role: 'Alfred' });
                 }
-                // Keep the last line if it is incomplete
-                tempStr = lines[lines.length - 1];
+                return updatedChatHistory
             }
-            botResponse = { content: res, role: 'Alfred' }
-            // setResponseStream('')
         }
     } catch (error) {
         console.error('Error streaming response:', error);
     } finally {
     }
-
-    console.log("botResponsebotResponse", botResponse)
-    return { botResponse, streamingBotResponse }
 }
 
 // TO GET CHAT STREAM
 function* getEducationalBotChatStream(action) {
     store.dispatch(setLoading(true));
+    const prevChatHistory = (yield select())['educationalChatBotSlice']?.chatHistory || "";
+
     if (action?.payload) {
-        let { botResponse, streamingBotResponse } = yield call(fetchChatStream, action?.payload);
-        if (botResponse) {
-            yield put(setChatHistoryRequest(botResponse))
+        let { updatedChatHistory } = yield call(fetchChatStream, { payload: action?.payload, prevChatHistory: prevChatHistory });
+        if (updatedChatHistory) {
+            yield put(setChatHistoryRequest(updatedChatHistory))
         }
     }
     store.dispatch(setLoading(false))

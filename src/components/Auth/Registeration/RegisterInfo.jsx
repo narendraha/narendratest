@@ -108,14 +108,14 @@ export default function RegisterInfo() {
                       Sign in
                     </Link>
                   </div>
-                  {/* <Button
+                  <Button
                     type="submit"
                     className="al_login_button mt-4"
                     // disabled={isSubmitting || !dirty}
                     variant="contained"
                   >
                     Submit
-                  </Button> */}
+                  </Button>
                 </div>
               </div>
             </Col>

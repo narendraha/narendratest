@@ -209,30 +209,11 @@ export default function HomeEducationalBot() {
                         {message?.role === "User" ?
                           <div>{message.content}</div> :
                           // <div><EducationalBotHTMLcontent props={message.content} />{loadingIndex === index && <div key={index} className="al_chatloading my-1"></div>}</div>}
-                        <div><EducationalBotHTMLcontent props={message.content} /></div>}
+                          <div><EducationalBotHTMLcontent props={message.content} /></div>}
                         {message?.role === "Alfred" && (
-                          <p className="mb-0 mt-1">
-                            <Icon
-                              icon="iconamoon:like-light"
-                              width="1.5em"
-                              height="1.5em"
-                              onClick={() => handleAction(index, 'like', message.content)} // Handle like action
-                              style={{
-                                cursor: 'pointer',
-                                color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
-                              }}
-                            />
-                            <Icon
-                              icon="iconamoon:dislike-light"
-                              width="1.5em"
-                              height="1.5em"
-                              className="mx-2"
-                              onClick={() => handleAction(index, 'dislike', message.content)} // Handle dislike action
-                              style={{
-                                cursor: 'pointer',
-                                color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
-                              }}
-                            />
+                          <p className="mb-0 mt-2 al_chatfeedbackactions">
+                            <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', message?.content)}></i>
+                            <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', message?.content)}></i>
                           </p>
                         )}
                       </Col>

@@ -873,6 +873,22 @@ button.al_roundbtn {
     font-size: 11px;
 }
 
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.al_bot-reply {
+    animation: slideIn 0.3s ease-out;
+}
+
 .al_chatcontent {
     display: flex;
     align-items: flex-start;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Card, CardBody, Col, Row, Modal, ModalBody, Table } from "reactstrap";
+import { Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { getActivetab } from "../../../_mock/internalJsControl";
 import atrialfib from "../../../images/atrialfib.png";
 import rhythm from "../../../images/rhythm.png";
@@ -52,7 +52,19 @@ export const HealthHub = () => {
                             isOptionDisabled={(option) => option.disabled}
                         />
                     </div>
-                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" style={{ fontSize: "22px" }} onClick={() => setShowOverview(true)}></i>
+                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" id="overviewtooltip" style={{ fontSize: "22px" }} onClick={() => setShowOverview(true)}></i>
+                    <UncontrolledTooltip
+                        modifiers={[{
+                            preventOverflow: {
+                                boundariesElement: "window",
+                            },
+                        }]}
+                        placement="right"
+                        trigger='hover'
+                        target="overviewtooltip"
+                    >
+                        Overview
+                    </UncontrolledTooltip>
                 </Col>
                 <Col lg="5" md="7" sm="8">
                     <Row className="align-items-center">

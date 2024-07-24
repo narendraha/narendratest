@@ -1,79 +1,72 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 import { getBotRole } from '../../_mock/internalJsControl';
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from "../../images/usericon.svg";
+import { updateChatPreferenceRequest } from '../../store/EducationaChatBot/slice';
 import EducationalBotHTMLcontent from './EducationalBotHTMLcontent';
 
 const ChatBotMsgInterface = ({ props }) => {
+  const dispatch = useDispatch()
+
   const { chatHistory, index } = props;
+  const messagesEndRef = useRef(null);
 
-  const [selectedIcons, setSelectedIcons] = useState([]); // State to track selected icons
+  const [selectedIcons, setSelectedIcons,] = useState([]); // State to track selected icons
 
-  const { isLoading } = useSelector((state) => state?.utilityCallFunctionSlice);
+  const { chatBotLoadingIndex } = useSelector((state) => state?.utilityCallFunctionSlice);
   const isUser = chatHistory?.role === getBotRole.USER;
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
     setSelectedIcons(prevIcons => ({
       ...prevIcons,
-      [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },
-    }));
-    
-    // dispatch(updateChatPreferenceRequest())
+      [messageId]: { reaction: iconType }
+    }))
+
+    let reqObj = {
+      message: alfredValue,
+      preference: iconType === 'like' ? true : false
+    }
+    dispatch(updateChatPreferenceRequest(reqObj))
   }
 
-  return (
-    <div className="flex-grow-1">
-      <div className="scrolldiv">
-        <Row className={"mb-4 al_chatcontent" + (isUser ? " al_usermsg" : "")}>
-          <div>
-            {isUser ?
-              <ChatBotTextUi props={{ imgUrl: Chatuser, imgAlt: "chat user", imgId: "userimagehomeed", toolTipText: "User" }} /> :
-              <ChatBotTextUi props={{ imgUrl: Chatbot, imgAlt: "Bot", imgId: "botimagehomeed", toolTipText: "Alfred" }} />
-            }
-          </div>
-          <Col>
-            {isUser ?
-              <div>{chatHistory?.content}</div> :
-              <EducationalBotHTMLcontent props={chatHistory?.content} />
-            }
-            {!isUser && (
-              <p className="mb-0 mt-2 al_chatfeedbackactions">
-                <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', chatHistory?.content)}></i>
-                <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', chatHistory?.content)}></i>
-              </p>
-            )}
-          </Col>
-        </Row>
+  useEffect(() => {
+    scrollToBottom(); // Scroll to bottom whenever messages change
+  }, [chatHistory]);
 
-        {isLoading && <ChatBotLoading />}
-        {/* <div ref={messagesEndRef} /> */}
-      </div>
-    </div>
-  )
-}
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-export default ChatBotMsgInterface;
-
-// ========= chatbot loading ============
-export const ChatBotLoading = () => {
   return (
     <>
-      <Row className="mb-4 al_chatcontent">
+      <Row className={"mb-4 al_chatcontent" + (isUser ? " al_usermsg" : "")}>
         <div>
-          <img src={Chatbot} alt="Bot" id="botimageed" />
+          {isUser ?
+            <ChatBotTextUi props={{ imgUrl: Chatuser, imgAlt: "chat user", imgId: "userimagehomeed", toolTipText: "User" }} /> :
+            <ChatBotTextUi props={{ imgUrl: Chatbot, imgAlt: "Bot", imgId: "botimagehomeed", toolTipText: "Alfred" }} />
+          }
         </div>
         <Col>
-          <div>
-            <div className="al_chatloading my-1"></div>
-          </div>
+          {isUser ?
+            <div>{chatHistory?.content}</div> :
+            <div><EducationalBotHTMLcontent props={chatHistory?.content} />{chatBotLoadingIndex === index && <div className="al_chatloading my-1"></div>}</div>
+          }
+          {!isUser && (
+            <p className="mb-0 mt-2 al_chatfeedbackactions">
+              <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', chatHistory?.content)}></i>
+              <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', chatHistory?.content)}></i>
+            </p>
+          )}
         </Col>
       </Row>
+      <div ref={messagesEndRef} />
     </>
   )
 }
 
+export default ChatBotMsgInterface;
 
 // ========= image and tooltip ============
 export const ChatBotTextUi = ({ props }) => {

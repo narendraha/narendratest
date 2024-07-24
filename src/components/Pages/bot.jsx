@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from 'reactstrap';
-import { v4 as uuidv4 } from 'uuid';
+import { pageTitle } from "../../_mock/internalJsControl";
 import homebotimg from '../../images/doctorbot.png';
 import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
-import { setChatHistoryRequest } from "../../store/EducationaChatBot/slice";
-import { getAssetsRequest, setLoading } from "../../store/UtilityCallFunction/slice";
+import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest } from "../../store/EducationaChatBot/slice";
+import { getAssetsRequest } from "../../store/UtilityCallFunction/slice";
 import ChatBotMsgInterface from "../Utilities/ChatBotMsgInterface";
 import ChatBotSearchArea from "../Utilities/ChatBotSearchArea";
+import Chatbot from "../../images/alfredicon.svg";
 
 // let homeleftmobile = 'homeleftmobile.gif'
 
 const HomeEducationalBot = () => {
+    pageTitle("Home")
     const dispatch = useDispatch();
 
-    const [isInputDisable, setinputDiable] = useState(false);
-    const [randomId, setRandomId] = useState(null);
-    const [openChatUI, setOpenChatUI] = useState(false)
+    const [openChatUI, setOpenChatUI] = useState(false);
 
-    const { assetUrl, chatHistory } = useSelector((state) => state?.educationalChatBotSlice);
+    const { assetUrl, chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
 
     useEffect(() => {
         dispatch(getAssetsRequest(homeleftmobile))
     }, []);
-
-    useEffect(() => {
-        setRandomId(uuidv4().slice(0, 5))
-    }, [randomId === null])
 
 
     const handleFormSubmit = (e) => {
@@ -35,68 +31,11 @@ const HomeEducationalBot = () => {
         let inputValue = e?.target?.value || e;
         if (!inputValue.trim()) return; // Do not submit empty input
         setOpenChatUI(true)
+        dispatch(setInputDisableRequest(true))
         dispatch(setChatHistoryRequest({ content: inputValue, role: 'User' }))
-        let data = {
-            id: randomId,
-            messages: [{ content: inputValue, role: 'User' }],
-        };
-        // dispatch(getChatStreamRequest(data))
-        getChatStreamRequest(data)
+        dispatch(getChatStreamRequest(inputValue))
     };
 
-
-    const getChatStreamRequest = async (data) => {
-        dispatch(setLoading(true));
-        setinputDiable(true);
-        const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
-        const headers = {
-            'Content-Type': 'application/json',
-        };
-
-        try {
-            const responseStream = await fetch(apiUrl, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify(data),
-            });
-            console.log("responseStream=>", responseStream)
-
-            if (responseStream) {
-                const reader = responseStream.body.getReader();
-                const decoder = new TextDecoder();
-                let done = false;
-                let tempStr = '';
-
-                while (!done) {
-                    const { value, done: doneReading } = await reader.read();
-                    done = doneReading;
-                    const chunk = decoder.decode(value, { stream: true });
-
-                    console.log("chunk=>", chunk)
-                    tempStr += chunk;
-
-                    const updatedChatHistory = [...chatHistory];
-                    const lastMessage = updatedChatHistory[updatedChatHistory.length - 1];
-                    // Check if the last message is from 'Alfred' and update it
-                    if (lastMessage && lastMessage.role === 'Alfred') {
-                        updatedChatHistory[updatedChatHistory.length - 1].content += chunk;
-                    } else {
-                        updatedChatHistory.push({ content: chunk, role: 'Alfred' });
-                    }
-                    dispatch(setChatHistoryRequest(updatedChatHistory))
-                    return updatedChatHistory
-                }
-            }
-        } catch (error) {
-            console.error('Error streaming response:', error);
-        } finally {
-            dispatch(setLoading(false));
-            setinputDiable(false)
-            // setLoadingIndex(null);
-        }
-    }
-
-    console.log("assetUrlassetUrl", assetUrl)
 
     return (
         <React.Fragment>
@@ -104,9 +43,24 @@ const HomeEducationalBot = () => {
                 {openChatUI ?
                     <div className="w-50 al_chatbotauth">
                         <div className="d-flex flex-column">
-                            {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index }} />
-                            })}
+                            <div className="flex-grow-1">
+                                <div className="scrolldiv">
+                                    {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
+                                        return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index }} />
+                                    })}
+                                    {isChatBotLoading &&
+                                        <Row className="mb-4 al_chatcontent">
+                                            <div>
+                                                <img src={Chatbot} alt="Bot" id="botimageed" />
+                                            </div>
+                                            <Col>
+                                                <div>
+                                                    <div className="al_chatloading my-1"></div>
+                                                </div>
+                                            </Col>
+                                        </Row>}
+                                </div>
+                            </div>
                             <ChatBotSearchArea
                                 handleFormSubmit={handleFormSubmit}
                                 isInputDisable={isInputDisable}

@@ -1,31 +1,24 @@
 import { toast } from "react-toastify";
-import { call, put, select, takeLeading } from 'redux-saga/effects';
+import { call, select, takeLeading, put } from 'redux-saga/effects';
 import { callAPI } from "../../_mock/helperIndex";
-import {
-    getChatStreamRequest,
-    setChatHistoryRequest,
-    updateChatPreferenceRequest
-} from "./slice";
-
 import { setLoading } from "../UtilityCallFunction/slice";
 import store from '../store';
+import { getChatStreamRequest, getChatStreamResponse, setInputDisableRequest, updateChatPreferenceRequest } from "./slice";
+import { setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
 
 function* updateChatPreference(action) {
     try {
-        let reqObj = {
-            message: action.payload,
-            // preference: iconType === "like"
-        }
+
         const response = yield call(callAPI, {
             url: '/preference_chat',
             method: 'POST',
-            data: reqObj,
+            data: action?.payload,
             contentType: 'application/json',
         });
-        if (!response?.status && response?.status !== 200) {
+        if (response?.status && response?.statuscode === 200) {
             toast(response?.message, {
                 position: "top-right",
-                type: "error",
+                type: "success",
             });
         }
     } catch (error) {
@@ -36,11 +29,12 @@ function* updateChatPreference(action) {
     }
 }
 
-const fetchChatStream = async (action) => {
-    let { payload, prevChatHistory } = action;
 
-    const updatedChatHistory = [];
+export const fetchChatStream = async (payload, prevChatHistory, isLoading) => {
+    let updatedHistory = [...prevChatHistory];
 
+    let chatLoadingIndex = updatedHistory?.length;
+    store.dispatch(setChatBotLoadingIndex(chatLoadingIndex))
     const data = {
         id: '1234-9876-54321',
         message: payload || "",
@@ -56,52 +50,65 @@ const fetchChatStream = async (action) => {
             headers,
             body: JSON.stringify(data),
         });
-        console.log("responseStream=>", responseStream)
+        console.log("responseStream=>", responseStream);
 
         if (responseStream) {
             const reader = responseStream.body.getReader();
             const decoder = new TextDecoder();
             let done = false;
-            let tempStr = '';
 
             while (!done) {
                 const { value, done: doneReading } = await reader.read();
                 done = doneReading;
                 const chunk = decoder.decode(value, { stream: true });
 
-                console.log("chunk=>", chunk)
-                tempStr += chunk;
+                console.log("chunk=>", chunk);
+                const lastMessage = updatedHistory[updatedHistory.length - 1];
 
-                updatedChatHistory = [...prevChatHistory];
-                const lastMessage = updatedChatHistory[updatedChatHistory.length - 1];
-                // Check if the last message is from 'Alfred' and update it
+                // Create a new object to avoid mutating the state directly
                 if (lastMessage && lastMessage.role === 'Alfred') {
-                    updatedChatHistory[updatedChatHistory.length - 1].content += chunk;
+                    updatedHistory = [
+                        ...updatedHistory.slice(0, updatedHistory.length - 1),
+                        { ...lastMessage, content: lastMessage.content + chunk }
+                    ];
                 } else {
-                    updatedChatHistory.push({ content: chunk, role: 'Alfred' });
+                    updatedHistory = [...updatedHistory, { content: chunk, role: 'Alfred' }];
                 }
-                return updatedChatHistory
+
+                // Dispatch action to update chat history
+                store.dispatch(getChatStreamResponse(updatedHistory));
             }
         }
     } catch (error) {
         console.error('Error streaming response:', error);
-    } finally {
+        throw error;
     }
-}
+};
+
 
 // TO GET CHAT STREAM
 function* getEducationalBotChatStream(action) {
-    store.dispatch(setLoading(true));
-    const prevChatHistory = (yield select())['educationalChatBotSlice']?.chatHistory || "";
+    store.dispatch(setLoading(true))
+    try {
+        const prevChatHistory = yield select(state => state.educationalChatBotSlice?.chatHistory || []);
+        const isLoading = yield select(state => state.utilityCallFunctionSlice?.isLoading);
 
-    if (action?.payload) {
-        let { updatedChatHistory } = yield call(fetchChatStream, { payload: action?.payload, prevChatHistory: prevChatHistory });
-        if (updatedChatHistory) {
-            yield put(setChatHistoryRequest(updatedChatHistory))
+        if (action?.payload) {
+            yield call(fetchChatStream, action?.payload, prevChatHistory, isLoading);
         }
+    } catch (error) {
+        console.error('Error in getEducationalBotChatStream saga:', error);
+        toast(error?.message, {
+            position: "top-right",
+            type: "error",
+        });
+    } finally {
+        yield put(setInputDisableRequest(false))
+        store.dispatch(setChatBotLoadingIndex(null))
     }
-    store.dispatch(setLoading(false))
 }
+
+
 
 function* watchHomeEducationalBotSaga() {
     yield takeLeading(updateChatPreferenceRequest.type, updateChatPreference)

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, CardBody, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { pageTitle } from '../../_mock/helperIndex';
 import { default as accuratehealth, default as additionalvalue, default as assesssymptoms, default as costeffective } from '../../images/costeffective.png';
-import facebook from '../../images/facebook.svg';
 import linkedin from '../../images/linkedin.svg';
 import pbehaviour from '../../images/pbehaviour.svg';
 import peducation from '../../images/peducation.svg';

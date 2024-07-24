@@ -11,7 +11,7 @@ const initialState = {
     actionData: "",
     actionType: getActionTypes.UNSELECT,
     assetUrl: "",
-    ischatBotLoading: false
+    chatBotLoadingIndex: null
 };
 
 const utilityCallFunctionSlice = createSlice({
@@ -37,11 +37,14 @@ const utilityCallFunctionSlice = createSlice({
         setConfirmationOpen: (state, action) => {
             state.confirmationData = action.payload
         },
-        setConfirmationClose: (state, action) => {
+        setConfirmationClose: (state) => {
             state.confirmationData = null
         },
         setLoading: (state, action) => {
             state.isLoading = action?.payload
+        },
+        setChatBotLoadingIndex: (state, action) => {
+            state.chatBotLoadingIndex = action?.payload
         },
         getAssetsRequest: () => { },
         getAssetsResponse: (state, action) => {
@@ -53,6 +56,7 @@ const utilityCallFunctionSlice = createSlice({
 const { actions, reducer } = utilityCallFunctionSlice;
 export const {
     setLoading,
+    setChatBotLoadingIndex,
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,

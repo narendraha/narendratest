@@ -38,7 +38,7 @@ export default function ContactUs() {
                             <div className='al_socallinks'>
                                 <a href="/#"><img src={twitter} alt="X" /></a>
                                 <a href="/#"><img src={linkedin} alt="linkedin" /></a>
-                                <a href="https://www.youtube.com/@HelloAlfredAI" target="_blank"><img src={youtube} alt="youtube" /></a>
+                                <a href="https://www.youtube.com/@HelloAlfredAI" rel="noreferrer" target="_blank"><img src={youtube} alt="youtube" /></a>
                             </div>
                         </Col>
                         <Col lg="8" sm="7">

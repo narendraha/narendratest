@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormGroup, Label, Row, Col } from 'reactstrap';
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
+import { Col, FormGroup, Label, Row } from 'reactstrap';
 
 export default function ContactForm() {
   return (

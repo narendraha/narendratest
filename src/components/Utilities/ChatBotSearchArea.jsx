@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { pageTitle } from '../../_mock/helperIndex';
 
 export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) {
-  pageTitle('Home');
-
   const inputRef = useRef();
+
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
 
@@ -17,6 +15,12 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
 
   const getIconClassName = () => {
     return isShowSendBtn ? "icon_alfred_sendmsg h-auto" : "icon_alfred_speech h-auto"
+  }
+
+  const handleIconSubmit = () => {
+    if (isShowSendBtn)
+      handleFormSubmit(inputValue)
+    handleInputChange("")
   }
 
   return (
@@ -33,6 +37,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
           ref={inputRef}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              setInputValue("")
               e.preventDefault(); // Prevent default form submission behavior
               handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
             }
@@ -46,7 +51,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
         }
         <i
           className={getIconClassName()}
-          onClick={() => isShowSendBtn ? handleFormSubmit(inputValue) : handleInputChange("")}
+          onClick={handleIconSubmit}
         />
       </form>
     </div >

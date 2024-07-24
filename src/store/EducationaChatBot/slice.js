@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    chatHistory: []
+    chatHistory: [],
+    isInputDisable: false,
+    isChatBotLoading: false
 }
 const educationalChatBotSlice = createSlice({
     name: 'educationalChatBotSlice',
@@ -19,8 +21,16 @@ const educationalChatBotSlice = createSlice({
         },
         updateChatPreferenceRequest: () => { },
         updateChatPreferenceResponse: () => { },
-        getChatStreamRequest: () => { },
-        getChatStreamResponse: () => { },
+        getChatStreamRequest: (state) => {
+            state.isChatBotLoading = true
+        },
+        getChatStreamResponse: (state, action) => {
+            state.isChatBotLoading = false
+            state.chatHistory = action?.payload
+        },
+        setInputDisableRequest: (state, action) => {
+            state.isInputDisable = action.payload
+        }
     }
 });
 
@@ -28,6 +38,7 @@ const { actions, reducer } = educationalChatBotSlice;
 
 export const {
     setChatHistoryRequest,
+    setInputDisableRequest,
     updateChatPreferenceRequest, updateChatPreferenceResponse,
     getChatStreamRequest, getChatStreamResponse
 } = actions;

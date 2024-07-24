@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import { getActionTypes, getActivetab } from "../../../_mock/helperIndex";
 import bulb from "../../../images/idea.png";
-import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest } from "../../../store/Home/slice";
+import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest, getSymptomsDetailsRequest } from "../../../store/Home/slice";
 import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const horizontalLabels = {
@@ -59,6 +59,7 @@ export const SymptomsListForm = () => {
 
     const handleSelect = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
+        dispatch(getSymptomsDetailsRequest())
     }
 
     return (
@@ -74,10 +75,10 @@ export const SymptomsListForm = () => {
                         </span>
                         {+lastUpdatedSymptomsDetails?.difference !== 0 ? "days ago " : ""}
                         on
-                        <span style={{ color: "#3bc0c3" }} onClick={handleSelect}>
+                        <span className="al_text_link" onClick={handleSelect}>
                             {lastUpdatedSymptomsDetails?.date}
                         </span>
-                        <i className="icon_alfred_info ms-2" style={{ verticalAlign: "middle" }} id="vitalInfo"></i>
+                        <i className="icon_alfred_info text-info ms-2" style={{ verticalAlign: "middle" }} id="vitalInfo"></i>
                         <UncontrolledTooltip
                             modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                             placement='top' target="vitalInfo">

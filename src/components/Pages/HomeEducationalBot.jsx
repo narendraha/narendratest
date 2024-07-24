@@ -63,42 +63,107 @@ export default function HomeEducationalBot() {
   };
 
 
+  // const handleFormSubmit = async (e) => {
+  //   setIsInputShow(true);
+  //   e.preventDefault();
+  //   if (!inputValue.trim()) return; // Do not submit empty input
+  //   setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
+  //   setInputValue(""); // Clear input after submitting
+  //   setIsLoading(true);
+  //   setIsShow(true);
+  //   let data = {
+  //     id: randomId,
+  //     message: inputValue,
+  //   };
+  //   // api integration
+  //   await AxiosInstance("application/json")
+  //     // .post(`/history`, data)
+  //     .post(`/education_bot_home`, data)
+  //     .then((res) => {
+  //       if (res && res.data && res.status === 200) {
+  //         setIsInputShow(false);
+  //         // setIsShow(true);
+  //         if (res.data.statuscode === 200) {
+  //           const responseData = res.data.data;
+  //           // Convert responseData to an array of objects
+  //           setIsLoading(false);
+  //           setChatHistory((prevHistory) => [
+  //             ...prevHistory,
+  //             { Alfred: responseData?.alfred },
+  //           ]); /* Add new item to end of array */
+  //         } else {
+  //         }
+  //       }
+  //     })
+  //     .catch((er) => {
+  //     });
+  // };
+
+  const [loadingIndex, setLoadingIndex] = useState(null); // 
   const handleFormSubmit = async (e) => {
-    setIsInputShow(true);
     e.preventDefault();
-    if (!inputValue.trim()) return; // Do not submit empty input
-    setChatHistory((prevHistory) => [...prevHistory, { User: inputValue }]);
-    setInputValue(""); // Clear input after submitting
+    if (!inputValue.trim()) return; // Prevent empty input submission
+    setIsInputShow(true);
+    setChatHistory((prevHistory) => [...prevHistory, { content: inputValue, role: 'User' }]);
+    setInputValue(''); // Clear input after submitting
     setIsLoading(true);
     setIsShow(true);
-    let data = {
-      id: randomId,
+
+    const currentMessageIndex = chatHistory.length;
+    setLoadingIndex(currentMessageIndex); // Set the loading index to the current message index
+
+    const data = {
+      id: '1234-9876-54321',
       message: inputValue,
     };
-    // api integration
-    await AxiosInstance("application/json")
-      // .post(`/history`, data)
-      .post(`/education_bot_home`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          setIsInputShow(false);
-          // setIsShow(true);
-          if (res.data.statuscode === 200) {
-            const responseData = res.data.data;
-            // Convert responseData to an array of objects
-            setIsLoading(false);
-            setChatHistory((prevHistory) => [
-              ...prevHistory,
-              { Alfred: responseData?.alfred },
-            ]); /* Add new item to end of array */
-          } else {
-          }
-        }
-      })
-      .catch((er) => {
-      });
-  };
+    const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
+    try {
+      const responseStream = await fetch(apiUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
+      });
+      console.log("responseStream=>", responseStream)
+
+      if (responseStream) {
+        const reader = responseStream.body.getReader();
+        const decoder = new TextDecoder();
+        let done = false;
+        let tempStr = '';
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          const chunk = decoder.decode(value, { stream: true });
+
+          console.log("chunk=>", chunk)
+          tempStr += chunk;
+          setChatHistory((prevHistory) => {
+            // Create a new message object with the received chunk
+            const updatedHistory = [...prevHistory];
+            const lastMessage = updatedHistory[updatedHistory.length - 1];
+            // Check if the last message is from 'Alfred' and update it
+            if (lastMessage && lastMessage.role === 'Alfred') {
+              updatedHistory[updatedHistory.length - 1].content += chunk;
+            } else {
+              updatedHistory.push({ content: chunk, role: 'Alfred' });
+            }
+            return updatedHistory;
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error streaming response:', error);
+    } finally {
+      setIsLoading(false);
+      setIsInputShow(false);
+      setLoadingIndex(null);
+    }
+  };
   const handleInputChange = (e) => {
     let { value } = e.target;
     value !== ""
@@ -113,6 +178,8 @@ export default function HomeEducationalBot() {
     return key === "User"
   }
 
+  console.log("chatHistory", chatHistory)
+
   return (
     <div className="cs_homepage">
       {isShow ? (
@@ -123,33 +190,54 @@ export default function HomeEducationalBot() {
                 {/* Chat need to be rendered here */}
                 {chatHistory.map((message, index) => (
                   <React.Fragment key={index}>
-                    {Object.entries(message).map(([key, value]) => (
-                      <Row className={"mb-4 al_chatcontent" + (key === "User" ? " al_usermsg" : "")} key={key}>
-                        {["User", "Alfred"]?.includes(key) ? <div>
-                          <img
-                            src={getIsUser(key) ? Chatuser : Chatbot}
-                            alt={getIsUser(key) ? "chat user" : "Bot"}
-                            id={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}
-                          />
-                          <UncontrolledTooltip
-                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                            placement='bottom' target={getIsUser(key) ? "userimagehomeed" : "botimagehomeed"}>
-                            {getIsUser(key) ? "User" : "Alfred"}
-                          </UncontrolledTooltip>
-                        </div> : null}
-                        <Col>
-                          {key === "User" ?
-                            <div>{value}</div> :
-                            <EducationalBotHTMLcontent props={value} />}
-                          {key === "Alfred" && (
-                            <p className="mb-0 mt-2 al_chatfeedbackactions">
-                              <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', message?.content)}></i>
-                              <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', message?.content)}></i>
-                            </p>
-                          )}
-                        </Col>
-                      </Row>
-                    ))}
+                    {/* {Object.entries(message).map(([key, value]) => ( */}
+                    <Row className={"mb-4 al_chatcontent" + (message?.role === "User" ? " al_usermsg" : "")} key={message?.role}>
+                      {["User", "Alfred"]?.includes(message?.role) ? <div>
+                        <img
+                          src={getIsUser(message?.role) ? Chatuser : Chatbot}
+                          alt={getIsUser(message?.role) ? "chat user" : "Bot"}
+                          id={getIsUser(message?.role) ? "userimagehomeed" : "botimagehomeed"}
+                        />
+                        <UncontrolledTooltip
+                          modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                          placement='bottom' target={getIsUser(message?.role) ? "userimagehomeed" : "botimagehomeed"}>
+                          {getIsUser(message?.role) ? "User" : "Alfred"}
+                        </UncontrolledTooltip>
+                      </div> : null}
+                      <Col>
+                        {console.log("loadingIndexloadingIndex", loadingIndex, index)}
+                        {message?.role === "User" ?
+                          <div>{message.content}</div> :
+                          // <div><EducationalBotHTMLcontent props={message.content} />{loadingIndex === index && <div key={index} className="al_chatloading my-1"></div>}</div>}
+                        <div><EducationalBotHTMLcontent props={message.content} /></div>}
+                        {message?.role === "Alfred" && (
+                          <p className="mb-0 mt-1">
+                            <Icon
+                              icon="iconamoon:like-light"
+                              width="1.5em"
+                              height="1.5em"
+                              onClick={() => handleAction(index, 'like', message.content)} // Handle like action
+                              style={{
+                                cursor: 'pointer',
+                                color: selectedIcons[index]?.reaction === 'like' ? 'green' : '', // Apply green color if selected
+                              }}
+                            />
+                            <Icon
+                              icon="iconamoon:dislike-light"
+                              width="1.5em"
+                              height="1.5em"
+                              className="mx-2"
+                              onClick={() => handleAction(index, 'dislike', message.content)} // Handle dislike action
+                              style={{
+                                cursor: 'pointer',
+                                color: selectedIcons[index]?.reaction === 'dislike' ? 'red' : '', // Apply red color if selected
+                              }}
+                            />
+                          </p>
+                        )}
+                      </Col>
+                    </Row>
+                    {/* ))} */}
                   </React.Fragment>
                 ))}
                 {isLoading && <Row className="mb-4 al_chatcontent">

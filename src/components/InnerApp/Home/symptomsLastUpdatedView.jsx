@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalBody, Table } from "reactstrap";
 import { getActionTypes } from '../../../_mock/helperIndex';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
@@ -7,12 +7,27 @@ import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/s
 const SymptomsLastUpdatedView = () => {
     const dispatch = useDispatch();
 
+    const { lastUpdatedHealthDetails, symptomsData } = useSelector((state) => state?.homePageSlice);
+
+    const formatedData = Object.keys(symptomsData).reduce((acc, symptom) => {
+        const { severity, frequency, quality_of_life } = symptomsData[symptom];
+        if (severity || frequency || quality_of_life) { 
+            acc.push({
+                symptom: symptom,
+                frequency: frequency,
+                severity: severity,
+                quality_of_life: quality_of_life
+            });
+        }
+        return acc;
+    }, []);
+
     const handleClose = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT, actionData: null }))
     }
     return (
         <React.Fragment>
-            <Modal className='modal-md detailsModal' isOpen={true} wrapClassName="al_outerparentwp">
+            <Modal className='modal-md detailsModal' isOpen={symptomsData} wrapClassName="al_outerparentwp">
                 <div className='d-flex align-items-center justify-content-between p-4'>
                     <h6 className='mb-0'>Last Updated Symptoms (18-06-2024)</h6>
                     <i className="icon_alfred_close pointer" title="Close" onClick={handleClose}></i>
@@ -29,24 +44,16 @@ const SymptomsLastUpdatedView = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Cold sweat</td>
-                                    <td>Occasionally</td>
-                                    <td>Extreme</td>
-                                    <td>Yes</td>
-                                </tr>
-                                <tr>
-                                    <td>Chest Pain</td>
-                                    <td>Often</td>
-                                    <td>Moderate</td>
-                                    <td>Yes</td>
-                                </tr>
-                                <tr>
-                                    <td>Pressure/Discomfort in chest</td>
-                                    <td>Always</td>
-                                    <td>Extreme</td>
-                                    <td>Yes</td>
-                                </tr>
+                                {symptomsData && formatedData?.map((x) => (
+                                    <>
+                                        <tr>
+                                            <td>{x?.symptom}</td>
+                                            <td>{x?.frequency}</td>
+                                            <td>{x?.severity}</td>
+                                            <td>{x?.quality_of_life}</td>
+                                        </tr>
+                                    </>
+                                ))}
                             </tbody>
                         </Table>
                     </div>

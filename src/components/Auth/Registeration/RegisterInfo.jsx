@@ -74,11 +74,12 @@ export default function RegisterInfo() {
                     >
                       <h6 className="mb-0 fw-medium">I am a</h6>
                       <h5
-                        className="mb-0 lh-normal pe-5"
+                        className="mb-0 lh-normal pe-4"
                         style={{ lineHeight: 1.25 }}
                       >
                         Patient
                       </h5>
+                      <small className="text-muted mb-0 me-4 pe-5 mt-1">Your health journey starts here.</small>
                     </div>
                     <div
                       className={`al_accounttype ${
@@ -88,11 +89,12 @@ export default function RegisterInfo() {
                     >
                       <h6 className="mb-0 fw-medium">I am a</h6>
                       <h5
-                        className="mb-0 me-4 pe-5"
+                        className="mb-0 pe-4"
                         style={{ lineHeight: 1.25 }}
                       >
                         Healthcare Provider
                       </h5>
+                      <small className="text-muted mb-0 me-4 pe-5 mt-1">Joining hands for well-being.</small>
                     </div>
                   </div>
                   <ErrorMessage
@@ -106,14 +108,14 @@ export default function RegisterInfo() {
                       Sign in
                     </Link>
                   </div>
-                  <Button
+                  {/* <Button
                     type="submit"
                     className="al_login_button mt-4"
                     // disabled={isSubmitting || !dirty}
                     variant="contained"
                   >
                     Submit
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </Col>

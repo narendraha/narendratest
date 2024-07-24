@@ -1,3 +1,47 @@
+@media screen and (min-width: 767px) and (max-width: 1300px) {
+    .rc-slider-mark {
+        .rc-slider-mark-text {
+            font-size: 8px !important;
+        }
+    }
+
+    .al_login-right h5 {
+        font-size: 18px !important;
+    }
+
+    .al_accounttype {
+        background-size: 65px !important;
+    }
+
+    .al_hometabs {
+        .nav-item {
+            span {
+                font-size: 12px !important;
+
+                &:first-child {
+                    font-size: 16px !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                }
+            }
+        }
+    }
+
+    .al_symptoms .al_frequencylist label.btn {
+        padding: 8px !important;
+        font-size: 10px !important;
+    }
+}
+
+@media screen and (min-width: 1650px) and (max-width: 3500px) {
+    .al_doctorwidth {
+        .col-lg-6 {
+            width: 33.3%;
+            flex: 0 0 33.3%;
+        }
+    }
+}
+
 @media screen and (max-width: 600px) {
 
     body,
@@ -468,27 +512,5 @@
 @media screen and (min-width: 1200px) and (max-width: 4000px) {
     .mobileanim {
         height: 85%;
-    }
-}
-
-@media screen and (min-width: 767px) and (max-width: 1300px) {
-    .rc-slider-mark {
-        .rc-slider-mark-text {
-            font-size: 8px !important;
-        }
-    }
-
-    .al_symptoms .al_frequencylist label.btn {
-        padding: 8px !important;
-        font-size: 10px !important;
-    }
-}
-
-@media screen and (min-width: 1650px) and (max-width: 3500px) {
-    .al_doctorwidth {
-        .col-lg-6 {
-            width: 33.3%;
-            flex: 0 0 33.3%;
-        }
     }
 }

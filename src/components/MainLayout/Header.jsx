@@ -35,6 +35,11 @@ export default function Header({ logoSrc, variant }) {
       link: ''
     },
     {
+      moduleId: '5',
+      name: 'About',
+      link: 'about'
+    },
+    {
       moduleId: '6',
       name: 'Personomics',
       link: '/personomics'
@@ -101,11 +106,6 @@ export default function Header({ logoSrc, variant }) {
         { id: "4", name: "Dietician", link: 'dietician' },
         { id: "4", name: "Health care Consultants", link: 'healthcare' }
       ]
-    },
-    {
-      moduleId: '5',
-      name: 'About',
-      link: 'about'
     },
     {
       moduleId: '6',

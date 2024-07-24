@@ -2149,11 +2149,26 @@ ul.standardPlans {
 
 .healthhubprogress {
     .rc-slider {
+        margin-bottom: 0;
+        height: 8px;
+        padding: 0;
 
-        .rc-slider-rail,
+        .rc-slider-rail {
+            background: #e7f0f1;
+            height: 8px;
+        }
+
         .rc-slider-track {
-            background: linear-gradient(to right, #dff9fc, #aff7ff, #7cf2ff, #3de9fc, #01d5ec);
-            height: 5px;
+            background: #04C1D6;
+            height: 8px;
+        }
+
+        .rc-slider-handle {
+            display: none;
+        }
+
+        .rc-slider-step {
+            height: 8px;
         }
     }
 }

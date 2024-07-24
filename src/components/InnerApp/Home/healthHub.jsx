@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Card, CardBody, Col, Row } from "reactstrap";
+import { Card, CardBody, Col, Row, Modal, ModalBody, Table } from "reactstrap";
 import { getActivetab } from "../../../_mock/internalJsControl";
 import atrialfib from "../../../images/atrialfib.png";
 import rhythm from "../../../images/rhythm.png";
@@ -15,10 +15,12 @@ import { setActiveTabRequest } from "../../../store/Home/slice";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Select from "react-select";
+import { HealthHubOverview } from "./healthHubOverview";
 
 export const HealthHub = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState({ value: "Week 3", label: "Week 3" });
+    const [showOverview, setShowOverview] = useState(false);
 
     const handleSetTabs = () => {
         dispatch(setActiveTabRequest({ setTab: getActivetab.HEALTHHUB, nextOrBackTab: getActivetab.EXPTMONITORING }))
@@ -36,19 +38,11 @@ export const HealthHub = () => {
         { value: "Week 5", label: "Week 5", disabled: true }
     ];
 
-    const horizontalLabels = {
-        0: "Knowledge",
-        25: "Awareness",
-        48: "Exposure",
-        70: "Experience",
-        90: "Expertise",
-    };
-
     return (
         <React.Fragment>
             <Row>
-                <Col>
-                    <div className="w-25 mb-3">
+                <Col className="d-flex align-items-center mb-3">
+                    <div className="w-25">
                         <Select
                             options={weekoptions}
                             name="weeklevel"
@@ -58,18 +52,17 @@ export const HealthHub = () => {
                             isOptionDisabled={(option) => option.disabled}
                         />
                     </div>
+                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" style={{ fontSize: "22px" }} onClick={() => setShowOverview(true)}></i>
                 </Col>
                 <Col lg="5" md="7" sm="8">
-                    <Row>
-                        <span className="w-auto me-3">Progress</span>
+                    <Row className="align-items-center">
+                        <span className="w-auto">Progress</span>
                         <Col className="healthhubprogress">
                             <Slider
-                                range
                                 min={0}
                                 max={100}
                                 tooltip={false}
-                                marks={horizontalLabels}
-                                value={week.value === "Week 1" ? 0 : week.value === "Week 2" ? 25 : week.value === "Week 3" ? 48 : week.value === "Week 4" ? 70 : 100}
+                                value={week.value === "Week 1" ? 0 : week.value === "Week 2" ? 25 : week.value === "Week 3" ? 50 : week.value === "Week 4" ? 75 : 100}
                                 onChange={(e) => { }}
                             />
                         </Col>
@@ -156,7 +149,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B"
-                                                        title="YouTube video player"
+                                                        title="video1"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -174,7 +167,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/onWtndwgPBI?si=YmbNN3k27UuudXqc"
-                                                        title="YouTube video player"
+                                                        title="video2"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -192,7 +185,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/w5c6yvZEQ7M?si=AyXQHXi91B5-U0kE"
-                                                        title="YouTube video player"
+                                                        title="video3"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -282,7 +275,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/VkYIhaKc2ZQ?si=003k-FHhHuZzzd8C"
-                                                        title="YouTube video player"
+                                                        title="video4"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -300,7 +293,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/UJtJnBYmf5w?si=EOZPGtsU7H3e7c1O"
-                                                        title="YouTube video player"
+                                                        title="video5"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -318,7 +311,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/dAHrFEGxuS4?si=9-wLjML-Hbebf8LT"
-                                                        title="YouTube video player"
+                                                        title="video6"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -408,7 +401,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/vEllQUKGszY?si=ghi5GIkQQQy9oRqM"
-                                                        title="YouTube video player"
+                                                        title="video7"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -426,7 +419,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/ugnERAFq7as?si=iTRCvHVAVaVDGP8q"
-                                                        title="YouTube video player"
+                                                        title="video8"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -444,7 +437,7 @@ export const HealthHub = () => {
                                                         width="100%"
                                                         height="130"
                                                         src="https://www.youtube.com/embed/RND_o8-fbks?si=4VhKrav4V51ftCmt"
-                                                        title="YouTube video player"
+                                                        title="video9"
                                                         frameBorder="0"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         allowFullScreen
@@ -471,6 +464,9 @@ export const HealthHub = () => {
                     Proceed
                 </button>
             </div>
+            {/* {showOverview &&
+                <HealthHubOverview setShowOverview={setShowOverview} />
+            } */}
         </React.Fragment>
     )
 }

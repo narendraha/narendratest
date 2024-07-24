@@ -106,6 +106,11 @@ export default function Header({ logoSrc, variant }) {
       moduleId: '5',
       name: 'About',
       link: 'about'
+    },
+    {
+      moduleId: '6',
+      name: 'Contact Us',
+      link: 'contactus'
     }
   ]
 

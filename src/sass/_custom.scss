@@ -395,6 +395,7 @@ textarea {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 textarea,
 .react-datepicker-wrapper input,
 .input-group,
@@ -562,6 +563,7 @@ button#notificationpopover {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   margin-bottom: 25px;
+  transform: rotateX(0deg);
 
   img {
     width: 100%;

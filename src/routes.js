@@ -23,6 +23,7 @@ import Terms from "./components/Auth/Registeration/Terms&Confition";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
+const ContactUs = React.lazy(() => import("./components/Pages/ContactUs"));
 const Ablation = React.lazy(() => import("./components/Pages/Ablation"));
 const ACO = React.lazy(() => import("./components/Pages/Aco"));
 const Affaq = React.lazy(() => import("./components/Pages/Affaq"));
@@ -109,6 +110,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
             <Route path="/" element={<Layout />}>
               <Route index element={<HomeEducationalBot />} />
               <Route path="about" element={<About />} />
+              <Route path="contactus" element={<ContactUs />} />
               <Route path="personomics" element={<Personomics />} />
               <Route path="affaq" element={<Affaq />} />
               <Route path="symptoms" element={<Symptoms />} />

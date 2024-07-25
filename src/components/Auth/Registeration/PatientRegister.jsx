@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import DatePicker from "react-datepicker";
+import 'react-phone-input-2/lib/style.css';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -12,7 +13,6 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import * as Yup from "yup";
-import { phoneNumberReg } from "../../../_mock/RegularExp";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
@@ -24,10 +24,8 @@ export default function RegisterInfo() {
   pageTitle("Register | Patient")
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(null)
-  const { isLoading, activeForm, actionData } = useSelector((state) => state.patientRegisterSlice)
-  const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] =
-    useState(true);
+  const { isLoading, activeForm, actionData, actionType } = useSelector((state) => state.patientRegisterSlice)
+  const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] = useState(true);
   const genderoptions = getGenderoptions;
   const residenceoptions = getResidenceoptions;
   const educationOptions = getEductaionOptions;
@@ -38,26 +36,27 @@ export default function RegisterInfo() {
       navigate(activeForm)
     }
   }, [activeForm])
-  const handleFirstFormSubmit = (values) => {
-    setFormData({ ...formData, ...values });
-    dispatch(getRegisterResponseData({ actionType: getActionTypes.SELECT, actionData: values }));
-
+  const handleFirstFormSubmit = (values, isTerm = false) => {
+    let updatedActionType = isTerm ? actionType : getActionTypes.SELECT
+    dispatch(getRegisterResponseData({ actionType: updatedActionType, actionData: values, isTerm }));
+    window.sessionStorage.setItem("actionData", JSON.stringify(values));
   };
   const FirstForm = ({ onSubmit }) => (
     <Formik
       enableReinitialize
       initialValues={{
-        username: formData?.username || actionData?.username || "",
-        email: formData?.email || actionData?.email || "",
-        dob: formData?.dob || actionData?.dob || "",
-        gender: formData?.gender || actionData?.gender || "",
-        mobile: formData?.mobile || actionData?.mobile || "",
-        rtype: formData?.rtype || actionData?.rtype || "",
-        education: formData?.education || actionData?.education || "",
-        ssn: formData?.ssn || actionData?.ssn || "",
-        insuranceurl: formData?.insuranceurl || actionData?.insuranceurl || "",
-        file: formData?.file || actionData?.file || null,
-        termsAndConditions: formData?.termsAndConditions || actionData?.termsAndConditions || false,
+        username: actionData?.username || "",
+        email: actionData?.email || "",
+        dob: actionData?.dob || "",
+        gender: actionData?.gender || "",
+        mobile: actionData?.mobile || "",
+        rtype: actionData?.rtype || "",
+        education: actionData?.education || "",
+        ssn: actionData?.ssn || "",
+        insuranceurl: actionData?.insuranceurl || "",
+        file: actionData?.file || null,
+        termsAndConditions: actionData?.termsAndConditions || false,
+        countryCode: ""
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
@@ -68,7 +67,7 @@ export default function RegisterInfo() {
           .email("Invalid email")
           .required("Email is required"),
         mobile: Yup.string()
-          .matches(phoneNumberReg, "Invalid phone number")
+          // .matches(phoneNumberReg, "Invalid phone number")
           .required("Mobile number is required"),
         dob: Yup.date()
           .max(
@@ -99,6 +98,7 @@ export default function RegisterInfo() {
       }) => {
         return (
           <Form className="wflexLayout">
+            {console.log("errorserrors", errors)}
             {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
@@ -227,7 +227,6 @@ export default function RegisterInfo() {
                           <div className="input-group">
                             <Field
                               type="text"
-                              // className="form-control"
                               name="mobile"
                               placeholder="e.g.123-4567-8901"
                               aria-describedby="basic-addon1"
@@ -361,8 +360,8 @@ export default function RegisterInfo() {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() => {
+                              handleFirstFormSubmit(values, true)
                               serIsTermsAndConditionsRead(false);
-                              setFormData({ ...formData, ...values });
                             }}
                           >
                             terms and conditions

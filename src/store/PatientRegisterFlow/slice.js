@@ -7,8 +7,8 @@ const initialState = {
   actionData: null,
   activeForm: "",
   message: "",
-  flowForm:"",
-  isAuthenticated:localStorage.getItem("token") ? true : false,
+  flowForm: "",
+  isAuthenticated: localStorage.getItem("token") ? true : false,
 };
 
 const patientRegisterSlice = createSlice({
@@ -24,7 +24,7 @@ const patientRegisterSlice = createSlice({
     getRegisterResponseData: (state, action) => {
       return {
         ...state,
-        isLoading: action.payload.isLoading,
+        isLoading: action?.payload?.isTerm ? "" : action.payload.isLoading,
         actionType: action.payload.actionType,
         actionData: action.payload.actionData,
         activeForm: action.payload.activeForm,
@@ -107,7 +107,7 @@ const patientRegisterSlice = createSlice({
     },
     logoutSlice: (state, action) => {
       return {
-       ...initialState,
+        ...initialState,
         isAuthenticated: false,
       }
     }

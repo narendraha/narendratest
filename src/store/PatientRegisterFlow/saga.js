@@ -21,52 +21,54 @@ function* RegisterUser({ payload }) {
   yield put(getRegisterResponseData({ ...payload, isLoading: true }));
 
   let response;
-  try {
-    response = yield call(callAPI, {
-      url: "/generate_otp",
-      method: "POST",
-      data: {
-        email: payload?.actionData?.email,
-        username: payload?.actionData?.username,
-        mobile: payload?.actionData?.mobile,
-      },
-      contentType: "application/json",
-    });
+  if (!payload?.isTerm) {
+    try {
+      response = yield call(callAPI, {
+        url: "/generate_otp",
+        method: "POST",
+        data: {
+          email: payload?.actionData?.email,
+          username: payload?.actionData?.username,
+          mobile: payload?.actionData?.mobile,
+        },
+        contentType: "application/json",
+      });
 
-    if (!response?.status && response?.status !== 200) {
-      toast(response?.message, {
+      if (!response?.status && response?.status !== 200) {
+        toast(response?.message, {
+          position: "top-right",
+          type: "error",
+        });
+        yield put(
+          getRegisterResponseData({
+            ...payload,
+            activeForm: "",
+            isLoading: false,
+          })
+        );
+      } else {
+        toast(response?.message, {
+          position: "top-right",
+          type: "success",
+        });
+        yield put(
+          getRegisterResponseData({
+            ...payload,
+            message: response?.message,
+            activeForm: "/patient/OTP",
+            isLoading: false,
+          })
+        );
+      }
+    } catch (error) {
+      toast(error?.response?.data?.detail, {
         position: "top-right",
         type: "error",
       });
       yield put(
-        getRegisterResponseData({
-          ...payload,
-          activeForm: "",
-          isLoading: false,
-        })
-      );
-    } else {
-      toast(response?.message, {
-        position: "top-right",
-        type: "success",
-      });
-      yield put(
-        getRegisterResponseData({
-          ...payload,
-          message:response?.message,
-          activeForm: "/patient/OTP",
-          isLoading: false,
-        })
+        getRegisterResponseData({ ...payload, activeForm: "", isLoading: false })
       );
     }
-  } catch (error) {
-    toast(error?.response?.data?.detail, {
-      position: "top-right",
-      type: "error",
-    });
-    yield put(
-      getRegisterResponseData({ ...payload, activeForm: "", isLoading: false })
-    );
   }
 }
 
@@ -201,7 +203,7 @@ function* updateForgotPassword({ payload }) {
       yield put(
         getForgorPasswordForm({
           ...payload,
-          message:response?.message,
+          message: response?.message,
           activeForm: "/signin",
           flowForm: "",
           isLoading: false,
@@ -226,7 +228,7 @@ function* updateForgotPassword({ payload }) {
 
 function* loginReducer({ payload }) {
   // store.dispatch(setLoading(true))
-  yield put(loginForm({  ...payload, isLoading: true }));
+  yield put(loginForm({ ...payload, isLoading: true }));
 
   let response;
   try {
@@ -250,7 +252,7 @@ function* loginReducer({ payload }) {
         position: "top-right",
         type: "success",
       });
-      yield put(loginForm({ ...payload, isAuthenticated: true, actionData:null,  activeForm: "/home", isLoading: false }));
+      yield put(loginForm({ ...payload, isAuthenticated: true, actionData: null, activeForm: "/home", isLoading: false }));
       localStorage.setItem("token", response.data?.token);
     }
   } catch (error) {

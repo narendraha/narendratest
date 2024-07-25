@@ -78,15 +78,17 @@ export const HealthHub = () => {
                         Overview
                     </UncontrolledTooltip>
                 </Col>
-                <Col lg="5" md="7" sm="8">
-                    <Row>
+                <Col lg="4" md="6" sm="6">
+                    <Row className="align-items-center">
                         <span className="w-auto">Progress</span>
                         <Col className="healthhubprogress">
                             <Slider
+                                dots
                                 min={0}
                                 max={100}
-                                tooltip={false}
-                                marks={horizontalLabels}
+                                step={25}
+                                dotStyle={{ borderColor: '#c5c5c5' }}
+                                activeDotStyle={{ borderColor: '#1dffa4' }}
                                 value={week.value === "Week 1" ? 0 : week.value === "Week 2" ? 25 : week.value === "Week 3" ? 50 : week.value === "Week 4" ? 75 : 100}
                                 onChange={(e) => { }}
                             />

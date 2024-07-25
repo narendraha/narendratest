@@ -2183,16 +2183,25 @@ ul.standardPlans {
         }
 
         .rc-slider-track {
-            background: #04c97a;
+            background: #07db86;
             height: 6px;
-        }
-
-        .rc-slider-handle {
-            display: none;
         }
 
         .rc-slider-step {
             height: 6px;
+        }
+
+        .rc-slider-handle {
+            border: 2px solid #08a762;
+            box-shadow: none;
+            width: 15px;
+            height: 15px;
+        }
+
+        .rc-slider-dot {
+            display: block !important;
+            width: 10px;
+            height: 10px;
         }
     }
 }

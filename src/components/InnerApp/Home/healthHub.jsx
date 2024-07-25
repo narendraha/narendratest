@@ -26,6 +26,14 @@ const weekoptions = [
     { value: "Week 5", label: "Week 5", disabled: true }
 ];
 
+const horizontalLabels = {
+    0: "Knowledge",
+    25: "Awareness",
+    50: "Exposure",
+    75: "Experience",
+    95: "Expertise",
+};
+
 export const HealthHub = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState({ value: "Week 3", label: "Week 3" });
@@ -71,13 +79,14 @@ export const HealthHub = () => {
                     </UncontrolledTooltip>
                 </Col>
                 <Col lg="5" md="7" sm="8">
-                    <Row className="align-items-center">
+                    <Row>
                         <span className="w-auto">Progress</span>
                         <Col className="healthhubprogress">
                             <Slider
                                 min={0}
                                 max={100}
                                 tooltip={false}
+                                marks={horizontalLabels}
                                 value={week.value === "Week 1" ? 0 : week.value === "Week 2" ? 25 : week.value === "Week 3" ? 50 : week.value === "Week 4" ? 75 : 100}
                                 onChange={(e) => { }}
                             />

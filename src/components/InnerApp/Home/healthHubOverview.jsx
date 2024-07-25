@@ -30,7 +30,7 @@ export const HealthHubOverview = () => {
                             <tbody>
                                 <tr>
                                     <td className="w-25">Week 1</td>
-                                    <td>General Knowledge
+                                    <td><strong>General Knowledge</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -40,19 +40,43 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 2</td>
-                                    <td>Anti</td>
+                                    <td><strong>Antiarrhythmic Knowledge</strong>
+                                        <ol type="1" className="mb-0">
+                                            <li className="mb-1">Introduction</li>
+                                            <li className="mb-1">Content</li>
+                                            <li className="mb-1">Videos</li>
+                                        </ol>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 3</td>
-                                    <td>200/210 (mmHg)</td>
+                                    <td><strong>Ablation Knowledge</strong>
+                                        <ol type="1" className="mb-0">
+                                            <li className="mb-1">Introduction</li>
+                                            <li className="mb-1">Content</li>
+                                            <li className="mb-1">Videos</li>
+                                        </ol>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 4</td>
-                                    <td>200/210 (mmHg)</td>
+                                    <td><strong>Blood thinners</strong>
+                                        <ol type="1" className="mb-0">
+                                            <li className="mb-1">Introduction</li>
+                                            <li className="mb-1">Content</li>
+                                            <li className="mb-1">Videos</li>
+                                        </ol>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 5</td>
-                                    <td>200/210 (mmHg)</td>
+                                    <td><strong>Left atrial appendage</strong>
+                                        <ol type="1" className="mb-0">
+                                            <li className="mb-1">Introduction</li>
+                                            <li className="mb-1">Content</li>
+                                            <li className="mb-1">Videos</li>
+                                        </ol>
+                                    </td>
                                 </tr>
                             </tbody>
                         </Table>

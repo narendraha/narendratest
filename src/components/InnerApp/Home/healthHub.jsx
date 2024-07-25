@@ -69,7 +69,6 @@ export const HealthHub = () => {
                     >
                         Overview
                     </UncontrolledTooltip>
-                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" style={{ fontSize: "22px" }} onClick={handleSelect}></i>
                 </Col>
                 <Col lg="5" md="7" sm="8">
                     <Row className="align-items-center">
@@ -481,9 +480,6 @@ export const HealthHub = () => {
                     Proceed
                 </button>
             </div>
-            {/* {showOverview &&
-                <HealthHubOverview setShowOverview={setShowOverview} />
-            } */}
         </React.Fragment>
     )
 }

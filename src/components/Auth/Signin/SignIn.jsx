@@ -112,7 +112,7 @@ export default function Signin({ setIsAuthenticated }) {
                         <span style={{ fontSize: "26px" }}>
                           Hello
                           <span className="text-info">
-                            Alfred.AI{" "}
+                            Alfred.ai{" "}
                             <img
                               src={handwave}
                               alt=""

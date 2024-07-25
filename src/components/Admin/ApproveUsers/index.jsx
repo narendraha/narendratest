@@ -7,6 +7,7 @@ import nodata from '../../../images/nodata.svg';
 export default function ApproveUsers() {
     const [tab, setTab] = useState("1");
     const [showHoldModal, setShowHoldModal] = useState(false);
+    const [showPatientDetails, setShowPatientDetails] = useState(false);
     const rejectreasons = [
         { value: "Insurance not verified", label: "Insurance not verified" },
         { value: "Your insurance date expired", label: "Your insurance date expired" },
@@ -98,7 +99,8 @@ export default function ApproveUsers() {
                                 </Row>
                                 <div className='wflexScroll d-flex flex-column mb-2'>
                                     <div className='flex-grow-1'>
-                                        <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
+                                        {/* Patients List */}
+                                        {/* <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
                                                     <th>
@@ -143,22 +145,6 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                            Residence Type
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Insurance
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
                                                             Requested Date
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
@@ -170,13 +156,11 @@ export default function ApproveUsers() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                                                                        <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
                                                     <td>19-04-1985</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance.jpg</a></td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -187,13 +171,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                                                                        <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -204,13 +186,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                                                                        <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -221,13 +201,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                                                                        <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -238,13 +216,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                                                                        <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -255,9 +231,10 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </Table>
+                                        </Table> */}
+
                                         {/* Doctor List */}
-                                        {/* <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
+                                        <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                             <thead className='sticky_header'>
                                                 <tr>
                                                     <th>
@@ -294,39 +271,7 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                            Area of Specialization
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Provider ID Number
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Medical license number
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Country
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            State
+                                                            Area of Spec
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
@@ -345,15 +290,11 @@ export default function ApproveUsers() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
                                                     <td>MD, DM</td>
                                                     <td>Cardiology</td>
-                                                    <td>457896543456</td>
-                                                    <td>656HGFHKJ647879</td>
-                                                    <td>USA</td>
-                                                    <td>Texas</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -364,15 +305,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>9855432568</td>
                                                     <td>MD, DM</td>
                                                     <td>Cardiology</td>
-                                                    <td>457896543456</td>
-                                                    <td>656HGFHKJ647879</td>
-                                                    <td>USA</td>
-                                                    <td>Texas</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -383,15 +320,11 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>9855432568</td>
                                                     <td>MD, DM</td>
                                                     <td>Cardiology</td>
-                                                    <td>457896543456</td>
-                                                    <td>656HGFHKJ647879</td>
-                                                    <td>USA</td>
-                                                    <td>Texas</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td>
                                                         <div className='d-flex gap-2'>
@@ -402,7 +335,8 @@ export default function ApproveUsers() {
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </Table> */}
+                                        </Table>
+
                                         {/* No Records */}
                                         {/* <div className="d-flex flex-column align-items-center pt-5">
                                             <img src={nodata} width={220} alt="" />
@@ -500,22 +434,6 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                            Residence Type
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Insurance
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
                                                             Approved By
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
@@ -530,40 +448,37 @@ export default function ApproveUsers() {
                                                             ) : <i className="icon_alfred_tablesort" />}
                                                         </div>
                                                     </th>
-                                                    <th>
+                                                    <th>Actions</th>
+                                                    {/* <th>
                                                         <div onClick={() => { }}>
                                                             Remarks
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
                                                             ) : <i className="icon_alfred_tablesort" />}
                                                         </div>
-                                                    </th>
+                                                    </th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
                                                     <td>19-04-1985</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Anthony</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td>-</td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>Anthony</td>
                                                     <td>27-6-2024, 9:45 am</td>
-                                                    <td>-</td>
+                                                    <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -656,22 +571,6 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                            Residence Type
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Insurance
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
                                                             Hold By
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
@@ -691,25 +590,21 @@ export default function ApproveUsers() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
                                                     <td>19-04-1985</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance.jpg</a></td>
                                                     <td>Andrew</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>Andrew</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
@@ -805,22 +700,6 @@ export default function ApproveUsers() {
                                                     </th>
                                                     <th>
                                                         <div onClick={() => { }}>
-                                                            Residence Type
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
-                                                            Insurance
-                                                            {false ? (
-                                                                <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                            ) : <i className="icon_alfred_tablesort" />}
-                                                        </div>
-                                                    </th>
-                                                    <th>
-                                                        <div onClick={() => { }}>
                                                             Rejected By
                                                             {false ? (
                                                                 <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
@@ -840,25 +719,22 @@ export default function ApproveUsers() {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Charlotte</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Charlotte</div></td>
                                                     <td>Male</td>
                                                     <td>Charlotte@test.com</td>
                                                     <td>9855432568</td>
                                                     <td>19-04-1985</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance.jpg</a></td>
+
                                                     <td>James</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Richard</td>
+                                                    <td><div className='al_text_link d-inline-block' onClick={() => setShowPatientDetails(true)}>Richard</div></td>
                                                     <td>Male</td>
                                                     <td>Richard@gmail.com</td>
                                                     <td>2255432568</td>
                                                     <td>10-09-1955</td>
-                                                    <td>Cohabitant</td>
-                                                    <td><a href="#">Insurance2.jpg</a></td>
                                                     <td>James</td>
                                                     <td>27-6-2024, 9:45 am</td>
                                                     <td><button type="button" className='al_button_sm al_testbtn'>Undo</button></td>
@@ -917,6 +793,37 @@ export default function ApproveUsers() {
                             </div>
                         </ModalBody>
                     </Modal>
+
+                    {showPatientDetails &&
+                        <Modal className='modal-md detailsModal' isOpen={true} wrapClassName="al_outerparentwp">
+                            <div className='d-flex align-items-center justify-content-between p-4'>
+                                <h6 className='mb-0'>Personal Details</h6>
+                                <i className="icon_alfred_close pointer" title="Close" onClick={() => setShowPatientDetails(false)}></i>
+                            </div>
+                            <ModalBody className="wflexLayout p-0">
+                                <div className='wflexScroll px-4 my-3'>
+                                    <Row>
+                                        <Col sm="6" className='mb-3'>
+                                            <Label>Provider ID Number</Label>
+                                            <div>324234234234</div>
+                                        </Col>
+                                        <Col sm="6" className='mb-3'>
+                                            <Label>Medical license number</Label>
+                                            <div>124234234234</div>
+                                        </Col>
+                                        <Col sm="6" className='mb-3'>
+                                            <Label>Country</Label>
+                                            <div>USA</div>
+                                        </Col>
+                                        <Col sm="6" className='mb-3'>
+                                            <Label>State</Label>
+                                            <div>Texas</div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </ModalBody>
+                        </Modal>
+                    }
                 </div>
             </div>
         </>

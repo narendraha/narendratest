@@ -31,50 +31,50 @@ export const HealthHubOverview = () => {
                                 <tr>
                                     <td className="w-25">Week 1</td>
                                     <td><strong>General Knowledge</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                        <ol type="1" className="mb-0 d-flex">
+                                            <li className="mb-1 me-4">Introduction</li>
+                                            <li className="mb-1 me-4">Content</li>
+                                            <li className="mb-1 me-4">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 2</td>
                                     <td><strong>Antiarrhythmic Knowledge</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                        <ol type="1" className="mb-0 d-flex">
+                                            <li className="mb-1 me-4">Introduction</li>
+                                            <li className="mb-1 me-4">Content</li>
+                                            <li className="mb-1 me-4">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 3</td>
                                     <td><strong>Ablation Knowledge</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                        <ol type="1" className="mb-0 d-flex">
+                                            <li className="mb-1 me-4">Introduction</li>
+                                            <li className="mb-1 me-4">Content</li>
+                                            <li className="mb-1 me-4">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 4</td>
                                     <td><strong>Blood thinners</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                        <ol type="1" className="mb-0 d-flex">
+                                            <li className="mb-1 me-4">Introduction</li>
+                                            <li className="mb-1 me-4">Content</li>
+                                            <li className="mb-1 me-4">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 5</td>
                                     <td><strong>Left atrial appendage</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                        <ol type="1" className="mb-0 d-flex">
+                                            <li className="mb-1 me-4">Introduction</li>
+                                            <li className="mb-1 me-4">Content</li>
+                                            <li className="mb-1 me-4">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>

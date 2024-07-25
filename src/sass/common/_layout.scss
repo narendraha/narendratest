@@ -400,7 +400,7 @@ section:not(.cs_banner) {
                 border: 1px solid #f0f0ff;
                 border-left: 0;
                 border-right: 0;
-                font-weight: 300;
+                font-weight: 400;
 
                 &:first-child {
                     border-top-left-radius: 12px;
@@ -443,25 +443,25 @@ section:not(.cs_banner) {
 }
 
 .al_approveusers {
-    width: 150%;
+    // width: 150%;
 
     th,
     td {
-        width: 9%;
+        width: 12%;
 
         &:last-child {
-            width: 19%;
+            width: 16%;
         }
 
-        &:nth-child(2) {
-            width: 8%;
-        }
+        // &:nth-child(2) {
+        //     width: 12%;
+        // }
 
-        &:nth-child(3),
-        &:nth-child(6),
-        &:nth-last-of-type(2) {
-            width: 11%;
-        }
+        // &:nth-child(3),
+        // &:nth-child(6),
+        // &:nth-last-of-type(2) {
+        //     width: 11%;
+        // }
     }
 }
 
@@ -642,6 +642,7 @@ section:not(.cs_banner) {
     height: 100%;
     font-size: 14px;
     margin: 0 auto !important;
+    line-height: normal;
 
     .modal-content {
         border-radius: 18px;
@@ -2173,17 +2174,17 @@ ul.standardPlans {
 .healthhubprogress {
     .rc-slider {
         margin-bottom: 0;
-        height: 8px;
+        height: 6px;
         padding: 0;
 
         .rc-slider-rail {
             background: #e7f0f1;
-            height: 8px;
+            height: 6px;
         }
 
         .rc-slider-track {
             background: #04C1D6;
-            height: 8px;
+            height: 6px;
         }
 
         .rc-slider-handle {
@@ -2191,7 +2192,7 @@ ul.standardPlans {
         }
 
         .rc-slider-step {
-            height: 8px;
+            height: 6px;
         }
     }
 }

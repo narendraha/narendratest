@@ -11,6 +11,7 @@ import { phoneNumberReg } from "../../../_mock/RegularExp";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { addProfileImageRequest, profileDetailsAndProfileImageUpdateRequest } from '../../../store/Profile/slice';
 import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
+import { PhoneNumberCodeAndFlag } from '../../Utilities/PhoneNumberCodeAndFlag';
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -313,21 +314,14 @@ export const ProfileEditAction = () => {
                                                 Mobile
                                             </Label>
                                             <div className="input-group">
-                                                <div className="input-group-prepend">
-                                                    <span
-                                                        className="input-group-text"
-                                                        id="basic-addon1"
-                                                    >
-                                                        +1
-                                                    </span>
-                                                </div>
                                                 <Field
                                                     type="text"
-                                                    className="form-control"
+                                                    // className="form-control"
                                                     name="mobile"
                                                     placeholder="e.g.123-4567-8901"
-                                                    onKeyPress={(e) => allowedNumbersOnField(10, e)}
+                                                    // onKeyPress={(e) => allowedNumbersOnField(10, e)}
                                                     aria-describedby="basic-addon1"
+                                                    component={PhoneNumberCodeAndFlag}
                                                 />
                                             </div>
                                             <ErrorMessage

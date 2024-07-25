@@ -12,12 +12,13 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 import * as Yup from "yup";
+import { phoneNumberReg } from "../../../_mock/RegularExp";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
-import { getRegisterClear, getRegisterRequest, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
+import { getRegisterClear, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
 import Loading from "../../InnerApp/LoadingComponent";
-import { phoneNumberReg } from "../../../_mock/RegularExp";
+import { PhoneNumberCodeAndFlag } from "../../Utilities/PhoneNumberCodeAndFlag";
 
 export default function RegisterInfo() {
   pageTitle("Register | Patient")
@@ -117,30 +118,6 @@ export default function RegisterInfo() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    {/* <>
-                      <div className="w-80 mx-auto wflexLayout">
-                        <h5 className="mb-2">Type of Account</h5>
-                        <div className="al_login-form al_registrationform wflexScroll">
-                          <div className="al_accounttype mb-3">
-                            <h6 className="mb-0 fw-medium">I am a</h6>
-                            <h4 className="mb-0">Patient</h4>
-                          </div>
-                          <div className="al_accounttype">
-                            <h6 className="mb-0 fw-medium">I am a</h6>
-                            <h4 className="mb-0">Physician</h4>
-                          </div>
-                        </div>
-                        <div className="mt-3 text-medium">
-                          Already have an account?{" "}
-                          <Link
-                            to="/signin"
-                            className="al_text_link cs_medium"
-                          >
-                            Sign in
-                          </Link>
-                        </div>
-                      </div>
-                    </> */}
                     <>
                       <h6 className="mb-2">Personal Details</h6>
                       <div className="al_login-form al_registrationform wflexScroll">
@@ -248,21 +225,13 @@ export default function RegisterInfo() {
                             <span className="requiredLabel">*</span>Mobile
                           </Label>
                           <div className="input-group">
-                            <div className="input-group-prepend">
-                              <span
-                                className="input-group-text"
-                                id="basic-addon1"
-                              >
-                                +1
-                              </span>
-                            </div>
                             <Field
                               type="text"
-                              className="form-control"
+                              // className="form-control"
                               name="mobile"
                               placeholder="e.g.123-4567-8901"
-                              onKeyPress={(e) => allowedNumbersOnField(10, e)}
                               aria-describedby="basic-addon1"
+                              component={PhoneNumberCodeAndFlag}
                             />
                           </div>
                           <ErrorMessage
@@ -411,6 +380,13 @@ export default function RegisterInfo() {
                         </Label>
                       </div>
                       <div className="al_login_footer mt-3">
+                        <button
+                          type="button"
+                          className="al_login_button"
+                          onClick={() => navigate('/registration-info')}
+                        >
+                          Back
+                        </button>
                         <button
                           type="submit"
                           className="al_login_button"

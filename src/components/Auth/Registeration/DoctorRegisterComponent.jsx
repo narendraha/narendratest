@@ -9,17 +9,16 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { allowsOnlyNumeric, passwordReg, phoneNumberReg } from "../../../_mock/RegularExp";
-import { getEductaionOptions, pageTitle } from "../../../_mock/helperIndex";
+import { passwordReg, phoneNumberReg } from "../../../_mock/RegularExp";
+import { customContentValidation, getEductaionOptions, pageTitle } from "../../../_mock/helperIndex";
 import { AxiosInstance } from "../../../_mock/utilities";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
 import successImg from "../../../images/sucessimg.svg";
 import Loading from "../../InnerApp/LoadingComponent";
+import { PhoneNumberCodeAndFlag } from "../../Utilities/PhoneNumberCodeAndFlag";
 import OTPForm from "../OTPForm";
 import SubscriptionForm from "../SubscriptionForm";
-import { allowedNumbersOnField } from "../../../_mock/helperIndex";
-import { customContentValidation } from "../../../_mock/helperIndex";
 
 export default function Register() {
   pageTitle("Register | Doctor")
@@ -215,21 +214,14 @@ export default function Register() {
                           <span className="requiredLabel">*</span>Mobile
                         </Label>
                         <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span
-                              className="input-group-text"
-                              id="basic-addon1"
-                            >
-                              +1
-                            </span>
-                          </div>
                           <Field
                             type="text"
-                            className="form-control"
+                            // className="form-control"
                             name="mobile"
                             placeholder="e.g.123-4567-8901"
-                            onKeyPress={(e) => allowedNumbersOnField(10, e)}
+                            // onKeyPress={(e) => allowedNumbersOnField(10, e)}
                             aria-describedby="basic-addon1"
+                            component={PhoneNumberCodeAndFlag}
                           />
                         </div>
                         <ErrorMessage
@@ -403,6 +395,13 @@ export default function Register() {
                       </FormGroup>
                     </div>
                     <div className="al_login_footer mt-3">
+                      <button
+                        type="button"
+                        className="al_login_button"
+                        onClick={() => navigate('/registration-info')}
+                      >
+                        Back
+                      </button>
                       <button
                         type="submit"
                         className="al_login_button"

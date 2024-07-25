@@ -395,19 +395,22 @@ export default function Register() {
                       </FormGroup>
                     </div>
                     <div className="al_login_footer mt-3">
-                      <button
-                        type="button"
-                        className="al_login_button"
-                        onClick={() => navigate('/registration-info')}
-                      >
-                        Back
-                      </button>
-                      <button
-                        type="submit"
-                        className="al_login_button"
-                      >
-                        Continue
-                      </button>
+                      <div className="d-flex">
+                        <button
+                          type="button"
+                          style={{ width: "50px" }}
+                          className="al_login_button_back me-3 d-flex align-items-center justify-content-center"
+                          onClick={() => navigate('/registration-info')}
+                        >
+                          <i className="icon_alfred_back-arrow"></i>
+                        </button>
+                        <button
+                          type="submit"
+                          className="al_login_button"
+                        >
+                          Continue
+                        </button>
+                      </div>
                       <button
                         type="button"
                         className="al_login_button_back mt-3"

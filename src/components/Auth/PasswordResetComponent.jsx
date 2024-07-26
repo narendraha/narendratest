@@ -36,22 +36,18 @@ export default function RegisterInfo() {
   };
   const handleFirstFormSubmit = (values) => {
     setFormData({ ...formData, ...values });
-    flowForm === "forgotPassword"
-      ? dispatch(
-          getForgorPasswordForm({
-            actionType: getActionTypes.SELECT,
-            actionData: { ...actionData, ...values },
-          })
-        )
-      : dispatch(
-          getRegisterPasswordResponseData({
-            actionType: getActionTypes.SELECT,
-            actionData: { ...actionData, ...values },
-          })
-        );
+  
+    const action = flowForm === "forgotPassword" ? getForgorPasswordForm : getRegisterPasswordResponseData;
+  
+    dispatch(
+      action({
+        actionType: getActionTypes.SELECT,
+        actionData: { ...actionData, ...values },
+        flowForm,
+      })
+    );
   };
  
-
   return (
     <div className="al_login_container">
       <Formik

@@ -119,18 +119,24 @@ function* OTPRegister({ payload }) {
 }
 
 function* PasswordRegister({ payload }) {
+  console.log('payload: ', payload);
   yield put(getRegisterPasswordResponseData({ ...payload, isLoading: true }));
 
   let response;
+  let URL = payload.flowForm === "doctor" ? "/create-doctor-account" :"/create_account" 
+
+  let Payload =  {
+    ...payload.actionData,
+    ...(payload.flowForm !== "doctor" &&
+    {dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD")}),
+    password: payload?.actionData?.password,
+  }
+delete Payload.reenterpassword
   try {
     response = yield call(callAPI, {
-      url: "/create_account",
+      url: URL,
       method: "POST",
-      data: {
-        ...payload.actionData,
-        dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD"),
-        password: payload?.actionData?.password,
-      },
+      data: Payload,
       contentType: "application/json",
     });
 

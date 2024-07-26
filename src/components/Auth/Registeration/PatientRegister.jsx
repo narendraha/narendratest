@@ -117,31 +117,6 @@ export default function RegisterInfo() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    {/* <>
-                      <div className="w-80 mx-auto wflexLayout">
-                        <h5 className="mb-2">Type of Account</h5>
-                        <div className="al_login-form al_registrationform wflexScroll">
-                          <div className="al_accounttype mb-3">
-                            <h6 className="mb-0 fw-medium">I am a</h6>
-                            <h4 className="mb-0">Patient</h4>
-                          </div>
-                          <div className="al_accounttype">
-                            <h6 className="mb-0 fw-medium">I am a</h6>
-                            <h4 className="mb-0">Physician</h4>
-                          </div>
-                        </div>
-                        <div className="mt-3 text-medium">
-                          Already have an account?{" "}
-                          <Link
-                            to="/signin"
-                            className="al_text_link cs_medium"
-                          >
-                            Sign in
-                          </Link>
-                        </div>
-                      </div>
-                    </> */}
-                    <>
                       <h6 className="mb-2">Personal Details</h6>
                       <div className="al_login-form al_registrationform wflexScroll">
                         <FormGroup>
@@ -428,7 +403,7 @@ export default function RegisterInfo() {
                           </Link>
                         </button>
                       </div>
-                    </>
+                    
                   </div>
                 </div>
               </Col>

@@ -39,6 +39,8 @@ export default function HomeEducationalBot() {
   useEffect(() => { inputRef.current?.focus() })
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
+    console.log(chatHistory?.find((element, index) => index === messageId - 1)?.User);
+
     setSelectedIcons(prevIcons => ({
       ...prevIcons,
       [messageId]: { reaction: iconType, alfred: alfredValue, User: chatHistory?.find((element, index) => index === messageId - 1)?.User },

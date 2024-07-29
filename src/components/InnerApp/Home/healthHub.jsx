@@ -155,7 +155,7 @@ export const HealthHub = () => {
                     <Row className="align-items-center">
                         <span className="w-auto">Progress</span>
                         <Col className="healthhubprogress">
-                            <Slider
+                            {/* <Slider
                                 dots
                                 min={0}
                                 max={100}
@@ -164,14 +164,22 @@ export const HealthHub = () => {
                                 activeDotStyle={{ borderColor: '#1dffa4' }}
                                 value={week.value === "Week 1" ? 0 : week.value === "Week 2" ? 25 : week.value === "Week 3" ? 50 : week.value === "Week 4" ? 75 : 100}
                                 onChange={(e) => { }}
-                            />
+                            /> */}
+                            <ol class="al_progress mb-0">
+                                <li class="al_complete" title="Knowledge"><i className="icon_alfred_circle_check_solid"></i></li>
+                                <li class="al_complete" title="Awareness"><i className="icon_alfred_circle_check_solid"></i></li>
+                                <li class="al_current" title="Exposure"><i className="icon_alfred_circle_check_solid"></i></li>
+                                <li class="al_not_complete" title="Experience"><i className="icon_alfred_circle_xmark_solid"></i></li>
+                                <li class="al_not_complete" title="Expertise"><i className="icon_alfred_circle_xmark_solid"></i></li>
+                            </ol>
                         </Col>
                     </Row>
                 </Col>
             </Row>
             {week.value === "Week 1" &&
                 <>
-                    <h6 className="mb-3 fw-semibold">General Knowledge - <small className="fw-normal text-grey">Understanding Atrial Fibrillation (Afib)</small></h6>
+                    <h6 className="mb-0 fw-semibold">General Knowledge</h6>
+                    <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                     <Row className='al_hubpreviw'>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>
@@ -262,7 +270,8 @@ export const HealthHub = () => {
             }
             {week.value === "Week 2" &&
                 <>
-                    <h6 className="mb-3 fw-semibold">Antiarrhythmic Knowledge</h6>
+                    <h6 className="mb-0 fw-semibold">Antiarrhythmic Knowledge</h6>
+                    <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                     <Row>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>
@@ -346,7 +355,8 @@ export const HealthHub = () => {
 
             {week.value === "Week 3" &&
                 <>
-                    <h6 className="mb-3 fw-semibold">Ablation Knowledge</h6>
+                    <h6 className="mb-0 fw-semibold">Ablation Knowledge</h6>
+                    <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                     <Row>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>

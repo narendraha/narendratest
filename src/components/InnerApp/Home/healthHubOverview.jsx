@@ -54,7 +54,6 @@ export const HealthHubOverview = () => {
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
                                         </ol>
                                     </td>
                                 </tr>

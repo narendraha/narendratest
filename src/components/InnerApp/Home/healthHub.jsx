@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch } from "react-redux";
@@ -38,6 +38,7 @@ export const HealthHub = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState({ value: "Week 3", label: "Week 3" });
     const [activeIndex, setActiveIndex] = useState(0);
+    const [items, setItems] = useState([]);
 
     const next = () => {
         const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
@@ -65,21 +66,6 @@ export const HealthHub = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
     }
 
-    const items = [
-        {
-            id: 1,
-            altText: 'Slide 1',
-            type: 'video',
-            src: 'https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B',
-        },
-        {
-            id: 2,
-            altText: 'Slide 2',
-            type: 'image',
-            src: rhythm
-        }
-    ];
-
     const slides = items.map((item) => {
         return (
             <CarouselItem
@@ -95,7 +81,7 @@ export const HealthHub = () => {
                     : <iframe
                         width="100%"
                         height="130"
-                        src="https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B"
+                        src={item.src}
                         title={item.altText}
                         frameBorder="0"
                         allowFullScreen
@@ -106,6 +92,36 @@ export const HealthHub = () => {
         )
     }
     )
+
+    useEffect(() => {
+        setItems(week.value === "Week 1" ? [
+            {
+                id: 1,
+                altText: 'Slide 1',
+                type: 'video',
+                src: 'https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B',
+            },
+            {
+                id: 2,
+                altText: 'Slide 2',
+                type: 'image',
+                src: rhythm
+            }
+        ] : [
+            {
+                id: 1,
+                altText: 'Slide 1',
+                type: 'video',
+                src: 'https://www.youtube.com/embed/UJtJnBYmf5w?si=mLLMNYuBIUi4jJKX',
+            },
+            {
+                id: 2,
+                altText: 'Slide 2',
+                type: 'image',
+                src: antiarrhythmicmed
+            }
+        ]);
+    }, [week]);
 
     return (
         <React.Fragment>
@@ -248,29 +264,51 @@ export const HealthHub = () => {
                 <>
                     <h6>Antiarrhythmic Knowledge</h6>
                     <Row>
-                        <Col lg="7" sm="12">
-                            <Row>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">What is an antiarrhythmic medication or drug?</strong>
-                                        <img
-                                            src={antiarrhythmicmed}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
+                                        <Carousel
+                                            activeIndex={activeIndex}
+                                            next={next}
+                                            previous={previous}
+                                            interval={null}
+                                            className="al_preview_carousel">
+                                            <CarouselIndicators
+                                                items={items}
+                                                activeIndex={activeIndex}
+                                                onClickHandler={goToIndex}
+                                            />
+                                            {slides}
+                                            <CarouselControl
+                                                direction="prev"
+                                                directionText=""
+                                                onClickHandler={previous}
+                                            />
+                                            <CarouselControl
+                                                direction="next"
+                                                directionText=""
+                                                onClickHandler={next}
+                                            />
+                                        </Carousel>
                                         <p className="mt-3">
                                             Antiarrhythmic medications are a type of drug used to treat abnormal heart rhythms, such as the one you're experiencing - atrial fibrillation. These drugs are designed with a special purpose: to help maintain a <strong>normal heart rhythm</strong>.
                                         </p>
                                         <p>They can be prescribed to help <strong>control your heart rate</strong> and <strong>improve your symptoms</strong>, making your day-to-day life more comfortable.</p>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">The risks of antiarrhythmic medication?</strong>
                                         <img
                                             src={antiarrhythmicrisk}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             Antiarrhythmic medications can indeed be effective, but it's equally important to be aware of the potential risks. Here's what you should know:
@@ -279,14 +317,18 @@ export const HealthHub = () => {
                                             <strong>Your well-being and quality of life matter:</strong> Symptoms such as palpitations, shortness of breath, weakness, and anxiety can affect your overall well-being and quality of life. It's important to communicate these experiences with your healthcare provider
                                         </p>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">About the risks of flecainide?</strong>
                                         <img
                                             src={flecainiderisks}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             <strong>Self-management behaviors:</strong> It's essential for your well-being to follow the prescribed regimen for taking flecainide.
@@ -295,75 +337,6 @@ export const HealthHub = () => {
                                             <strong>Specific adverse events:</strong> The available sources do not mention specific adverse events related to flecainide usage. However, this doesn't mean there aren't any. It's always best to stay vigilant and report any unusual symptoms to your healthcare provider.
                                         </p>
                                     </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col lg="5" sm="12">
-                            <Card
-                                className="al_cardnoborder"
-                                style={{
-                                    backgroundColor: "#F7F7F7",
-                                    boxShadow: "none",
-                                }}
-                            >
-                                <CardBody>
-                                    <h6>Videos</h6>
-                                    <Row className="mt-3 al_knowldgebank">
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/VkYIhaKc2ZQ?si=003k-FHhHuZzzd8C"
-                                                        title="video4"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Symptoms of Palpitations
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/UJtJnBYmf5w?si=EOZPGtsU7H3e7c1O"
-                                                        title="video5"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Reduce Stroke Risk in Non-Valvular AFib
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/dAHrFEGxuS4?si=9-wLjML-Hbebf8LT"
-                                                        title="video6"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        4 Heart-Healthy Yoga Poses
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    </Row>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -375,15 +348,15 @@ export const HealthHub = () => {
                 <>
                     <h6>Ablation Knowledge</h6>
                     <Row>
-                        <Col lg="7" sm="12">
-                            <Row>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">Different types of catheter ablation available for atrial fibrillation?</strong>
                                         <img
                                             src={cathetertypes}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             There are indeed different types of catheter ablation available for atrial fibrillation. Here are some of the commonly used types:
@@ -394,373 +367,48 @@ export const HealthHub = () => {
                                             <li>Maze operation</li>
                                         </ol>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">Risks of catheter ablation of atrial fibrillation?</strong>
                                         <img
                                             src={catheterrisk}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3"><strong>Stroke: </strong> Atrial fibrillation can increase the risk of stroke, and while catheter ablation can help manage the condition, it doesn't completely eliminate this risk.</p>
                                         <p><strong>Adverse cardiovascular events: </strong>It's important to know that patients with atrial fibrillation may face a higher risk of adverse cardiovascular events such as heart failure, myocardial infarction (heart attack), and cardiovascular death</p>
                                         <p><strong>Comorbidities: </strong>Patients with atrial fibrillation often have a higher rate of comorbidities such as hypertension, diabetes, dyslipidemia, and coronary artery disease</p>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">What is called phrenic nerve palsy?</strong>
                                         <img
                                             src={nervepalsy}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             This condition refers to the temporary or permanent paralysis of the phrenic nerve, which plays a crucial role in controlling the movement of your diaphragm and thus, your breathing function. It's indeed a serious matter and your concerns are completely valid.
                                         </p>
                                         <p>Phrenic nerve palsy can occur as a complication of catheter ablation for atrial fibrillation, specifically when the ablation procedure affects the phrenic nerve.</p>
+
                                     </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col lg="5" sm="12">
-                            <Card
-                                className="al_cardnoborder"
-                                style={{
-                                    backgroundColor: "#F7F7F7",
-                                    boxShadow: "none",
-                                }}
-                            >
-                                <CardBody>
-                                    <h6>Videos</h6>
-                                    <Row className="mt-3 al_knowldgebank">
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/vEllQUKGszY?si=ghi5GIkQQQy9oRqM"
-                                                        title="video7"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        What is an Echocardiogram
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/ugnERAFq7as?si=iTRCvHVAVaVDGP8q"
-                                                        title="video8"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Why Smokers Have Higher Risk of Heart Disease
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/RND_o8-fbks?si=4VhKrav4V51ftCmt"
-                                                        title="video9"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Heart Attacks & Depression
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    </Row>
                                 </CardBody>
                             </Card>
                         </Col>
                     </Row>
                 </>
             }
-            {week.value === "Week 4" &&
-                <>
-                    <h6>Blood thinners Knowledge</h6>
-                    <Row>
-                        <Col lg="7" sm="12">
-                            <Row>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">What are the blood thinners used to decrease risk of a stroke?</strong>
-                                        <img
-                                            src={cathetertypes}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3">
-                                            The commonly used blood thinners include:
-                                        </p>
-                                        <ol type="a">
-                                            <li>
-                                                <strong>Warfarin: </strong>This is a long-term therapy that can decrease your risk of stroke by about 68%. It's been a trusted option for many patients like you.
-                                            </li>
-                                            <li>
-                                                <strong>Direct oral anticoagulants (DOACs): </strong>These include apixaban, dabigatran, edoxaban, and rivaroxaban. They are also used to reduce the risk of stroke in patients with atrial fibrillation. These might be a suitable option for you, depending on your specific circumstances.
-                                            </li>
-                                        </ol>
-                                    </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">What is my risk of bleeding on a blood thinner?</strong>
-                                        <img
-                                            src={catheterrisk}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3">There are several factors that may increase the risk of bleeding while on blood thinners. These include:</p>
-                                        <ol type="i">
-                                            <li>Poor medication adherence</li>
-                                            <li>Cognitive impairment</li>
-                                            <li>Social isolation</li>
-                                            <li>Depressed mood</li>
-                                            <li>Poor health literacy</li>
-                                            <li>Functional impairment</li>
-                                        </ol>
-                                    </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">If I cannot take a blood thinner, what are my options?</strong>
-                                        <img
-                                            src={nervepalsy}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3">
-                                            These options are designed to help you manage your condition effectively and improve your quality of life. They include:
-                                        </p>
-                                        <ol type="i">
-                                            <li>Rate control medications</li>
-                                            <li>Rhythm control medications</li>
-                                            <li>Cardioversion</li>
-                                            <li>Ablation therapy</li>
-                                        </ol>
-                                        <p>The choice of treatment will depend on various factors, including your individual health condition and preferences.</p>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col lg="5" sm="12">
-                            <Card
-                                className="al_cardnoborder"
-                                style={{
-                                    backgroundColor: "#F7F7F7",
-                                    boxShadow: "none",
-                                }}
-                            >
-                                <CardBody>
-                                    <h6>Videos</h6>
-                                    <Row className="mt-3 al_knowldgebank">
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/vEllQUKGszY?si=ghi5GIkQQQy9oRqM"
-                                                        title="video10"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        What is an Echocardiogram
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/ugnERAFq7as?si=iTRCvHVAVaVDGP8q"
-                                                        title="video11"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Why Smokers Have Higher Risk of Heart Disease
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/RND_o8-fbks?si=4VhKrav4V51ftCmt"
-                                                        title="video12"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Heart Attacks & Depression
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                </>
-            }
-            {/* {week.value === "Week 5" &&
-                <>
-                    <h6>Left atrial appendage Knowledge</h6>
-                    <Row>
-                        <Col lg="7" sm="12">
-                            <Row>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">Different types of catheter ablation available for atrial fibrillation?</strong>
-                                        <img
-                                            src={cathetertypes}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3">
-                                            There are indeed different types of catheter ablation available for atrial fibrillation. Here are some of the commonly used types:
-                                        </p>
-                                        <ol type="a">
-                                            <li>Radiofrequency catheter ablation of atrial foci</li>
-                                            <li>Pulmonary vein isolation (PV isolation)</li>
-                                            <li>Maze operation</li>
-                                        </ol>
-                                    </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">Risks of catheter ablation of atrial fibrillation?</strong>
-                                        <img
-                                            src={catheterrisk}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3"><strong>Stroke: </strong> Atrial fibrillation can increase the risk of stroke, and while catheter ablation can help manage the condition, it doesn't completely eliminate this risk.</p>
-                                        <p><strong>Adverse cardiovascular events: </strong>It's important to know that patients with atrial fibrillation may face a higher risk of adverse cardiovascular events such as heart failure, myocardial infarction (heart attack), and cardiovascular death</p>
-                                        <p><strong>Comorbidities: </strong>Patients with atrial fibrillation often have a higher rate of comorbidities such as hypertension, diabetes, dyslipidemia, and coronary artery disease</p>
-                                    </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
-                                        <strong className="d-block mb-2">What is called phrenic nerve palsy?</strong>
-                                        <img
-                                            src={nervepalsy}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
-                                        <p className="mt-3">
-                                            This condition refers to the temporary or permanent paralysis of the phrenic nerve, which plays a crucial role in controlling the movement of your diaphragm and thus, your breathing function. It's indeed a serious matter and your concerns are completely valid.
-                                        </p>
-                                        <p>Phrenic nerve palsy can occur as a complication of catheter ablation for atrial fibrillation, specifically when the ablation procedure affects the phrenic nerve.</p>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col lg="5" sm="12">
-                            <Card
-                                className="al_cardnoborder"
-                                style={{
-                                    backgroundColor: "#F7F7F7",
-                                    boxShadow: "none",
-                                }}
-                            >
-                                <CardBody>
-                                    <h6>Videos</h6>
-                                    <Row className="mt-3 al_knowldgebank">
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/vEllQUKGszY?si=ghi5GIkQQQy9oRqM"
-                                                        title="video7"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        What is an Echocardiogram
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/ugnERAFq7as?si=iTRCvHVAVaVDGP8q"
-                                                        title="video8"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Why Smokers Have Higher Risk of Heart Disease
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/RND_o8-fbks?si=4VhKrav4V51ftCmt"
-                                                        title="video9"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        Heart Attacks & Depression
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                </>
-            } */}
             <div className="mt-4">
                 <button
                     type="button"

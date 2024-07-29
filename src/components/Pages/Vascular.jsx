@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { pageTitle } from '../../_mock/helperIndex';
-import vascular from '../../images/vascular.png';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 import Section from './Section/index';
 
+let vascular = "vascular.png";
+
 export default function Vascular() {
   pageTitle('Vascular');
+
+  const dispatch = useDispatch();
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(vascular))
+  }, []);
+
   return (
     <>
       <BannerSectionStyle
@@ -26,7 +37,7 @@ export default function Vascular() {
               <p>Your health care provider will assess these risks, and consider appropriate testing and evaluations.</p>
             </Col>
             <div className='w-auto ps-5'>
-              <img src={vascular} alt="vascular" width={330} />
+              <img src={assetUrl?.["vascular"]} alt="vascular" width={330} />
             </div>
           </Row>
         </div>

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Field, Form, Formik } from "formik";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import Select from "react-select";
 import { toast } from "react-toastify";
@@ -9,13 +10,19 @@ import { getProfileCmpDetails, pageTitle } from '../../../_mock/helperIndex';
 import { AxiosInstance } from "../../../_mock/utilities";
 import Chatbot from "../../../images/alfredicon.svg";
 import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
-import incompleteprofile from "../../../images/incompleteprofile.png";
 import ChatMaleuser from "../../../images/userprofile.jpg";
+import { getAssetsRequest } from "../../../store/UtilityCallFunction/slice";
 import Loading from "../../InnerApp/LoadingComponent";
 import ModalView from "../../Utilities/ModalView";
 
+let incompleteprofile = "incompleteprofile.png";
+
 export default function HistoryChatBot() {
   pageTitle("History Chat Bot");
+
+  const dispatch = useDispatch();
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
@@ -53,6 +60,7 @@ export default function HistoryChatBot() {
 
   useEffect(() => {
     fetchProfileComplitionDetails();
+    dispatch(getAssetsRequest(incompleteprofile))
   }, []);
 
   let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
@@ -570,7 +578,7 @@ export default function HistoryChatBot() {
                         ) : (
                           <div className="d-flex flex-column h-100 align-items-center justify-content-center">
                             {/* <div>No question available</div> */}
-                            <img src={incompleteprofile} alt="" style={{ width: "200px" }} />
+                            <img src={assetUrl["incompleteprofile"]} alt="" style={{ width: "200px" }} />
                             <h6 className="mb-0 text-warning">Will be coming soon</h6>
                             {Array?.isArray(getChatQus) && getChatQus?.length > 0 ? (
                               <div className="my-3">

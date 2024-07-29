@@ -4,14 +4,13 @@ import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 import { pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
-import homeleftmobile from '../../images/homeleftmobile.gif';
 import homeright from '../../images/homeright.gif';
 import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest } from "../../store/EducationaChatBot/slice";
 import { getAssetsRequest } from "../../store/UtilityCallFunction/slice";
 import ChatBotMsgInterface from "../Utilities/ChatBotMsgInterface";
 import ChatBotSearchArea from "../Utilities/ChatBotSearchArea";
 
-// let homeleftmobile = 'homeleftmobile.gif'
+let homeleftmobile = 'homeleftmobile.gif'
 
 const HomeEducationalBot = () => {
     pageTitle("Home")
@@ -20,12 +19,14 @@ const HomeEducationalBot = () => {
     const [openChatUI, setOpenChatUI] = useState(false);
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
+    const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
 
     useEffect(() => {
         dispatch(getAssetsRequest(homeleftmobile))
     }, []);
 
 
+    console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {
         // e.preventDefault();
         let inputValue = e?.target?.value || e;
@@ -45,19 +46,6 @@ const HomeEducationalBot = () => {
                         <div className="d-flex flex-column">
                             <div className="flex-grow-1">
                                 <div className="scrolldiv">
-                                    <Row className="mb-4 al_chatcontent">
-                                        <div>
-                                            <img src={Chatbot} alt="Bot" id="botinitialimage" />
-                                            <UncontrolledTooltip
-                                                modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                                                placement='bottom' target="botinitialimage">
-                                                Alfred
-                                            </UncontrolledTooltip>
-                                        </div>
-                                        <Col>
-                                            <div>Hello, I am Alfred! How can i assist you today?</div>
-                                        </Col>
-                                    </Row>
                                     {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
                                         return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index }} />
                                     })}
@@ -85,7 +73,7 @@ const HomeEducationalBot = () => {
                     :
                     <Row className="w-75 align-items-center wflexLayout">
                         <Col sm="4" className="h-100 d-flex align-items-center d-xs-none">
-                            <img src={homeleftmobile} alt="chatbot" className="mobileanim" />
+                            <img src={assetUrl?.["homeleftmobile"]} alt="chatbot" className="mobileanim" />
                         </Col>
                         <Col sm="8" className="h-100 d-flex flex-column justify-content-center">
                             <Row className="al_hometop">

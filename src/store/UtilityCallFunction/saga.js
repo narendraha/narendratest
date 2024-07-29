@@ -59,7 +59,9 @@ function* getAssetsFile(action) {
     }
 
     yield put(getAssetsResponse(asset))
-    store.dispatch(setLoading(false))
+    setTimeout(() => {
+        store.dispatch(setLoading(false))
+    }, 1000)
 }
 
 function* watchUtilityCallFunctionSaga() {

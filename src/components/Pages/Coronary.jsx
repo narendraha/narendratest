@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { pageTitle } from '../../_mock/helperIndex';
 import coronary from '../../images/coronary.png';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Section from './Section';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 
+let coronarybg = "coronarybg.png"
+
 export default function Coronary() {
   pageTitle('Coronary');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(coronarybg))
+  }, []);
+
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
   return (
     <>
       <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
-        imgUrl="/images/coronarybg.png"
+        imgUrl={assetUrl?.["coronarybg"]}
         title="Don’t Let Your Health<br/>Take a Backseat!"
         subTitle="Consider appropriate testing and evaluations"
       />

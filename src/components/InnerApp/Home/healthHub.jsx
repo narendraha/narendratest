@@ -3,7 +3,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { Card, CardBody, Col, Row, UncontrolledTooltip, Carousel, CarouselControl, CarouselItem, CarouselIndicators } from "reactstrap";
+import { Card, CardBody, Carousel, CarouselControl, CarouselIndicators, CarouselItem, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { getActionTypes } from "../../../_mock/helperIndex";
 import { getActivetab } from "../../../_mock/internalJsControl";
 import antiarrhythmicmed from "../../../images/antiarrhythmicmed.png";

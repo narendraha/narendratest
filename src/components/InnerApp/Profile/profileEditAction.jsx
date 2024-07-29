@@ -75,13 +75,13 @@ export const ProfileEditAction = () => {
                     dob: Yup.date()
                         .max(
                             new Date(Date.now() - 567648000000),
-                            "You must be at least 18 years old"
+                            "Your age must be at least 18 years old"
                         )
                         .min(
                             new Date(
                                 Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000
                             ),
-                            "You must be below 120 years old"
+                            "Your age must be below 120 years old"
                         )
                         .required("Dob is required").nullable(),
                     gender: Yup.string().required("This field is required"),

@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 import { pageTitle } from '../../_mock/helperIndex';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Section from './Section';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 
+let faq = "faq.png";
+
 export default function Ablation() {
   pageTitle('Ablation');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(faq))
+  }, []);
+
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
   return (
     <>
       <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
-        imgUrl="/images/about/faq.png"
+        imgUrl={assetUrl["faq"]}
         title="Don’t Let Your Health<br/> Take a Backseat!"
         subTitle="Rhythm control may be used when Afib symptoms get worse."
       />

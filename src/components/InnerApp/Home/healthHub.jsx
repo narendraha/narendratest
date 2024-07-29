@@ -171,7 +171,7 @@ export const HealthHub = () => {
             </Row>
             {week.value === "Week 1" &&
                 <>
-                    <h6>General Knowledge</h6>
+                    <h6 className="mb-3 fw-semibold">General Knowledge - <small className="fw-normal text-grey">Understanding Atrial Fibrillation (Afib)</small></h6>
                     <Row className='al_hubpreviw'>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>
@@ -262,7 +262,7 @@ export const HealthHub = () => {
             }
             {week.value === "Week 2" &&
                 <>
-                    <h6>Antiarrhythmic Knowledge</h6>
+                    <h6 className="mb-3 fw-semibold">Antiarrhythmic Knowledge</h6>
                     <Row>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>
@@ -346,7 +346,7 @@ export const HealthHub = () => {
 
             {week.value === "Week 3" &&
                 <>
-                    <h6>Ablation Knowledge</h6>
+                    <h6 className="mb-3 fw-semibold">Ablation Knowledge</h6>
                     <Row>
                         <Col lg="4" md="6" sm="12" className='mb-3'>
                             <Card className='al_cardview'>

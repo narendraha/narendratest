@@ -54,7 +54,7 @@ export default function HomeManager() {
     <>
       <div className="wflexLayout">
         <div className="wflexScroll al-pad">
-          <h3 className="bc_main_text mb-1 text-capitalize">
+          <h3 className="bc_main_text mb-0 text-capitalize">
             Hello, {getProfileDetails?.username}!
           </h3>
           <Row className="al_hometabs">

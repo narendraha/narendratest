@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Button, Popover, PopoverBody } from 'reactstrap';
 import chatBot from '../../images/chatboticon.svg';
-import EducationalChatBot from '../InnerApp/EducationalChatBot/EducationalChatBot';
+import EducationalChatBot from '../InnerApp/ChatBots/EducationalChatBot';
 import ConfirmationAction from './ConfirmationAction';
 import Loading from './Loading';
 import SideNav from './SideNav';

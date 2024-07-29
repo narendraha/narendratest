@@ -1,4 +1,6 @@
 import { AxiosInstance } from '../_mock/utilities';
+import ChatFemaleuser from "../images/femaleuserImg.jpg";
+import ChatMaleuser from "../images/userprofile.jpg";
 
 // gender options 
 export const getGenderoptions = [
@@ -147,3 +149,8 @@ export const allowedNumbersOnField = (fieldLength, e) => {
 export const pageTitle = (title) => {
     return (document.title = title);
 };
+
+// to get genderbasedProfile Picture
+export const getProfilePictureByGender = (getProfileDetails) => {
+    return ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url)
+}

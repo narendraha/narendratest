@@ -32,7 +32,7 @@ export default function Signin({ setIsAuthenticated }) {
   };
   const handleSubmit = (values) => {
     dispatch(loginForm({ actionData: values }));
-    if(isAuthenticated) {
+    if (isAuthenticated) {
       setIsAuthenticated(true);
     }
   };
@@ -42,7 +42,7 @@ export default function Signin({ setIsAuthenticated }) {
       .then((data) => {
         dispatch(googleLogin({ actionData: data?.user }));
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   return (
@@ -162,19 +162,11 @@ export default function Signin({ setIsAuthenticated }) {
                                 onClick={togglePasswordVisibility}
                                 className="password_icon"
                               >
-                                {showPassword ? (
-                                  <Icon
-                                    icon="bi:eye"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
-                                ) : (
-                                  <Icon
-                                    icon="bi:eye-slash"
-                                    width="1.2em"
-                                    height="1.2em"
-                                  />
-                                )}
+                                <Icon
+                                  icon={"bi:eye" + showPassword ? "-slash" : ""}
+                                  width="1.2em"
+                                  height="1.2em"
+                                />
                               </div>
                             </div>
                             <ErrorMessage

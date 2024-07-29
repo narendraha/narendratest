@@ -3,7 +3,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
+import { Card, CardBody, Col, Row, UncontrolledTooltip, Carousel, CarouselControl, CarouselItem, CarouselIndicators } from "reactstrap";
 import { getActionTypes } from "../../../_mock/helperIndex";
 import { getActivetab } from "../../../_mock/internalJsControl";
 import antiarrhythmicmed from "../../../images/antiarrhythmicmed.png";
@@ -13,7 +13,7 @@ import catheterrisk from "../../../images/catheterrisk.jpg";
 import cathetertypes from "../../../images/cathetertypes.jpg";
 import flecainiderisks from "../../../images/flecainiderisks.jpg";
 import nervepalsy from "../../../images/nervepalsy.jpg";
-import rhythm from "../../../images/rhythm.png";
+import rhythm from "../../../images/rhythm.jpg";
 import whytreatment from "../../../images/whytreatment.png";
 import { setActiveTabRequest } from "../../../store/Home/slice";
 import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
@@ -37,6 +37,21 @@ const horizontalLabels = {
 export const HealthHub = () => {
     const dispatch = useDispatch();
     const [week, setWeek] = useState({ value: "Week 3", label: "Week 3" });
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const next = () => {
+        const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+        setActiveIndex(nextIndex);
+    };
+
+    const previous = () => {
+        const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+        setActiveIndex(nextIndex);
+    };
+
+    const goToIndex = (newIndex) => {
+        setActiveIndex(newIndex);
+    };
 
     const handleSetTabs = () => {
         dispatch(setActiveTabRequest({ setTab: getActivetab.HEALTHHUB, nextOrBackTab: getActivetab.EXPTMONITORING }))
@@ -49,6 +64,48 @@ export const HealthHub = () => {
     const handleSelect = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
     }
+
+    const items = [
+        {
+            id: 1,
+            altText: 'Slide 1',
+            type: 'video',
+            src: 'https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B',
+        },
+        {
+            id: 2,
+            altText: 'Slide 2',
+            type: 'image',
+            src: rhythm
+        }
+    ];
+
+    const slides = items.map((item) => {
+        return (
+            <CarouselItem
+                key={item.id}
+                tag="div"
+            >
+                {item.type === "image" ?
+                    <img
+                        src={item.src}
+                        alt={item.altText}
+                        style={{ height: "130px", objectFit: "cover", width: "100%", marginBottom: "6px" }}
+                    />
+                    : <iframe
+                        width="100%"
+                        height="130"
+                        src="https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B"
+                        title={item.altText}
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+                    ></iframe>
+                }
+            </CarouselItem>
+        )
+    }
+    )
 
     return (
         <React.Fragment>
@@ -99,16 +156,16 @@ export const HealthHub = () => {
             {week.value === "Week 1" &&
                 <>
                     <h6>General Knowledge</h6>
-                    <Row>
-                        <Col lg="7" sm="12">
-                            <Row>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                    <Row className='al_hubpreviw'>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">Understand Atrial fibrillation(AF)</strong>
                                         <img
                                             src={atrialfib}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             Atrial fibrillation (AF) is a type of arrhythmia,
@@ -119,14 +176,18 @@ export const HealthHub = () => {
                                             and hyperthyroidism.
                                         </p>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">Why treatment?</strong>
                                         <img
                                             src={whytreatment}
                                             alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
+                                            style={{ height: "130px", objectFit: "contain" }}
                                         />
                                         <p className="mt-3">
                                             The way the heart beats in atrial fibrillation
@@ -137,15 +198,37 @@ export const HealthHub = () => {
                                             minimise your chance of having a stroke.
                                         </p>
                                     </div>
-                                </Col>
-                                <Col sm="6">
-                                    <div className="mb-4">
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col lg="4" md="6" sm="12" className='mb-3'>
+                            <Card className='al_cardview'>
+                                <CardBody>
+                                    <div>
                                         <strong className="d-block mb-2">Rhythm</strong>
-                                        <img
-                                            src={rhythm}
-                                            alt=""
-                                            style={{ height: "120px", objectFit: "contain" }}
-                                        />
+                                        <Carousel
+                                            activeIndex={activeIndex}
+                                            next={next}
+                                            previous={previous}
+                                            interval={null}
+                                            className="al_preview_carousel">
+                                            <CarouselIndicators
+                                                items={items}
+                                                activeIndex={activeIndex}
+                                                onClickHandler={goToIndex}
+                                            />
+                                            {slides}
+                                            <CarouselControl
+                                                direction="prev"
+                                                directionText=""
+                                                onClickHandler={previous}
+                                            />
+                                            <CarouselControl
+                                                direction="next"
+                                                directionText=""
+                                                onClickHandler={next}
+                                            />
+                                        </Carousel>
                                         <p className="mt-3">
                                             Atrial fibrillation (Afib) is an irregular and
                                             often very rapid heart rhythm. An irregular heart
@@ -155,75 +238,6 @@ export const HealthHub = () => {
                                             other heart-related complications.
                                         </p>
                                     </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col lg="5" sm="12">
-                            <Card
-                                className="al_cardnoborder"
-                                style={{
-                                    backgroundColor: "#F7F7F7",
-                                    boxShadow: "none",
-                                }}
-                            >
-                                <CardBody>
-                                    <h6>Videos</h6>
-                                    <Row className="mt-3 al_knowldgebank">
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/Opvz0mnwvYo?si=36N46RkXdf8KXv6B"
-                                                        title="video1"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        An Overview of Atrial Fibrillation
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/onWtndwgPBI?si=YmbNN3k27UuudXqc"
-                                                        title="video2"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        The Link Between Salt Intake and Heart Disease
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                        <Col sm="6" className="mb-3">
-                                            <Card className="al_cardnoborder h-100">
-                                                <CardBody>
-                                                    <iframe
-                                                        width="100%"
-                                                        height="130"
-                                                        src="https://www.youtube.com/embed/w5c6yvZEQ7M?si=AyXQHXi91B5-U0kE"
-                                                        title="video3"
-                                                        frameBorder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        allowFullScreen
-                                                    ></iframe>
-                                                    <div className="mt-2">
-                                                        The Dangers of Light Smoking
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </Col>
-                                    </Row>
                                 </CardBody>
                             </Card>
                         </Col>

@@ -67,6 +67,7 @@ const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/i
 const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
 const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
 const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
+const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -103,6 +104,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="users" element={<UserManagement />} />
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
+              <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </>

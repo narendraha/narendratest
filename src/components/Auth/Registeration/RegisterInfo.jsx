@@ -54,8 +54,9 @@ export default function RegisterInfo() {
               </Col>
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflex-items-center wflexLayout">
-                  <div className="w-80 mx-auto wflexLayout wflex-items-center">
-                    <h5 className="mb-3">Type of Account</h5>
+                  <div className=" mx-auto wflexLayout wflex-items-center">
+                    <h5 className="mb-2 w-80">What would you like to register as</h5>
+                    <label className="mb-3">Select one option</label>
                     <div className="al_login-form al_registrationform wflexScroll">
                       <div
                         className={`al_accounttype mb-3 ${values.accountType === getRole.PATIENT ? "selected" : ""}`}

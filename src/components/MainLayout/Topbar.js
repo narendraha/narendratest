@@ -83,6 +83,12 @@ export default function Topbar(props) {
           name: "Upload Document",
           link: "uploaddocument",
           icon: "icon_alfred_uploaddocument",
+        },
+        {
+          id: "4",
+          name: "Weekly Curriculum",
+          link: "healthhubbuilder",
+          icon: "icon_alfred_healthcurriculum",
         }
       ],
     },

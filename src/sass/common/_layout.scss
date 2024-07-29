@@ -46,6 +46,41 @@ ol li {
     }
 }
 
+.al_preview_carousel {
+
+    .carousel-indicators {
+        margin-bottom: 0;
+        bottom: -20px;
+
+        button {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #D9D9D9;
+            border: none;
+            margin: 5px 3px 10px;
+
+            &.active {
+                background-color: #04C1D6;
+            }
+        }
+    }
+
+    .carousel-control-next,
+    .carousel-control-prev {
+        width: 8%;
+    }
+
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: #04C1D6;
+        border-radius: 5px;
+        background-size: 15px;
+    }
+}
+
 .greycardbg.card {
     background-color: #f2f2f2;
     border: none;
@@ -105,6 +140,31 @@ ol li {
     font-size: 14px !important;
     color: #202123;
     line-height: 1.5;
+}
+
+.al_quilleditor {
+    .ql-toolbar.ql-snow {
+        border: 1px solid #f2f6fb;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+    }
+
+    .ql-container.ql-snow {
+        background-color: #f2f6fb;
+        border: 1px solid #f2f6fb;
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
+
+        .ql-editor {
+            min-height: 150px;
+            max-height: 210px;
+            font-family: 'Poppins', sans-serif;
+
+            em {
+                font-weight: inherit !important;
+            }
+        }
+    }
 }
 
 .al_homemenu {
@@ -389,7 +449,13 @@ section:not(.cs_banner) {
     tbody {
         tr {
             border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(145, 150, 177, 0.1);
+            // box-shadow: 0 10px 20px rgba(145, 150, 177, 0.1);
+
+            &:nth-of-type(even) {
+                td {
+                    background-color: #f6f8fb;
+                }
+            }
 
             td {
                 color: #2A2F35;
@@ -438,6 +504,18 @@ section:not(.cs_banner) {
 
         &:first-child {
             width: 25%;
+        }
+    }
+}
+
+.al_curriculumtable {
+
+    th,
+    td {
+        width: 18%;
+
+        &:nth-child(2) {
+            width: 48%
         }
     }
 }
@@ -789,15 +867,30 @@ button.al_roundbtn {
     }
 }
 
-@media (min-width: 1025px) and (max-width: 1600px) {
+@media (min-width: 1024px) and (max-width: 1600px) {
 
     .al_menu_navigator:not(.al_slide_out)+.al_right_container,
     .al_right_container:not(:last-child) {
         .al_symptoms {
-
             .col-lg-4 {
                 max-width: 50%;
                 flex: 0 0 50%;
+            }
+        }
+
+        .al_healthubcontent {
+
+            .col-lg-5,
+            .col-lg-7 {
+                max-width: 50%;
+                flex: 0 0 50%;
+            }
+        }
+
+        .al_hubpreviw {
+            .col-lg-6 {
+                max-width: 100%;
+                flex: 0 0 100%;
             }
         }
 

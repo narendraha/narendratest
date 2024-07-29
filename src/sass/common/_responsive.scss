@@ -198,6 +198,10 @@
         }
     }
 
+    .al_listtable.w-80 {
+        width: 100% !important;
+    }
+
     .w-25 {
         width: 50% !important;
     }
@@ -383,7 +387,8 @@
         padding-left: 15px !important;
     }
 
-    .w-25 {
+    .w-25,
+    .al_listtable.w-80 {
         width: 100% !important;
     }
 

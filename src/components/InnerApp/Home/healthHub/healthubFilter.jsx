@@ -19,16 +19,16 @@ const horizontalLabels = [
 const HealthubFilter = () => {
     const dispatch = useDispatch();
 
-    const { selectedHealthHubWeek, healthHubProgressDetails } = useSelector((state) => state?.homePageSlice);
+    const { selectedHealthHubWeek, healthHubProgressDetails, currentProgressWeek } = useSelector((state) => state?.homePageSlice);
 
     let weekOptionsWithDiabledKey = weekoptions?.map((x) => {
         let value = healthHubProgressDetails?.[x.value],
             isSkippedWeek = (value === "none"),
-            inProgressWeek = (selectedHealthHubWeek?.value === x.value),
+            inProgressWeek = (currentProgressWeek?.value === x.value),
             isCompletedWeek = (value === true && !inProgressWeek)
         return {
             ...x,
-            isDisabled: !healthHubProgressDetails?.[x.value],
+            isDisabled: !value,
             icon: isCompletedWeek ? "icon_alfred_circle_check_solid " : isSkippedWeek ? "icon_alfred_circle_xmark_solid" : "",
             class: isCompletedWeek ? "al_complete" : isSkippedWeek ? "al_skipped" : inProgressWeek ? "al_current" : "",
         }
@@ -55,7 +55,7 @@ const HealthubFilter = () => {
                             options={weekOptionsWithDiabledKey}
                             name="weeklevel"
                             className="inputSelect"
-                            value={selectedHealthHubWeek || weekoptions[0] || ""}
+                            value={selectedHealthHubWeek || currentProgressWeek || ""}
                             onChange={(e) => handleWeekSelection(e)}
                             isOptionDisabled={(option) => option?.isDisabled}
                         />

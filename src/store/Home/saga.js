@@ -322,7 +322,7 @@ function* getHealthHubProgress() {
     let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === "none" ? 'skip' : '')?.filter((y) => y !== "")?.length);
     let selectedWeekOption = getWeekoptions[getLastSelectedWeekIndex - 1];
     yield put(setSelectedHealthHubWeekValues(selectedWeekOption));
-    yield put(getHealthHubProgressResponse(healthHubProgressDetails));
+    yield put(getHealthHubProgressResponse({healthHubProgressDetails, selectedWeekOption}));
 }
 
 function* watchHomePageSaga() {

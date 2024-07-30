@@ -8,7 +8,8 @@ const initialState = {
     getVitalsForHealthDetailGraph: "",
     symptomsData: "",
     lastUpdatedSymptomsDetails: "",
-    selectedHealthHubWeek: ""
+    selectedHealthHubWeek: "",
+    currentProgressWeek: ""
 }
 
 const homePageSlice = createSlice({
@@ -50,7 +51,9 @@ const homePageSlice = createSlice({
         },
         getHealthHubProgressRequest: () => { },
         getHealthHubProgressResponse: (state, action) => {
-            state.healthHubProgressDetails = action?.payload
+            console.log("9999999999999999999", action)
+            state.healthHubProgressDetails = action?.payload?.healthHubProgressDetails
+            state.currentProgressWeek = action?.payload?.selectedWeekOption
         }
     }
 });

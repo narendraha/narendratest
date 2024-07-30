@@ -6,7 +6,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import rhythm from "../../../images/rhythm.jpg";
-import whytreatment from "../../../images/whytreatment.png";
+import whytreatment from "../../../images/whytreatment.jpg";
 import atrialfib from "../../../images/atrialfib.png";
 import Switch from "react-switch";
 
@@ -413,7 +413,6 @@ export default function HealthHubBuilder() {
                                                                                 activeIndex={activeIndex}
                                                                                 next={next}
                                                                                 previous={previous}
-                                                                                interval={null}
                                                                                 className="al_preview_carousel">
                                                                                 <CarouselIndicators
                                                                                     items={items}
@@ -421,16 +420,6 @@ export default function HealthHubBuilder() {
                                                                                     onClickHandler={goToIndex}
                                                                                 />
                                                                                 {slides}
-                                                                                <CarouselControl
-                                                                                    direction="prev"
-                                                                                    directionText=""
-                                                                                    onClickHandler={previous}
-                                                                                />
-                                                                                <CarouselControl
-                                                                                    direction="next"
-                                                                                    directionText=""
-                                                                                    onClickHandler={next}
-                                                                                />
                                                                             </Carousel>
                                                                             <p className="mt-3">
                                                                                 Atrial fibrillation (Afib) is an irregular and

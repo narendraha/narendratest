@@ -113,13 +113,15 @@ ol li {
 }
 
 .al_hubpreviw {
-    >div {
-        &:nth-of-type(even) {
-            .al_cardview {
-                .row {
-                    flex-direction: row-reverse;
-                }
-            }
+    .al_cardview {
+
+        p:last-child,
+        ol li:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        img {
+            width: 100%;
         }
     }
 }
@@ -900,9 +902,9 @@ button.al_roundbtn {
         }
 
         .al_hubpreviw {
-            .col-lg-6 {
-                max-width: 100%;
-                flex: 0 0 100%;
+            .col-lg-4 {
+                max-width: 50%;
+                flex: 0 0 50%;
             }
         }
 
@@ -1942,6 +1944,22 @@ ul.standardPlans {
         }
     }
 
+    .al_greyborderbutton {
+        border: 1px solid #e0e0ff;
+        border-radius: 10px !important;
+        padding: 5px 8px !important;
+        text-align: center;
+        color: #2C2C37;
+        cursor: pointer;
+        min-width: 60px !important;
+        background-color: transparent;
+
+        &:hover {
+            background-color: #2C2C37;
+            color: #ffffff;
+        }
+    }
+
     .al_lightbgbutton {
         border: 1px solid #F3F8FC;
         border-radius: 20px;
@@ -2153,7 +2171,6 @@ ul.standardPlans {
                 color: #ffa93a;
             }
         }
-
     }
 }
 

@@ -14,7 +14,7 @@ import cathetertypes from "../../../images/cathetertypes.jpg";
 import flecainiderisks from "../../../images/flecainiderisks.jpg";
 import nervepalsy from "../../../images/nervepalsy.jpg";
 import rhythm from "../../../images/rhythm.jpg";
-import whytreatment from "../../../images/whytreatment.png";
+import whytreatment from "../../../images/whytreatment.jpg";
 import { setActiveTabRequest } from "../../../store/Home/slice";
 import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
 
@@ -260,7 +260,6 @@ export const HealthHub = () => {
                                                 activeIndex={activeIndex}
                                                 next={next}
                                                 previous={previous}
-                                                interval={null}
                                                 className="al_preview_carousel">
                                                 <CarouselIndicators
                                                     items={items}
@@ -268,16 +267,6 @@ export const HealthHub = () => {
                                                     onClickHandler={goToIndex}
                                                 />
                                                 {slides}
-                                                <CarouselControl
-                                                    direction="prev"
-                                                    directionText=""
-                                                    onClickHandler={previous}
-                                                />
-                                                <CarouselControl
-                                                    direction="next"
-                                                    directionText=""
-                                                    onClickHandler={next}
-                                                />
                                             </Carousel>
                                         </Col>
                                         <Col sm="7">
@@ -319,7 +308,6 @@ export const HealthHub = () => {
                                                 activeIndex={activeIndex}
                                                 next={next}
                                                 previous={previous}
-                                                interval={null}
                                                 className="al_preview_carousel">
                                                 <CarouselIndicators
                                                     items={items}
@@ -327,7 +315,7 @@ export const HealthHub = () => {
                                                     onClickHandler={goToIndex}
                                                 />
                                                 {slides}
-                                                <CarouselControl
+                                                {/* <CarouselControl
                                                     direction="prev"
                                                     directionText=""
                                                     onClickHandler={previous}
@@ -336,7 +324,7 @@ export const HealthHub = () => {
                                                     direction="next"
                                                     directionText=""
                                                     onClickHandler={next}
-                                                />
+                                                /> */}
                                             </Carousel>
                                         </Col>
                                         <Col sm="7">

@@ -72,14 +72,17 @@ const HealthubFilter = () => {
                     >
                         Overview
                     </UncontrolledTooltip>
+                    <div className="w-auto px-3 al_button_sm al_greyborderbutton">
+                        <div className="fw-medium">Skip</div>
+                    </div>
                 </Col>
                 <Col lg="4" md="6" sm="6">
                     <Row className="align-items-center">
                         <span className="w-auto px-0">Progress</span>
                         <Col className="healthhubprogress px-0">
-                            <ol class="al_progress mb-0">
+                            <ol className="al_progress mb-0">
                                 {horizontalLabels?.map((x, index) => {
-                                    return <li class={weekOptionsWithDiabledKey[index]?.class} title={x?.label}><i className={weekOptionsWithDiabledKey[index]?.icon}></i></li>
+                                    return <li key={index} className={weekOptionsWithDiabledKey[index]?.class} title={x?.label}><i className={weekOptionsWithDiabledKey[index]?.icon}></i></li>
                                 })}
                             </ol>
                         </Col>

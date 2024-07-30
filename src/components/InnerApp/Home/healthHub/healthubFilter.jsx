@@ -22,14 +22,15 @@ const HealthubFilter = () => {
     const { selectedHealthHubWeek, healthHubProgressDetails } = useSelector((state) => state?.homePageSlice);
 
     let weekOptionsWithDiabledKey = weekoptions?.map((x) => {
-        let value = healthHubProgressDetails?.[x.value];
-        let isSkippedWeek = value === "none";
-        let isCompletedWeek = value === true
+        let value = healthHubProgressDetails?.[x.value],
+            isSkippedWeek = (value === "none"),
+            inProgressWeek = (selectedHealthHubWeek?.value === x.value),
+            isCompletedWeek = (value === true && !inProgressWeek)
         return {
             ...x,
             isDisabled: !healthHubProgressDetails?.[x.value],
             icon: isCompletedWeek ? "icon_alfred_circle_check_solid " : isSkippedWeek ? "icon_alfred_circle_xmark_solid" : "",
-            class: isCompletedWeek ? "al_complete" : isSkippedWeek ? "al_skipped" : "",
+            class: isCompletedWeek ? "al_complete" : isSkippedWeek ? "al_skipped" : inProgressWeek ? "al_current" : "",
         }
     });
 

@@ -2140,13 +2140,13 @@ ul.standardPlans {
         }
 
         &::after {
-            background-color: #00a4b6;
+            background-color: #07db86;
             width: 0%;
         }
 
         &.al_current {
             i {
-                background-color: #00a4b6;
+                background-color: #07db86;
             }
         }
 
@@ -2157,13 +2157,13 @@ ul.standardPlans {
             }
 
             i {
-                color: #00a4b6;
+                color: #07db86;
             }
         }
 
         &.al_skipped {
             &::before {
-                background-color: #00a4b6;
+                background-color: #07db86;
                 width: 80%;
             }
 

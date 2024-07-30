@@ -33,10 +33,9 @@ export const fetchChatStream = async (payload, prevChatHistory) => {
 
     let updatedHistory = [...prevChatHistory];
     const data = {
-        id: '1234-9876-54321',
         message: payload || "",
     };
-    const apiUrl = 'http://192.168.7.214:3000/educational_bot';
+    const apiUrl = 'https://dev.api.helloalfred.ai/education_bot_home';
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -90,7 +89,7 @@ function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
     }
     try {
         const response = yield call(callAPI, {
-            url: '/educational_bot',
+            url: 'https://dev.api.helloalfred.ai/educational_bot',
             method: 'POST',
             data: reqObj,
             contentType: 'application/json',
@@ -127,7 +126,7 @@ function* getEducationalBotChatStream(action) {
         if (inputValue && innerBot)
             yield call(fetchInnerEducationalBotResponse, inputValue, prevChatHistory)
         else
-            yield call(fetchChatStream, inputValue, prevChatHistory);
+            yield call(fetchChatStream, action?.payload, prevChatHistory);
 
     } catch (error) {
         console.error('Error in getEducationalBotChatStream saga:', error);

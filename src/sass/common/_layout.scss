@@ -112,6 +112,18 @@ ol li {
     }
 }
 
+.al_hubpreviw {
+    >div{
+        &:nth-of-type(even) {
+            .al_cardview {
+                .row {
+                    flex-direction: row-reverse;
+                }
+            }
+        }
+    }
+}
+
 .al_mainLoading {
     height: 100%;
     width: 100%;

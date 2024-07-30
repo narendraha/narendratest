@@ -30,7 +30,7 @@ export const HealthHubOverview = () => {
                             <tbody>
                                 <tr>
                                     <td className="w-25">Week 1</td>
-                                    <td><strong>General Knowledge</strong>
+                                    <td><strong>General content about Atrial Fibrilliation</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -40,7 +40,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 2</td>
-                                    <td><strong>Antiarrhythmic Knowledge</strong>
+                                    <td><strong>Anti medication(Rythm Control)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -50,7 +50,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 3</td>
-                                    <td><strong>Ablation Knowledge</strong>
+                                    <td><strong>Information about Ablation(Rythm Control)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -59,7 +59,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 4</td>
-                                    <td><strong>Blood thinners</strong>
+                                    <td><strong>Blood Thinners(Stroke Prevention)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -69,7 +69,17 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 5</td>
-                                    <td><strong>Left atrial appendage</strong>
+                                    <td><strong>Left Atrial Appendage(Occlusion)</strong>
+                                        <ol type="1" className="mb-0">
+                                            <li className="mb-1">Introduction</li>
+                                            <li className="mb-1">Content</li>
+                                            <li className="mb-1">Videos</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 6</td>
+                                    <td><strong>Lifestyle</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>

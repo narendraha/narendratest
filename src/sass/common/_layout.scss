@@ -113,7 +113,7 @@ ol li {
 }
 
 .al_hubpreviw {
-    >div{
+    >div {
         &:nth-of-type(even) {
             .al_cardview {
                 .row {
@@ -2142,6 +2142,18 @@ ul.standardPlans {
                 color: #00a4b6;
             }
         }
+
+        &.al_skipped {
+            &::before {
+                background-color: #00a4b6;
+                width: 80%;
+            }
+
+            i {
+                color: #ffa93a;
+            }
+        }
+
     }
 }
 

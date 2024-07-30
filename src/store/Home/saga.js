@@ -1,7 +1,7 @@
 import moment from "moment";
 import { toast } from "react-toastify";
 import { call, put, takeLeading } from 'redux-saga/effects';
-import { callAPI, getActivetab } from "../../_mock/internalJsControl";
+import { callAPI, getActivetab, getWeekoptions } from "../../_mock/internalJsControl";
 import {
     addSymptomsDetailRequest,
     addSymptomsDetailResponse,
@@ -319,9 +319,10 @@ function* getHealthHubProgress() {
         "week5": false
     };
 
-    let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === "none" ? 'skip' : '')?.filter((y) => y !== "")?.length());
-
-    yield put(getHealthHubProgressResponse(healthHubProgressDetails))
+    let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === "none" ? 'skip' : '')?.filter((y) => y !== "")?.length);
+    let selectedWeekOption = getWeekoptions[getLastSelectedWeekIndex - 1];
+    yield put(setSelectedHealthHubWeekValues(selectedWeekOption));
+    yield put(getHealthHubProgressResponse(healthHubProgressDetails));
 }
 
 function* watchHomePageSaga() {

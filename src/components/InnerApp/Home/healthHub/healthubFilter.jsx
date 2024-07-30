@@ -2,17 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
-import { getActionTypes, getWeekValue } from '../../../../_mock/helperIndex';
+import { getActionTypes, getWeekoptions } from '../../../../_mock/helperIndex';
 import { getHealthHubProgressRequest, setSelectedHealthHubWeekValues } from '../../../../store/Home/slice';
 import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunction/slice';
 
-const weekoptions = [
-    { value: "week1", label: "Week 1" },
-    { value: "week2", label: "Week 2" },
-    { value: "week3", label: "Week 3" },
-    { value: "week4", label: "Week 4" },
-    { value: "week5", label: "Week 5" }
-];
+const weekoptions = getWeekoptions;
 
 const horizontalLabels = [
     { label: "Knowledge", value: 0 },
@@ -27,12 +21,17 @@ const HealthubFilter = () => {
 
     const { selectedHealthHubWeek, healthHubProgressDetails } = useSelector((state) => state?.homePageSlice);
 
-    let weekOptionsWithDiabledKey = weekoptions?.map((x) => ({
-        ...x,
-        isDisabled: !healthHubProgressDetails?.[x.value],
-        icon: healthHubProgressDetails?.[x.value] ? "icon_alfred_circle_check_solid" : "icon_alfred_circle_xmark_solid",
-        class: healthHubProgressDetails?.[x.value] ? "al_complete" : "al_not_complete"
-    }));
+    let weekOptionsWithDiabledKey = weekoptions?.map((x) => {
+        let value = healthHubProgressDetails?.[x.value];
+        let isSkippedWeek = value === "none";
+        let isCompletedWeek = value === true
+        return {
+            ...x,
+            isDisabled: !healthHubProgressDetails?.[x.value],
+            icon: isCompletedWeek ? "icon_alfred_circle_check_solid " : isSkippedWeek ? "icon_alfred_circle_xmark_solid" : "",
+            class: isCompletedWeek ? "al_complete" : isSkippedWeek ? "al_skipped" : "",
+        }
+    });
 
     useEffect(() => {
         dispatch(getHealthHubProgressRequest())

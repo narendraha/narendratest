@@ -74,6 +74,15 @@ export const getWeekValue = {
     WEEKSIX: "week6"
 }
 
+// WEEK OPTIONS
+export const getWeekoptions = [
+    { value: "week1", label: "Week 1" },
+    { value: "week2", label: "Week 2" },
+    { value: "week3", label: "Week 3" },
+    { value: "week4", label: "Week 4" },
+    { value: "week5", label: "Week 5" }
+];
+
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {
     breathnessda: "Breathlessness during Physical activity",

@@ -8,6 +8,7 @@ const initialState = {
     getVitalsForHealthDetailGraph: "",
     symptomsData: "",
     lastUpdatedSymptomsDetails: "",
+    selectedHealthHubWeek: ""
 }
 
 const homePageSlice = createSlice({
@@ -43,6 +44,13 @@ const homePageSlice = createSlice({
         getSymptomsDetailsLastUpdateRequest: () => { },
         getSymptomsDetailsLastUpdateResponse: (state, action) => {
             state.lastUpdatedSymptomsDetails = action?.payload
+        },
+        setSelectedHealthHubWeekValues: (state, action) => {
+            state.selectedHealthHubWeek = action?.payload
+        },
+        getHealthHubProgressRequest: () => { },
+        getHealthHubProgressResponse: (state, action) => {
+            state.healthHubProgressDetails = action?.payload
         }
     }
 });
@@ -59,6 +67,8 @@ export const {
     updateHealthDetailsRequest, updateHealthDetailsResponse,
     getHealthDetailsGraphRequest, getHealthDetailsGraphResponse,
     getSymptomsDetailsLastUpdateRequest, getSymptomsDetailsLastUpdateResponse,
+    setSelectedHealthHubWeekValues,
+    getHealthHubProgressRequest, getHealthHubProgressResponse
 
 } = actions;
 

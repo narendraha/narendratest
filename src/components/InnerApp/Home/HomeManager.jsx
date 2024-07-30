@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
-import { getActionTypes, getActivetab, pageTitle } from "../../../_mock/internalJsControl";
+import { getActivetab, pageTitle } from "../../../_mock/internalJsControl";
 import { getActiveTabRequest, setActiveTabRequest } from "../../../store/Home/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
-import { ExpertMonitoring } from './expertMonitoring';
-import ExpertMonitoringLastUpdateView from "./expertMonitoringlastUpdateView";
-import { HealthHub } from "./healthHub";
-import { HealthHubOverview } from "./healthHubOverview";
-import { LifeStyleGoal } from "./lifeStyleGoal";
+import { ExpertMonitoring } from './expertMonitoring/expertMonitoring';
+import HealthHubManager from "./healthHub/healthHubManager";
+import { LifeStyleGoal } from "./lifeStyleGoal/lifeStyleGoal";
 import { RiskOptimization } from "./riskOptimization";
-import SymptomsListView from "./symptomsLastUpdatedView";
-import { SymptomsListForm } from "./symptomsListForm";
+import SymptomsListManager from "./symtomsList/symptomsListManager";
 
 let navItemsList = [
   { key: getActivetab.HEALTHHUB, navLink: "Health Hub" },
@@ -24,7 +21,7 @@ let navItemsList = [
 export default function HomeManager() {
   const dispatch = useDispatch();
 
-  const { getProfileDetails, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
+  const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
   const { activeTab, isNavRedirection } = useSelector((state) => state?.homePageSlice);
 
   useEffect(() => {
@@ -78,18 +75,15 @@ export default function HomeManager() {
               <TabContent activeTab={activeTab}>
 
                 <TabPane tabId={getActivetab.HEALTHHUB}>
-                  {activeTab === getActivetab.HEALTHHUB && <HealthHub />}
-                  {activeTab === getActivetab.HEALTHHUB && actionType === getActionTypes.SELECT && <HealthHubOverview />}
+                  {activeTab === getActivetab.HEALTHHUB && <HealthHubManager />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.EXPTMONITORING}>
                   {activeTab === getActivetab.EXPTMONITORING && <ExpertMonitoring />}
-                  {(activeTab === getActivetab.EXPTMONITORING && actionType === getActionTypes.SELECT) ? <ExpertMonitoringLastUpdateView /> : ""}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.SYMPTOMSLIST}>
-                  {activeTab === getActivetab.SYMPTOMSLIST && <SymptomsListForm />}
-                  {(activeTab === getActivetab.SYMPTOMSLIST && actionType === getActionTypes.SELECT) ? <SymptomsListView /> : ""}
+                  {activeTab === getActivetab.SYMPTOMSLIST && <SymptomsListManager />}
                 </TabPane>
 
                 <TabPane tabId={getActivetab.LIFEGOAL}>

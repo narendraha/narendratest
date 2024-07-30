@@ -64,6 +64,15 @@ export const getRole = {
     PHYSICIAN: 'doctor'
 }
 
+// Healthhub weeks 
+export const getWeekValue = {
+    WEEKONE: "week1",
+    WEEKTWO: "week2",
+    WEEKTHREE: "week3",
+    WEEKFOUR: "week4",
+    WEEKFIVE: "week5",
+    WEEKSIX: "week6"
+}
 
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {

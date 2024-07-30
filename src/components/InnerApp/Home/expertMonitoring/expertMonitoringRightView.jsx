@@ -6,8 +6,8 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
-import nodata from '../../../images/nodata.svg';
-import { getHealthDetailsGraphRequest } from "../../../store/Home/slice";
+import nodata from '../../../../images/nodata.svg';
+import { getHealthDetailsGraphRequest } from "../../../../store/Home/slice";
 
 export const ExpertMonitoringRightView = () => {
     const dispatch = useDispatch();

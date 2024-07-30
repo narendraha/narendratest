@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Label, Row, Table } from "reactstrap";
-import { getActivetab } from "../../../_mock/internalJsControl";
-import { setActiveTabRequest } from "../../../store/Home/slice";
+import { getActivetab } from "../../../../_mock/internalJsControl";
+import { setActiveTabRequest } from "../../../../store/Home/slice";
 import LifeStyleGoalTabs from "./lifeStyleGoalTabs";
 
 export const getGoalTimePeriod = {

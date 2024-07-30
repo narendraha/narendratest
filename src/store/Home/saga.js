@@ -11,18 +11,21 @@ import {
     getHealthDetailsGraphResponse,
     getHealthDetailsLastUpdateRequest,
     getHealthDetailsLastUpdateResponse,
+    getHealthHubProgressRequest,
+    getHealthHubProgressResponse,
     getSymptomsDetailsLastUpdateRequest,
     getSymptomsDetailsLastUpdateResponse,
     getSymptomsDetailsRequest,
     getSymptomsDetailsResponse,
     setActiveTabRequest,
     setActiveTabResponse,
+    setSelectedHealthHubWeekValues,
     updateHealthDetailsRequest,
     updateHealthDetailsResponse
 } from "./slice";
 
 import { setLoading } from "../UtilityCallFunction/slice";
-import store from '../store'
+import store from '../store';
 
 // TO SET ACTIVE TAB
 function* setHomeActiveTab(action) {
@@ -287,6 +290,40 @@ function* getSymptomsDetailsLast() {
     store.dispatch(setLoading(false))
 }
 
+// TO GET HEALTH HUB PROGRESS
+function* getHealthHubProgress() {
+    let healthHubProgressDetails = "";
+    // try {
+    //     const response = yield call(callAPI, {
+    //         url: '/latest-symptoms-record-date',
+    //         method: 'GET',
+    //         data: null,
+    //         contentType: 'application/json',
+    //     });
+    //     if (response?.status && response?.statuscode === 200)
+    //         healthHubProgressDetails = response?.data
+    //     else {
+    //         toast(response?.message, {
+    //             position: "top-right",
+    //             type: "error",
+    //         });
+    //     }
+    // } catch (error) {
+    // }
+
+    healthHubProgressDetails = {
+        "week1": true,
+        "week2": "none",
+        "week3": true,
+        "week4": false,
+        "week5": false
+    };
+
+    let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === "none" ? 'skip' : '')?.filter((y) => y !== "")?.length());
+
+    yield put(getHealthHubProgressResponse(healthHubProgressDetails))
+}
+
 function* watchHomePageSaga() {
     yield takeLeading(getSymptomsDetailsLastUpdateRequest.type, getSymptomsDetailsLast)
     yield takeLeading(getSymptomsDetailsRequest.type, getSymptomsDetails)
@@ -296,6 +333,7 @@ function* watchHomePageSaga() {
     yield takeLeading(getActiveTabRequest.type, getActiveTabData)
     yield takeLeading(setActiveTabRequest.type, setHomeActiveTab)
     yield takeLeading(addSymptomsDetailRequest.type, addSymptomsData)
+    yield takeLeading(getHealthHubProgressRequest.type, getHealthHubProgress)
 }
 
 export default watchHomePageSaga;

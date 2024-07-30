@@ -31,7 +31,7 @@ export default function Signin({ setIsAuthenticated }) {
     setShowPassword(!showPassword);
   };
   const handleSubmit = (values) => {
-    dispatch(loginForm({ actionData: values }));
+    dispatch(loginForm({ actionData: values, navigate }));
     if (isAuthenticated) {
       setIsAuthenticated(true);
     }

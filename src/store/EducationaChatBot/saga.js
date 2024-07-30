@@ -36,7 +36,7 @@ export const fetchChatStream = async (payload, prevChatHistory) => {
         id: '1234-9876-54321',
         message: payload || "",
     };
-    const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
+    const apiUrl = 'http://192.168.7.214:3000/educational_bot';
     const headers = {
         'Content-Type': 'application/json',
     };

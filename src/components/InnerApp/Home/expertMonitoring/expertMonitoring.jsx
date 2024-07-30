@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from 'reactstrap';
-import { getActionTypes } from "../../../_mock/helperIndex";
-import bulb from "../../../images/idea.png";
-import { getHealthDetailsLastUpdateRequest } from "../../../store/Home/slice";
-import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
+import { Col, Row, UncontrolledTooltip } from 'reactstrap';
+import { getActionTypes } from "../../../../_mock/helperIndex";
+import bulb from "../../../../images/idea.png";
+import { getHealthDetailsLastUpdateRequest } from "../../../../store/Home/slice";
+import { setActionTypeAndActionData } from "../../../../store/UtilityCallFunction/slice";
 import { ExpertMonitoringLeftView } from "./expertMonitoringLeftView";
 import { ExpertMonitoringRightView } from "./expertMonitoringRightView";
-import { UncontrolledTooltip } from "reactstrap";
+import ExpertMonitoringLastUpdateView from "./expertMonitoringlastUpdateView";
 
 export const ExpertMonitoring = () => {
     const dispatch = useDispatch();
 
     const { lastUpdatedHealthDetails } = useSelector((state) => state?.homePageSlice);
+    const { actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
 
     useEffect(() => {
         dispatch(getHealthDetailsLastUpdateRequest())
@@ -55,6 +56,7 @@ export const ExpertMonitoring = () => {
                     <ExpertMonitoringRightView />
                 </Col>
             </Row>
+            {actionType === getActionTypes.SELECT && <ExpertMonitoringLastUpdateView />}
         </React.Fragment>
     )
 }

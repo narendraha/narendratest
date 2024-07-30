@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
 import { Form, Formik } from "formik";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
-import { getActionTypes, getActivetab } from "../../../_mock/helperIndex";
-import bulb from "../../../images/idea.png";
-import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, setActiveTabRequest, getSymptomsDetailsRequest } from "../../../store/Home/slice";
-import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
+import { getActionTypes, getActivetab } from "../../../../_mock/helperIndex";
+import bulb from "../../../../images/idea.png";
+import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, getSymptomsDetailsRequest, setActiveTabRequest } from "../../../../store/Home/slice";
+import { setActionTypeAndActionData, setConfirmationOpen } from "../../../../store/UtilityCallFunction/slice";
 
 const horizontalLabels = {
     0: "None",

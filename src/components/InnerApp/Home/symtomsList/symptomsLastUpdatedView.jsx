@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalBody, Table } from "reactstrap";
-import { getActionTypes } from '../../../_mock/helperIndex';
-import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import { getActionTypes } from '../../../../_mock/helperIndex';
+import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunction/slice';
 
 const SymptomsLastUpdatedView = () => {
     const dispatch = useDispatch();

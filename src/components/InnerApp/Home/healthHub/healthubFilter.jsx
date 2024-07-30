@@ -1,0 +1,94 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Select from "react-select";
+import { Col, Row, UncontrolledTooltip } from 'reactstrap';
+import { getActionTypes, getWeekValue } from '../../../../_mock/helperIndex';
+import { getHealthHubProgressRequest, setSelectedHealthHubWeekValues } from '../../../../store/Home/slice';
+import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunction/slice';
+
+const weekoptions = [
+    { value: "week1", label: "Week 1" },
+    { value: "week2", label: "Week 2" },
+    { value: "week3", label: "Week 3" },
+    { value: "week4", label: "Week 4" },
+    { value: "week5", label: "Week 5" }
+];
+
+const horizontalLabels = [
+    { label: "Knowledge", value: 0 },
+    { label: "Awareness", value: 25 },
+    { label: "Exposure", value: 50 },
+    { label: "Experience", value: 75 },
+    { label: "Expertise", value: 95 }
+];
+
+const HealthubFilter = () => {
+    const dispatch = useDispatch();
+
+    const { selectedHealthHubWeek, healthHubProgressDetails } = useSelector((state) => state?.homePageSlice);
+
+    let weekOptionsWithDiabledKey = weekoptions?.map((x) => ({
+        ...x,
+        isDisabled: !healthHubProgressDetails?.[x.value],
+        icon: healthHubProgressDetails?.[x.value] ? "icon_alfred_circle_check_solid" : "icon_alfred_circle_xmark_solid",
+        class: healthHubProgressDetails?.[x.value] ? "al_complete" : "al_not_complete"
+    }));
+
+    useEffect(() => {
+        dispatch(getHealthHubProgressRequest())
+    }, [])
+
+    const handleSelect = () => {
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
+    }
+
+    const handleWeekSelection = (e) => {
+        dispatch(setSelectedHealthHubWeekValues(e))
+    }
+
+    return (
+        <React.Fragment>
+            <Row className="align-items-center">
+                <Col className="d-flex align-items-center mb-3">
+                    <div className="w-25">
+                        <Select
+                            options={weekOptionsWithDiabledKey}
+                            name="weeklevel"
+                            className="inputSelect"
+                            value={selectedHealthHubWeek || weekoptions[0] || ""}
+                            onChange={(e) => handleWeekSelection(e)}
+                            isOptionDisabled={(option) => option?.isDisabled}
+                        />
+                    </div>
+                    <i className="icon_alfred_overview al_text_link text-decoration-none pointer mx-3" id="overviewtooltip" style={{ fontSize: "22px" }} onClick={handleSelect}></i>
+                    <UncontrolledTooltip
+                        modifiers={[{
+                            preventOverflow: {
+                                boundariesElement: "window",
+                            },
+                        }]}
+                        placement="right"
+                        trigger='hover'
+                        target="overviewtooltip"
+                    >
+                        Overview
+                    </UncontrolledTooltip>
+                </Col>
+                <Col lg="4" md="6" sm="6">
+                    <Row className="align-items-center">
+                        <span className="w-auto px-0">Progress</span>
+                        <Col className="healthhubprogress px-0">
+                            <ol class="al_progress mb-0">
+                                {horizontalLabels?.map((x, index) => {
+                                    return <li class={weekOptionsWithDiabledKey[index]?.class} title={x?.label}><i className={weekOptionsWithDiabledKey[index]?.icon}></i></li>
+                                })}
+                            </ol>
+                        </Col>
+                    </Row>
+                </Col>
+            </Row >
+        </React.Fragment >
+    )
+}
+
+export default HealthubFilter

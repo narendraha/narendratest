@@ -228,7 +228,8 @@ function* updateForgotPassword({ payload }) {
 
 function* loginReducer({ payload }) {
   // store.dispatch(setLoading(true))
-  yield put(loginForm({ ...payload, isLoading: true }));
+  let { actionData, navigate } = payload
+  yield put(loginForm({ ...actionData, isLoading: true }));
 
   let response;
   try {
@@ -236,8 +237,8 @@ function* loginReducer({ payload }) {
       url: "/login_account",
       method: "POST",
       data: {
-        username: payload?.actionData?.username,
-        password: payload?.actionData?.password,
+        username: actionData?.username,
+        password: actionData?.password,
       },
       contentType: "application/json",
     });
@@ -246,13 +247,14 @@ function* loginReducer({ payload }) {
         position: "top-right",
         type: "error",
       });
-      yield put(loginForm({ ...payload, isLoading: false }));
+      yield put(loginForm({ ...actionData, isLoading: false }));
+      navigate("/home")
     } else {
       toast(response?.message, {
         position: "top-right",
         type: "success",
       });
-      yield put(loginForm({ ...payload, isAuthenticated: true, actionData: null, activeForm: "/home", isLoading: false }));
+      yield put(loginForm({ ...actionData, isAuthenticated: true, actionData: null, activeForm: "/home", isLoading: false }));
       localStorage.setItem("token", response.data?.token);
     }
   } catch (error) {
@@ -260,7 +262,7 @@ function* loginReducer({ payload }) {
       position: "top-right",
       type: "error",
     });
-    yield put(loginForm({ ...payload, isLoading: false }));
+    yield put(loginForm({ ...actionData, isLoading: false }));
   }
 }
 

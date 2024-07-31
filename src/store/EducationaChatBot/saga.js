@@ -35,7 +35,7 @@ export const fetchChatStream = async (payload, prevChatHistory) => {
     const data = {
         message: payload || "",
     };
-    const apiUrl = 'https://dev.api.helloalfred.ai/education_bot_home';
+    const apiUrl = 'https://api.stream.helloalfred.ai/education_bot_home';
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -89,14 +89,14 @@ function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
     }
     try {
         const response = yield call(callAPI, {
-            url: 'https://dev.api.helloalfred.ai/educational_bot',
+            url: 'https://api.stream.helloalfred.ai/educational_bot',
             method: 'POST',
             data: reqObj,
             contentType: 'application/json',
         });
         console.log("fetchInnerEducationalBotResponse=>", response)
         if (response?.status && response?.statuscode === 200) {
-            updatedHistory = [...updatedHistory, { content: response?.data, role: 'Alfred' }];
+            updatedHistory = [...updatedHistory, { content: response?.data?.alfred, role: 'Alfred' }];
             store.dispatch(getChatStreamResponse(updatedHistory));
         } else if (response.statuscode === 500) {
             updatedHistory = [...updatedHistory, { content: "Sorry Unable to reach server at that moment can you please try again!", role: 'Alfred' }];

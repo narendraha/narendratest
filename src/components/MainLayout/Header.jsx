@@ -135,24 +135,24 @@ export default function Header({ logoSrc, variant }) {
                     {homemenuData.map((menu, index) => {
                       return <React.Fragment key={index}>
                         <li className={menu.subModules?.length > 0 ? 'menu-item-has-children' : ''}>
-                          <Link to={menu.link} className={(location.pathname === '/' + menu.link ? 'active' : '')}>{menu.name}</Link>
+                          <Link to={menu.link} className={(location.pathname === '/' + menu.link ? 'active' : '')} onClick={() => setMobileToggle(!mobileToggle)}>{menu.name}</Link>
                           {menu.subModules?.length > 0 &&
                             <DropDown>
                               <ul>
                                 {menu.subModules.map((submenu, index) => {
                                   return <li key={index}>
-                                    {!submenu.innerModules && <Link to={submenu.link} className={(location.pathname === '/' + submenu.link ? 'active' : '')}>{submenu.name}</Link>}
+                                    {!submenu.innerModules && <Link to={submenu.link} onClick={() => setMobileToggle(!mobileToggle)} className={(location.pathname === '/' + submenu.link ? 'active' : '')}>{submenu.name}</Link>}
                                     {submenu.innerModules?.length > 0 && <>
                                       <div className='cs_nav_innersubmenu'>{submenu.name}</div>
                                       <div className='px-2'>
                                         {submenu.innerModules?.map((innermenu, index) => {
                                           return <React.Fragment key={index}>
-                                            {!innermenu.innersubModules && <Link to={innermenu.link} className={(location.pathname === '/' + innermenu.link ? 'active' : '')} key={index}>{innermenu.name}</Link>}
+                                            {!innermenu.innersubModules && <Link to={innermenu.link} onClick={() => setMobileToggle(!mobileToggle)} className={(location.pathname === '/' + innermenu.link ? 'active' : '')} key={index}>{innermenu.name}</Link>}
                                             {innermenu.innersubModules?.length > 0 && <>
                                               <div className='cs_nav_innersubmenu'>{innermenu.name}</div>
                                               <div className='px-2'>
                                                 {innermenu.innersubModules?.map((innersubmenu, index) => {
-                                                  return <Link to={innersubmenu.link} key={index} className={(location.pathname === '/' + innersubmenu.link ? 'active' : '')}>{innersubmenu.name}</Link>
+                                                  return <Link to={innersubmenu.link} key={index} onClick={() => setMobileToggle(!mobileToggle)} className={(location.pathname === '/' + innersubmenu.link ? 'active' : '')}>{innersubmenu.name}</Link>
                                                 })}
                                               </div>
                                             </>

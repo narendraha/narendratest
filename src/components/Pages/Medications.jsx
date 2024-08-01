@@ -16,13 +16,13 @@ export default function Medications() {
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>
-          <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+          <h3 className="text-center mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
             Medications
           </h3>
-          <h6 className='w-80'>Studies also have shown that if you do not have symptoms but have risk factors such as age older than 65, high blood pressure, diabetes, congestive heart failure, prior stroke can still benefit from rhythm control.</h6>
-          <p className='mb-5'>Anti-arrhythmic medications that suppress the atrial fibrillation from happening</p>
-          <Row className='mb-5'>
-            <Col lg="5" md="6">
+          <h6 className='w-80 mx-auto text-center'>Studies also have shown that if you do not have symptoms but have risk factors such as age older than 65, high blood pressure, diabetes, congestive heart failure, prior stroke can still benefit from rhythm control.</h6>
+          <p className='mb-5 text-center'>Anti-arrhythmic medications that suppress the atrial fibrillation from happening</p>
+          <Row className='mb-5 w-80 mx-auto'>
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>
@@ -34,7 +34,7 @@ export default function Medications() {
                 </CardBody>
               </Card>
             </Col>
-            <Col lg="5" md="6">
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>

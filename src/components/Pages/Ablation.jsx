@@ -28,13 +28,13 @@ export default function Ablation() {
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>
-          <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
             Ablation
           </h3>
-          <h6 className='w-80'>If you have symptoms and effecting quality of life or if you don’t have symptoms but have risk factors, then we recommend rhythm control</h6>
-          <p className='mb-5'>Ablation- freezing or cauterization of the electrical connections around the veins.</p>
-          <Row className='mb-5'>
-            <Col lg="5" md="6">
+          <h6 className='w-80 mx-auto text-center'>If you have symptoms and effecting quality of life or if you don’t have symptoms but have risk factors, then we recommend rhythm control</h6>
+          <p className='mb-5 text-center'>Ablation- freezing or cauterization of the electrical connections around the veins.</p>
+          <Row className='mb-5 w-80 mx-auto'>
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>
@@ -46,7 +46,7 @@ export default function Ablation() {
                 </CardBody>
               </Card>
             </Col>
-            <Col lg="5" md="6">
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>
@@ -59,8 +59,8 @@ export default function Ablation() {
               </Card>
             </Col>
           </Row>
-          <Row className='mb-5'>
-            <Col lg="5" md="6">
+          <Row className='mb-5 w-80 mx-auto'>
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>
@@ -72,7 +72,7 @@ export default function Ablation() {
                 </CardBody>
               </Card>
             </Col>
-            <Col lg="5" md="6">
+            <Col md="6">
               <Card className='greycardbg'>
                 <CardBody>
                   <Row>

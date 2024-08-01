@@ -12,7 +12,7 @@ export default function ContactInfoWidget() {
       </li> */}
       <li className='me-4'>
         <Icon icon="fluent:call-24-regular" />
-        971-335-2875
+        +1 971-335-2875
       </li>
       <li className='me-4'>
         <Icon icon="bi:envelope" />

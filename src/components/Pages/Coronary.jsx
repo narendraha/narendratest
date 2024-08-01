@@ -23,7 +23,7 @@ export default function Coronary() {
     <>
       <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
-        imgUrl={assetUrl?.["coronarybg"]}
+        imgUrl={coronary}
         title="Don’t Let Your Health<br/>Take a Backseat!"
         subTitle="Consider appropriate testing and evaluations"
       />
@@ -38,7 +38,7 @@ export default function Coronary() {
               <p>Your health care provider will assess these risks, and consider appropriate testing and evaluations.</p>
             </Col>
             <div className='w-auto ps-5'>
-              <img src={coronary} alt="coronary" width={330} />
+              <img src={assetUrl?.["coronarybg"]} alt="coronary" width={330} />
             </div>
           </Row>
         </div>

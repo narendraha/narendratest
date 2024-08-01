@@ -245,7 +245,7 @@ export default function Header({ logoSrc, variant }) {
           <Spacing md="35" lg="50" xl="35" />
           <IconBoxStyle11
             title="Phone"
-            subTitle="971-335-2875"
+            subTitle="+1 971-335-2875"
             iconSrc="/images/contact/icon_1.svg"
           />
           <Spacing md="30" lg="30" xl="30" />

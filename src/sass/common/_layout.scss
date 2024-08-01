@@ -124,6 +124,13 @@ ol li {
             width: 100%;
         }
     }
+    >div:nth-of-type(even) {
+        .al_cardview {
+            .row {
+                flex-direction: row-reverse;
+            }
+        }
+    }
 }
 
 .al_mainLoading {
@@ -1945,7 +1952,7 @@ ul.standardPlans {
     }
 
     .al_greyborderbutton {
-        border: 1px solid #e0e0ff;
+        border: 1px solid #c8c8ff;
         border-radius: 10px !important;
         padding: 5px 8px !important;
         text-align: center;
@@ -1955,7 +1962,7 @@ ul.standardPlans {
         background-color: transparent;
 
         &:hover {
-            background-color: #2C2C37;
+            background-color: #ff7a7a;
             color: #ffffff;
         }
     }

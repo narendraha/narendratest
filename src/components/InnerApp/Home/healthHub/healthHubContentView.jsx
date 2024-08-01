@@ -273,7 +273,7 @@ export const WeekTwoData = () => {
         <>
             <Row className="align-items-center">
                 <Col>
-                    <h6 className="mb-0 fw-semibold">Anti medication(Rythm Control)</h6>
+                    <h6 className="mb-0 fw-semibold">Antiarrhythmic medication(Rythm Control)</h6>
                     <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                 </Col>
             </Row>

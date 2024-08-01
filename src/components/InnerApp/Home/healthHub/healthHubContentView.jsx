@@ -198,7 +198,7 @@ export const WeekOneData = () => {
                                             onClickHandler={goToIndex}
                                         />
                                         {slides}
-                                        <CarouselControl
+                                        {/* <CarouselControl
                                             direction="prev"
                                             directionText=""
                                             onClickHandler={previous}
@@ -207,7 +207,7 @@ export const WeekOneData = () => {
                                             direction="next"
                                             directionText=""
                                             onClickHandler={next}
-                                        />
+                                        /> */}
                                     </Carousel>
                                 </Col>
                                 <Col sm="7">
@@ -300,7 +300,7 @@ export const WeekTwoData = () => {
                                             onClickHandler={goToIndex}
                                         />
                                         {slides}
-                                        <CarouselControl
+                                        {/* <CarouselControl
                                             direction="prev"
                                             directionText=""
                                             onClickHandler={previous}
@@ -309,7 +309,7 @@ export const WeekTwoData = () => {
                                             direction="next"
                                             directionText=""
                                             onClickHandler={next}
-                                        />
+                                        /> */}
                                     </Carousel>
                                 </Col>
                                 <Col sm="7">

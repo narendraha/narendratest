@@ -79,7 +79,7 @@ const HealthubFilter = () => {
                 </Col>
                 <Col lg="4" md="6" sm="6">
                     <Row className="align-items-center">
-                        <span className="w-auto px-0">Progress</span>
+                        <span className="w-auto pe-0">Progress</span>
                         <Col className="healthhubprogress px-0">
                             <ol className="al_progress mb-0">
                                 {horizontalLabels?.map((x, index) => {

@@ -114,9 +114,6 @@ export const WeekOneData = () => {
                     <h6 className="mb-0 fw-semibold">General content about Atrial Fibrilliation</h6>
                     <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                 </Col>
-                <div className="w-auto px-4">
-                    <div className="al_text_link fw-medium">Skip</div>
-                </div>
             </Row>
             <Row className='al_hubpreviw'>
                 <Col sm="12" className='mb-3'>
@@ -279,9 +276,6 @@ export const WeekTwoData = () => {
                     <h6 className="mb-0 fw-semibold">Anti medication(Rythm Control)</h6>
                     <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                 </Col>
-                <div className="w-auto px-4">
-                    <div className="al_text_link fw-medium">Skip</div>
-                </div>
             </Row>
             <Row className='al_hubpreviw'>
                 <Col sm="12" className='mb-3'>
@@ -399,9 +393,6 @@ export const WeekThreeData = () => {
                     <h6 className="mb-0 fw-semibold">Information about Ablation(Rythm Control)</h6>
                     <div className="fw-normal lh-normal text-small text-grey mb-3">Understanding Atrial Fibrillation (Afib)</div>
                 </Col>
-                <div className="w-auto px-4">
-                    <div className="al_text_link fw-medium">Skip</div>
-                </div>
             </Row>
             <Row className='al_hubpreviw'>
                 <Col sm="12" className='mb-3'>

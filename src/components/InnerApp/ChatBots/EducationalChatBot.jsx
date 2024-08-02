@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
 import { getProfilePictureByGender } from '../../../_mock/helperIndex';
 import Chatbot from "../../../images/alfredicon.svg";
-import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest } from "../../../store/EducationaChatBot/slice";
+import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest, setResetPendingEducationalBotRequest } from "../../../store/EducationaChatBot/slice";
 import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
 import ChatBotMsgInterface from '../../Utilities/ChatBotMsgInterface';
 import ChatBotSearchArea from '../../Utilities/ChatBotSearchArea';
@@ -17,6 +17,9 @@ const EducationalChatBot2 = (props) => {
 
     useEffect(() => {
         dispatch(getPatientDetailsRequest())
+        return () => {
+            dispatch(setResetPendingEducationalBotRequest())
+        }
     }, []);
 
     const handleFormSubmit = (e) => {
@@ -72,7 +75,7 @@ const EducationalChatBot2 = (props) => {
                                     </Col>
                                 </Row>
                                 {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                    return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index, profilePicture }} />
+                                    return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index, profilePicture, getProfileDetails }} />
                                 })}
                                 {isChatBotLoading &&
                                     <Row className="mb-4 al_chatcontent al_bot-reply">

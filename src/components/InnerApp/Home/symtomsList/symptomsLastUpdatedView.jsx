@@ -7,11 +7,11 @@ import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunctio
 const SymptomsLastUpdatedView = () => {
     const dispatch = useDispatch();
 
-    const { lastUpdatedHealthDetails, symptomsData } = useSelector((state) => state?.homePageSlice);
+    const { symptomsData } = useSelector((state) => state?.homePageSlice);
 
     const formatedData = Object.keys(symptomsData).reduce((acc, symptom) => {
         const { severity, frequency, quality_of_life } = symptomsData[symptom];
-        if (severity || frequency || quality_of_life) { 
+        if (severity || frequency || quality_of_life) {
             acc.push({
                 symptom: symptom,
                 frequency: frequency,
@@ -29,7 +29,7 @@ const SymptomsLastUpdatedView = () => {
         <React.Fragment>
             <Modal className='modal-md detailsModal' isOpen={symptomsData} wrapClassName="al_outerparentwp">
                 <div className='d-flex align-items-center justify-content-between p-4'>
-                    <h6 className='mb-0'>Last Updated Symptoms (18-06-2024)</h6>
+                    <h6 className='mb-0'>Last Updated Symptoms</h6>
                     <i className="icon_alfred_close pointer" title="Close" onClick={handleClose}></i>
                 </div>
                 <ModalBody className="wflexLayout p-0">

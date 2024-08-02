@@ -20,6 +20,7 @@ import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
 import Terms from "./components/Auth/Registeration/Terms&Confition";
 import Signin from "./components/Auth/Signin/SignIn";
 import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
+import PatientAndDoctorRegistration from "./components/Auth/Registeration/PatientAndDoctorRegistration"
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -144,12 +145,14 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="terms" element={<Terms />} />
               <Route path="privacypolicy" element={<PrivacyPolicy />} />
               <Route path="registration-info" element={<RegisterInfo />} />
-              <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} />
+              {/* <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} /> */}
+              <Route path="patient/registration" element={<PatientAndDoctorRegistration />} />
               <Route path="patient/OTP" element={<OTPComponent />} />
               <Route path="passwordReset" element={<PasswordResetComponent />} />
               <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
               <Route path="subscription" element={<SubscriptionFormComponent />} />
-              <Route path="doctor/registration" element={<DoctorRegister />} />
+              {/* <Route path="doctor/registration" element={<DoctorRegister />} /> */}
+              <Route path="doctor/registration" element={<PatientAndDoctorRegistration />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>

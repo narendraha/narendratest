@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { getRole, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
-import { getFlowForm } from "../../../store/PatientRegisterFlow/slice";
+import { getFlowForm, setRegisterAccountType } from "../../../store/PatientRegisterFlow/slice";
 
 export default function RegisterInfo() {
   pageTitle("Register")
@@ -15,7 +15,7 @@ export default function RegisterInfo() {
   const navigate = useNavigate();
 
   const initialFormSubmitHandle = (e, setFieldValue) => {
-    setFieldValue('accountType', e)
+    setFieldValue('accountType', e);
     dispatch(getFlowForm({ flowForm: e }));
     let navigationWidnow = `/${e === getRole.PATIENT ? 'patient' : 'doctor'}/registration`
     navigate(navigationWidnow)

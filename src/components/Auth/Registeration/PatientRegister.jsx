@@ -97,7 +97,6 @@ export default function RegisterInfo() {
       }) => {
         return (
           <Form className="wflexLayout">
-            {console.log("errorserrors", errors)}
             {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">

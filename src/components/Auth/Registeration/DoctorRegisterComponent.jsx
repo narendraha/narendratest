@@ -20,6 +20,21 @@ import { PhoneNumberCodeAndFlag } from "../../Utilities/PhoneNumberCodeAndFlag";
 import OTPForm from "../OTPForm";
 import SubscriptionForm from "../SubscriptionForm";
 
+let stateOfPractice = [
+  { label: "Cardiology", value: "cardiology" },
+  { label: "Primary Care", value: "primary care" },
+  { label: "Cardio Electrophysiologist", value: "cardio electrophysiologist" },
+  { label: "Structural Cardiology", value: "structural cardiology" },
+  { label: "Others", value: "others" }
+]
+
+let hospitalsOptions = [
+  { label: "Yashoda Hospital", value: "Yashoda Hospital" },
+  { label: "AIG Hopitals", value: "AIG Hopitals" },
+  { label: "Dr. Agrawal Hospital", value: "Dr. Agrawal Hospital" },
+  { label: "L.V. Prasad Hospital", value: "L.V. Prasad Hospital" },
+]
+
 export default function Register() {
   pageTitle("Register | Doctor")
   const navigate = useNavigate();
@@ -76,8 +91,6 @@ export default function Register() {
     label: country.name,
   }));
   useEffect(() => {
-    console.log('formData: ', selectedCountry);
-
     if (selectedCountry) {
       const states = State.getStatesOfCountry(selectedCountry).map((state) => ({
         value: state.isoCode,
@@ -96,6 +109,7 @@ export default function Register() {
         email: formData?.email || "",
         mobile: formData?.mobile || "",
         education: formData?.education || "",
+
         specialization: formData?.specialization || "",
         nationalID: formData?.nationalID || "",
         licenseNo: formData?.licenseNo || "",
@@ -117,12 +131,12 @@ export default function Register() {
           .email("Invalid email")
           .required("Email is required"),
         mobile: Yup.string()
-          .matches(phoneNumberReg, "Invalid phone number")
+          // .matches(phoneNumberReg, "Invalid phone number")
           .required("This field is required"),
         specialization: Yup.string().required("Specialization field is required"),
         nationalID: Yup.string().required("National ID is required"),
         licenseNo: Yup.string().required("License No. is required"),
-        rCode: Yup.string().required("This field is required"),
+        // rCode: Yup.string().required("This field is required"),
         country: Yup.string().required("Country is required"),
         // state: Yup.string().required("State is required"),
         // hospital: Yup.string().required("Hospital is required"),
@@ -259,11 +273,11 @@ export default function Register() {
                           <span className="requiredLabel">*</span>State of Practice
                         </Label>
                         <Select
-                          options={educationOptions}
+                          options={stateOfPractice}
                           name="specialization"
                           className="inputSelect"
                           value={educationOptions.find(
-                            (option) => option.value === values.education
+                            (option) => option.value === values.specialization
                           )}
                           onChange={(selectedOption) => {
                             setFieldValue(
@@ -358,11 +372,11 @@ export default function Register() {
                           Name of the Hospital
                         </Label>
                         <Select
-                          options={educationOptions}
+                          options={hospitalsOptions}
                           name="hospital"
                           className="inputSelect"
-                          value={educationOptions.find(
-                            (option) => option.value === values.education
+                          value={hospitalsOptions.find(
+                            (option) => option.value === values.hospital
                           )}
                           onChange={(selectedOption) => {
                             setFieldValue(
@@ -379,7 +393,7 @@ export default function Register() {
                       </FormGroup>
                       <FormGroup>
                         <Label>
-                          <span className="requiredLabel">*</span>Referral Code
+                          Referral Code
                         </Label>
                         <Field
                           type="text"
@@ -387,11 +401,11 @@ export default function Register() {
                           placeholder="Enter Referral"
                           className="form-control"
                         />
-                        <ErrorMessage
+                        {/* <ErrorMessage
                           name="rCode"
                           component={"div"}
                           className="text-danger"
-                        />
+                        /> */}
                       </FormGroup>
                     </div>
                     <div className="al_login_footer mt-3">
@@ -499,6 +513,7 @@ export default function Register() {
     delete data.reenterpassword;
     delete data.otp;
     delete data.file;
+    // dispatch(getRegisterResponseData({ actionType: updatedActionType, actionData: values, isTerm }));
 
     AxiosInstance("application/json")
       .post(`/create_account`, data)

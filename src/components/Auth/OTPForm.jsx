@@ -46,20 +46,20 @@ export default function RegisterInfo() {
       })
     );
   };
-  const handleBackButton = ()=>{
+  const handleBackButton = () => {
     flowForm === "forgotPassword"
       ? dispatch(
-          getRegisterBackToForm({
-            activeForm: "/forgot-password",
-          })
-        )
+        getRegisterBackToForm({
+          activeForm: "/forgot-password",
+        })
+      )
       : flowForm === "doctor"
-      ? dispatch(
+        ? dispatch(
           getRegisterBackToForm({
             activeForm: "/doctor/registration",
           })
         )
-      : dispatch(
+        : dispatch(
           getRegisterBackToForm({
             activeForm: "/patient/registration",
           })
@@ -145,13 +145,13 @@ export default function RegisterInfo() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                      0,
-                                                      index
-                                                    ) +
-                                                    updatedValue +
-                                                    values.otp.substring(
-                                                      index + 1
-                                                    ),
+                                                    0,
+                                                    index
+                                                  ) +
+                                                  updatedValue +
+                                                  values.otp.substring(
+                                                    index + 1
+                                                  ),
                                             },
                                           });
                                           if (

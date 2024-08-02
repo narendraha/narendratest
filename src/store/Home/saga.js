@@ -362,7 +362,7 @@ function* getVitalDetailsLastUpdate() {
     let lastUpdatedVitalDetails = ""
     try {
         const response = yield call(callAPI, {
-            url: '/',
+            url: '/get-latest-expertmonitoring',
             method: 'GET',
             data: null,
             contentType: 'application/json',

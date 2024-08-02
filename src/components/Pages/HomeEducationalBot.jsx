@@ -5,7 +5,7 @@ import { pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
 import homeright from '../../images/homeright.gif';
-import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest } from "../../store/EducationaChatBot/slice";
+import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest, setResetPendingEducationalBotRequest } from "../../store/EducationaChatBot/slice";
 import { getAssetsRequest } from "../../store/UtilityCallFunction/slice";
 import ChatBotMsgInterface from "../Utilities/ChatBotMsgInterface";
 import ChatBotSearchArea from "../Utilities/ChatBotSearchArea";
@@ -23,8 +23,10 @@ const HomeEducationalBot = () => {
 
     useEffect(() => {
         dispatch(getAssetsRequest(homeleftmobile))
+        return () => {
+            dispatch(setResetPendingEducationalBotRequest())
+        }
     }, []);
-
 
     console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {

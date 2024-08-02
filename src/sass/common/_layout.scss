@@ -60,7 +60,7 @@ ol li {
             border: none;
             margin: 5px 3px 10px;
             min-width: auto;
-            padding: 0;
+            padding: 0 !important;
 
             &.active {
                 background-color: #04C1D6;

@@ -67,7 +67,6 @@ const HealthHubContentView = () => {
                         style={{ height: "200px", objectFit: "cover", width: "100%", marginBottom: "6px" }}
                     />
                 ) : (
-
                     <iframe
                         width="100%"
                         height="200"

@@ -75,13 +75,13 @@ export default function Affaq() {
         subTitle="Your Partner in Health and Wellness"
       />
 
-      <Section>
+      <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto'>
-          <div className='my-5'>
-            <h6 className='text-center'>FAQ’S</h6>
-            <h3 className='text-center'>Alfred addresses Afib-related questions, and shows empathy and understanding, making patients feel assured and building trust in Alfred's personalized Education.</h3>
-            <p className='text-center'>Alfred FAQs serve as awareness guidelines that provide valuable insights into Afib health conditions, treatments, and preventive measures, helping patients make informed decisions. Alfred bridged the information gap between the Afib patients healthcare providers, by addressing the valuable awareness in a very user-friendly approach.</p>
-          </div>
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+            FAQ’S
+          </h3>
+          <h3 className='text-center'>Alfred addresses Afib-related questions, and shows empathy and understanding, making patients feel assured and building trust in Alfred's personalized Education.</h3>
+          <p className='text-center'>Alfred FAQs serve as awareness guidelines that provide valuable insights into Afib health conditions, treatments, and preventive measures, helping patients make informed decisions. Alfred bridged the information gap between the Afib patients healthcare providers, by addressing the valuable awareness in a very user-friendly approach.</p>
           <Accordion variant="cs_style1 cs_type_2" data={faqData} />
 
           <div className='alfaq_footer'>

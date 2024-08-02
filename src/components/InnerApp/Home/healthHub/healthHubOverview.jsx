@@ -40,7 +40,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 2</td>
-                                    <td><strong>Anti medication(Rythm Control)</strong>
+                                    <td><strong>Antiarrhythmic medication(Rhythm Control)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>
@@ -50,7 +50,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 3</td>
-                                    <td><strong>Information about Ablation(Rythm Control)</strong>
+                                    <td><strong>Information about Ablation(Rhythm Control)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>

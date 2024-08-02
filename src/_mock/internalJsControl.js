@@ -80,7 +80,8 @@ export const getWeekoptions = [
     { value: "week2", label: "Week 2" },
     { value: "week3", label: "Week 3" },
     { value: "week4", label: "Week 4" },
-    { value: "week5", label: "Week 5" }
+    { value: "week5", label: "Week 5" },
+    { value: "week6", label: "Week 6" }
 ];
 
 // lifestyle tab Symptoms Keys

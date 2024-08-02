@@ -44,6 +44,7 @@ const HealthubFilter = () => {
 
     const handleWeekSelection = (e) => {
         dispatch(setSelectedHealthHubWeekValues(e))
+        
     }
 
     return (

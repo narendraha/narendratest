@@ -9,7 +9,9 @@ const initialState = {
     symptomsData: "",
     lastUpdatedSymptomsDetails: "",
     selectedHealthHubWeek: "",
-    currentProgressWeek: ""
+    currentProgressWeek: "",
+    healthHubWeeklyContent: "",
+    lastUpdatedVitalDetails: ""
 }
 
 const homePageSlice = createSlice({
@@ -51,9 +53,16 @@ const homePageSlice = createSlice({
         },
         getHealthHubProgressRequest: () => { },
         getHealthHubProgressResponse: (state, action) => {
-            console.log("9999999999999999999", action)
             state.healthHubProgressDetails = action?.payload?.healthHubProgressDetails
             state.currentProgressWeek = action?.payload?.selectedWeekOption
+        },
+        getWeekWiseHealthHubContentRequest: () => { },
+        getWeekWiseHealthHubContentResponse: (state, action) => {
+            state.healthHubWeeklyContent = action?.payload
+        },
+        getVitalDetailsLastUpdateRequest: () => { },
+        getVitalDetailsLastUpdateResponse: (state, action) => {
+            state.lastUpdatedVitalDetails = action?.payload
         }
     }
 });
@@ -71,7 +80,9 @@ export const {
     getHealthDetailsGraphRequest, getHealthDetailsGraphResponse,
     getSymptomsDetailsLastUpdateRequest, getSymptomsDetailsLastUpdateResponse,
     setSelectedHealthHubWeekValues,
-    getHealthHubProgressRequest, getHealthHubProgressResponse
+    getHealthHubProgressRequest, getHealthHubProgressResponse,
+    getWeekWiseHealthHubContentRequest, getWeekWiseHealthHubContentResponse,
+    getVitalDetailsLastUpdateRequest, getVitalDetailsLastUpdateResponse
 
 } = actions;
 

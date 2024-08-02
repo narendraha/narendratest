@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 import { getActionTypes } from "../../../../_mock/helperIndex";
 import bulb from "../../../../images/idea.png";
-import { getHealthDetailsLastUpdateRequest } from "../../../../store/Home/slice";
+import { getHealthDetailsLastUpdateRequest, getVitalDetailsLastUpdateRequest } from "../../../../store/Home/slice";
 import { setActionTypeAndActionData } from "../../../../store/UtilityCallFunction/slice";
 import { ExpertMonitoringLeftView } from "./expertMonitoringLeftView";
 import { ExpertMonitoringRightView } from "./expertMonitoringRightView";
@@ -21,6 +21,7 @@ export const ExpertMonitoring = () => {
 
     const handleSelect = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT, actionData: null }))
+        dispatch(getVitalDetailsLastUpdateRequest())
     }
 
     return (

@@ -12,10 +12,6 @@ const HealthHubManager = () => {
     const { actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
     const { activeTab } = useSelector((state) => state?.homePageSlice);
 
-    // useEffect(() => {
-    //     dispatch(getHealthHubProgressRequest())
-    // }, []);
-
     return (
         <React.Fragment>
             <HealthubFilter />

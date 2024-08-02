@@ -116,7 +116,6 @@ export default function RegisterInfo() {
               <Col lg="5" sm="6" className="al_login-right h-100">
                 <div className="wflexLayout al_mx-auto">
                   <div className="wflex-items-center wflexLayout">
-                    <>
                       <h6 className="mb-2">Personal Details</h6>
                       <div className="al_login-form al_registrationform wflexScroll">
                         <FormGroup>
@@ -404,7 +403,7 @@ export default function RegisterInfo() {
                           </Link>
                         </button>
                       </div>
-                    </>
+                    
                   </div>
                 </div>
               </Col>

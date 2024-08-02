@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Icon } from "@iconify/react";
-import { Country, State } from "country-state-city";
+import { Country, State, City } from "country-state-city";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import moment from "moment"; // Import moment library
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { toast } from "react-toastify";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
 import { passwordReg, phoneNumberReg } from "../../../_mock/RegularExp";
@@ -14,7 +11,6 @@ import { customContentValidation, getEductaionOptions, pageTitle } from "../../.
 import { AxiosInstance } from "../../../_mock/utilities";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
-import successImg from "../../../images/sucessimg.svg";
 import Loading from "../../InnerApp/LoadingComponent";
 import { PhoneNumberCodeAndFlag } from "../../Utilities/PhoneNumberCodeAndFlag";
 import OTPForm from "../OTPForm";
@@ -37,55 +33,12 @@ let hospitalsOptions = [
 
 export default function Register() {
   pageTitle("Register | Doctor")
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
-  const [otpResponse, setOtpResponse] = useState("");
   const educationOptions = getEductaionOptions;
-  const [showPassword, setShowPassword] = useState(false);
-  const [isShowConfirmPassword, setisShowConfirmPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [activeForm, setActiveForm] = useState(1);
   const [formData, setFormData] = useState(null);
-  const [states, setStates] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const {isLoading, activeForm, actionData, flowForm} = useSelector((state)=>state.patientRegisterSlice)
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  const togglePasswordVisibility2 = () => {
-    setisShowConfirmPassword(!isShowConfirmPassword);
-  };
-
-  const resendOtp = (data) => {
-    setIsFormLoading(true);
-    AxiosInstance("application/json")
-      .post(`/generate_otp`, data)
-      .then((res) => {
-        if (res && res.data && res.status === 200) {
-          setIsFormLoading(false);
-          if (res.data.statuscode === 200) {
-            setOtpResponse(res.data?.message);
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "success",
-            });
-            setActiveForm(2); // Switch to the second form after submitting the first form
-          } else {
-            toast(res.data?.message, {
-              position: "top-right",
-              type: "error",
-            });
-          }
-        }
-      })
-      .catch((er) => {
-        toast(er?.response?.data?.message, {
-          position: "top-right",
-          type: "error",
-        });
-      });
-  };
   const countries = Country.getAllCountries().map((country) => ({
     value: country.isoCode,
     label: country.name,
@@ -120,10 +73,6 @@ export default function Register() {
       }}
       validationSchema={Yup.object().shape({
         // Define validation rules for Register form fields
-        // username: Yup.string()
-        //   .min(2, "Too Short!")
-        //   .max(50, "Too Long!")
-        //   .required("User field is required"),
         username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string()
           .trim()
@@ -138,14 +87,12 @@ export default function Register() {
         licenseNo: Yup.string().required("License No. is required"),
         // rCode: Yup.string().required("This field is required"),
         country: Yup.string().required("Country is required"),
-        // state: Yup.string().required("State is required"),
-        // hospital: Yup.string().required("Hospital is required"),
-        education: Yup.string().required("Education is required"),
+        state: Yup.string().required("State is required"),
+        city: Yup.string().required("City is required"),
+        name_of_hospital: Yup.string().required("Hospital name is required"),
       })}
       onSubmit={(values) => {
-        console.log('values: ', values);
-        onSubmit({ ...values })
-      }
+        handleFirstFormSubmit(values)}
       }
     >
       {({
@@ -164,9 +111,18 @@ export default function Register() {
             label: state.name,
           }))
           : [];
+          const cities =
+          values.country && values.state
+            ? City?.getCitiesOfState(values.country, values.state).map(
+                (state) => ({
+                  value: (state.name).normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+                  label: (state.name).normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+                })
+              )
+            : [];
         return (
           <Form className="wflexLayout">
-            {isFormLoading && <Loading />}
+            {isLoading && <Loading />}
             <Row className="al_login_section">
               <Col lg="7" sm="6" className="al_left_login h-100">
                 <div className="wflexLayout">

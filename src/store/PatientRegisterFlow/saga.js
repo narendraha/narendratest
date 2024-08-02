@@ -122,6 +122,7 @@ function* OTPRegister({ payload }) {
 }
 
 function* PasswordRegister({ payload }) {
+  console.log('payload: ', payload);
   yield put(getRegisterPasswordResponseData({ ...payload, isLoading: true }));
 
   const { flowForm } = yield select(state => state.patientRegisterSlice);
@@ -156,6 +157,15 @@ function* PasswordRegister({ payload }) {
   let activeForm = "";
   let createAccountJwt = "";
   let response;
+  let URL = payload.flowForm === "doctor" ? "/create-doctor-account" :"/create_account" 
+
+  let Payload =  {
+    ...payload.actionData,
+    ...(payload.flowForm !== "doctor" &&
+    {dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD")}),
+    password: payload?.actionData?.password,
+  }
+delete Payload.reenterpassword
   try {
     response = yield call(callAPI, {
       url: url,

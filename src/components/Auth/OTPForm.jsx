@@ -47,24 +47,21 @@ export default function RegisterInfo() {
     );
   };
   const handleBackButton = () => {
-    flowForm === "forgotPassword"
-      ? dispatch(
-        getRegisterBackToForm({
-          activeForm: "/forgot-password",
-        })
-      )
-      : flowForm === "doctor"
-        ? dispatch(
-          getRegisterBackToForm({
-            activeForm: "/doctor/registration",
-          })
-        )
-        : dispatch(
-          getRegisterBackToForm({
-            activeForm: "/patient/registration",
-          })
-        );
-  }
+    const formMap = {
+      forgotPassword: "/forgot-password",
+      doctor: "/doctor/registration",
+      patient: "/patient/registration", // assuming 'patient' is the default case
+    };
+  
+    const activeForm = formMap[flowForm] || "/patient/registration";
+  
+    dispatch(
+      getRegisterBackToForm({
+        activeForm,
+      })
+    );
+  };
+  
   const SecondForm = ({ onSubmit }) => (
     <Formik
       initialValues={{

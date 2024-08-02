@@ -69,7 +69,7 @@ export const HealthHubOverview = () => {
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 5</td>
-                                    <td><strong>Left Atrial Appendage(Occlusion)</strong>
+                                    <td><strong>Left Atrial Appendage Occlusion(Stroke Prevention)</strong>
                                         <ol type="1" className="mb-0">
                                             <li className="mb-1">Introduction</li>
                                             <li className="mb-1">Content</li>

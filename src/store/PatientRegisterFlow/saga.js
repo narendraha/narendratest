@@ -75,7 +75,6 @@ function* RegisterUser({ payload }) {
 function* OTPRegister({ payload }) {
   yield put(getRegisterOTPResponseData({ ...payload, isLoading: true }));
 
-  console.log("payloadpayloadpayloadpayload", payload)
   let response;
   try {
     response = yield call(callAPI, {
@@ -137,7 +136,8 @@ function* PasswordRegister({ payload }) {
     ssn: payload?.actionData?.ssn,
     insuranceurl: payload?.actionData?.licenseNo,
     password: payload?.actionData?.password,
-    username: payload?.actionData?.username
+    username: payload?.actionData?.username,
+    insuranceurl: ""
   } : {
     username: payload?.actionData?.username,
     email: payload?.actionData?.email,
@@ -157,15 +157,7 @@ function* PasswordRegister({ payload }) {
   let activeForm = "";
   let createAccountJwt = "";
   let response;
-  let URL = payload.flowForm === "doctor" ? "/create-doctor-account" :"/create_account" 
 
-  let Payload =  {
-    ...payload.actionData,
-    ...(payload.flowForm !== "doctor" &&
-    {dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD")}),
-    password: payload?.actionData?.password,
-  }
-delete Payload.reenterpassword
   try {
     response = yield call(callAPI, {
       url: url,
@@ -254,6 +246,7 @@ function* loginReducer({ payload }) {
   let { actionData, navigate } = payload
   yield put(loginForm({ ...actionData, isLoading: true }));
   let isAuthenticated = false;
+  let activeForm = ""
   let response;
   try {
     response = yield call(callAPI, {
@@ -267,7 +260,8 @@ function* loginReducer({ payload }) {
     });
     if (response?.status && response?.statuscode === 200) {
       isAuthenticated = true
-      navigate("/home")
+      activeForm = "/home"
+      // navigate("/home")
       toast(response?.message, {
         position: "top-right",
         type: "success",
@@ -284,7 +278,7 @@ function* loginReducer({ payload }) {
       type: "error",
     });
   }
-  yield put(loginForm({ ...actionData, isAuthenticated, actionData: null, activeForm: "/home", isLoading: false }));
+  yield put(loginForm({ ...actionData, isAuthenticated, actionData: null, activeForm: activeForm, isLoading: false }));
   localStorage.setItem("token", response.data?.token);
 }
 
@@ -327,7 +321,7 @@ function* googleLoginReducer({ payload }) {
 }
 
 export const fetchConfirmationEmail = async (token, navigate) => {
-  const url = "https://dev.api.helloalfred.ai/send-confirmation-email";
+  const url = "https://api.helloalfred.ai/send-confirmation-email";
 
   try {
     const response = await fetch(url, {

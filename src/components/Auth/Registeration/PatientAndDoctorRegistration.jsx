@@ -1,17 +1,12 @@
+import React, { useEffect, useState } from "react";
 import { Country, State } from "country-state-city";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import {
-    Col,
-    FormGroup,
-    Label,
-    Row,
-    UncontrolledTooltip
-} from "reactstrap";
+import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
 import * as Yup from "yup";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, getRole, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
@@ -37,38 +32,78 @@ let hospitalsOptions = [
 
 const PatientAndDoctorRegistration = () => {
 
-    pageTitle("Register | Patient")
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isTermsAndConditionsRead, serIsTermsAndConditionsRead] = useState(true);
     const [states, setStates] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(null);
+    const [initialValues, setInitialValues] = useState("");
+    const [validationSchema, setValidationSchema] = useState(Yup.object().shape({}));
+
     const genderoptions = getGenderoptions;
     const residenceoptions = getResidenceoptions;
     const educationOptions = getEductaionOptions;
 
     const { isLoading, activeForm, flowForm, actionData, actionType } = useSelector((state) => state.patientRegisterSlice);
 
-    const getDefaultInitialValues = () => ({
-        username: actionData?.username || "",
-        email: actionData?.email || "",
-        mobile: actionData?.mobile || "",
-        education: actionData?.education || "",
-        dob: actionData?.dob || "",
-        gender: actionData?.gender || "",
-        rtype: actionData?.rtype || "",
-        ssn: actionData?.ssn || "",
-        insuranceurl: actionData?.insuranceurl || "",
-        file: actionData?.file || null,
-        termsAndConditions: actionData?.termsAndConditions || false,
-        countryCode: "",
+    let doctorValidationSchema = Yup.object().shape({
+        // Define validation rules for Doctor Registation fields
+        username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
+        email: Yup.string()
+            .trim()
+            .max(50, "Maximum 50 characters are allowed")
+            .email("Invalid email")
+            .required("Email is required"),
+        mobile: Yup.string()
+            // .matches(phoneNumberReg, "Invalid phone number")
+            .required("This field is required"),
+        education: Yup.string().required("Education field is required"),
+        specialization: Yup.string().required("Specialization field is required"),
+        nationalID: Yup.string().required("National ID is required"),
+        licenseNo: Yup.string().required("License No. is required"),
+        // rCode: Yup.string().required("This field is required"),
+        country: Yup.string().required("Country is required"),
+        // state: Yup.string().required("State is required"),
+        // city: Yup.string().required("City is required"),
+        hospital: Yup.string().required("Hospital name is required"),
     });
 
-    const [initialValues, setInitialValues] = useState("");
+    let patientValidationSchema = Yup.object().shape({
+        // Define validation rules for Patient Registation fields
+        username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
+        email: Yup.string().trim().max(50, "Maximum 50 characters are allowed").email("Invalid email").required("Email is required"),
+        mobile: Yup.string().required("Mobile number is required"),
+        dob: Yup.date().max(new Date(Date.now() - 567648000000), "Your age must be at-least 18 years old")
+            .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000), "Your age must be below 120 years old")
+            .required("DOB is required").nullable(),
+        gender: Yup.string().required("Gender is required"),
+        rtype: Yup.string().required("Resident type is required"),
+        education: Yup.string().required("Education field is required"),
+        ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
+    });
 
     useEffect(() => {
         if (flowForm === getRole.PATIENT) {
+            pageTitle("Register | Patient")
             setInitialValues({
+                username: actionData?.username || "",
+                email: actionData?.email || "",
+                dob: actionData?.dob || "",
+                gender: actionData?.gender || "",
+                mobile: actionData?.mobile || "",
+                rtype: actionData?.rtype || "",
+                education: actionData?.education || "",
+                ssn: actionData?.ssn || "",
+                insuranceurl: actionData?.insuranceurl || "",
+                file: actionData?.file || null,
+                termsAndConditions: actionData?.termsAndConditions || false,
+                countryCode: ""
+            });
+            setValidationSchema(patientValidationSchema)
+        }
+        if (flowForm === getRole.PHYSICIAN) {
+            pageTitle("Register | Doctor")
+            setInitialValues(({
                 username: actionData?.username || "",
                 email: actionData?.email || "",
                 mobile: actionData?.mobile || "",
@@ -80,11 +115,14 @@ const PatientAndDoctorRegistration = () => {
                 country: actionData?.rtype || "",
                 state: actionData?.state || "",
                 hospital: actionData?.hospital || "",
-            });
-        } else {
-            setInitialValues(getDefaultInitialValues());
+            }));
+            setValidationSchema(doctorValidationSchema)
         }
-    }, [flowForm, actionData]);
+        return () => {
+            setInitialValues("")
+            setValidationSchema(Yup.object().shape({}))
+        }
+    }, [flowForm]);
 
     useEffect(() => {
         if (activeForm) {
@@ -97,20 +135,6 @@ const PatientAndDoctorRegistration = () => {
         dispatch(getRegisterResponseData({ actionType: updatedActionType, actionData: values, isTerm }));
         window.sessionStorage.setItem("actionData", JSON.stringify(values));
     };
-
-    let getValidationSchema = Yup.object().shape({
-        username: customContentValidation('Full name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
-        email: Yup.string().trim().max(50, "Maximum 50 characters are allowed").email("Invalid email").required("Email is required"),
-        mobile: Yup.string().required("Mobile number is required"),
-        dob: Yup.date().max(new Date(Date.now() - 567648000000), "Your age must be at-least 18 years old")
-            .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000), "Your age must be below 120 years old")
-            .required("DOB is required").nullable(),
-        gender: Yup.string().required("Gender is required"),
-        rtype: Yup.string().required("Resident type is required"),
-        education: Yup.string().required("Education field is required"),
-        ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9)
-    })
-
 
     const countries = Country.getAllCountries().map((country) => ({
         value: country.isoCode,
@@ -133,15 +157,16 @@ const PatientAndDoctorRegistration = () => {
             <div className="al_login_container">
                 <Formik
                     enableReinitialize
-                    initialValues={{ initialValues }}
-                    // validationSchema={getValidationSchema}
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
                     onSubmit={(values) => {
                         handleFirstFormSubmit(values)
                     }}
-                >{({ values, setFieldValue, setFieldTouched }) => (
+                >{({ values, setFieldValue, setFieldTouched, errors }) => (
                     <>
                         <Form className="wflexLayout">
                             {isLoading && <Loading />}
+                            {console.log("88888888888888888888", values, errors)}
                             <Row className="al_login_section">
                                 <Col lg="7" sm="6" className="al_left_login h-100">
                                     <div className="wflexLayout">
@@ -555,11 +580,6 @@ const PatientAndDoctorRegistration = () => {
                                                                 placeholder="Enter Referral"
                                                                 className="form-control"
                                                             />
-                                                            {/* <ErrorMessage
-                          name="rCode"
-                          component={"div"}
-                          className="text-danger"
-                        /> */}
                                                         </FormGroup>
 
                                                     </>}

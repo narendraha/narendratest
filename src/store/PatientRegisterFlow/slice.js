@@ -53,7 +53,8 @@ const patientRegisterSlice = createSlice({
         ...state,
         isLoading: action.payload.isLoading,
         activeForm: action.payload.activeForm,
-        createAccountJwt: action.payload.createAccountJwt
+        createAccountJwt: action.payload.createAccountJwt,
+        actionData: action.payload.actionData
       };
     },
     getRegisterForwardToForm: (state, action) => {

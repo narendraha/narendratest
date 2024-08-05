@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Country, State, City } from "country-state-city";
+import { City, Country, State } from "country-state-city";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { passwordReg, phoneNumberReg } from "../../../_mock/RegularExp";
+import { passwordReg } from "../../../_mock/RegularExp";
 import { customContentValidation, getEductaionOptions, pageTitle } from "../../../_mock/helperIndex";
 import { AxiosInstance } from "../../../_mock/utilities";
 import alferdlogomobile from "../../../images/alfredlogo.svg";

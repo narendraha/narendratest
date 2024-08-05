@@ -166,7 +166,6 @@ const PatientAndDoctorRegistration = () => {
                     <>
                         <Form className="wflexLayout">
                             {isLoading && <Loading />}
-                            {console.log("88888888888888888888", values, errors)}
                             <Row className="al_login_section">
                                 <Col lg="7" sm="6" className="al_left_login h-100">
                                     <div className="wflexLayout">

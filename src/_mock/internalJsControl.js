@@ -11,8 +11,9 @@ export const getGenderoptions = [
 
 //  residence options
 export const getResidenceoptions = [
-    { value: "Cohabitant", label: "Cohabitant" },
-    { value: "Non-Resident", label: "Non-Resident" },
+    { value: "Myself/Patient", label: "Myself/Patient" },
+    { value: "Family Member", label: "Family Member" },
+    { value: "Care Giver", label: "Care Giver" },
     { value: "Other", label: "Other" },
 ];
 
@@ -140,8 +141,9 @@ export const getProfileCmpDetails = async (link, reOpenModel = false) => {
 
 
 // for Api Integration
-export const callAPI = async ({ url, method, data, contentType }) => {
-    const axiosInstance = AxiosInstance(contentType);
+export const callAPI = async ({ url, method, data, contentType, intenalToken = null }) => {
+    console.log("internaltoken=>", intenalToken)
+    const axiosInstance = AxiosInstance(contentType, intenalToken);
     try {
         const response = await axiosInstance({
             url,

@@ -320,43 +320,26 @@ function* googleLoginReducer({ payload }) {
   }
 }
 
-export const fetchConfirmationEmail = async (token, navigate) => {
-  const url = "https://api.helloalfred.ai/send-confirmation-email";
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: null
-    });
-    if (response?.status)
-      navigate("/signin")
-    else
-      toast(response?.message, {
-        position: "top-right",
-        type: "error",
-      });
-  } catch (error) {
-
-  }
-}
 
 function* sendConfirmationMailForRegister(action) {
   store.dispatch(setLoading(true));
   const { createAccountJwt } = yield select(state => state?.patientRegisterSlice);
-  const token = createAccountJwt;
-
   try {
-    // const response = yield call(callAPI, {
-    //   url: '/send-confirmation-email',
-    //   method: 'POST',
-    //   data: null,
-    //   contentType: 'application/json',
-    // });
-    yield call(fetchConfirmationEmail, token, action.payload);
+    const response = yield call(callAPI, {
+      url: '/send-confirmation-email',
+      method: 'POST',
+      data: null,
+      contentType: 'application/json',
+      intenalToken: createAccountJwt
+    });
+    console.log("response =>", response)
+    if (response?.status && response?.statuscode === 200) {
+      yield put(getRegisterSubscriptionForm({ activeForm: "/signin" }));
+      toast(response?.message, {
+        position: "top-right",
+        type: "success",
+      });
+    }
   } catch (error) {
 
   }

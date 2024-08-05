@@ -33,14 +33,6 @@ export default function RegisterInfo() {
             <div className="wflexLayout al_mx-auto">
               <div className="wflex-items-center wflexLayout">
                 <div className="al_login-form al_registrationform wflexScroll">
-                  {/* <div className="text-center mb-4">
-                    <img src={successImg} alt="success" height={85} />
-                    <div className="mt-4">Password set</div>
-                    <h4 className="text-success">successfully</h4>
-                    <p className="mb-0 textLight">
-                      Login to your account with new password
-                    </p>
-                  </div> */}
                   <div className="text-center mb-4">
                     <img src={approvalsent} alt="approval" height={85} />
                     <div className="mt-4">You have registered</div>
@@ -52,15 +44,10 @@ export default function RegisterInfo() {
                 </div>
                 <div className="al_login_footer mt-3">
                   <button
-                    type="submit"
+                    type="button"
                     className="al_login_button"
                     onClick={() => {
-                      dispatch(sendConfirmationMailRegisterRequest(navigate))
-                      // dispatch(
-                      //   getRegisterForwardToForm({
-                      //     activeForm: "/subscription",
-                      //   })
-                      // ); // Switch back to the first form after submitting the second form
+                      dispatch(sendConfirmationMailRegisterRequest())
                     }}
                   >
                     Continue

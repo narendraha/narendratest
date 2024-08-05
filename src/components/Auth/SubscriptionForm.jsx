@@ -6,7 +6,6 @@ import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import {
-  getRegisterClear,
   getRegisterForwardToForm
 } from "../../store/PatientRegisterFlow/slice";
 import Loading from "../InnerApp/LoadingComponent";
@@ -29,14 +28,8 @@ export default function RegisterInfo() {
         activeForm: "/passwordSuccess",
       })
     );
-    // dispatch(
-    //   getRegisterSubscriptionForm({
-    //     actionType: getActionTypes.SELECT,
-    //     actionData: values,
-    //   })
-    // );
 
-    setTimeout(() => dispatch(getRegisterClear()), [2000]);
+    // setTimeout(() => dispatch(getRegisterClear()), [2000]);
   };
   const SubscriptionForm = ({ onSubmit }) => (
     <Formik

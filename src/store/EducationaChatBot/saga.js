@@ -1,10 +1,9 @@
 import { toast } from "react-toastify";
-import { call, select, takeLeading, put } from 'redux-saga/effects';
+import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI } from "../../_mock/helperIndex";
-import { setLoading } from "../UtilityCallFunction/slice";
+import { setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
 import store from '../store';
 import { getChatStreamRequest, getChatStreamResponse, setInputDisableRequest, updateChatPreferenceRequest } from "./slice";
-import { setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
 
 function* updateChatPreference(action) {
     try {
@@ -15,31 +14,28 @@ function* updateChatPreference(action) {
             data: action?.payload,
             contentType: 'application/json',
         });
-        if (response?.status && response?.statuscode === 200) {
+        if (!response?.status && response?.statuscode !== 200) {
             toast(response?.message, {
                 position: "top-right",
-                type: "success",
+                type: "error",
             });
         }
     } catch (error) {
-        toast(error?.response?.data?.detail, {
-            position: "top-right",
-            type: "error",
-        });
+        // toast(error?.response?.data?.detail, {
+        //     position: "top-right",
+        //     type: "error",
+        // });
     }
 }
 
 
-export const fetchChatStream = async (payload, prevChatHistory, isLoading) => {
-    let updatedHistory = [...prevChatHistory];
+export const fetchChatStream = async (payload, prevChatHistory) => {
 
-    let chatLoadingIndex = updatedHistory?.length;
-    store.dispatch(setChatBotLoadingIndex(chatLoadingIndex))
+    let updatedHistory = [...prevChatHistory];
     const data = {
-        id: '1234-9876-54321',
         message: payload || "",
     };
-    const apiUrl = 'http://4.246.143.7:3001/education_bot_home';
+    const apiUrl = 'https://api.stream.helloalfred.ai/education_bot_home';
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -85,23 +81,55 @@ export const fetchChatStream = async (payload, prevChatHistory, isLoading) => {
     }
 };
 
+function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
+    let updatedHistory = [...prevChatHistory];
+
+    let reqObj = {
+        message: payload || ""
+    }
+    try {
+        const response = yield call(callAPI, {
+            url: 'https://api.stream.helloalfred.ai/educational_bot',
+            method: 'POST',
+            data: reqObj,
+            contentType: 'application/json',
+        });
+        console.log("fetchInnerEducationalBotResponse=>", response)
+        if (response?.status && response?.statuscode === 200) {
+            updatedHistory = [...updatedHistory, { content: response?.data?.alfred, role: 'Alfred' }];
+            store.dispatch(getChatStreamResponse(updatedHistory));
+        } else if (response.statuscode === 500) {
+            updatedHistory = [...updatedHistory, { content: "Sorry Unable to reach server at that moment can you please try again!", role: 'Alfred' }];
+        } else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        console.error('Error streaming response:', error);
+        throw error;
+    }
+    yield put(getChatStreamResponse(updatedHistory))
+}
+
 
 // TO GET CHAT STREAM
 function* getEducationalBotChatStream(action) {
-    store.dispatch(setLoading(true))
+    let { inputValue, innerBot } = action?.payload;
+
     try {
         const prevChatHistory = yield select(state => state.educationalChatBotSlice?.chatHistory || []);
-        const isLoading = yield select(state => state.utilityCallFunctionSlice?.isLoading);
+        let chatLoadingIndex = prevChatHistory?.length;
+        store.dispatch(setChatBotLoadingIndex(chatLoadingIndex))
 
-        if (action?.payload) {
-            yield call(fetchChatStream, action?.payload, prevChatHistory, isLoading);
-        }
+        if (inputValue && innerBot)
+            yield call(fetchInnerEducationalBotResponse, inputValue, prevChatHistory)
+        else
+            yield call(fetchChatStream, action?.payload, prevChatHistory);
+
     } catch (error) {
         console.error('Error in getEducationalBotChatStream saga:', error);
-        toast(error?.message, {
-            position: "top-right",
-            type: "error",
-        });
     } finally {
         yield put(setInputDisableRequest(false))
         store.dispatch(setChatBotLoadingIndex(null))

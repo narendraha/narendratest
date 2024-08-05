@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { pageTitle } from '../../_mock/helperIndex';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Accordion from '../DefaultPages/Accordin';
 import Section from './Section';
 import BannerSectionStyle from './Section/BannerSectionStyle';
@@ -51,24 +53,35 @@ const faqData = [
       'One can prevent from atrial fibrillation happening by working on risk factors<ol type="1"><li>Habits<ol type="a"><li>Minimize alcohol intake</li><li>No recreational drugs</li><li>No smoking</li></ol></li><li>Healthy weight by eating an appropriate diet</li><li>If having the below risks optimizing their control<ol type="a"><li>Blood pressure control</li><li>Lose weight if overweight or obese</li><li>Be evaluated for and get treated for sleepapnea</li><li>Diabetes control</li></ol></li></ol>',
   }
 ];
+
+let faq = "faq.png";
+
 export default function Affaq() {
   pageTitle('Affaq');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(faq))
+  }, []);
+
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
   return (
     <>
       <BannerSectionStyle
         bgUrl="/images/about/banner_bg.svg"
-        imgUrl="/images/about/faq.png"
+        imgUrl={assetUrl["faq"]}
         title="Welcome to HelloAlfred<br/>Your AI Health companion"
         subTitle="Your Partner in Health and Wellness"
       />
 
-      <Section>
+      <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto'>
-          <div className='my-5'>
-            <h6 className='text-center'>FAQ’S</h6>
-            <h3 className='text-center'>Alfred addresses Afib-related questions, and shows empathy and understanding, making patients feel assured and building trust in Alfred's personalized Education.</h3>
-            <p className='text-center'>Alfred FAQs serve as awareness guidelines that provide valuable insights into Afib health conditions, treatments, and preventive measures, helping patients make informed decisions. Alfred bridged the information gap between the Afib patients healthcare providers, by addressing the valuable awareness in a very user-friendly approach.</p>
-          </div>
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+            FAQ’S
+          </h3>
+          <h3 className='text-center'>Alfred addresses Afib-related questions, and shows empathy and understanding, making patients feel assured and building trust in Alfred's personalized Education.</h3>
+          <p className='text-center'>Alfred FAQs serve as awareness guidelines that provide valuable insights into Afib health conditions, treatments, and preventive measures, helping patients make informed decisions. Alfred bridged the information gap between the Afib patients healthcare providers, by addressing the valuable awareness in a very user-friendly approach.</p>
           <Accordion variant="cs_style1 cs_type_2" data={faqData} />
 
           <div className='alfaq_footer'>

@@ -24,7 +24,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
   }
 
   return (
-    <div className="cs_mainsearch mb-2">
+    <React.Fragment>
       <form action="#">
         <i className="icon_alfred_search h-auto"></i>
         <input
@@ -54,6 +54,6 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
           onClick={handleIconSubmit}
         />
       </form>
-    </div >
+    </React.Fragment>
   );
 }

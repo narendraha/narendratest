@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import Footer from './Footer';
-import Loading from './Loading';
 import Header from './Header';
+import Loading from './Loading';
 
 export default function Layout3() {
   return (
@@ -15,6 +15,7 @@ export default function Layout3() {
           <Footer />
         </Col>
       </Suspense>
+      <Loading />
     </Row>
   );
 }

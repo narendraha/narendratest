@@ -10,7 +10,7 @@ import EducationalBotHTMLcontent from './EducationalBotHTMLcontent';
 const ChatBotMsgInterface = ({ props }) => {
   const dispatch = useDispatch()
 
-  const { chatHistory, index } = props;
+  const { chatHistory, index, profilePicture, getProfileDetails } = props;
   const messagesEndRef = useRef(null);
 
   const [selectedIcons, setSelectedIcons,] = useState([]); // State to track selected icons
@@ -40,11 +40,11 @@ const ChatBotMsgInterface = ({ props }) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <Row className={"mb-4 al_chatcontent" + (isUser ? " al_usermsg" : "")}>
         <div>
           {isUser ?
-            <ChatBotTextUi props={{ imgUrl: Chatuser, imgAlt: "chat user", imgId: "userimagehomeed", toolTipText: "User" }} /> :
+            <ChatBotTextUi props={{ imgUrl: (profilePicture || Chatuser), imgAlt: "chat user", imgId: "userimagehomeed", toolTipText: ((getProfileDetails && getProfileDetails?.username) || "User") }} /> :
             <ChatBotTextUi props={{ imgUrl: Chatbot, imgAlt: "Bot", imgId: "botimagehomeed", toolTipText: "Alfred" }} />
           }
         </div>
@@ -62,7 +62,7 @@ const ChatBotMsgInterface = ({ props }) => {
         </Col>
       </Row>
       <div ref={messagesEndRef} />
-    </>
+    </React.Fragment>
   )
 }
 

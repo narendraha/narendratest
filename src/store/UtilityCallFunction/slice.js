@@ -49,7 +49,8 @@ const utilityCallFunctionSlice = createSlice({
         getAssetsRequest: () => { },
         getAssetsResponse: (state, action) => {
             state.assetUrl = action.payload
-        }
+        },
+        contactUsRequest: () => { }
     },
 });
 
@@ -60,7 +61,8 @@ export const {
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,
-    getAssetsRequest, getAssetsResponse
+    getAssetsRequest, getAssetsResponse,
+    contactUsRequest
 } = actions;
 
 export default reducer;

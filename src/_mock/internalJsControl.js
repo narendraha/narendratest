@@ -1,4 +1,6 @@
 import { AxiosInstance } from '../_mock/utilities';
+import ChatFemaleuser from "../images/femaleuserImg.jpg";
+import ChatMaleuser from "../images/userprofile.jpg";
 
 // gender options 
 export const getGenderoptions = [
@@ -9,8 +11,9 @@ export const getGenderoptions = [
 
 //  residence options
 export const getResidenceoptions = [
-    { value: "Cohabitant", label: "Cohabitant" },
-    { value: "Non-Resident", label: "Non-Resident" },
+    { value: "Myself/Patient", label: "Myself/Patient" },
+    { value: "Family Member", label: "Family Member" },
+    { value: "Care Giver", label: "Care Giver" },
     { value: "Other", label: "Other" },
 ];
 
@@ -62,6 +65,25 @@ export const getRole = {
     PHYSICIAN: 'doctor'
 }
 
+// Healthhub weeks 
+export const getWeekValue = {
+    WEEKONE: "week1",
+    WEEKTWO: "week2",
+    WEEKTHREE: "week3",
+    WEEKFOUR: "week4",
+    WEEKFIVE: "week5",
+    WEEKSIX: "week6"
+}
+
+// WEEK OPTIONS
+export const getWeekoptions = [
+    { value: "week1", label: "Week 1" },
+    { value: "week2", label: "Week 2" },
+    { value: "week3", label: "Week 3" },
+    { value: "week4", label: "Week 4" },
+    { value: "week5", label: "Week 5" },
+    { value: "week6", label: "Week 6" }
+];
 
 // lifestyle tab Symptoms Keys
 export const lifeStyleGoalSymptomsKeys = {
@@ -119,8 +141,9 @@ export const getProfileCmpDetails = async (link, reOpenModel = false) => {
 
 
 // for Api Integration
-export const callAPI = async ({ url, method, data, contentType }) => {
-    const axiosInstance = AxiosInstance(contentType);
+export const callAPI = async ({ url, method, data, contentType, intenalToken = null }) => {
+    console.log("internaltoken=>", intenalToken)
+    const axiosInstance = AxiosInstance(contentType, intenalToken);
     try {
         const response = await axiosInstance({
             url,
@@ -147,3 +170,8 @@ export const allowedNumbersOnField = (fieldLength, e) => {
 export const pageTitle = (title) => {
     return (document.title = title);
 };
+
+// to get genderbasedProfile Picture
+export const getProfilePictureByGender = (getProfileDetails) => {
+    return ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url)
+}

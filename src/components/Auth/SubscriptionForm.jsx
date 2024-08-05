@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import Loading from "../InnerApp/LoadingComponent";
 import alferdlogo from "../../images/alfredlogowhite.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { getActionTypes } from "../../_mock/internalJsControl";
 import {
-  getRegisterClear,
-  getRegisterSubscriptionForm,
+  getRegisterForwardToForm
 } from "../../store/PatientRegisterFlow/slice";
+import Loading from "../InnerApp/LoadingComponent";
 
 export default function RegisterInfo() {
   const navigate = useNavigate();
@@ -26,12 +24,12 @@ export default function RegisterInfo() {
   }, [activeForm]);
   const handleFinalSubmit = (values) => {
     dispatch(
-      getRegisterSubscriptionForm({
-        actionType: getActionTypes.SELECT,
-        actionData: values,
+      getRegisterForwardToForm({
+        activeForm: "/passwordSuccess",
       })
     );
-    setTimeout(() => dispatch(getRegisterClear()), [2000]);
+
+    // setTimeout(() => dispatch(getRegisterClear()), [2000]);
   };
   const SubscriptionForm = ({ onSubmit }) => (
     <Formik

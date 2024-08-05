@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { pageTitle } from '../../_mock/helperIndex';
-import animation from '../../images/animation.mp4';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Spacing from '../DefaultPages/Spacing';
 import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';
 import Section from './Section';
@@ -36,15 +37,26 @@ const personomicsData = [
   }
 ];
 
+let animation = "animation.mp4";
+
 export default function Personomics() {
   pageTitle('Personomics');
+
+  const dispatch = useDispatch();
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(animation))
+  }, []);
+
+  console.log("9999999999999999999999999999", assetUrl)
   return (
     <>
       <section className="videobanner cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
         <div className="cs_banner_img">
           {/* <img src={personomics} alt="chatbot" /> */}
           <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
-            <source src={animation} type="video/mp4" />
+            <source src={assetUrl?.["animation"]} type="video/mp4" />
           </video>
         </div>
         <div className="container">

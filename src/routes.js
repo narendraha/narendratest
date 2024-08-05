@@ -13,8 +13,6 @@ import ForgotPassword from "./components/Auth/ForgotPassword";
 import OTPComponent from "./components/Auth/OTPForm";
 import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
 import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
-// import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
-// import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
 import PrivacyPolicy from "./components/Auth/Registeration/PrivacyPolicy";
 import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
 import Terms from "./components/Auth/Registeration/Terms&Confition";
@@ -145,14 +143,12 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="terms" element={<Terms />} />
               <Route path="privacypolicy" element={<PrivacyPolicy />} />
               <Route path="registration-info" element={<RegisterInfo />} />
-              {/* <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} /> */}
               <Route path="patient/registration" element={<PatientAndDoctorRegistration />} />
               <Route path="patient/OTP" element={<OTPComponent />} />
               <Route path="passwordReset" element={<PasswordResetComponent />} />
               <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
               <Route path="subscription" element={<SubscriptionFormComponent />} />
-              {/* <Route path="doctor/registration" element={<DoctorRegister />} /> */}
-              <Route path="doctor/registration" element={<PatientAndDoctorRegistration />} />
+              <Route path="registration" element={<PatientAndDoctorRegistration />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>

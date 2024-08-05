@@ -49,15 +49,21 @@ export default function Personomics() {
     dispatch(getAssetsRequest(animation))
   }, []);
 
-  console.log("9999999999999999999999999999", assetUrl)
   return (
     <>
       <section className="videobanner cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
         <div className="cs_banner_img">
-          {/* <img src={personomics} alt="chatbot" /> */}
-          <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
+          {/* <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
             <source src={assetUrl?.["animation"]} type="video/mp4" />
-          </video>
+          </video> */}
+          <iframe
+            width="auto"
+            height="430"
+            src={assetUrl?.["animation"]}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
         <div className="container">
           <div className="cs_banner_text">

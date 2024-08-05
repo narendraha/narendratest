@@ -142,13 +142,13 @@ export default function RegisterInfo() {
                                                 index === 0
                                                   ? updatedValue
                                                   : values.otp.substring(
-                                                      0,
-                                                      index
-                                                    ) +
-                                                    updatedValue +
-                                                    values.otp.substring(
-                                                      index + 1
-                                                    ),
+                                                    0,
+                                                    index
+                                                  ) +
+                                                  updatedValue +
+                                                  values.otp.substring(
+                                                    index + 1
+                                                  ),
                                             },
                                           });
                                           if (

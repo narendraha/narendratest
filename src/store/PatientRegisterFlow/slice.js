@@ -7,8 +7,10 @@ const initialState = {
   actionData: null,
   activeForm: "",
   message: "",
-  flowForm:"",
-  isAuthenticated:localStorage.getItem("token") ? true : false,
+  flowForm: "",
+  isAuthenticated: localStorage.getItem("token") ? true : false,
+  createAccountJwt: "",
+  registerAccountType: ""
 };
 
 const patientRegisterSlice = createSlice({
@@ -24,7 +26,7 @@ const patientRegisterSlice = createSlice({
     getRegisterResponseData: (state, action) => {
       return {
         ...state,
-        isLoading: action.payload.isLoading,
+        isLoading: action?.payload?.isTerm ? "" : action.payload.isLoading,
         actionType: action.payload.actionType,
         actionData: action.payload.actionData,
         activeForm: action.payload.activeForm,
@@ -51,6 +53,8 @@ const patientRegisterSlice = createSlice({
         ...state,
         isLoading: action.payload.isLoading,
         activeForm: action.payload.activeForm,
+        createAccountJwt: action.payload.createAccountJwt,
+        actionData: action.payload.actionData
       };
     },
     getRegisterForwardToForm: (state, action) => {
@@ -78,6 +82,7 @@ const patientRegisterSlice = createSlice({
       return {
         activeForm: action.payload.activeForm,
         flowForm: action.payload.flowForm,
+        registerAccountType: action?.payload
       };
     },
     getForgorPasswordForm: (state, action) => {
@@ -107,10 +112,11 @@ const patientRegisterSlice = createSlice({
     },
     logoutSlice: (state, action) => {
       return {
-       ...initialState,
+        ...initialState,
         isAuthenticated: false,
       }
-    }
+    },
+    sendConfirmationMailRegisterRequest: () => { },
   },
 });
 
@@ -128,7 +134,8 @@ export const {
   getForgorPasswordForm,
   loginForm,
   googleLogin,
-  logoutSlice
+  logoutSlice,
+  sendConfirmationMailRegisterRequest,
 } = actions;
 
 export default reducer;

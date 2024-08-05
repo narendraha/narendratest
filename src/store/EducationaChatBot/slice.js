@@ -9,10 +9,18 @@ const educationalChatBotSlice = createSlice({
     name: 'educationalChatBotSlice',
     initialState,
     reducers: {
+        setResetPendingEducationalBotRequest: (state, action) => {
+            return {
+                ...state,
+                chatHistory: undefined,
+                isInputDisable: false,
+                isChatBotLoading: false
+            }
+        },
         setChatHistoryRequest: (state, action) => {
             state = {
                 ...state,
-                chatHistory: [
+                chatHistory: action.payload === null ? [] : [
                     ...state?.chatHistory,
                     action.payload
                 ]
@@ -37,6 +45,7 @@ const educationalChatBotSlice = createSlice({
 const { actions, reducer } = educationalChatBotSlice;
 
 export const {
+    setResetPendingEducationalBotRequest,
     setChatHistoryRequest,
     setInputDisableRequest,
     updateChatPreferenceRequest, updateChatPreferenceResponse,

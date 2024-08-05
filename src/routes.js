@@ -9,17 +9,18 @@ import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 import ErrorPage from "./components/Pages/ErrorPage";
 
 // auth
-import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import OTPComponent from "./components/Auth/OTPForm";
 import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
 import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
-import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
+// import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
+// import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
 import PrivacyPolicy from "./components/Auth/Registeration/PrivacyPolicy";
 import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
+import Terms from "./components/Auth/Registeration/Terms&Confition";
 import Signin from "./components/Auth/Signin/SignIn";
 import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
-import Terms from "./components/Auth/Registeration/Terms&Confition";
+import PatientAndDoctorRegistration from "./components/Auth/Registeration/PatientAndDoctorRegistration"
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -38,9 +39,7 @@ const EcoPharmacy = React.lazy(() => import("./components/Pages/EcoPharmacy"));
 const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
 const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
 const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
-// const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
-// const HomeEducationalBot = React.lazy(() => import("./components/Pages/educationalBotWIthStreaming"));
-const HomeEducationalBot = React.lazy(() => import("./components/Pages/bot"));
+const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
 const Medications = React.lazy(() => import("./components/Pages/Medications"));
 const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));
 const Obesity = React.lazy(() => import("./components/Pages/Obesity"));
@@ -67,6 +66,7 @@ const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/i
 const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
 const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
 const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
+const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
 
 const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   const { pathname } = useLocation();
@@ -103,6 +103,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="users" element={<UserManagement />} />
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
+              <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </>
@@ -144,12 +145,14 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="terms" element={<Terms />} />
               <Route path="privacypolicy" element={<PrivacyPolicy />} />
               <Route path="registration-info" element={<RegisterInfo />} />
-              <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} />
+              {/* <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} /> */}
+              <Route path="patient/registration" element={<PatientAndDoctorRegistration />} />
               <Route path="patient/OTP" element={<OTPComponent />} />
               <Route path="passwordReset" element={<PasswordResetComponent />} />
               <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
               <Route path="subscription" element={<SubscriptionFormComponent />} />
-              <Route path="doctor/registration" element={<DoctorRegister />} />
+              {/* <Route path="doctor/registration" element={<DoctorRegister />} /> */}
+              <Route path="doctor/registration" element={<PatientAndDoctorRegistration />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>

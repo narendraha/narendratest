@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardBody, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { pageTitle } from '../../_mock/helperIndex';
 import { default as accuratehealth, default as additionalvalue, default as assesssymptoms, default as costeffective } from '../../images/costeffective.png';
@@ -8,15 +9,25 @@ import peducation from '../../images/peducation.svg';
 import phistory from '../../images/phistory.svg';
 import twitter from '../../images/twitter.svg';
 import whatwedo from '../../images/whatwedo.png';
-import whoweare from '../../images/whoweare.jpg';
 import youtube from '../../images/youtube.svg';
+import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Spacing from '../DefaultPages/Spacing';
 import Section from './Section';
 import BannerSectionStyle from './Section/BannerSectionStyle';
 
+let whoweare = "whoweare.jpg";
+
 export default function About() {
   pageTitle('About');
   const [tab, setTab] = useState("1");
+
+  const dispatch = useDispatch();
+  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+
+  useEffect(() => {
+    dispatch(getAssetsRequest(whoweare))
+  }, []);
+
   return (
     <>
       <BannerSectionStyle
@@ -32,7 +43,7 @@ export default function About() {
           </h3>
           <Row className='my-5'>
             <div className='px-3 w-auto'>
-              <img src={whoweare} alt="whoweare" width={400} className="cs_radius_20" />
+              <img src={assetUrl?.["whoweare"]} alt="whoweare" width={400} className="cs_radius_20" />
             </div>
             <Col className='ps-5'>
               <h4>Who We Are?</h4>

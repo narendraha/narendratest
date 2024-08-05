@@ -1,7 +1,7 @@
 import moment from "moment";
 import { toast } from "react-toastify";
 import { call, put, takeLeading } from 'redux-saga/effects';
-import { callAPI, getActivetab } from "../../_mock/internalJsControl";
+import { callAPI, getActivetab, getWeekoptions } from "../../_mock/internalJsControl";
 import {
     addSymptomsDetailRequest,
     addSymptomsDetailResponse,
@@ -11,10 +11,16 @@ import {
     getHealthDetailsGraphResponse,
     getHealthDetailsLastUpdateRequest,
     getHealthDetailsLastUpdateResponse,
+    getHealthHubProgressRequest,
+    getHealthHubProgressResponse,
     getSymptomsDetailsLastUpdateRequest,
     getSymptomsDetailsLastUpdateResponse,
     getSymptomsDetailsRequest,
     getSymptomsDetailsResponse,
+    getVitalDetailsLastUpdateRequest,
+    getVitalDetailsLastUpdateResponse,
+    getWeekWiseHealthHubContentRequest,
+    getWeekWiseHealthHubContentResponse,
     setActiveTabRequest,
     setActiveTabResponse,
     updateHealthDetailsRequest,
@@ -22,7 +28,7 @@ import {
 } from "./slice";
 
 import { setLoading } from "../UtilityCallFunction/slice";
-import store from '../store'
+import store from '../store';
 
 // TO SET ACTIVE TAB
 function* setHomeActiveTab(action) {
@@ -287,15 +293,110 @@ function* getSymptomsDetailsLast() {
     store.dispatch(setLoading(false))
 }
 
+// TO GET HEALTH HUB PROGRESS
+function* getHealthHubProgress() {
+    let healthHubProgressDetails = "";
+    try {
+        const response = yield call(callAPI, {
+            url: '/weekly-unlock',
+            method: 'GET',
+            data: null,
+            contentType: 'application/json',
+        });
+        console.log("getHealthHubProgress_response=>", response)
+        if (response?.status && response?.statuscode === 200)
+            healthHubProgressDetails = response?.data
+        else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.message, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+
+    let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === null ? 'skip' : '')?.filter((y) => y !== "")?.length);
+    let selectedWeekOption = getWeekoptions[getLastSelectedWeekIndex - 1];
+    yield call(getWeekWiseHealthContent, selectedWeekOption?.value)
+    yield put(getHealthHubProgressResponse({ healthHubProgressDetails, selectedWeekOption }));
+}
+
+// TO GET WEEK WISE CONTENT ON HEALH HUB
+function* getWeekWiseHealthContent(action) {
+    let healthHubWeeklyContent = "";
+    let data = action?.payload || action
+    let reqParam = data[data?.length - 1]
+    try {
+        const response = yield call(callAPI, {
+            url: ('/getweeklycontent/{week}')?.replace('{week}', reqParam),
+            method: 'GET',
+            data: null,
+            contentType: 'application/json',
+        });
+        console.log("getWeekWiseHealthContent_response=>", response)
+        if (response?.status && response?.statuscode === 200)
+            healthHubWeeklyContent = response?.data
+        else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.message, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+
+    yield put(getWeekWiseHealthHubContentResponse(healthHubWeeklyContent))
+}
+
+// to get last updated vitals details 
+function* getVitalDetailsLastUpdate() {
+    store.dispatch(setLoading(true))
+    let lastUpdatedVitalDetails = ""
+    try {
+        const response = yield call(callAPI, {
+            url: '/get-latest-expertmonitoring',
+            method: 'GET',
+            data: null,
+            contentType: 'application/json',
+        });
+        if (response?.status && response?.statuscode === 200)
+            lastUpdatedVitalDetails = response?.data
+        else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.data?.detail, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    yield put(getVitalDetailsLastUpdateResponse(lastUpdatedVitalDetails))
+    store.dispatch(setLoading(false))
+}
+
 function* watchHomePageSaga() {
-    yield takeLeading(getSymptomsDetailsLastUpdateRequest.type, getSymptomsDetailsLast)
-    yield takeLeading(getSymptomsDetailsRequest.type, getSymptomsDetails)
-    yield takeLeading(updateHealthDetailsRequest.type, updateHealtDetails)
-    yield takeLeading(getHealthDetailsGraphRequest.type, getHealthDetailsGraph)
-    yield takeLeading(getHealthDetailsLastUpdateRequest.type, getLastUpdatedHealthDetails)
-    yield takeLeading(getActiveTabRequest.type, getActiveTabData)
-    yield takeLeading(setActiveTabRequest.type, setHomeActiveTab)
-    yield takeLeading(addSymptomsDetailRequest.type, addSymptomsData)
+    yield takeLeading(getSymptomsDetailsLastUpdateRequest.type, getSymptomsDetailsLast);
+    yield takeLeading(getSymptomsDetailsRequest.type, getSymptomsDetails);
+    yield takeLeading(updateHealthDetailsRequest.type, updateHealtDetails);
+    yield takeLeading(getHealthDetailsGraphRequest.type, getHealthDetailsGraph);
+    yield takeLeading(getHealthDetailsLastUpdateRequest.type, getLastUpdatedHealthDetails);
+    yield takeLeading(getActiveTabRequest.type, getActiveTabData);
+    yield takeLeading(setActiveTabRequest.type, setHomeActiveTab);
+    yield takeLeading(addSymptomsDetailRequest.type, addSymptomsData);
+    yield takeLeading(getHealthHubProgressRequest.type, getHealthHubProgress);
+    yield takeLeading(getWeekWiseHealthHubContentRequest.type, getWeekWiseHealthContent)
+    yield takeLeading(getVitalDetailsLastUpdateRequest.type, getVitalDetailsLastUpdate)
 }
 
 export default watchHomePageSaga;

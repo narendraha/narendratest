@@ -6,16 +6,24 @@ import riskmanagement from "../../../images/riskmanagement.png";
 import riskmanagement2 from "../../../images/riskmanagement2.jpg";
 import riskmanagement3 from "../../../images/riskmanagement3.jpg";
 import { setActiveTabRequest } from '../../../store/Home/slice';
+import { getAssetsRequest } from '../../../store/UtilityCallFunction/slice';
+
+// let riskmanagement3 = "riskmanagement3.jpg";
 
 export const RiskOptimization = () => {
     const dispatch = useDispatch();
 
     const { activeTab } = useSelector((state) => state?.homePageSlice);
+    const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
 
     useEffect(() => {
         if (activeTab === getActivetab.ORMANAGEMENT)
             dispatch(setActiveTabRequest({ setTab: getActivetab.ORMANAGEMENT, nextOrBackTab: getActivetab.ORMANAGEMENT }))
     }, [activeTab, dispatch]);
+
+    // useEffect(() => {
+    //     dispatch(getAssetsRequest(riskmanagement3))
+    // }, []);
 
     return (
         <React.Fragment>

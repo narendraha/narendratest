@@ -381,11 +381,50 @@ textarea {
   }
 }
 
+.input-group {
+  .react-tel-input {
+    input {
+      &.form-control {
+        height: 40px;
+        font-size: 14px;
+        border: 1px solid #f3f6fb;
+        background-color: #f3f6fb;
+        border-radius: 7px !important;
+        box-shadow: none;
+        width: 100%;
+        border: none;
+
+        &:focus {
+          box-shadow: none;
+          background-color: #f3f6fb;
+        }
+      }
+
+      &::placeholder {
+        font-size: 12px;
+        font-weight: 300;
+        opacity: 0.6;
+        color: #A0A3B5 !important;
+      }
+    }
+
+    .flag-dropdown {
+      border: 1px solid #f3f6fb !important;
+      background-color: #f3f6fb;
+
+      .selected-flag {
+        border-radius: 7px 0 0 7px;
+      }
+    }
+  }
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],
 textarea,
 .react-datepicker-wrapper input,
+.react-tel-input input,
 .input-group,
 .inputSelect div[class$=-control] {
   &:focus {
@@ -408,12 +447,14 @@ textarea,
     box-shadow: none;
     border: 1px solid #dddddd;
     margin-top: 1px;
+    z-index: 3;
   }
 }
 
 input:has(+ div.text-danger),
 textarea:has(+ div.text-danger),
 .react-datepicker-wrapper:has(+ div.text-danger) input,
+.react-tel-input:has(+ div.text-danger) input,
 .input-group:has(+ div.text-danger),
 .inputSelect:has(+ div.text-danger) div[class$=-control],
 div.position-relative:has(~ div.text-danger) input,

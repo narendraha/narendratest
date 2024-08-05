@@ -1,19 +1,19 @@
-import { toast } from "react-toastify";
-import { all, call, put, select, takeLeading } from "redux-saga/effects";
-import { callAPI } from "../../_mock/internalJsControl";
-import {
-  getRegisterOTPResponseData,
-  getRegisterPasswordResponseData,
-  getRegisterRequest,
-  getRegisterResponseData,
-  getRegisterSubscriptionForm,
-} from "./slice";
 import moment from "moment";
+import { toast } from "react-toastify";
+import { call, put, select, takeLeading } from "redux-saga/effects";
+import { callAPI, getRole } from "../../_mock/internalJsControl";
 import { setLoading } from "../UtilityCallFunction/slice";
 import store from "../store";
-import { getForgorPasswordForm } from "./slice";
-import { loginForm } from "./slice";
-import { googleLogin } from "./slice";
+import {
+  getForgorPasswordForm,
+  getRegisterOTPResponseData,
+  getRegisterPasswordResponseData,
+  getRegisterResponseData,
+  getRegisterSubscriptionForm,
+  googleLogin,
+  loginForm,
+  sendConfirmationMailRegisterRequest
+} from "./slice";
 
 function* RegisterUser({ payload }) {
   console.log("payload: ", payload);
@@ -21,52 +21,54 @@ function* RegisterUser({ payload }) {
   yield put(getRegisterResponseData({ ...payload, isLoading: true }));
 
   let response;
-  try {
-    response = yield call(callAPI, {
-      url: "/generate_otp",
-      method: "POST",
-      data: {
-        email: payload?.actionData?.email,
-        username: payload?.actionData?.username,
-        mobile: payload?.actionData?.mobile,
-      },
-      contentType: "application/json",
-    });
+  if (!payload?.isTerm) {
+    try {
+      response = yield call(callAPI, {
+        url: "/generate_otp",
+        method: "POST",
+        data: {
+          email: payload?.actionData?.email,
+          username: payload?.actionData?.username,
+          mobile: payload?.actionData?.mobile,
+        },
+        contentType: "application/json",
+      });
 
-    if (!response?.status && response?.status !== 200) {
-      toast(response?.message, {
+      if (!response?.status && response?.status !== 200) {
+        toast(response?.message, {
+          position: "top-right",
+          type: "error",
+        });
+        yield put(
+          getRegisterResponseData({
+            ...payload,
+            activeForm: "",
+            isLoading: false,
+          })
+        );
+      } else {
+        toast(response?.message, {
+          position: "top-right",
+          type: "success",
+        });
+        yield put(
+          getRegisterResponseData({
+            ...payload,
+            message: response?.message,
+            activeForm: "/patient/OTP",
+            isLoading: false,
+          })
+        );
+      }
+    } catch (error) {
+      toast(error?.response?.data?.detail, {
         position: "top-right",
         type: "error",
       });
       yield put(
-        getRegisterResponseData({
-          ...payload,
-          activeForm: "",
-          isLoading: false,
-        })
-      );
-    } else {
-      toast(response?.message, {
-        position: "top-right",
-        type: "success",
-      });
-      yield put(
-        getRegisterResponseData({
-          ...payload,
-          message:response?.message,
-          activeForm: "/patient/OTP",
-          isLoading: false,
-        })
+        getRegisterResponseData({ ...payload, activeForm: "", isLoading: false })
       );
     }
-  } catch (error) {
-    toast(error?.response?.data?.detail, {
-      position: "top-right",
-      type: "error",
-    });
-    yield put(
-      getRegisterResponseData({ ...payload, activeForm: "", isLoading: false })
-    );
   }
 }
 
@@ -122,53 +124,62 @@ function* PasswordRegister({ payload }) {
   console.log('payload: ', payload);
   yield put(getRegisterPasswordResponseData({ ...payload, isLoading: true }));
 
-  let response;
-  let URL = payload.flowForm === "doctor" ? "/create-doctor-account" :"/create_account" 
-
-  let Payload =  {
-    ...payload.actionData,
-    ...(payload.flowForm !== "doctor" &&
-    {dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD")}),
+  const { flowForm } = yield select(state => state.patientRegisterSlice);
+  let url = flowForm === getRole.PATIENT ? '/create_account' : '/create-doctor-account'
+  let reqObj = flowForm === getRole.PATIENT ? {
+    email: payload?.actionData?.email,
+    dob: moment(payload?.actionData?.dob).format("YYYY-MM-DD"),
+    gender: payload?.actionData?.gender,
+    mobile: payload?.actionData?.mobile,
+    rtype: payload?.actionData?.rtype,
+    education: payload?.actionData?.education,
+    ssn: payload?.actionData?.ssn,
+    insuranceurl: payload?.actionData?.licenseNo,
     password: payload?.actionData?.password,
+    username: payload?.actionData?.username,
+    insuranceurl: ""
+  } : {
+    username: payload?.actionData?.username,
+    email: payload?.actionData?.email,
+    mobile: payload?.actionData?.mobile,
+    highest_grade: payload?.actionData?.education,
+    state_of_practice: payload?.actionData?.specialization,
+    national_provider_id: payload?.actionData?.nationalID,
+    medical_license_number: payload?.actionData?.licenseNo,
+    country: payload?.actionData?.country,
+    state: payload?.actionData?.state,
+    name_of_hospital: payload?.actionData?.hospital,
+    referral_code: "NA",
+    password: payload?.actionData?.password,
+    city: "NA"
   }
-delete Payload.reenterpassword
+  console.log("PasswordRegister=>", reqObj, payload)
+  let activeForm = "";
+  let createAccountJwt = "";
+  let response;
+
   try {
     response = yield call(callAPI, {
-      url: URL,
+      url: url,
       method: "POST",
-      data: Payload,
+      data: reqObj,
       contentType: "application/json",
     });
 
-    if (!response?.status && response?.status !== 200) {
-      toast(response?.message, {
-        position: "top-right",
-        type: "error",
-      });
-      yield put(
-        getRegisterPasswordResponseData({ ...payload, isLoading: false })
-      );
+    if (response?.status && response?.statuscode === 200) {
+      activeForm = "/subscription"
+      createAccountJwt = response?.data?.token
     } else {
       toast(response?.message, {
         position: "top-right",
         type: "success",
       });
-      yield put(
-        getRegisterPasswordResponseData({
-          ...payload,
-          activeForm: "/passwordSuccess",
-          isLoading: false,
-        })
-      );
     }
-  } catch (error) {
-    toast(error?.response?.data?.detail, {
-      position: "top-right",
-      type: "error",
-    });
     yield put(
-      getRegisterPasswordResponseData({ ...payload, isLoading: false })
+      getRegisterPasswordResponseData({ ...payload, activeForm, createAccountJwt, isLoading: false })
     );
+  } catch (error) {
+
   }
 }
 function* subscriptions({ payload }) {
@@ -207,7 +218,7 @@ function* updateForgotPassword({ payload }) {
       yield put(
         getForgorPasswordForm({
           ...payload,
-          message:response?.message,
+          message: response?.message,
           activeForm: "/signin",
           flowForm: "",
           isLoading: false,
@@ -232,40 +243,43 @@ function* updateForgotPassword({ payload }) {
 
 function* loginReducer({ payload }) {
   // store.dispatch(setLoading(true))
-  yield put(loginForm({  ...payload, isLoading: true }));
-
+  let { actionData, navigate } = payload
+  yield put(loginForm({ ...actionData, isLoading: true }));
+  let isAuthenticated = false;
+  let activeForm = ""
   let response;
   try {
     response = yield call(callAPI, {
       url: "/login_account",
       method: "POST",
       data: {
-        username: payload?.actionData?.username,
-        password: payload?.actionData?.password,
+        username: actionData?.username,
+        password: actionData?.password,
       },
       contentType: "application/json",
     });
-    if (!response?.status && response?.status !== 200) {
-      toast(response?.message, {
-        position: "top-right",
-        type: "error",
-      });
-      yield put(loginForm({ ...payload, isLoading: false }));
-    } else {
+    if (response?.status && response?.statuscode === 200) {
+      isAuthenticated = true
+      activeForm = "/home"
+      // navigate("/home")
       toast(response?.message, {
         position: "top-right",
         type: "success",
       });
-      yield put(loginForm({ ...payload, isAuthenticated: true, actionData:null,  activeForm: "/home", isLoading: false }));
-      localStorage.setItem("token", response.data?.token);
+    } else {
+      toast(response?.message, {
+        position: "top-right",
+        type: "error",
+      });
     }
   } catch (error) {
     toast(error?.response?.data?.detail, {
       position: "top-right",
       type: "error",
     });
-    yield put(loginForm({ ...payload, isLoading: false }));
   }
+  yield put(loginForm({ ...actionData, isAuthenticated, actionData: null, activeForm: activeForm, isLoading: false }));
+  localStorage.setItem("token", response.data?.token);
 }
 
 function* googleLoginReducer({ payload }) {
@@ -305,6 +319,33 @@ function* googleLoginReducer({ payload }) {
     yield put(googleLogin({ ...payload, isLoading: false }));
   }
 }
+
+
+function* sendConfirmationMailForRegister(action) {
+  store.dispatch(setLoading(true));
+  const { createAccountJwt } = yield select(state => state?.patientRegisterSlice);
+  try {
+    const response = yield call(callAPI, {
+      url: '/send-confirmation-email',
+      method: 'POST',
+      data: null,
+      contentType: 'application/json',
+      intenalToken: createAccountJwt
+    });
+    console.log("response =>", response)
+    if (response?.status && response?.statuscode === 200) {
+      yield put(getRegisterSubscriptionForm({ activeForm: "/signin" }));
+      toast(response?.message, {
+        position: "top-right",
+        type: "success",
+      });
+    }
+  } catch (error) {
+
+  }
+  store.dispatch(setLoading(false))
+}
+
 function* watchRegisterUserSaga() {
   yield takeLeading(getRegisterResponseData.type, RegisterUser);
   yield takeLeading(getRegisterOTPResponseData.type, OTPRegister);
@@ -313,7 +354,7 @@ function* watchRegisterUserSaga() {
   yield takeLeading(getForgorPasswordForm.type, updateForgotPassword);
   yield takeLeading(loginForm.type, loginReducer);
   yield takeLeading(googleLogin.type, googleLoginReducer);
-
+  yield takeLeading(sendConfirmationMailRegisterRequest.type, sendConfirmationMailForRegister)
 }
 
 export default watchRegisterUserSaga;

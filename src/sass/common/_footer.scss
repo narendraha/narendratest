@@ -1,20 +1,6 @@
 /*--------------------------------------------------------------
 8. Footer
 ----------------------------------------------------------------*/
-.cs_newsletter_1_wrap {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    height: 70%;
-    background-color: #fff;
-  }
-}
-
 .cs_newsletter.cs_style_2 {
   border-radius: 20px;
   background: #fff;
@@ -62,22 +48,6 @@
   p {
     color: $primary;
     margin: 0;
-  }
-
-  .cs_newsletter_right {
-    min-width: 500px;
-
-    p {
-      margin-bottom: 12px;
-    }
-
-    @media (max-width: 1400px) {
-      min-width: 400px;
-    }
-
-    @media (max-width: 575px) {
-      min-width: 100%;
-    }
   }
 }
 
@@ -234,11 +204,6 @@
     }
   }
 
-  .cs_newsletter_right {
-    max-width: 500px;
-    width: 100%;
-  }
-
   .cs_form_field {
     border-color: rgba(255, 255, 255, 0.5);
     color: #fff;
@@ -280,18 +245,6 @@
       font-size: 36px;
     }
   }
-
-  .cs_newsletter_left {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-
-    @media (max-width: 1400px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-  }
 }
 
 .cs_social_links_wrap {
@@ -330,20 +283,6 @@
   }
 }
 
-.cs_footer_bottom_in {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px 30px;
-  flex-wrap: wrap;
-  padding: 37px 0;
-
-  @media (max-width: 575px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
 .cs_copyright {
   color: #4F4F4F;
   text-align: right;
@@ -355,57 +294,6 @@
 
   @media (max-width: 991px) {
     margin-top: 200px;
-  }
-
-  .cs_footer_logo_wrap {
-    position: absolute;
-    height: calc(100% + 200px);
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    background-position: top center;
-    background-size: cover;
-
-    @media (max-width: 991px) {
-      height: calc(100% + 120px);
-    }
-  }
-
-  .cs_footer_brand {
-    height: 448px;
-    width: 426px;
-    background-position: 6px 0px;
-    position: absolute;
-    left: 50%;
-    top: -180px;
-    transform: translateX(-50%);
-    margin-left: 6px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-size: 100% 100%;
-
-    img {
-      animation: spinAnimaiton 6s linear infinite;
-    }
-
-    @media (max-width: 991px) {
-      height: 360px;
-      width: 360px;
-      top: -140px;
-    }
-  }
-
-  .cs_footer_brand_text {
-    font-size: 36px;
-    font-weight: 400;
-    color: #fff;
-    margin: 5px 0 0;
-
-    @media (max-width: 991px) {
-      font-size: 32px;
-    }
   }
 
   .cs_text_widget+.cs_contact_widget {
@@ -521,9 +409,6 @@
     svg {
       margin-right: 5px;
     }
-    // &:not(:last-child) {
-    //   margin-bottom: 13px;
-    // }
   }
 
   i {

@@ -17,7 +17,7 @@ export default function Alcohol() {
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>
-          <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
             Alcohol
           </h3>
           <Row className='my-5'>

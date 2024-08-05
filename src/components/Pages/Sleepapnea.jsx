@@ -17,13 +17,15 @@ export default function Sleepapnea() {
       />
       <Section topMd={80} topLg={80} topXl={80}>
         <div className='w-80 mx-auto abouttop'>
-          <h3 className="mb-5 cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
+          <h3 className="mb-5 text-center cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_accent_color cs_fs_32">
             Sleep apnea
           </h3>
           <Row className='my-5'>
             <Col>
-              <p>We may evaluate for sleep apnea as it decreases the risk of recurrences. We optimize blood pressure control and diabetes.</p>
-              <p>To achieve the above goals, we usually recommend to follow up with interdisciplinary team of providers available in your region or your health system</p>
+              <p>Sleep apnea is when breathing repeatedly stops and starts during sleep. This can have serious negative effects on people with atrial fibrillation (AFib).</p>
+              <p>Sleep apnea causes poor sleep and fluctuating oxygen levels, which put stress on the heart. This stress can trigger AFib and increase the risk of heart problems.</p>
+              <p>Treating sleep apnea with continuous positive airway pressure (CPAP) therapy or other methods is important for improving heart health. It can also enhance sleep quality and reduce AFib episodes.</p>
+              <p>Understanding the link between these conditions helps create a treatment plan for better heart and sleep health.</p>
             </Col>
             <div className='w-auto ps-5'>
               <img src={sleepapnea} alt="sleepapnea" width={330} />

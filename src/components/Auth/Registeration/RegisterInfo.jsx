@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { getRole, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
-import { getFlowForm, setRegisterAccountType } from "../../../store/PatientRegisterFlow/slice";
+import { getFlowForm } from "../../../store/PatientRegisterFlow/slice";
 
 export default function RegisterInfo() {
   pageTitle("Register")

@@ -12,7 +12,7 @@ export default function CommunityResources() {
       <BannerSectionStyle
         bgUrl="/images/appointments/banner_bg.svg"
         imgUrl="/images/communityresourcebg.png"
-        title="Community resources are invaluable"
+        title="Community resources are invaluable in the treatment of Afib"
         subTitle="These resources include local support groups, educational workshops, and wellness programs"
       />
       <Section topMd={80} topLg={80} topXl={80}>

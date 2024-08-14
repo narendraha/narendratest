@@ -5,9 +5,12 @@ import SocialWidget from '../DefaultPages/Widget/SocialWidget';
 import Newsletter from '../DefaultPages/Widget/Newsletter';
 import IconBoxStyle11 from '../DefaultPages/IconBox/IconBoxStyle11';
 import Spacing from '../DefaultPages/Spacing';
-
+import { getAuthRoute } from '../../_mock/internalJsControl';
+import { useDispatch } from 'react-redux';
+import { setAuthRoutes } from '../../store/SessionStore/slice';
 
 export default function Header({ logoSrc, variant }) {
+  const dispatch = useDispatch();
   const [isSticky, setIsSticky] = useState(false);
   const [mobileToggle, setMobileToggle] = useState(false);
   const [sideNav, setSideNav] = useState(false);
@@ -42,7 +45,7 @@ export default function Header({ logoSrc, variant }) {
     {
       moduleId: '6',
       name: 'Personomics',
-      link: '/personomics'
+      link: 'personomics'
     },
     {
       moduleId: '2',
@@ -112,7 +115,11 @@ export default function Header({ logoSrc, variant }) {
       name: 'Contact Us',
       link: 'contactus'
     }
-  ]
+  ];
+
+  const handleSigninClick = () => {
+    dispatch(setAuthRoutes(getAuthRoute.SIGNIN))
+  }
 
   return (
     <>
@@ -185,7 +192,7 @@ export default function Header({ logoSrc, variant }) {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
-                  <Link to="/signin">Sign In</Link>
+                  <Link to="/signin" onClick={handleSigninClick}>Sign In</Link>
 
                   {/* <button
                     className="cs_toolbox_btn cs_sidebar_toggle_btn"

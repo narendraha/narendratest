@@ -1,14 +1,22 @@
 import { toast } from 'react-toastify';
 import { all, call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI, getActionTypes } from '../../_mock/internalJsControl';
-import { getPatientDetailsRequest, setLoading, setActionTypeAndActionData } from '../UtilityCallFunction/slice';
-import store from '../store';
+import { getPatientDetailsRequest, setActionTypeAndActionData, setLoading } from '../UtilityCallFunction/slice';
+import { store } from '../store';
 import {
     changeProfilePasswordRequest,
     changeProfilePasswordResponse,
+    deleteProfileImageRequest,
     profileDetailsAndProfileImageUpdateRequest,
     profileDetailsAndProfileImageUpdateResponse
 } from './slice';
+
+// To hard reload the web
+const reLoadWindow = () => {
+    let isWinowLoaded = false
+    window.location.reload()
+    return isWinowLoaded = true
+}
 
 // TO UPDATE PROFILE DETAILS AND PROFILE IMAGE
 function* updateProfileDetailsAndProfileImage(action) {
@@ -17,12 +25,6 @@ function* updateProfileDetailsAndProfileImage(action) {
     let isUpdated = false;
 
     const uploadedProfileImageData = (yield select())['profileSlice']?.uploadedProfileImage?.formData || "";
-
-    const reLoadWindow = () => {
-        let isWinowLoaded = false
-        window.location.reload()
-        return isWinowLoaded = true
-    }
 
     let reqObj = { ...action.payload };
     if (uploadedProfileImageData !== "")
@@ -132,10 +134,36 @@ function* changeProfilePassword(action) {
     }
 }
 
+// TO DELETE PROFILE IMAGE
+function* deleteProfileImage() {
+    store.dispatch(setLoading(true))
+    let iswindwoLoaded = false;
+    try {
+        const response = yield call(callAPI, {
+            url: '/delete-profile-image',
+            method: 'POST',
+            data: null,
+            contentType: 'application/json',
+        });
+        if (response?.status && response?.statuscode === 200)
+            iswindwoLoaded = reLoadWindow()?.isWinowLoaded
+        toast(response?.message, {
+            position: "top-right",
+            type: response?.status && response?.statuscode === 200 ? "success" : "error",
+        });
+    } catch (error) {
+        toast(error?.response?.data?.detail, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    store.dispatch(setLoading(false))
+}
 
 function* watchProfileSaga() {
     yield takeLeading(changeProfilePasswordRequest.type, changeProfilePassword)
     yield takeLeading(profileDetailsAndProfileImageUpdateRequest.type, updateProfileDetailsAndProfileImage)
+    yield takeLeading(deleteProfileImageRequest.type, deleteProfileImage)
 }
 
 export default watchProfileSaga;

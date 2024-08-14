@@ -21,11 +21,7 @@ const ResendOTP = (props) => {
   const handleResendClick = () => {
     setSeconds(30);
     setIsDisabled(true);
-    let data = {
-      username: props?.data?.username,
-      email: props?.data?.email,
-    };
-    props?.resendOtp(data);
+    props?.resendOtp();
   };
 
   return (

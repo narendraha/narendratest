@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getActionTypes } from '../../_mock/internalJsControl';
 
 const initialState = {
     error: null,
-    actionType: getActionTypes.UNSELECT,
     uploadedProfileImage: "",
     isConfirmModel: false
 };
@@ -12,6 +10,9 @@ const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
+        setResetProfileSliceData: () => {
+            return initialState
+        },
         addProfileImageRequest: (state, action) => {
             state.uploadedProfileImage = action.payload
         },
@@ -23,14 +24,17 @@ const profileSlice = createSlice({
         changeProfilePasswordRequest: () => { },
         changeProfilePasswordResponse: (state, action) => {
             state.error = action?.payload
-        }
+        },
+        deleteProfileImageRequest: () => { }
     },
 });
 
 export const {
     addProfileImageRequest,
     profileDetailsAndProfileImageUpdateRequest, profileDetailsAndProfileImageUpdateResponse,
-    changeProfilePasswordRequest, changeProfilePasswordResponse
+    changeProfilePasswordRequest, changeProfilePasswordResponse,
+    deleteProfileImageRequest,
+    setResetProfileSliceData,
 
 } = profileSlice.actions;
 

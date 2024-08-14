@@ -14,9 +14,9 @@ const SymptomsLastUpdatedView = () => {
         if (severity || frequency || quality_of_life) {
             acc.push({
                 symptom: symptom,
-                frequency: frequency,
-                severity: severity,
-                quality_of_life: quality_of_life
+                frequency: frequency || "None",
+                severity: severity || "None",
+                quality_of_life: quality_of_life || "None"
             });
         }
         return acc;

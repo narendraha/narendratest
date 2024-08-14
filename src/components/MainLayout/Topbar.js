@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { AxiosInstance } from '../../_mock/utilities';
 import femaleuserImg from "../../images/femaleuserImg.jpg";
 import noNotifications from '../../images/noNotifications.svg';
 import maleuserImg from '../../images/userprofile.jpg';
-import { useDispatch } from 'react-redux';
-import { logoutSlice } from '../../store/PatientRegisterFlow/slice';
+import { logoutRequest } from '../../store/SessionStore/slice';
 
 export default function Topbar(props) {
   const [menu, setMenu] = useState();
@@ -36,9 +36,7 @@ export default function Topbar(props) {
     navigate('profile')
   }
   const handleLogOut = () => {
-    localStorage.clear();
-    sessionStorage.clear();
-    dispatch(logoutSlice())
+    dispatch(logoutRequest())
     navigate('/signin')
   }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Carousel, CarouselIndicators, CarouselItem, Col, Row } from "reactstrap";
 import { getActivetab } from "../../../../_mock/internalJsControl";
-import { setActiveTabRequest } from "../../../../store/Home/slice";
+import { getActiveTabRequest, setActiveTabRequest, setHealthHubSkippedWeekRequest } from "../../../../store/Home/slice";
 
 const HealthHubContentView = () => {
     const dispatch = useDispatch();
@@ -10,39 +10,41 @@ const HealthHubContentView = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
 
-    const { healthHubWeeklyContent } = useSelector((state) => state?.homePageSlice);
+    const { healthHubWeeklyContent, selectedHealthHubWeek } = useSelector((state) => state?.homePageSlice);
 
     const handleSetTabs = () => {
         dispatch(setActiveTabRequest({ setTab: getActivetab.HEALTHHUB, nextOrBackTab: getActivetab.EXPTMONITORING }))
+        dispatch(setHealthHubSkippedWeekRequest({ selectedHealthHubWeek, isUpdateSkipWeek: true }))
     }
 
-    const getCarosuelItem = (content) => {
-        return [{
-            id: 1,
-            altText: 'Slide 1',
-            type: 'video',
-            src: "https://www.youtube.com/embed/Opvz0mnwvYo?si=a_dDmbH74VXc9bfv"
-        },
-        {
-            id: 2,
-            altText: 'Slide 2',
-            type: 'image',
-            src: content?.photo
-        }]
+    const getCarosuelItem = (content, index) => {
+        const items = [
+            {
+                id: 1,
+                altText: 'Slide 1',
+                type: index % 2 === 0 ? 'image' : 'video',
+                src: index % 2 === 0 ? content?.photo : content?.video,
+            },
+            {
+                id: 2,
+                altText: 'Slide 2',
+                type: index % 2 === 0 ? 'video' : 'image',
+                src: index % 2 === 0 ? content?.video : content?.photo,
+            }
+        ];
+        return items;
     }
 
-
-
-    const next = (content) => {
+    const next = (content, index) => {
         if (animating) return;
-        let items = getCarosuelItem(content);
+        let items = getCarosuelItem(content, index);
         const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
         setActiveIndex(nextIndex);
     };
 
-    const previous = (content) => {
+    const previous = (content, index) => {
         if (animating) return;
-        let items = getCarosuelItem(content);
+        let items = getCarosuelItem(content, index);
         const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
         setActiveIndex(nextIndex);
     };
@@ -52,8 +54,8 @@ const HealthHubContentView = () => {
         setActiveIndex(newIndex);
     };
 
-    const slideHandler = (content) => {
-        let carosuelItem = getCarosuelItem(content);
+    const slideHandler = (content, index) => {
+        let carosuelItem = getCarosuelItem(content, index);
         return carosuelItem.map((item) => (
             <CarouselItem
                 key={item.id}
@@ -84,7 +86,7 @@ const HealthHubContentView = () => {
     useEffect(() => {
         if (healthHubWeeklyContent?.content) {
             const interval = setInterval(() => {
-                next(healthHubWeeklyContent?.content[0]);
+                next(healthHubWeeklyContent?.content[0], 0);
             }, 3000);
 
             return () => clearInterval(interval);
@@ -100,7 +102,7 @@ const HealthHubContentView = () => {
                 </Col>
             </Row>
             <Row className='al_hubpreviw'>
-                {healthHubWeeklyContent?.content?.map((content) => (
+                {healthHubWeeklyContent?.content?.map((content, index) => (
                     <Col sm="12" className='mb-3' key={content.id}>
                         <Card className='al_cardview'>
                             <CardBody>
@@ -108,16 +110,16 @@ const HealthHubContentView = () => {
                                     <Col sm="5">
                                         <Carousel
                                             activeIndex={activeIndex}
-                                            next={() => next(content)}
-                                            previous={() => previous(content)}
+                                            next={() => next(content, index)}
+                                            previous={() => previous(content, index)}
                                             className="al_preview_carousel"
                                         >
                                             <CarouselIndicators
-                                                items={getCarosuelItem(content)}
+                                                items={getCarosuelItem(content, index)}
                                                 activeIndex={activeIndex}
                                                 onClickHandler={goToIndex}
                                             />
-                                            {slideHandler(content)}
+                                            {slideHandler(content, index)}
                                         </Carousel>
                                     </Col>
                                     <Col sm="7">

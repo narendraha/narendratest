@@ -11,7 +11,9 @@ const initialState = {
     actionData: "",
     actionType: getActionTypes.UNSELECT,
     assetUrl: "",
-    chatBotLoadingIndex: null
+    chatBotLoadingIndex: null,
+    mobileFieldValidation: "",
+    isProfileImageEnableToDelete: false
 };
 
 const utilityCallFunctionSlice = createSlice({
@@ -30,7 +32,8 @@ const utilityCallFunctionSlice = createSlice({
                 ...state,
                 getProfileDetails: action.payload,
                 profilePicture: ((action.payload?.profile_url === "NA") ? (action.payload.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : action.payload?.profile_url),
-                isLoading: false
+                isLoading: false,
+                isProfileImageEnableToDelete: action.payload?.profile_url !== "NA"
             }
             return state
         },
@@ -50,7 +53,12 @@ const utilityCallFunctionSlice = createSlice({
         getAssetsResponse: (state, action) => {
             state.assetUrl = action.payload
         },
-        contactUsRequest: () => { }
+        contactUsRequest: () => { },
+        getMobileValidationLengthByCountryCodeRequest: () => { },
+        getMobileValidationLengthByCountryCodeResponse: (state, action) => {
+            state.mobileFieldValidation = action?.payload
+        },
+        sendEmailPdfRequest: () => { }
     },
 });
 
@@ -62,7 +70,9 @@ export const {
     setConfirmationOpen, setConfirmationClose,
     getPatientDetailsRequest, getPatientDetailsResponse,
     getAssetsRequest, getAssetsResponse,
-    contactUsRequest
+    contactUsRequest,
+    getMobileValidationLengthByCountryCodeRequest, getMobileValidationLengthByCountryCodeResponse,
+    sendEmailPdfRequest
 } = actions;
 
 export default reducer;

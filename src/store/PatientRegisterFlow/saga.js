@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { call, put, select, takeLeading } from "redux-saga/effects";
 import { callAPI, getRole } from "../../_mock/internalJsControl";
 import { setLoading } from "../UtilityCallFunction/slice";
-import store from "../store";
+import { store } from "../store";
 import {
   getForgorPasswordForm,
   getRegisterOTPResponseData,
@@ -137,7 +137,6 @@ function* PasswordRegister({ payload }) {
     insuranceurl: payload?.actionData?.licenseNo,
     password: payload?.actionData?.password,
     username: payload?.actionData?.username,
-    insuranceurl: ""
   } : {
     username: payload?.actionData?.username,
     email: payload?.actionData?.email,
@@ -258,28 +257,30 @@ function* loginReducer({ payload }) {
       },
       contentType: "application/json",
     });
-    if (response?.status && response?.statuscode === 200) {
+
+    if(response?.status && response?.statuscode === 200){
       isAuthenticated = true
-      activeForm = "/home"
-      // navigate("/home")
+      // activeForm = "/home"
+      navigate("/home")
       toast(response?.message, {
-        position: "top-right",
-        type: "success",
-      });
-    } else {
+            position: "top-right",
+            type: "success",
+          });
+    localStorage.setItem("token", response.data?.token);
+    }else{
       toast(response?.message, {
-        position: "top-right",
-        type: "error",
-      });
+            position: "top-right",
+            type: "error",
+          });
     }
   } catch (error) {
+    activeForm = "/home"
     toast(error?.response?.data?.detail, {
       position: "top-right",
       type: "error",
     });
   }
-  yield put(loginForm({ ...actionData, isAuthenticated, actionData: null, activeForm: activeForm, isLoading: false }));
-  localStorage.setItem("token", response.data?.token);
+  yield put(loginForm({isAuthenticated, actionData: null, activeForm: activeForm, isLoading: false }));
 }
 
 function* googleLoginReducer({ payload }) {

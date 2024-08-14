@@ -83,10 +83,6 @@ export default function Affaq() {
           <h3 className='text-center'>Alfred addresses Afib-related questions, and shows empathy and understanding, making patients feel assured and building trust in Alfred's personalized Education.</h3>
           <p className='text-center'>Alfred FAQs serve as awareness guidelines that provide valuable insights into Afib health conditions, treatments, and preventive measures, helping patients make informed decisions. Alfred bridged the information gap between the Afib patients healthcare providers, by addressing the valuable awareness in a very user-friendly approach.</p>
           <Accordion variant="cs_style1 cs_type_2" data={faqData} />
-
-          <div className='alfaq_footer'>
-            Your AI companion, health journey navigator, and coach for self-better care in managing a patient's atrial fibrillation journey
-          </div>
         </div>
       </Section>
     </>

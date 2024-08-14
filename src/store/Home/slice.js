@@ -28,7 +28,8 @@ const homePageSlice = createSlice({
         },
         getActiveTabRequest: () => { },
         getActiveTabResponse: (state, action) => {
-            state.activeTab = action.payload
+            state.activeTab = action.payload?.updatedActiveTab
+            state.completedActiveHomeTab = action.payload?.completedActiveHomeTab
         },
         getHealthDetailsLastUpdateRequest: () => { },
         getHealthDetailsLastUpdateResponse: (state, action) => {
@@ -55,6 +56,7 @@ const homePageSlice = createSlice({
         getHealthHubProgressResponse: (state, action) => {
             state.healthHubProgressDetails = action?.payload?.healthHubProgressDetails
             state.currentProgressWeek = action?.payload?.selectedWeekOption
+            state.selectedHealthHubWeek = action?.payload?.selectedWeekOption
         },
         getWeekWiseHealthHubContentRequest: () => { },
         getWeekWiseHealthHubContentResponse: (state, action) => {
@@ -63,7 +65,8 @@ const homePageSlice = createSlice({
         getVitalDetailsLastUpdateRequest: () => { },
         getVitalDetailsLastUpdateResponse: (state, action) => {
             state.lastUpdatedVitalDetails = action?.payload
-        }
+        },
+        setHealthHubSkippedWeekRequest: () => { }
     }
 });
 
@@ -82,7 +85,8 @@ export const {
     setSelectedHealthHubWeekValues,
     getHealthHubProgressRequest, getHealthHubProgressResponse,
     getWeekWiseHealthHubContentRequest, getWeekWiseHealthHubContentResponse,
-    getVitalDetailsLastUpdateRequest, getVitalDetailsLastUpdateResponse
+    getVitalDetailsLastUpdateRequest, getVitalDetailsLastUpdateResponse,
+    setHealthHubSkippedWeekRequest
 
 } = actions;
 

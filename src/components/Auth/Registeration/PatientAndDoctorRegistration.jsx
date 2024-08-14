@@ -6,14 +6,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
+import { Col, FormGroup, Label, Modal, ModalBody, Row } from "reactstrap";
 import * as Yup from "yup";
-import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, getRole, pageTitle } from "../../../_mock/helperIndex";
+import { customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions, getRole, pageTitle } from "../../../_mock/helperIndex";
 import alferdlogomobile from "../../../images/alfredlogo.svg";
 import alferdlogo from "../../../images/alfredlogowhite.svg";
-import { getRegisterClear, getRegisterResponseData } from "../../../store/PatientRegisterFlow/slice";
+import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
 import Loading from "../../InnerApp/LoadingComponent";
 import { PhoneNumberCodeAndFlag } from "../../Utilities/PhoneNumberCodeAndFlag";
+import { Terms } from "./Terms&Confition";
 
 let stateOfPractice = [
     { label: "Cardiology", value: "cardiology" },
@@ -39,10 +40,13 @@ const PatientAndDoctorRegistration = () => {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [initialValues, setInitialValues] = useState("");
     const [validationSchema, setValidationSchema] = useState(Yup.object().shape({}));
+    const [getLocalStorage, setLocalStorage] = useState("");
 
     const genderoptions = getGenderoptions;
     const residenceoptions = getResidenceoptions;
     const educationOptions = getEductaionOptions;
+    const isPatientAccount = getLocalStorage === getRole.PATIENT
+    const isDoctorAccount = getLocalStorage === getRole.PHYSICIAN
 
     const { isLoading, activeForm, flowForm, actionData, actionType } = useSelector((state) => state.patientRegisterSlice);
 
@@ -82,57 +86,58 @@ const PatientAndDoctorRegistration = () => {
         ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
     });
 
+    let patientFormInitialValues = {
+        username: actionData?.username || "",
+        email: actionData?.email || "",
+        dob: actionData?.dob || "",
+        gender: actionData?.gender || "",
+        mobile: actionData?.mobile || "",
+        rtype: actionData?.rtype || "",
+        education: actionData?.education || "",
+        ssn: actionData?.ssn || "",
+        insuranceurl: actionData?.insuranceurl || "",
+        file: actionData?.file || null,
+        termsAndConditions: actionData?.termsAndConditions || false,
+        countryCode: ""
+    }
+
+    let doctorFormInitialValues = {
+        username: actionData?.username || "",
+        email: actionData?.email || "",
+        mobile: actionData?.mobile || "",
+        education: actionData?.education || "",
+        specialization: actionData?.specialization || "",
+        nationalID: actionData?.nationalID || "",
+        licenseNo: actionData?.licenseNo || "",
+        rCode: actionData?.rCode || "",
+        country: actionData?.rtype || "",
+        state: actionData?.state || "",
+        hospital: actionData?.hospital || "",
+    }
+
     useEffect(() => {
-        if (flowForm === getRole.PATIENT) {
+        if (isPatientAccount) {
             pageTitle("Register | Patient")
-            setInitialValues({
-                username: actionData?.username || "",
-                email: actionData?.email || "",
-                dob: actionData?.dob || "",
-                gender: actionData?.gender || "",
-                mobile: actionData?.mobile || "",
-                rtype: actionData?.rtype || "",
-                education: actionData?.education || "",
-                ssn: actionData?.ssn || "",
-                insuranceurl: actionData?.insuranceurl || "",
-                file: actionData?.file || null,
-                termsAndConditions: actionData?.termsAndConditions || false,
-                countryCode: ""
-            });
+            setInitialValues(patientFormInitialValues);
             setValidationSchema(patientValidationSchema)
         }
-        if (flowForm === getRole.PHYSICIAN) {
+        if (isDoctorAccount) {
             pageTitle("Register | Doctor")
-            setInitialValues(({
-                username: actionData?.username || "",
-                email: actionData?.email || "",
-                mobile: actionData?.mobile || "",
-                education: actionData?.education || "",
-                specialization: actionData?.specialization || "",
-                nationalID: actionData?.nationalID || "",
-                licenseNo: actionData?.licenseNo || "",
-                rCode: actionData?.rCode || "",
-                country: actionData?.rtype || "",
-                state: actionData?.state || "",
-                hospital: actionData?.hospital || "",
-            }));
+            setInitialValues(doctorFormInitialValues);
             setValidationSchema(doctorValidationSchema)
         }
         return () => {
             setInitialValues("")
             setValidationSchema(Yup.object().shape({}))
         }
-    }, [flowForm]);
+    }, [getLocalStorage]);
 
     useEffect(() => {
-        if (activeForm) {
-            navigate(activeForm)
-        }
-    }, [activeForm]);
+        setLocalStorage(sessionStorage.getItem("regesteTypeSelection"))
+    }, [])
 
     const handleFirstFormSubmit = (values, isTerm = false) => {
         let updatedActionType = isTerm ? actionType : getActionTypes.SELECT
-        dispatch(getRegisterResponseData({ actionType: updatedActionType, actionData: values, isTerm }));
         window.sessionStorage.setItem("actionData", JSON.stringify(values));
     };
 
@@ -187,22 +192,44 @@ const PatientAndDoctorRegistration = () => {
                                             <>
                                                 <h6 className="mb-2">Personal Details</h6>
                                                 <div className="al_login-form al_registrationform wflexScroll">
-                                                    <FormGroup>
-                                                        <Label>
-                                                            <span className="requiredLabel">*</span>Full Name
-                                                        </Label>
-                                                        <Field
-                                                            type="text"
-                                                            name="username"
-                                                            placeholder="e.g.John Doe"
-                                                            className="form-control"
-                                                        />
-                                                        <ErrorMessage
-                                                            name="username"
-                                                            component={"div"}
-                                                            className="text-danger"
-                                                        />
-                                                    </FormGroup>
+                                                    <Row className="mx-0">
+                                                        <Col lg="6" md="12" className="ps-0">
+                                                            <FormGroup>
+                                                                <Label>
+                                                                    <span className="requiredLabel">*</span>First Name
+                                                                </Label>
+                                                                <Field
+                                                                    type="text"
+                                                                    name="username"
+                                                                    placeholder="e.g.John"
+                                                                    className="form-control"
+                                                                />
+                                                                <ErrorMessage
+                                                                    name="username"
+                                                                    component={"div"}
+                                                                    className="text-danger"
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col lg="6" md="12" className="pe-0">
+                                                            <FormGroup>
+                                                                <Label>
+                                                                    <span className="requiredLabel">*</span>Last Name
+                                                                </Label>
+                                                                <Field
+                                                                    type="text"
+                                                                    name="lastname"
+                                                                    placeholder="e.g. Doe"
+                                                                    className="form-control"
+                                                                />
+                                                                <ErrorMessage
+                                                                    name="lastname"
+                                                                    component={"div"}
+                                                                    className="text-danger"
+                                                                />
+                                                            </FormGroup>
+                                                        </Col>
+                                                    </Row>
                                                     <FormGroup>
                                                         <Label>
                                                             <span className="requiredLabel">*</span>Email ID
@@ -242,7 +269,7 @@ const PatientAndDoctorRegistration = () => {
                                                             className="text-danger"
                                                         />
                                                     </FormGroup>
-                                                    <FormGroup>
+                                                    {/* <FormGroup>
                                                         <Label>
                                                             <span className="requiredLabel">*</span>Highest
                                                             Education
@@ -251,6 +278,7 @@ const PatientAndDoctorRegistration = () => {
                                                             options={educationOptions}
                                                             name="education"
                                                             className="inputSelect"
+                                                            menuPlacement="top"
                                                             value={educationOptions.find(
                                                                 (option) => option.value === values.education
                                                             )}
@@ -267,7 +295,8 @@ const PatientAndDoctorRegistration = () => {
                                                             component={"div"}
                                                             className="text-danger"
                                                         />
-                                                    </FormGroup>
+                                                    </FormGroup> */}
+
                                                     {flowForm === getRole.PATIENT && <>
                                                         <FormGroup>
                                                             <Label>
@@ -332,7 +361,7 @@ const PatientAndDoctorRegistration = () => {
                                                                 className="text-danger"
                                                             />
                                                         </FormGroup>
-                                                        <FormGroup>
+                                                        {/* <FormGroup>
                                                             <Label>
                                                                 <span className="requiredLabel">*</span>Residence
                                                                 Type
@@ -397,55 +426,74 @@ const PatientAndDoctorRegistration = () => {
                                                                     Upload File
                                                                 </label>
                                                             </div>
-                                                            {/* <div className="al_fileuplod-note">* jpg, jpeg, png File only</div> */}
                                                             <ErrorMessage
                                                                 name="file"
                                                                 component="div"
                                                                 className="text-danger"
                                                             />
-                                                        </FormGroup>
-                                                        <Label check className="d-flex align-items-center">
-                                                            <div id="terms" style={{ lineHeight: 0 }}>
-                                                                <input
-                                                                    name="termsAndConditions"
-                                                                    type="checkbox"
-                                                                    defaultChecked={values?.termsAndConditions}
-                                                                    value={values?.termsAndConditions}
-                                                                    disabled={isTermsAndConditionsRead}
-                                                                    onChange={(e) => {
-                                                                        setFieldValue(
-                                                                            "termsAndConditions",
-                                                                            e.target.checked
-                                                                        );
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            &nbsp; I agree to the&nbsp;
-                                                            <Link
-                                                                to="/terms"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
+                                                        </FormGroup> */}
+                                                        <Label>
+                                                            <span>I agree to the </span>
+                                                            <span className="al_text_link"
                                                                 onClick={() => {
                                                                     handleFirstFormSubmit(values, true)
                                                                     serIsTermsAndConditionsRead(false);
                                                                 }}
                                                             >
-                                                                terms and conditions
-                                                            </Link>
-                                                            {isTermsAndConditionsRead && (
-                                                                <UncontrolledTooltip
-                                                                    color="primary"
-                                                                    placement="right"
-                                                                    target="terms"
-                                                                >
-                                                                    Please read the Terms and Conditions to enable
-                                                                    this option
-                                                                </UncontrolledTooltip>
-                                                            )}
+                                                                Terms and conditions
+                                                            </span>
                                                         </Label>
+
+                                                        {/* {isTermsAndConditionsRead && (
+                                                            <UncontrolledTooltip
+                                                                color="primary"
+                                                                placement="right"
+                                                                target="terms"
+                                                            >
+                                                                Please read the Terms and Conditions to enable
+                                                                this option
+                                                            </UncontrolledTooltip>
+                                                        )} */}
+                                                        <Modal className='modal-lg detailsModal' isOpen={isTermsAndConditionsRead}>
+                                                            <div className='d-flex align-items-center justify-content-between p-4'>
+                                                                <h6 className='mb-0'>Terms & Conditions</h6>
+                                                                <i className="icon_alfred_close pointer" title="Close" onClick={() => { serIsTermsAndConditionsRead(false); }}></i>
+                                                            </div>
+                                                            <ModalBody className="wflexLayout p-0">
+                                                                <div className='wflexScroll mb-3'>
+                                                                    <Terms />
+                                                                    <div className="px-4">
+                                                                        <Label check className="d-flex align-items-center">
+                                                                            <div id="terms" style={{ lineHeight: 0 }}>
+                                                                                <input
+                                                                                    name="termsAndConditions"
+                                                                                    type="checkbox"
+                                                                                    defaultChecked={values?.termsAndConditions}
+                                                                                    value={values?.termsAndConditions}
+                                                                                    // disabled={isTermsAndConditionsRead}
+                                                                                    onChange={(e) => {
+                                                                                        setFieldValue(
+                                                                                            "termsAndConditions",
+                                                                                            e.target.checked
+                                                                                        );
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                            &nbsp; I have accepted the terms and condition
+                                                                        </Label>
+                                                                        <div>
+                                                                            <button type="button" className="my-3 al_button al_savebtn me-2">Submit</button>
+                                                                            <button type="button" className="al_testbtn" onClick={() => { }}>
+                                                                                <i className="icon_alfred_share me-2"></i>Share to email
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ModalBody>
+                                                        </Modal>
                                                     </>}
 
-                                                    {flowForm === getRole.PHYSICIAN && <>
+                                                    {isDoctorAccount && <>
                                                         <FormGroup>
                                                             <Label>
                                                                 <span className="requiredLabel">*</span>State of Practice
@@ -582,14 +630,13 @@ const PatientAndDoctorRegistration = () => {
                                                         </FormGroup>
 
                                                     </>}
-
                                                 </div>
                                                 <div className="al_login_footer mt-3">
                                                     <div className="d-flex">
                                                         <button
                                                             type="button"
                                                             style={{ width: "50px" }}
-                                                            className="al_login_button_back me-3 d-flex align-items-center justify-content-center"
+                                                            className="al_login_button_back me-3 mb-0 d-flex align-items-center justify-content-center"
                                                             onClick={() => navigate('/registration-info')}
                                                         >
                                                             <i className="icon_alfred_back-arrow"></i>
@@ -597,7 +644,7 @@ const PatientAndDoctorRegistration = () => {
                                                         <button
                                                             type="submit"
                                                             className="al_login_button"
-                                                            disabled={flowForm === getRole.PATIENT && !values?.termsAndConditions}
+                                                            disabled={isPatientAccount && !values?.termsAndConditions}
                                                         >
                                                             Continue
                                                         </button>
@@ -605,7 +652,7 @@ const PatientAndDoctorRegistration = () => {
                                                     <button
                                                         type="button"
                                                         className="al_login_button_back mt-3"
-                                                        onClick={() => dispatch(getRegisterClear())}
+                                                        onClick={() => dispatch(setActionTypeAndActionData({ actionData: "" }))}
                                                     >
                                                         <Link to="/signin">
                                                             Back to <strong>Sign in</strong>

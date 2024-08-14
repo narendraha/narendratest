@@ -118,13 +118,13 @@ export const ProfileViewDetails = () => {
             <Row>
                 <Col md="4" sm="12">
                     <div className="al_profiledata">
-                        <div>{getProfileDetails?.mobile || "N/A"}</div>
+                        <div>+{getProfileDetails?.mobile || "N/A"}</div>
                         <Label>Mobile</Label>
                     </div>
                 </Col>
                 <Col md="4" sm="12">
                     <div className="al_profiledata">
-                        <div>{getProfileDetails?.nationality === "NA" ? "United State" : getProfileDetails?.nationality}</div>
+                        <div>{getProfileDetails?.nationality || "N/A"}</div>
                         <Label>Nationality</Label>
                     </div>
                 </Col>

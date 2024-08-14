@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 import { Label } from 'reactstrap';
 import { getActionTypes } from '../../../_mock/internalJsControl';
-import { addProfileImageRequest } from '../../../store/Profile/slice';
+import { addProfileImageRequest, deleteProfileImageRequest } from '../../../store/Profile/slice';
+import { setConfirmationOpen } from '../../../store/UtilityCallFunction/slice';
 
 const ProfileImageUpload = () => {
     const dispatch = useDispatch();
 
     const { uploadedProfileImage } = useSelector((state) => state?.profileSlice);
-    const { profilePicture, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { profilePicture, actionType, isProfileImageEnableToDelete } = useSelector((state) => state?.utilityCallFunctionSlice);
     const profilePictureData = (!uploadedProfileImage && uploadedProfileImage === "") ? profilePicture : uploadedProfileImage?.file;
 
     const getFileSizeInMb = (fileSize = 0) => (fileSize ? fileSize / 1024 / 1024 : 0);
@@ -33,11 +34,19 @@ const ProfileImageUpload = () => {
         }
     }
 
+    const handleSubmit = () => {
+        dispatch(deleteProfileImageRequest())
+    }
+
+    const deleteProfileImageHandle = () => {
+        dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, message: "Are you sure, you want to delete your profile picture?", callApi: handleSubmit }))
+    }
+
 
     return (
         <React.Fragment>
             <div className={"al_profile_photo "}>
-                <img src={profilePictureData} alt="profilePhoto" loading='eager'/>
+                <img src={profilePictureData} alt="profilePhoto" loading='eager' />
             </div>
             {actionType === getActionTypes.EDIT && (
                 <>
@@ -51,17 +60,14 @@ const ProfileImageUpload = () => {
                             hidden
                             accept=".jpg,.jpeg,.png"
                         />
-                        <Label
-                            for="uploadPicture"
-                        // onClick={() => (true)}
-                        >
+                        <Label for="uploadPicture">
                             <div className="al_profile-edit-icon">
                                 <i className="icon_alfred_edit"></i>
                             </div>
                         </Label>
-                        {/* {updatedFile && <div className="al_profile-edit-icon ms-3" onClick={() => setUpdatedFile("")}>
+                        {isProfileImageEnableToDelete && <div className="al_profile-edit-icon ms-3" onClick={deleteProfileImageHandle}>
                             <i className="icon_alfred_trashbin"></i>
-                        </div>} */}
+                        </div>}
                     </div>
                 </>
             )}

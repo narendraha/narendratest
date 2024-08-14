@@ -49,15 +49,19 @@ export default function Personomics() {
     dispatch(getAssetsRequest(animation))
   }, []);
 
-  console.log("9999999999999999999999999999", assetUrl)
   return (
     <>
       <section className="videobanner cs_banner cs_style_3 cs_bg_filed" style={{ backgroundImage: `url('/images/about/banner_bg.svg')` }}>
         <div className="cs_banner_img">
-          {/* <img src={personomics} alt="chatbot" /> */}
-          <video width="auto" height="430" autoPlay="autoplay" controls controlsList="nodownload">
-            <source src={assetUrl?.["animation"]} type="video/mp4" />
-          </video>
+          <iframe
+            width="800"
+            height="410"
+            src="https://www.youtube.com/embed/jvKUsnrNYtc?autoplay=1&mute=1"
+            title="HelloAlfred.ai Introduction"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
         </div>
         <div className="container">
           <div className="cs_banner_text">
@@ -81,11 +85,6 @@ export default function Personomics() {
         </p>
         <Section topMd={50} topLg={50} topXl={50}>
           <TestimonialCarouselStyle2 data={personomicsData} />
-        </Section>
-        <Section>
-          <div className='alfaq_footer'>
-            Your AI companion, health journey navigator, and coach for self-better care in managing a patient's atrial fibrillation journey
-          </div>
         </Section>
       </div>
     </>

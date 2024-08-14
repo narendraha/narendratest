@@ -126,6 +126,7 @@ ol li {
             width: 100%;
         }
     }
+
     >div:nth-of-type(even) {
         .al_cardview {
             .row {
@@ -228,7 +229,8 @@ ol li {
     .cs_banner_img {
         padding: 0 50px !important;
 
-        video {
+        video,
+        iframe {
             border: 5px solid #ffffff;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
@@ -237,6 +239,7 @@ ol li {
         }
     }
 }
+
 
 button.al_add_dashed_button {
     border: 1px dashed #04C1D6;
@@ -812,12 +815,12 @@ section:not(.cs_banner) {
 }
 
 .alfaq_footer {
-    background-color: #f1f1f1;
-    border-radius: 30px;
+    background-color: #f9f9f9;
+    border-radius: 18px;
     margin: 50px 0;
     color: #1C2C3C;
-    font-size: 20px;
-    padding: 35px;
+    font-size: 16px;
+    padding: 25px;
     text-align: center;
     line-height: normal;
 }
@@ -2132,6 +2135,9 @@ ul.standardPlans {
             position: relative;
             transition: all 0.25s ease-out;
             color: #7c7c7c;
+            background-color: #e4e9ea;
+            border: 3px solid #ffffff;
+            box-shadow: 0.5px 0 0px 3px #e4e9ea;
         }
 
         &::before,
@@ -2142,7 +2148,7 @@ ul.standardPlans {
             position: absolute;
             z-index: 1;
             width: 100%;
-            left: -38%;
+            left: -40%;
             top: 50%;
             transform: translateY(-50%);
             transition: all 0.25s ease-out;
@@ -2156,6 +2162,20 @@ ul.standardPlans {
         &.al_current {
             i {
                 background-color: #07db86;
+                position: relative;
+
+                &::after {
+                    top: -6px;
+                    left: -5px;
+                    width: 1.15em;
+                    height: 1.15em;
+                    position: absolute;
+                    content: "";
+                    display: block;
+                    border-radius: 50%;
+                    border: 3px solid #07db86;
+                    animation: dot-ripple 2s linear infinite;
+                }
             }
         }
 
@@ -2166,7 +2186,25 @@ ul.standardPlans {
             }
 
             i {
-                color: #07db86;
+                color: #ffffff;
+                background-color: #07db86;
+            }
+        }
+
+        &.al_complete {
+            i {
+                border: 3px solid #07db86;
+                box-shadow: 0.5px 0 0px 3px #07db86;
+            }
+        }
+
+        &.al_current {
+            animation: pulse 1s;
+
+            i {
+                background-color: #ffffff;
+                border: 3px solid #07db86;
+                box-shadow: 0.5px 0 0px 3px #07db86;
             }
         }
 
@@ -2177,9 +2215,19 @@ ul.standardPlans {
             }
 
             i {
-                color: #ffa93a;
+                background-color: #ffa93a;
+                color: #ffffff;
+                border: 3px solid #ffa93a;
+                box-shadow: 0.5px 0 0px 3px #ffa93a;
             }
         }
+    }
+}
+
+@keyframes dot-ripple {
+    100% {
+        opacity: 0;
+        transform: scale(2.5);
     }
 }
 
@@ -2521,6 +2569,7 @@ button.al_upgrade_btn {
         }
     }
 }
+
 
 .al_profile_manage {
     h2 {

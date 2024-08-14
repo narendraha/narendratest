@@ -20,10 +20,10 @@ const educationalChatBotSlice = createSlice({
         setChatHistoryRequest: (state, action) => {
             state = {
                 ...state,
-                chatHistory: action.payload === null ? [] : [
+                chatHistory: action.payload === null ? [] : state?.chatHistory?.length > 0 ? [
                     ...state?.chatHistory,
                     action.payload
-                ]
+                ] : [action.payload]
             }
             return state
         },

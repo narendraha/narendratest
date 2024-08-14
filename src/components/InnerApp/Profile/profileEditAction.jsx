@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import moment from "moment/moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import PhoneInput from 'react-phone-input-2';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
-import { phoneNumberReg } from "../../../_mock/RegularExp";
 import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
 import { addProfileImageRequest, profileDetailsAndProfileImageUpdateRequest } from '../../../store/Profile/slice';
-import { setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
-import { PhoneNumberCodeAndFlag } from '../../Utilities/PhoneNumberCodeAndFlag';
+import { getMobileValidationLengthByCountryCodeRequest, setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
 const genderoptions = getGenderoptions;
 const residenceoptions = getResidenceoptions;
@@ -36,7 +35,12 @@ export const ProfileEditAction = () => {
     const dispatch = useDispatch();
 
     const { uploadedProfileImage } = useSelector((state) => state?.profileSlice);
-    const { getProfileDetails, profilePicture } = useSelector((state) => state?.utilityCallFunctionSlice);
+    let { getProfileDetails, profilePicture, mobileFieldValidation } = useSelector((state) => state?.utilityCallFunctionSlice);
+
+    useEffect(() => {
+        if (mobileFieldValidation === null)
+            mobileFieldValidation = getProfileDetails?.mobile_checks?.max_len
+    }, [getProfileDetails]);
 
     const handleSubmit = (data) => {
         dispatch(profileDetailsAndProfileImageUpdateRequest(data))
@@ -46,6 +50,25 @@ export const ProfileEditAction = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
         dispatch(addProfileImageRequest(""))
     }
+
+    let getmobileLengthWithoutCO = (value, country = null, dialCode = null) => {
+        return value?.replace(country?.dialCode || dialCode, "")?.length
+    }
+
+    const getMobileValueWithoutCountryCode = async (value, country, setFieldValue) => {
+        let mobileNumberWithoutCountryCode = getmobileLengthWithoutCO(value, country)
+        await setFieldValue('mobileValueLengthWithoutCountryCode', mobileNumberWithoutCountryCode)
+        dispatch(getMobileValidationLengthByCountryCodeRequest(country))
+    }
+
+    const handleMobileChange = (value, country, setFieldValue) => {
+        setFieldValue('mobile', value);
+        getMobileValueWithoutCountryCode(value, country, setFieldValue)
+    }
+
+    // const fetChInitialValues = (key) => {
+    //     return getProfileDetails?.[key] !== "NA" ? getProfileDetails?.[key] : ""
+    // }
 
     return (
         <React.Fragment>
@@ -65,13 +88,13 @@ export const ProfileEditAction = () => {
                     weight: getProfileDetails?.weight !== "NA" ? getProfileDetails?.weight : "",
                     bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
                     nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : "",
-                    profile_url: profilePicture || ""
+                    profile_url: profilePicture || "",
+                    mobileValueLengthWithoutCountryCode: (getProfileDetails?.mobile_checks?.dialCode && getmobileLengthWithoutCO(getProfileDetails?.mobile_checks?.dialCode)) || null,
+                    country: getProfileDetails?.mobile_checks?.country_code || 'us',
+                    dialCode: getProfileDetails?.mobile_checks?.Dial_Code,
                 }}
                 validationSchema={Yup.object().shape({
                     username: customContentValidation('Full Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
-                    mobile: Yup.string()
-                        .matches(phoneNumberReg, "Invalid phone number")
-                        .required("Mobile number is required"),
                     dob: Yup.date()
                         .max(
                             new Date(Date.now() - 567648000000),
@@ -96,11 +119,11 @@ export const ProfileEditAction = () => {
                     feet: Yup.string()
                         .test(
                             'is-greater-than-one',
-                            'Height must be atleast 3feet',
+                            'Height must be atleast 3 feet',
                             value => value && parseFloat(value) > 3
                         ).test(
                             'is-less-than-nine',
-                            "Height can not be more than 9feet",
+                            "Height can not be more than 9 feet",
                             value => value && parseFloat(value) <= 9
                         )
                         // .min(1, "Too Short!") // Minimum length of 1 character
@@ -116,7 +139,6 @@ export const ProfileEditAction = () => {
                     let data = {
                         ...values,
                         dob: moment(values.dob).format("YYYY-MM-DD"),
-                        nationality: "United State"
                     };
                     dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, actionData: data, callApi: handleSubmit }))
                 }}
@@ -125,7 +147,8 @@ export const ProfileEditAction = () => {
                     values,
                     setFieldValue,
                     setFieldTouched,
-                    dirty
+                    dirty,
+                    touched
                 }) => {
                     return (
                         <>
@@ -314,21 +337,19 @@ export const ProfileEditAction = () => {
                                                 Mobile
                                             </Label>
                                             <div className="input-group">
-                                                <Field
-                                                    type="text"
-                                                    // className="form-control"
-                                                    name="mobile"
-                                                    placeholder="e.g.123-4567-8901"
-                                                    // onKeyPress={(e) => allowedNumbersOnField(10, e)}
-                                                    aria-describedby="basic-addon1"
-                                                    component={PhoneNumberCodeAndFlag}
+                                                <PhoneInput
+                                                    country={values?.country}
+                                                    value={values.mobile}
+                                                    onChange={(value, country) => handleMobileChange(value, country, setFieldValue)}
+                                                    inputProps={{
+                                                        onBlur: () => { setFieldTouched('mobile', true) }
+                                                    }}
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="mobile"
-                                                component={"div"}
-                                                className="text-danger"
-                                            />
+                                            {touched.mobile && values?.mobile === "" ? <div className="text-danger">{"Mobile number is required"}</div> :
+                                                values?.mobileValueLengthWithoutCountryCode !== null && mobileFieldValidation && values?.mobileValueLengthWithoutCountryCode !== mobileFieldValidation ?
+                                                    <div className="text-danger">{`Allow only ${mobileFieldValidation} numbers`}</div> : ""
+                                            }
                                         </FormGroup>
                                     </Col>
                                     <Col md="4" sm="12">
@@ -444,11 +465,11 @@ export const ProfileEditAction = () => {
                                         Cancel
                                     </button>
                                 </div>
-                            </Form>
+                            </Form >
                         </>
                     );
                 }}
             </Formik>
-        </React.Fragment>
+        </React.Fragment >
     )
 }

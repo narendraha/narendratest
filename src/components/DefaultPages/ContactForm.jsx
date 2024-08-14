@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch } from 'react-redux';
 import { Col, FormGroup, Label, Row } from 'reactstrap';
 import * as Yup from 'yup';
-import { customContentValidation } from '../../_mock/coreHelperHA';
+import { customContentValidation } from '../../_mock/helperIndex';
 import { contactUsRequest } from '../../store/UtilityCallFunction/slice';
 
 export default function ContactForm() {
@@ -37,7 +37,7 @@ export default function ContactForm() {
           return (
             <Form>
               <Row>
-                <Col lg="6" sm="12">
+                <Col sm="12">
                   <FormGroup>
                     <Label><span className='requiredLabel'>*</span>Name</Label>
                     <Field
@@ -53,7 +53,7 @@ export default function ContactForm() {
                     />
                   </FormGroup>
                 </Col>
-                <Col lg="6" sm="12">
+                <Col sm="12">
                   <FormGroup>
                     <Label><span className='requiredLabel'>*</span>Email</Label>
                     <Field

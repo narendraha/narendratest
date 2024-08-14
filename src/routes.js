@@ -6,21 +6,11 @@ import Layout from "./components/MainLayout/Layout";
 import Loading from "./components/MainLayout/Loading";
 import MainLayout from "./components/MainLayout/index";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
-import ErrorPage from "./components/Pages/ErrorPage";
+import BackToHomeErrorPage from "./components/Pages/BackToHomeErrorPage";
+import BackToSignInErrorPage from "./components/Pages/BackToSIgninErrorPage";
 
 // auth
-import ForgotPassword from "./components/Auth/ForgotPassword";
-import OTPComponent from "./components/Auth/OTPForm";
-import PasswordResetComponent from "./components/Auth/PasswordResetComponent";
-import PasswordSuccessComponent from "./components/Auth/PasswordSuccessComponent";
-// import DoctorRegister from "./components/Auth/Registeration/DoctorRegisterComponent";
-// import PatientRegisterBasicInfoComponent from "./components/Auth/Registeration/PatientRegister";
-import PrivacyPolicy from "./components/Auth/Registeration/PrivacyPolicy";
-import RegisterInfo from "./components/Auth/Registeration/RegisterInfo";
-import Terms from "./components/Auth/Registeration/Terms&Confition";
-import Signin from "./components/Auth/Signin/SignIn";
-import SubscriptionFormComponent from "./components/Auth/SubscriptionForm";
-import PatientAndDoctorRegistration from "./components/Auth/Registeration/PatientAndDoctorRegistration"
+import AuthManagerForSignInAndReg from "./components/Auth/AuthManager";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -49,6 +39,7 @@ const Smoking = React.lazy(() => import("./components/Pages/Smoking"));
 const Sleepapnea = React.lazy(() => import("./components/Pages/Sleepapnea"));
 const Symptoms = React.lazy(() => import("./components/Pages/Symptoms"));
 const Vascular = React.lazy(() => import("./components/Pages/Vascular"));
+const TermsAndConditionExternal = React.lazy(() => import("./components/Pages/TermsAndConditionExternal"));
 
 // auth-user
 const Home = React.lazy(() => import("./components/InnerApp/Home/HomeManager"));
@@ -104,7 +95,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
-              <Route path="*" element={<ErrorPage />} />
+              <Route path="*" element={<BackToHomeErrorPage />} />
             </Route>
           </>
         ) : (
@@ -130,9 +121,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="vascular" element={<Vascular />} />
               <Route path="appointments" element={<Appointments />} />
               <Route path="pharmacy" element={<Pharmacy />} />
-              <Route
-                path="communityresources"
-                element={<CommunityResources />}
+              <Route path="communityresources" element={<CommunityResources />}
               />
               <Route path="healthplan" element={<HealthPlan />} />
               <Route path="aco" element={<ACO />} />
@@ -141,20 +130,12 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="healthcare" element={<HealthcareConsultant />} />
             </Route>
             <Route path="/" element={<NonAuthLayout />}>
-              <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
-              <Route path="terms" element={<Terms />} />
-              <Route path="privacypolicy" element={<PrivacyPolicy />} />
-              <Route path="registration-info" element={<RegisterInfo />} />
-              {/* <Route path="patient/registration" element={<PatientRegisterBasicInfoComponent />} /> */}
-              <Route path="patient/registration" element={<PatientAndDoctorRegistration />} />
-              <Route path="patient/OTP" element={<OTPComponent />} />
-              <Route path="passwordReset" element={<PasswordResetComponent />} />
-              <Route path="passwordSuccess" element={<PasswordSuccessComponent />} />
-              <Route path="subscription" element={<SubscriptionFormComponent />} />
-              {/* <Route path="doctor/registration" element={<DoctorRegister />} /> */}
-              <Route path="doctor/registration" element={<PatientAndDoctorRegistration />} />
-              <Route path="forgot-password" element={<ForgotPassword />} />
-              <Route path="*" element={<ErrorPage />} />
+              {/* <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} /> */}
+              <Route path="registration" element={<AuthManagerForSignInAndReg />} />
+              <Route path="signin" element={<AuthManagerForSignInAndReg />} />
+              <Route path="forgot-password" element={<AuthManagerForSignInAndReg />} />
+              <Route path="*" element={<BackToSignInErrorPage />} />
+              <Route path="tnc" element={<TermsAndConditionExternal />} />
             </Route>
           </>
         )}

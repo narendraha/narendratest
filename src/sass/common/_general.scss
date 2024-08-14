@@ -2033,7 +2033,7 @@ input::-ms-input-placeholder,
 }
 
 .cs_contact_form.cs_style_1 {
-  padding: 60px 12%;
+  padding: 12%;
   box-shadow: 0px 4px 21px 1px rgba(48, 123, 196, 0.1);
 
   @media (max-width: 991px) {
@@ -3093,6 +3093,12 @@ a.ui-button:active,
 @media screen and (min-width: 576px) and (max-width: 1023px) {
   .pe-5 {
     padding-right: 1.25rem !important;
+  }
+
+
+  .cs_banner.cs_style_3 .cs_banner_title,
+  .cs_banner.cs_style_5 .cs_banner_title {
+    font-size: 30px !important;
   }
 
   .me-4 {

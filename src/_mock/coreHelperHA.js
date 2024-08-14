@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
+import { persistStore } from 'redux-persist';
 import * as Yup from 'yup';
 import App from '../App';
+import { store } from '../store/store';
 import { customPatterns } from './helperIndex';
-import { Provider } from 'react-redux';
-import store from '../store/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 let controleErrors = {
     "min": "Minimum {min} {type} are required",
@@ -33,15 +35,16 @@ var N = (e, s, t) => new Promise((a, n) => {
     d((t = t.apply(e, s)).next())
 });
 
-
 // Initial rendering 
 export var loadPreDataAndApp = (e = !1) => N(void 0, null, function* () {
     //stop log in production
     process.env.NODE_ENV === "production" && (console.log = function () { })
     let app = React.createElement(Provider, {
         store: store
+    }, React.createElement(PersistGate, {
+        persistor: persistStore(store)
     },
-        React.createElement(Router, null, React.createElement(App, null)))
+        React.createElement(Router, null, React.createElement(App, null))))
     parseInt(React.version) >= 18 ? ReactDOM.createRoot(document.getElementById("root")).render(app) : ReactDOM.replace(app, document.getElementById("root"))
 })
 

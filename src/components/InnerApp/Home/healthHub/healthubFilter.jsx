@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 import { getActionTypes, getWeekoptions } from '../../../../_mock/helperIndex';
-import { getHealthHubProgressRequest, setSelectedHealthHubWeekValues } from '../../../../store/Home/slice';
+import { getHealthHubProgressRequest, getWeekWiseHealthHubContentRequest, setHealthHubSkippedWeekRequest, setSelectedHealthHubWeekValues } from '../../../../store/Home/slice';
 import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunction/slice';
 
 const weekoptions = getWeekoptions;
@@ -23,12 +23,13 @@ const HealthubFilter = () => {
 
     let weekOptionsWithDiabledKey = weekoptions?.map((x) => {
         let value = healthHubProgressDetails?.[x.value],
-            isSkippedWeek = (value === "none"),
+            isSkippedWeek = (value === null),
             inProgressWeek = (currentProgressWeek?.value === x.value),
-            isCompletedWeek = (value === true && !inProgressWeek)
+            isCompletedWeek = (value === true && !inProgressWeek),
+            isNotCompleteWeek = (value === false);
         return {
             ...x,
-            isDisabled: !value,
+            isDisabled: isNotCompleteWeek,
             icon: isCompletedWeek ? "icon_alfred_circle_check_solid " : isSkippedWeek ? "icon_alfred_circle_xmark_solid" : "",
             class: isCompletedWeek ? "al_complete" : isSkippedWeek ? "al_skipped" : inProgressWeek ? "al_current" : "",
         }
@@ -44,7 +45,11 @@ const HealthubFilter = () => {
 
     const handleWeekSelection = (e) => {
         dispatch(setSelectedHealthHubWeekValues(e))
-        
+        dispatch(getWeekWiseHealthHubContentRequest(e?.value))
+    }
+
+    const skipWeekHandle = () => {
+        dispatch(setHealthHubSkippedWeekRequest(selectedHealthHubWeek || currentProgressWeek))
     }
 
     return (
@@ -75,7 +80,7 @@ const HealthubFilter = () => {
                         Overview
                     </UncontrolledTooltip>
                     <div className="w-auto px-3 al_button_sm al_greyborderbutton">
-                        <div className="fw-medium">Skip</div>
+                        <div className="fw-medium" onClick={skipWeekHandle}>Skip</div>
                     </div>
                 </Col>
                 <Col lg="4" md="6" sm="6">

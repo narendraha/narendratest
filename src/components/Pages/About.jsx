@@ -216,9 +216,9 @@ export default function About() {
       </Section>
       <Section>
         <div className='w-80 mx-auto'>
-          <div className='alfaq_footer'>
+          {/* <div className='alfaq_footer'>
             Your AI companion, health journey navigator, and coach for self-better care in managing a patient's atrial fibrillation journey
-          </div>
+          </div> */}
           <p className='mb-2'>Follow Us</p>
           <div className='al_socallinks'>
             {/* <a href="/#"><img src={facebook} alt="facebook" /></a> */}

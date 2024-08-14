@@ -1,22 +1,26 @@
-import { Formik } from "formik";
 import React from 'react';
+import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { getRole } from "../../../_mock/helperIndex";
+import { Link } from "react-router-dom";
+import { getAuthRoute, getRegForm, getRole } from "../../../_mock/helperIndex";
+import { setActiveRegistrationForm, setAuthRoutes, setSelectedAccountType } from "../../../store/SessionStore/slice";
 
-export const RegisterTypeSelection = ({props}) => {
+export const RegisterTypeSelection = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const initialFormSubmitHandle = (e, setFieldValue) => {
-        props?.setFieldValue('registerAccountType', e);
         setFieldValue('registerAccountType', e)
-        let navigationWidnow = `/${e === getRole.PATIENT ? 'patient' : 'doctor'}/registration`
-        navigate(navigationWidnow)
+        dispatch(setActiveRegistrationForm(getRegForm.REGFORM))
+        dispatch(setSelectedAccountType(e))
     }
 
     let getActiveClass = (roleType, values) => {
         return values?.registerAccountType === roleType ? "selected" : ""
+    }
+
+    let backToSignInHandle = () => {
+        dispatch(setActiveRegistrationForm(""))
+        dispatch(setAuthRoutes(getAuthRoute.SIGNIN))
     }
 
     return (
@@ -54,7 +58,7 @@ export const RegisterTypeSelection = ({props}) => {
                                     <small className="text-muted mb-0 me-4 pe-5 mt-1">Joining hands for well-being.</small>
                                 </div>
                             </div>
-                            <div className="mt-3 text-medium">
+                            <div className="mt-3 text-medium" onClick={backToSignInHandle}>
                                 Already have an account?{" "}
                                 <Link to="/signin" className="al_text_link cs_medium">
                                     Sign in

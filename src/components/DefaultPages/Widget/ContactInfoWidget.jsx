@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react';
 import React from 'react';
 
+let email = "support@helloalfred.ai";
+
 export default function ContactInfoWidget() {
   return (
     <ul className="cs_contact_widget d-flex">
@@ -16,7 +18,7 @@ export default function ContactInfoWidget() {
       </li>
       <li className='me-4'>
         <Icon icon="bi:envelope" />
-        support@helloalfred.ai
+        <a href={`https://mail.google.com/mail/u/0/?fs=1&to=${email}&tf=cm`} className="py-0" target='blank'>support@helloalfred.ai</a>
       </li>
     </ul>
   );

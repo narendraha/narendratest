@@ -1,35 +1,44 @@
-import React from "react";
-import { Col, Form, Row } from "reactstrap";
-import { pageTitle } from "../../../_mock/helperIndex";
-import alferdlogomobile from "../../../images/alfredlogo.svg";
-import alferdlogo from "../../../images/alfredlogowhite.svg";
+import React, { useEffect } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getRegForm, getRole, pageTitle } from "../../../_mock/helperIndex";
+import { setResetSessionState } from "../../../store/SessionStore/slice";
+import { getMobileValidationLengthByCountryCodeResponse } from "../../../store/UtilityCallFunction/slice";
+import { DoctorRegister } from "./DoctorRegister";
+import OtpForm from "./OtpForm";
+import { PatientRegister } from "./PatientRegister";
+import { RegisterTypeSelection } from "./RegisterTypeSelection";
+import SetConfirmationForm from "./SetConfirmationForm";
+import SetResetPasswordForm from "./SetResetPassword";
+import SubscriptionForm from "./SubscriptionForm";
 
-export default function RegistrationManager() {
-    pageTitle("Register")
+const RegistrationManager = () => {
+  pageTitle("Register");
+  const dispatch = useDispatch();
 
-    return (
-        <div className="al_login_container">
-            <div className="wflexLayout">
-                <Row className="al_login_section">
-                    <Col lg="7" sm="6" className="al_left_login h-100">
-                        <img
-                            src={alferdlogo}
-                            className="login_logodesktop"
-                            alt="logo"
-                        />
-                        <img
-                            src={alferdlogomobile}
-                            className="login_logomobile"
-                            alt="logo_mobile"
-                        />
-                    </Col>
+  const { regActiveForm, regAccountType } = useSelector((state) => (state?.sessionStoreSlice));
 
-                    <Col lg="5" sm="6" className="al_login-right h-100">
-                        {/* patient reg */}
-                        {/* doc reg */}
-                    </Col>
-                </Row>
-            </div>
-        </div>
-    );
+  let isPatientAccount = (regActiveForm === getRegForm.REGFORM) && (regAccountType === getRole.PATIENT);
+  let isDoctorAccount = (regActiveForm === getRegForm.REGFORM) && (regAccountType === getRole.PHYSICIAN);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setResetSessionState())
+      dispatch(getMobileValidationLengthByCountryCodeResponse(null))
+    }
+  }, []);
+
+  return (
+    <React.Fragment>
+        {regActiveForm === getRegForm.REGTYPESELECTION && <RegisterTypeSelection />}
+        {isPatientAccount && <PatientRegister />}
+        {isDoctorAccount && <DoctorRegister />}
+        {regActiveForm === getRegForm.OTPFORM && <OtpForm />}
+        {regActiveForm === getRegForm.SETPASSWORDFORM && <SetResetPasswordForm />}
+        {regActiveForm === getRegForm.SUBSCRIPTIONFORM && <SubscriptionForm />}
+        {regActiveForm === getRegForm.CONFIRMATIONFORM && <SetConfirmationForm />}
+    </React.Fragment>
+  );
 }
+
+export default RegistrationManager

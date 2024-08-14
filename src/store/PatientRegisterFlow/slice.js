@@ -96,7 +96,7 @@ const patientRegisterSlice = createSlice({
     },
     loginForm: (state, action) => {
       return {
-        isAuthenticated: action.payload.isAuthenticated,
+        // isAuthenticated: action.payload.isAuthenticated,
         actionData: action.payload.actionData,
         isLoading: action.payload.isLoading,
         activeForm: action.payload.activeForm,
@@ -115,6 +115,9 @@ const patientRegisterSlice = createSlice({
         ...initialState,
         isAuthenticated: false,
       }
+    },
+    setAuthenticationRequest:(state, action)=>{
+      state.isAuthenticated = action?.payload
     },
     sendConfirmationMailRegisterRequest: () => { },
   },
@@ -136,6 +139,7 @@ export const {
   googleLogin,
   logoutSlice,
   sendConfirmationMailRegisterRequest,
+  setAuthenticationRequest
 } = actions;
 
 export default reducer;

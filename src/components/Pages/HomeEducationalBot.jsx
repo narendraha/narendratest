@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row, UncontrolledTooltip } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
 import homeright from '../../images/homeright.gif';
 import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest, setResetPendingEducationalBotRequest } from "../../store/EducationaChatBot/slice";
+import { setNonAuthSessionIdReuqest } from "../../store/SessionStore/slice";
 import { getAssetsRequest } from "../../store/UtilityCallFunction/slice";
 import ChatBotMsgInterface from "../Utilities/ChatBotMsgInterface";
 import ChatBotSearchArea from "../Utilities/ChatBotSearchArea";
@@ -20,13 +22,26 @@ const HomeEducationalBot = () => {
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
     const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { nonAuthSessionId } = useSelector((state) => (state?.sessionStoreSlice))
+
+    let generateNonAuthSessionId = () => {
+        let sessionId;
+        if (!nonAuthSessionId)
+            sessionId = nanoid()
+        else
+            sessionId = nonAuthSessionId
+        return sessionId;
+    }
 
     useEffect(() => {
         dispatch(getAssetsRequest(homeleftmobile))
+        dispatch(setNonAuthSessionIdReuqest(generateNonAuthSessionId()))
         return () => {
             dispatch(setResetPendingEducationalBotRequest())
         }
     }, []);
+
+    console.log("0809808098098080", nonAuthSessionId)
 
     console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {

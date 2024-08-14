@@ -22,7 +22,7 @@ export default function HomeManager() {
   const dispatch = useDispatch();
 
   const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
-  const { activeTab, isNavRedirection } = useSelector((state) => state?.homePageSlice);
+  const { activeTab, isNavRedirection, completedActiveHomeTab } = useSelector((state) => state?.homePageSlice);
 
   useEffect(() => {
     dispatch(getPatientDetailsRequest())
@@ -36,7 +36,7 @@ export default function HomeManager() {
   }
 
   const getIsActiveTabClassName = (currentTab) => {
-    return activeTab === currentTab ? "active" : ""
+    return activeTab === currentTab ? "active" : completedActiveHomeTab?.includes(currentTab) ? " completestep" : ""
   }
 
   let currentHometab = activeTab === getActivetab.HEALTHHUB ? "Health Hub" :

@@ -76,6 +76,29 @@ a.al_text_link {
   }
 }
 
+.map-footer_dot {
+  background-color: #04C1D6;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  bottom: 12%;
+  left: 45%;
+  position: absolute;
+
+  &::before {
+    top: 0;
+    left: 0;
+    position: absolute;
+    content: "";
+    display: block;
+    background-color: #04C1D6;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    animation: dot-ripple 3s linear infinite;
+  }
+}
+
 .input-group {
   border: 1px solid #f3f6fb !important;
   border-radius: 7px;
@@ -411,6 +434,7 @@ textarea {
     .flag-dropdown {
       border: 1px solid #f3f6fb !important;
       background-color: #f3f6fb;
+      border-radius: 7px 0 0 7px;
 
       .selected-flag {
         border-radius: 7px 0 0 7px;
@@ -448,6 +472,48 @@ textarea,
     border: 1px solid #dddddd;
     margin-top: 1px;
     z-index: 3;
+  }
+}
+
+.al_grey_borderbtn {
+  border: 1px solid #C7C7C7;
+  border-radius: 12px;
+  min-width: 110px;
+  padding: 6px 25px;
+  background-color: #ffffff;
+
+  &:hover {
+    border: 1px solid #1AC9DD;
+    color: #1AC9DD;
+  }
+}
+
+.al_savebtn {
+  border: 1px solid #04C1D6;
+  border-radius: 12px;
+  min-width: 110px;
+  padding: 6px 25px;
+  color: #ffffff;
+  background-color: #04C1D6;
+
+  &:hover {
+    background-color: #00a4b6;
+    border: 1px solid #00a4b6;
+  }
+
+}
+
+.al_testbtn {
+  border: 1px solid #FFB06A;
+  border-radius: 12px;
+  min-width: 110px;
+  padding: 6px 25px;
+  color: #ffffff;
+  background-color: #FFB06A;
+
+  &:hover {
+    background-color: #f89f51;
+    border: 1px solid #f89f51;
   }
 }
 
@@ -617,6 +683,7 @@ button#notificationpopover {
   }
 
   .nav-item {
+
     &:nth-child(1) {
       .nav-link {
         background-color: #C1DCEB;
@@ -709,6 +776,20 @@ button#notificationpopover {
 
         span:last-child {
           color: #ffffff;
+        }
+      }
+    }
+
+    .completestep {
+      &::after {
+        display: none;
+      }
+
+      div {
+        span {
+          &:first-child {
+            opacity: 1;
+          }
         }
       }
     }

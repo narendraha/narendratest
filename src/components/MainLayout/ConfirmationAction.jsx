@@ -37,7 +37,8 @@ export default function ConfirmationAction() {
               Confirmation
             </h5>
             <h5 className="text-center text-wrap al_modal_subheading">
-              Do you want to save this data
+              {/* Do you want to save this data */}
+              {confirmationData?.message || "Do you want to save this data "}
             </h5>
           </ModalBody>
 

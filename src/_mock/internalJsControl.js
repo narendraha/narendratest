@@ -75,6 +75,24 @@ export const getWeekValue = {
     WEEKSIX: "week6"
 }
 
+// registration flows
+export const getRegForm = {
+    REGTYPESELECTION: 1,
+    REGFORM: 2,
+    OTPFORM: 3,
+    SETPASSWORDFORM: 4,
+    SUBSCRIPTIONFORM: 5,
+    CONFIRMATIONFORM: 6,
+}
+
+export const getAuthRoute = {
+    REGISTER: 1,
+    SIGNIN: 2,
+    GOOGLESIGNIN: 3,
+    APPLESIGNIN: 4,
+    FORGOTPASSWORDFROM: 5
+}
+
 // WEEK OPTIONS
 export const getWeekoptions = [
     { value: "week1", label: "Week 1" },
@@ -82,7 +100,7 @@ export const getWeekoptions = [
     { value: "week3", label: "Week 3" },
     { value: "week4", label: "Week 4" },
     { value: "week5", label: "Week 5" },
-    { value: "week6", label: "Week 6" }
+    // { value: "week6", label: "Week 6" }
 ];
 
 // lifestyle tab Symptoms Keys
@@ -157,7 +175,6 @@ export const callAPI = async ({ url, method, data, contentType, intenalToken = n
 };
 
 // preventdefault for numbers 
-
 export const allowedNumbersOnField = (fieldLength, e) => {
     const re = /^[0-9\b]+$/;
 

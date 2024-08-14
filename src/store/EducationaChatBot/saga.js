@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI } from "../../_mock/helperIndex";
 import { setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
-import store from '../store';
+import { store } from '../store';
 import { getChatStreamRequest, getChatStreamResponse, setInputDisableRequest, updateChatPreferenceRequest } from "./slice";
 
 function* updateChatPreference(action) {
@@ -29,17 +29,24 @@ function* updateChatPreference(action) {
 }
 
 
-export const fetchChatStream = async (payload, prevChatHistory) => {
+export const fetchChatStream = async (payload, prevChatHistory, innerBot, authToken, sessionId, nonAuthSessionId) => {
 
+    let isUpdated = false;
     let updatedHistory = [...prevChatHistory];
     const data = {
         message: payload || "",
     };
-    const apiUrl = 'https://api.stream.helloalfred.ai/education_bot_home';
+    const apiUrl = `https://api.stream.helloalfred.ai/${innerBot ? `educational_bot` : `educational_bot_home`}`;
     const headers = {
         'Content-Type': 'application/json',
     };
-
+    if (innerBot) {
+        headers["Authorization"] = `Bearer ${authToken}`;
+        data["session_id"] = sessionId
+    } else {
+        data["id"] = "1234-9876-54321";
+        data["session_id"] = nonAuthSessionId
+    }
     try {
         const responseStream = await fetch(apiUrl, {
             method: 'POST',
@@ -48,7 +55,7 @@ export const fetchChatStream = async (payload, prevChatHistory) => {
         });
         console.log("responseStream=>", responseStream);
 
-        if (responseStream) {
+        if (responseStream?.status === 200) {
             const reader = responseStream.body.getReader();
             const decoder = new TextDecoder();
             let done = false;
@@ -72,15 +79,21 @@ export const fetchChatStream = async (payload, prevChatHistory) => {
                 }
 
                 // Dispatch action to update chat history
+                isUpdated = true
                 store.dispatch(getChatStreamResponse(updatedHistory));
             }
+        }
+        else {
+            updatedHistory = [...updatedHistory, { content: "Sorry Unable to reach server at that moment can you please try again!", role: 'Alfred' }];
         }
     } catch (error) {
         console.error('Error streaming response:', error);
         throw error;
     }
+    return { isUpdated, updatedHistory }
 };
 
+// TO GET UNSTREAMED RESPONSE BOT EDUCATIONAL BOT
 function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
     let updatedHistory = [...prevChatHistory];
 
@@ -117,17 +130,35 @@ function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
 // TO GET CHAT STREAM
 function* getEducationalBotChatStream(action) {
     let { inputValue, innerBot } = action?.payload;
+    const { authToken, sessionId, nonAuthSessionId } = yield select(state => state.sessionStoreSlice);
 
     try {
         const prevChatHistory = yield select(state => state.educationalChatBotSlice?.chatHistory || []);
         let chatLoadingIndex = prevChatHistory?.length;
         store.dispatch(setChatBotLoadingIndex(chatLoadingIndex))
 
-        if (inputValue && innerBot)
-            yield call(fetchInnerEducationalBotResponse, inputValue, prevChatHistory)
-        else
-            yield call(fetchChatStream, action?.payload, prevChatHistory);
+        // if (inputValue && innerBot)
+        //     yield call(fetchInnerEducationalBotResponse, inputValue, prevChatHistory)
+        // else
+        let { isUpdated, updatedHistory } = yield call(fetchChatStream, (inputValue || action?.payload), prevChatHistory, innerBot, authToken, sessionId, nonAuthSessionId);
 
+        if (isUpdated) {
+            let URL = `https://api.stream.helloalfred.ai/${innerBot ? `educational-bot-answer-dump` : `educational-bot-home-answer-dump`}`;
+            let reqObj = {
+                patient_id:innerBot ? authToken:"1234-9876-54321",
+                session_id: innerBot ? sessionId : nonAuthSessionId,
+                alfred: updatedHistory?.[updatedHistory?.length - 1]?.content,
+                user: updatedHistory?.[updatedHistory?.length - 2]?.content,
+            }
+            let dumpBotChatResponse = yield call(callAPI, {
+                url : URL,
+                method: 'POST',
+                data: reqObj,
+                contentType: 'application/json',
+            });
+
+            console.log("dumpBotChatResponse", { nonAuthSessionId, reqObj, dumpBotChatResponse })
+        }
     } catch (error) {
         console.error('Error in getEducationalBotChatStream saga:', error);
     } finally {

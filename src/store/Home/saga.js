@@ -23,16 +23,18 @@ import {
     getWeekWiseHealthHubContentResponse,
     setActiveTabRequest,
     setActiveTabResponse,
+    setHealthHubSkippedWeekRequest,
     updateHealthDetailsRequest,
     updateHealthDetailsResponse
 } from "./slice";
 
 import { setLoading } from "../UtilityCallFunction/slice";
-import store from '../store';
+import { store } from '../store';
 
 // TO SET ACTIVE TAB
 function* setHomeActiveTab(action) {
-    store.dispatch(setLoading(true))
+    store.dispatch(setLoading(true));
+
     let { setTab, nextOrBackTab } = action?.payload || action;
 
     if (setTab) {
@@ -46,12 +48,15 @@ function* setHomeActiveTab(action) {
                 data: reqObj,
                 contentType: 'application/json',
             });
-            if (!response?.status && response?.status !== 200) {
+            if (response?.status && response?.statuscode === 200) {
+                yield call(getActiveTabData)
+                if (setTab === getActivetab.HEALTHHUB)
+                    yield call(setHealthHubSkippedWeek)
+            } else
                 toast(response?.message, {
                     position: "top-right",
                     type: "error",
                 });
-            }
         } catch (error) {
             toast(error?.response?.data?.detail, {
                 position: "top-right",
@@ -104,6 +109,7 @@ function* addSymptomsData(action) {
 function* getActiveTabData() {
     store.dispatch(setLoading(true))
     let activeTab = [];
+    let completedActiveHomeTab = []
     try {
         const response = yield call(callAPI, {
             url: '/getstatus',
@@ -121,7 +127,7 @@ function* getActiveTabData() {
                 "lifestyle_goals": tabStack?.lifestyle_goals,
                 "optimal_risk_managemment": tabStack?.optimal_risk_managemment
             }
-            Object?.keys(tabStackData)?.map((key, index) => tabStackData[key] === 0 ? activeTab?.push(key) : "")
+            Object?.keys(tabStackData)?.map((key, index) => tabStackData[key] === 0 ? activeTab?.push(key) : completedActiveHomeTab?.push(key));
         } else {
             toast(response?.message, {
                 position: "top-right",
@@ -134,9 +140,8 @@ function* getActiveTabData() {
             type: "error",
         });
     }
-
     let updatedActiveTab = activeTab?.length === 0 ? getActivetab.HEALTHHUB : activeTab?.[0];
-    yield put(getActiveTabResponse(updatedActiveTab))
+    yield put(getActiveTabResponse({ updatedActiveTab, completedActiveHomeTab }))
     store.dispatch(setLoading(false))
 }
 
@@ -151,8 +156,8 @@ function* getLastUpdatedHealthDetails() {
             data: null,
             contentType: 'application/json',
         });
-        if (response?.status && response?.statuscode === 200)
-            lastUpdatedHealthDetails = response?.data
+        if ((response?.status && response?.statuscode === 200) || (response?.statuscode === 400))
+            lastUpdatedHealthDetails = response?.data || ""
         else {
             toast(response?.message, {
                 position: "top-right",
@@ -181,7 +186,7 @@ function* getHealthDetailsGraph(action) {
             data: action?.payload || {},
             contentType: 'application/json',
         });
-        if (response?.status && response?.statuscode === 200)
+        if ((response?.status && response?.statuscode === 200) || (response?.statuscode === 204))
             getVitalsForHealthDetailGraph = response?.data
         else {
             toast(response?.message, {
@@ -235,7 +240,6 @@ function* updateHealtDetails(action) {
 }
 
 // To get symptoms data 
-
 function* getSymptomsDetails() {
     store.dispatch(setLoading(true))
     let symptomsData = "";
@@ -275,7 +279,7 @@ function* getSymptomsDetailsLast() {
             data: null,
             contentType: 'application/json',
         });
-        if (response?.status && response?.statuscode === 200)
+        if ((response?.status && response?.statuscode === 200) || (response?.statuscode === 204))
             lastUpdatedSymptomsDetails = response?.data
         else {
             toast(response?.message, {
@@ -321,6 +325,7 @@ function* getHealthHubProgress() {
 
     let getLastSelectedWeekIndex = (healthHubProgressDetails && Object.keys(healthHubProgressDetails)?.map((x) => healthHubProgressDetails[x] === true ? healthHubProgressDetails[x] : healthHubProgressDetails[x] === null ? 'skip' : '')?.filter((y) => y !== "")?.length);
     let selectedWeekOption = getWeekoptions[getLastSelectedWeekIndex - 1];
+
     yield call(getWeekWiseHealthContent, selectedWeekOption?.value)
     yield put(getHealthHubProgressResponse({ healthHubProgressDetails, selectedWeekOption }));
 }
@@ -329,7 +334,7 @@ function* getHealthHubProgress() {
 function* getWeekWiseHealthContent(action) {
     let healthHubWeeklyContent = "";
     let data = action?.payload || action
-    let reqParam = data[data?.length - 1]
+    let reqParam = data && data[data?.length - 1]
     try {
         const response = yield call(callAPI, {
             url: ('/getweeklycontent/{week}')?.replace('{week}', reqParam),
@@ -337,7 +342,7 @@ function* getWeekWiseHealthContent(action) {
             data: null,
             contentType: 'application/json',
         });
-        console.log("getWeekWiseHealthContent_response=>", response)
+        console.log("getWeekWiseHealthContent_response=>", { response, reqParam, data })
         if (response?.status && response?.statuscode === 200)
             healthHubWeeklyContent = response?.data
         else {
@@ -385,6 +390,39 @@ function* getVitalDetailsLastUpdate() {
     store.dispatch(setLoading(false))
 }
 
+// TO SET SKIPPED WEEK OF HEALTHUB
+function* setHealthHubSkippedWeek(action) {
+    store.dispatch(setLoading(true))
+    let value = action?.payload?.value || action?.payload?.selectedHealthHubWeek?.value;
+    let isUpdateSkippedWeek = action?.payload?.isUpdateSkipWeek
+
+    let reqObjKey = isUpdateSkippedWeek ? "update_complete_week" : "skip_week"
+    let reqObj = {
+        [reqObjKey]: value[value?.length - 1]
+    }
+    try {
+        const response = yield call(callAPI, {
+            url: '/update-health-hub-Status',
+            method: 'POST',
+            data: reqObj,
+            contentType: 'application/json',
+        });
+        console.log("setHealthHubSkippedWeek=>", response, reqObj)
+        if (response?.status && response?.statuscode === 200) {
+            yield call(getHealthHubProgress);
+        } toast(response?.message, {
+            position: "top-right",
+            type: (response?.status && response?.statuscode === 200) ? "success" : "error",
+        });
+    } catch (error) {
+        toast(error?.response?.data?.detail, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    store.dispatch(setLoading(false))
+}
+
 function* watchHomePageSaga() {
     yield takeLeading(getSymptomsDetailsLastUpdateRequest.type, getSymptomsDetailsLast);
     yield takeLeading(getSymptomsDetailsRequest.type, getSymptomsDetails);
@@ -397,6 +435,7 @@ function* watchHomePageSaga() {
     yield takeLeading(getHealthHubProgressRequest.type, getHealthHubProgress);
     yield takeLeading(getWeekWiseHealthHubContentRequest.type, getWeekWiseHealthContent)
     yield takeLeading(getVitalDetailsLastUpdateRequest.type, getVitalDetailsLastUpdate)
+    yield takeLeading(setHealthHubSkippedWeekRequest.type, setHealthHubSkippedWeek)
 }
 
 export default watchHomePageSaga;

@@ -17,7 +17,7 @@ export default function BackToSignInErrorPage() {
         /> */}
         <h5 className='mb-0 fw-medium'>You are not authoried to access this page</h5>
         <Spacing lg="30" md="30" />
-        <Button btnText="Back to Home" btnUrl="/signin" />
+        <Button btnText="Back to Signin" btnUrl="/signin" />
       </div>
     </div>
   );

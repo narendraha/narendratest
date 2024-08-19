@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { pageTitle } from '../../_mock/helperIndex';
-import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Spacing from '../DefaultPages/Spacing';
 import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';
 import Section from './Section';
@@ -37,17 +35,8 @@ const personomicsData = [
   }
 ];
 
-let animation = "animation.mp4";
-
 export default function Personomics() {
   pageTitle('Personomics');
-
-  const dispatch = useDispatch();
-  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
-
-  useEffect(() => {
-    dispatch(getAssetsRequest(animation))
-  }, []);
 
   return (
     <>
@@ -56,11 +45,12 @@ export default function Personomics() {
           <iframe
             width="800"
             height="410"
-            src="https://www.youtube.com/embed/jvKUsnrNYtc?autoplay=1&mute=1"
+            src="https://www.youtube.com/embed/jvKUsnrNYtc?rel=0&autoplay=1&mute=1"
             title="HelloAlfred.ai Introduction"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            frameBorder="0"
           ></iframe>
         </div>
         <div className="container">

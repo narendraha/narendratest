@@ -95,8 +95,8 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
-              <Route path="*" element={<BackToHomeErrorPage />} />
             </Route>
+            <Route path="*" element={<BackToHomeErrorPage />} />
           </>
         ) : (
           <>
@@ -134,9 +134,9 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="registration" element={<AuthManagerForSignInAndReg />} />
               <Route path="signin" element={<AuthManagerForSignInAndReg />} />
               <Route path="forgot-password" element={<AuthManagerForSignInAndReg />} />
-              <Route path="*" element={<BackToSignInErrorPage />} />
               <Route path="tnc" element={<TermsAndConditionExternal />} />
             </Route>
+            <Route path="*" element={<BackToSignInErrorPage />} />
           </>
         )}
       </Routes>

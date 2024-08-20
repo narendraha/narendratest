@@ -56,7 +56,7 @@ export default function Personomics() {
           <iframe
             width="800"
             height="410"
-            src="https://www.youtube.com/embed/jvKUsnrNYtc?autoplay=1&mute=1"
+            src="https://www.youtube.com/embed/jvKUsnrNYtc?rel=0&autoplay=1&mute=1"
             title="HelloAlfred.ai Introduction"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"

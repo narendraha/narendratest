@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/MainLayout/Layout";
-import Loading from "./components/MainLayout/Loading";
 import MainLayout from "./components/MainLayout/index";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 import BackToHomeErrorPage from "./components/Pages/BackToHomeErrorPage";
@@ -11,6 +10,7 @@ import BackToSignInErrorPage from "./components/Pages/BackToSIgninErrorPage";
 
 // auth
 import AuthManagerForSignInAndReg from "./components/Auth/AuthManager";
+import PrivaycPolicy from "./components/Auth/Registeration/PrivacyPolicy";
 
 // non-auth 
 const About = React.lazy(() => import("./components/Pages/About"));
@@ -59,20 +59,7 @@ const UserManagement = React.lazy(() => import("./components/Admin/UserManagemen
 const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
 const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
 
-const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
-  const { pathname } = useLocation();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // window.scrollTo(0, 0);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000); // Adjust the timeout as needed
-  }, [pathname]);
-
-  if (loading) {
-    return <Loading />;
-  }
+const AllRoutes = ({ authenticated }) => {
 
   return (
     <>
@@ -130,11 +117,12 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
               <Route path="healthcare" element={<HealthcareConsultant />} />
             </Route>
             <Route path="/" element={<NonAuthLayout />}>
-              {/* <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} /> */}
               <Route path="registration" element={<AuthManagerForSignInAndReg />} />
               <Route path="signin" element={<AuthManagerForSignInAndReg />} />
               <Route path="forgot-password" element={<AuthManagerForSignInAndReg />} />
               <Route path="tnc" element={<TermsAndConditionExternal />} />
+              <Route path="privacypolicy" element={<PrivaycPolicy />} />
+              <Route path="*" element={<BackToSignInErrorPage />} />
             </Route>
             <Route path="*" element={<BackToSignInErrorPage />} />
           </>
@@ -144,4 +132,4 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
   );
 };
 
-export default AllRoutes;
+export default AllRoutes

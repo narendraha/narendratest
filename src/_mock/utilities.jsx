@@ -2,10 +2,9 @@ import axios from "axios";
 export const AxiosInstance = (contentType, internalToken = null) => {
   const Axios = axios.create({
     baseURL:
-      process.env.REACT_APP_NODE_ENV === "production" ||
-        process.env.REACT_APP_NODE_ENV === "staging"
-        ? `${process.env.REACT_APP_API_BASE_URL}/`
-        : `${process.env.REACT_APP_API_BASE_URL}/`,
+      process.env.REACT_APP_NODE_ENV === "production" ?
+       `${process.env.REACT_APP_HALF_PROD_APP_API_BASE_URL}/` :
+         `${process.env.REACT_APP_HALF_PREPROD_API_BASE_URL}/`,
   });
   // const Axios = axios.create({
   //   baseURL: `${apiservices.BaseURL}`,

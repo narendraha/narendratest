@@ -15,9 +15,9 @@ export default function BackToSignInErrorPage() {
           title="You are not authoried to access this page"
           variantColor="cs_white_color"
         /> */}
-        <h5 className='mb-0 fw-medium'>You are not authoried to access this page</h5>
+        <h5 className='mb-0 fw-medium'>Oops!, No such pages exist</h5>
         <Spacing lg="30" md="30" />
-        <Button btnText="Back to Signin" btnUrl="/signin" />
+        <Button btnText="Back to sign" btnUrl="/signin" />
       </div>
     </div>
   );

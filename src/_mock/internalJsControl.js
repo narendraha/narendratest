@@ -94,6 +94,12 @@ export const getAuthRoute = {
     FORGOTPASSWORDFROM: 5
 }
 
+export const getAuthRouteNames = {
+    REGISTER: '/registration',
+    SIGNIN: '/signin',
+    FORGOTPASSWORDFROM: '/forgot-password'
+}
+
 // WEEK OPTIONS
 export const getWeekoptions = [
     { value: "week1", label: "Week 1" },

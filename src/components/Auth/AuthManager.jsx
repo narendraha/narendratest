@@ -1,20 +1,21 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 import { Col, Row } from "reactstrap";
-import { getAuthRoute, pageTitle } from "../../_mock/helperIndex";
+import { getAuthRoute, getAuthRouteNames, pageTitle } from "../../_mock/helperIndex";
 import alferdlogomobile from "../../images/alfredlogo.svg";
 import alferdlogo from "../../images/alfredlogowhite.svg";
 import ForgotPassword from "./ForgotPassword";
 import RegistrationManager from "./Registeration/RegisterationManager";
 import { Signin } from "./Signin/SignIn";
-import SubscriptionForm from "./Registeration/SubscriptionForm";
 
 const AuthManager = () => {
-  pageTitle("Register");
+  let currentLocationPathName = useLocation()?.pathname;
 
   const { authRedirectionRoute } = useSelector((state) => (state?.sessionStoreSlice))
 
+
+  console.log("authRedirectionRouteauthRedirectionRoute", authRedirectionRoute)
   return (
     <React.Fragment>
       <div className="al_login_container">
@@ -36,10 +37,14 @@ const AuthManager = () => {
             </Col>
             <Col lg="5" sm="6" className="al_login-right h-100">
               {/* doctor and patient registration flow */}
-              {authRedirectionRoute === getAuthRoute.REGISTER && <RegistrationManager />}
+              {/* {authRedirectionRoute === getAuthRoute.REGISTER && <RegistrationManager />} */}
+              {currentLocationPathName === getAuthRouteNames.REGISTER && <RegistrationManager />}
               {/* signin */}
-              {authRedirectionRoute === getAuthRoute.SIGNIN && <Signin />}
-              {authRedirectionRoute === getAuthRoute.FORGOTPASSWORDFROM && <ForgotPassword />}
+              {/* {authRedirectionRoute === getAuthRoute.SIGNIN && <Signin />} */}
+              {currentLocationPathName === getAuthRouteNames.SIGNIN && <Signin />}
+              {/* forgot password */}
+              {/* {authRedirectionRoute === getAuthRoute.FORGOTPASSWORDFROM && <ForgotPassword />} */}
+              {currentLocationPathName === getAuthRouteNames.FORGOTPASSWORDFROM && <ForgotPassword />}
             </Col>
           </Row>
         </div >

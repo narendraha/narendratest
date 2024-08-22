@@ -1,6 +1,6 @@
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import moment from "moment";
-import React from "react";
 import DatePicker from "react-datepicker";
 import { useDispatch } from "react-redux";
 import { Col, FormGroup, Label, Row } from "reactstrap";
@@ -82,7 +82,7 @@ export const ExpertMonitoringLeftView = () => {
                             <Col sm="6" className="mb-3">
                                 <Label>Date</Label>
                                 <DatePicker
-                                    className="form-control al_calendarIcon"
+                                    className={'form-control ' + (values?.tdate ? '' : 'al_calendarIcon')}
                                     name="tdate"
                                     placeholderText="e.g.YYYY-MM-DD"
                                     popperPlacement="auto"
@@ -96,7 +96,7 @@ export const ExpertMonitoringLeftView = () => {
                                             },
                                         },
                                     ]}
-                                    selected={values?.tdate}
+                                    selected={values?.tdate || null}
                                     onChange={(e) => { setFieldValue("tdate", e); }}
                                     minDate={new Date().setMonth(new Date().getMonth() - 3)}
                                     dateFormat="yyyy/MM/dd"
@@ -106,6 +106,7 @@ export const ExpertMonitoringLeftView = () => {
                                     showMonthDropdown
                                     showYearDropdown
                                     dropdownMode="select"
+                                    isClearable={true}
                                 />
                                 <ErrorMessage
                                     name="tdate"

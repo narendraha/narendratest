@@ -273,7 +273,7 @@ export default function BehaviouralBotManager() {
                           {message.alfred && (
                             <>
                               <div>{message.alfred}</div>
-                              <div className="d-flex al_npsscore">
+                              {/* <div className="d-flex al_npsscore">
                                 <div>1</div>
                                 <div>2</div>
                                 <div>3</div>
@@ -284,7 +284,7 @@ export default function BehaviouralBotManager() {
                                 <div>8</div>
                                 <div>9</div>
                                 <div>10</div>
-                              </div>
+                              </div> */}
                             </>
                           )}
                           {message.user !== undefined && (

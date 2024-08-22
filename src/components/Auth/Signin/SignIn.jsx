@@ -27,6 +27,7 @@ export const Signin = () => {
   }
 
   const signUpAndForgotPassHandle = (activeForm, isRegister = false) => {
+    navigate(activeForm)
     dispatch(setAuthRoutes(activeForm))
     if (isRegister)
       dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION))

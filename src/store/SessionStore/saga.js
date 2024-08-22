@@ -282,15 +282,16 @@ function* setResetPasswordAndCreateAccount(action) {
             data: reqObj,
             contentType: 'application/json',
         });
-        console.log("setResetPasswordAndCreateAccount", {reqObj, response})
+        console.log("setResetPasswordAndCreateAccount", { reqObj, response })
         if (response?.status && response?.statuscode === 200) {
             regActiveForm = activeForm
             createAccountJwt = response?.data?.token
+        } else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
         }
-        toast(response?.message, {
-            position: "top-right",
-            type: !response?.status && response?.statuscode !== 200 ? "success" : "error",
-        });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {
             position: "top-right",
@@ -385,11 +386,12 @@ function* userLoginRequest(action) {
 // TO UPDATE PASSWORD THROUGH FORGOT PASSWORD 
 function* updatePassword(action) {
     store.dispatch(setLoading(true));
+    let { values, navigate } = action?.payload
     const { forgotPasswordFormData } = yield select(state => state.sessionStoreSlice);
 
     let reqObj = {
         email: forgotPasswordFormData?.email,
-        password: action?.payload?.password
+        password: values?.password
     }
     try {
         const response = yield call(callAPI, {
@@ -399,9 +401,10 @@ function* updatePassword(action) {
             contentType: 'application/json',
         });
         console.log("updatePassword=>", response);
-        if (response?.status && response?.statuscode === 200)
-            yield put(setAuthRoutes(getAuthRoute.SIGNIN))
-        toast(response?.message, {
+        if (response?.status && response?.statuscode === 200) {
+            yield put(setAuthRoutes(getAuthRoute.SIGNIN)) //not using this as of now
+            navigate("/signin")
+        } toast(response?.message, {
             position: "top-right",
             type: response?.status && response?.statuscode === 200 ? "success" : "error",
         });

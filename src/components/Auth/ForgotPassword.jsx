@@ -28,8 +28,7 @@ export default function ForgotPassword() {
   let backToSignInHandle = (navigateBack = false) => {
     dispatch(setActiveRegistrationForm(""))
     dispatch(setAuthRoutes(getAuthRoute.SIGNIN))
-    if (navigateBack)
-      navigate("/signin")
+    navigate("/signin")
   }
 
   return (

@@ -67,6 +67,7 @@ export const DoctorRegister = () => {
 
     const handleMobileChange = async (value, country, setFieldValue) => {
         setFieldValue('mobile', value);
+        setFieldValue('countryCode', country?.countryCode)
         let mobileNumberWithoutCountryCode = value?.replace(country?.dialCode, "")?.length;
         await setFieldValue('mobileValueLengthWithoutCountryCode', mobileNumberWithoutCountryCode)
         dispatch(getMobileValidationLengthByCountryCodeRequest(country))
@@ -89,7 +90,8 @@ export const DoctorRegister = () => {
         state: regFormData?.state || "",
         hospital: regFormData?.hospital || "",
         stateOptions: "",
-        mobileValueLengthWithoutCountryCode: null
+        mobileValueLengthWithoutCountryCode: null,
+        countryCode: 'us',
     }
 
     const validationSchema = Yup.object().shape({
@@ -186,7 +188,7 @@ export const DoctorRegister = () => {
                                         /> */}
                                         <div className="input-group">
                                             <PhoneInput
-                                                country={'us'}
+                                                country={values?.countryCode}
                                                 value={values.mobile}
                                                 onChange={(value, country) => handleMobileChange(value, country, setFieldValue)}
                                                 inputProps={{

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { customContentValidation, getAuthRoute, getEductaionOptions, getGenderoptions, getRegForm, getResidenceoptions } from "../../../_mock/helperIndex";
+import { customContentValidation, getAuthRoute, getGenderoptions, getRegForm } from "../../../_mock/helperIndex";
 import { getRegistrationOtpRequest, setActiveRegistrationForm, setAuthRoutes, setPersistActionData } from "../../../store/SessionStore/slice";
 import { getMobileValidationLengthByCountryCodeRequest } from "../../../store/UtilityCallFunction/slice";
 import { Terms } from "./Terms&Confition";
@@ -17,14 +17,10 @@ import { Terms } from "./Terms&Confition";
 export const PatientRegister = () => {
     const dispatch = useDispatch();
     const genderoptions = getGenderoptions;
-    const residenceoptions = getResidenceoptions;
-    const educationOptions = getEductaionOptions;
 
     const { regFormData } = useSelector((state) => (state?.sessionStoreSlice));
     const { mobileFieldValidation } = useSelector((state) => (state?.utilityCallFunctionSlice));
 
-
-    console.log("780980980", regFormData)
     const handleSubmit = (values, activeForm) => {
         if (values)
             dispatch(getRegistrationOtpRequest({ values, activeForm }));
@@ -34,6 +30,7 @@ export const PatientRegister = () => {
 
     const handleMobileChange = async (value, country, setFieldValue) => {
         setFieldValue('mobile', value);
+        setFieldValue('countryCode', country?.countryCode)
         let mobileNumberWithoutCountryCode = value?.replace(country?.dialCode, "")?.length;
         await setFieldValue('mobileValueLengthWithoutCountryCode', mobileNumberWithoutCountryCode)
         await setFieldValue('nationality', country?.name)
@@ -64,7 +61,8 @@ export const PatientRegister = () => {
         termsAndConditions: regFormData?.termsAndConditions || false,
         isTermsAndConditionClick: false,
         mobileValueLengthWithoutCountryCode: null,
-        nationality: ""
+        nationality: "",
+        countryCode: 'us',
     }
 
     const validationSchema = Yup.object().shape({
@@ -95,7 +93,6 @@ export const PatientRegister = () => {
                 <>
                     <Form className="wflexLayout" >
                         <div className="wflexLayout al_mx-auto">
-                            {console.log("09098080980980909", errors)}
                             <div className="wflex-items-center wflexLayout">
                                 <h6 className="mb-2">Personal Details</h6>
                                 <div className="al_login-form al_registrationform wflexScroll">
@@ -162,20 +159,8 @@ export const PatientRegister = () => {
                                             <span className="requiredLabel">*</span>Mobile
                                         </Label>
                                         <div className="input-group">
-                                            {/* <Field
-                                                type="text"
-                                                name="mobile"
-                                                placeholder="e.g.123-4567-8901"
-                                                aria-describedby="basic-addon1"
-                                                component={PhoneNumberCodeAndFlag}
-                                            /> */}
-                                            {/* <ErrorMessage
-                                                    name="mobile"
-                                                    component={"div"}
-                                                    className="text-danger"
-                                                /> */}
                                             <PhoneInput
-                                                country={'us'}
+                                                country={values?.countryCode}
                                                 value={values.mobile}
                                                 onChange={(value, country) => handleMobileChange(value, country, setFieldValue)}
                                                 inputProps={{
@@ -221,7 +206,7 @@ export const PatientRegister = () => {
                                             Birth
                                         </Label>
                                         <DatePicker
-                                            className="form-control al_calendarIcon"
+                                            className={'form-control ' + (values?.dob ? '' : 'al_calendarIcon')}
                                             name="dob"
                                             placeholderText="e.g.MM/DD/YYYY"
                                             popperPlacement="auto"
@@ -235,7 +220,7 @@ export const PatientRegister = () => {
                                                     },
                                                 },
                                             ]}
-                                            selected={values.dob}
+                                            selected={values.dob || null}
                                             onChange={(e) => {
                                                 setFieldValue("dob", e);
                                             }}
@@ -246,6 +231,7 @@ export const PatientRegister = () => {
                                             showMonthDropdown
                                             showYearDropdown
                                             dropdownMode="select"
+                                            isClearable={true}
                                         />
                                         <ErrorMessage
                                             name="dob"

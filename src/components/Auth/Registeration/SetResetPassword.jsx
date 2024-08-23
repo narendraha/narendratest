@@ -1,9 +1,9 @@
-import { Icon } from "@iconify/react";
-import { ErrorMessage, Field, Formik } from "formik";
 import React from "react";
+import { Icon } from "@iconify/react";
+import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { Form, FormGroup, Label } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { FormGroup, Label } from "reactstrap";
 import * as Yup from 'yup';
 import { passwordReg } from "../../../_mock/RegularExp";
 import { getAuthRoute, getRegForm } from "../../../_mock/helperIndex";
@@ -11,12 +11,13 @@ import { setActiveRegistrationForm, setAuthRoutes, setResetPasswordRequest, upda
 
 const SetResetPasswordForm = ({ props }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let { isForgotPassword } = props || false;
 
     const handleSubmit = (values) => {
         if (isForgotPassword)
-            dispatch(updatePasswordFromForgotPasswrodRequest(values))
+            dispatch(updatePasswordFromForgotPasswrodRequest({ values, navigate }))
         else
             dispatch(setResetPasswordRequest({ values, activeForm: getRegForm.SUBSCRIPTIONFORM }))
     }
@@ -47,7 +48,7 @@ const SetResetPasswordForm = ({ props }) => {
                 })}
                 onSubmit={(values) => {
                     console.log("Submit=>", values)
-                    // dispatch(setResetPasswordRequest(values, getRegForm.SUBSCRIPTIONFORM))
+                    handleSubmit(values)
                 }}
             >{({ values, setFieldValue }) => (
                 <>
@@ -116,9 +117,8 @@ const SetResetPasswordForm = ({ props }) => {
                                 </div>
                                 <div className="al_login_footer mt-3">
                                     <button
-                                        type="button"
+                                        type="submit"
                                         className="al_login_button"
-                                        onClick={() => handleSubmit(values)}
                                     >
                                         Continue
                                     </button>

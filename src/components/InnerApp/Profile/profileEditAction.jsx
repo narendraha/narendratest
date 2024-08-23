@@ -63,6 +63,7 @@ export const ProfileEditAction = () => {
 
     const handleMobileChange = (value, country, setFieldValue) => {
         setFieldValue('mobile', value);
+        setFieldValue('country', country?.countryCode)
         getMobileValueWithoutCountryCode(value, country, setFieldValue)
     }
 
@@ -96,38 +97,20 @@ export const ProfileEditAction = () => {
                 validationSchema={Yup.object().shape({
                     username: customContentValidation('Full Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
                     dob: Yup.date()
-                        .max(
-                            new Date(Date.now() - 567648000000),
-                            "Your age must be at least 18 years old"
-                        )
-                        .min(
-                            new Date(
-                                Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000
-                            ),
-                            "Your age must be below 120 years old"
-                        )
+                        .max(new Date(Date.now() - 567648000000),"Your age must be at least 18 years old")
+                        .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000),"Your age must be below 120 years old")
                         .required("Dob is required").nullable(),
                     gender: Yup.string().required("This field is required"),
-                    bloodtype: Yup.string().required(
-                        "Blood Type is required"
-                    ),
-                    rtype: Yup.string().required("This field is required"),
-                    education: Yup.string().required(
-                        "Education is required"
-                    ),
+                    bloodtype: Yup.string().required("Blood Type is required"),
+                    // rtype: Yup.string().required("This field is required"),
+                    // education: Yup.string().required("Education is required"),
                     ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
                     feet: Yup.string()
-                        .test(
-                            'is-greater-than-one',
-                            'Height must be atleast 3 feet',
+                        .test('is-greater-than-one','Height must be atleast 3 feet',
                             value => value && parseFloat(value) > 3
-                        ).test(
-                            'is-less-than-nine',
-                            "Height can not be more than 9 feet",
+                        ).test('is-less-than-nine',"Height can not be more than 9 feet",
                             value => value && parseFloat(value) <= 9
                         )
-                        // .min(1, "Too Short!") // Minimum length of 1 character
-                        // .max(1, "Max 3 characters are  Long!")  // Maximum length of 3 characters
                         .required("Height is required"),
                     weight: Yup.number()
                         .min(22, "Weight must be at least 22 lbs")
@@ -310,7 +293,7 @@ export const ProfileEditAction = () => {
                                                         enabled: false,
                                                     },
                                                 }]}
-                                                selected={new Date(values?.dob) || ""}
+                                                selected={values?.dob ? new Date(values?.dob) : null}
                                                 onChange={(e) => {
                                                     setFieldValue("dob", e);
                                                 }}
@@ -371,7 +354,7 @@ export const ProfileEditAction = () => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col md="4" sm="12">
+                                    {/* <Col md="4" sm="12">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>
@@ -393,8 +376,8 @@ export const ProfileEditAction = () => {
                                                 className="text-danger"
                                             />
                                         </FormGroup>
-                                    </Col>
-                                    <Col md="4" sm="12">
+                                    </Col> */}
+                                    {/* <Col md="4" sm="12">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>
@@ -417,7 +400,7 @@ export const ProfileEditAction = () => {
                                                 className="text-danger"
                                             />
                                         </FormGroup>
-                                    </Col>
+                                    </Col> */}
                                     <Col md="8" sm="12">
                                         <FormGroup>
                                             <Label>Name of Insurance Provider</Label>

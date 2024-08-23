@@ -253,7 +253,7 @@
     }
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 675px) {
 
     .cs_banner.cs_style_3 .cs_banner_title,
     .cs_banner.cs_style_5 .cs_banner_title {
@@ -276,6 +276,10 @@
 
     .flex-row-xs-reverse {
         flex-direction: row-reverse !important;
+    }
+
+    .flex-column-xs-reverse {
+        flex-direction: column-reverse !important;
     }
 
     .videobanner>div:first-child {

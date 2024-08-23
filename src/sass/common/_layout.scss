@@ -1388,6 +1388,21 @@ span.requiredLabel {
     display: inline;
 }
 
+.ulitems {
+    li {
+        font-size: 14px;
+        font-weight: 400;
+
+        strong {
+            font-size: 24px;
+        }
+
+        &::before {
+            top: inherit !important;
+        }
+    }
+}
+
 ul.standardPlans {
     padding-left: 10px;
 

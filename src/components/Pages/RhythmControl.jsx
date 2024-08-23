@@ -7,6 +7,10 @@ import tachycardia from '../../images/tachycardia.svg';
 import impsymptoms from '../../images/impsymptoms.svg';
 import enhquality from '../../images/enhquality.svg';
 import precomplications from '../../images/precomplications.svg';
+import medicationsanti from '../../images/medicationsanti.jpg';
+import electriccardio from '../../images/electriccardio.jpg';
+import cathetertypes from '../../images/cathetertypes.jpg';
+import surgicalappr from '../../images/surgicalappr.jpg';
 
 export default function RhythmControl() {
   pageTitle('Rhythm Control');
@@ -93,44 +97,44 @@ export default function RhythmControl() {
         <div className='w-80 mx-auto mb-5'>
           <h5>Methods of Rhythm Control</h5>
           <Row className="mt-4">
-            <Col md="5" sm="12">
-
+            <Col md="4" sm="12">
+              <img src={medicationsanti} alt="" className="cs_radius_20" />
             </Col>
-            <Col md="7" sm="12" className="abouttop">
-                <strong>Medications (Antiarrhythmic Drugs)</strong>
-                <p className="mt-3">Flecainide, Propafenone, Amiodarone, Sotalol, and Dronedarone are examples. These medications help keep sinus rhythm, but they may have more risk of side effects compared to rate control. Your provider will decide which medication is best for you.</p>
-            </Col>
-          </Row>
-          <Row className="flex-row-xs-reverse mt-4">
-            <Col md="7" sm="12" className="abouttop">
-                <strong>Electrical Cardioversion</strong>
-                <p className="mt-3">Electrical cardioversion is a procedure where a controlled electrical shock is delivered to the heart to reset its rhythm back to normal.</p>
-                <p>It is used when the heart stays in AFib continuously and may be combined with antiarrhythmic drugs to help keep sinus rhythm afterward.</p>
-                <p>Patients often take anticoagulation before and after the procedure to reduce the risk of stroke.</p>
-            </Col>
-            <Col md="5" sm="12">
-
+            <Col md="8" sm="12" className="abouttop ps-5">
+              <strong>Medications (Antiarrhythmic Drugs)</strong>
+              <p className="mt-3">Flecainide, Propafenone, Amiodarone, Sotalol, and Dronedarone are examples. These medications help keep sinus rhythm, but they may have more risk of side effects compared to rate control. Your provider will decide which medication is best for you.</p>
             </Col>
           </Row>
-          <Row className="mt-4">
-            <Col md="5" sm="12">
-
+          <Row className="flex-column-xs-reverse mt-5">
+            <Col md="8" sm="12" className="abouttop pe-5">
+              <strong>Electrical Cardioversion</strong>
+              <p className="mt-3">Electrical cardioversion is a procedure where a controlled electrical shock is delivered to the heart to reset its rhythm back to normal.</p>
+              <p>It is used when the heart stays in AFib continuously and may be combined with antiarrhythmic drugs to help keep sinus rhythm afterward.</p>
+              <p>Patients often take anticoagulation before and after the procedure to reduce the risk of stroke.</p>
             </Col>
-            <Col md="7" sm="12" className="abouttop">
-                <strong>Catheter Ablation</strong>
-                <p className="mt-3">In ablation, a catheter (thin, hollow tube) is guided to the inside of the heart through a vein. Tiny areas of heart tissue where the irregular electrical signals come from are destroyed using heat (radiofrequency), cold (cryoablation), or electrical impulse (PFA).</p>
-                <p>Ablation is considered when medications do not work or cause side-effects. It can be especially successful for patients with paroxysmal AFib (intermittent episodes).</p>
-                <p>Ablation has a higher success rate in keeping sinus rhythm compared to medications alone but requires a procedure and has potential for risks.</p>
+            <Col md="4" sm="12">
+              <img src={electriccardio} alt="" className="cs_radius_20" />
             </Col>
           </Row>
-          <Row className="flex-row-xs-reverse mt-4">
-            <Col md="7" sm="12" className="abouttop">
-                <strong>Surgical Approaches (e.g., Maze Procedure or epicardial ablation)</strong>
-                <p className="mt-3">The Maze procedure is a surgery on the outside of the heart. Scar tissue is created in the top part of the heart (atrium) to block abnormal electrical pathways.</p>
-                <p>Usually, the procedure is done with other open-heart surgeries like coronary bypass or valve replacement.</p>
+          <Row className="mt-5">
+            <Col md="4" sm="12">
+                <img src={cathetertypes} alt="" className="cs_radius_20" />
             </Col>
-            <Col md="5" sm="12">
-
+            <Col md="8" sm="12" className="abouttop ps-5">
+              <strong>Catheter Ablation</strong>
+              <p className="mt-3">In ablation, a catheter (thin, hollow tube) is guided to the inside of the heart through a vein. Tiny areas of heart tissue where the irregular electrical signals come from are destroyed using heat (radiofrequency), cold (cryoablation), or electrical impulse (PFA).</p>
+              <p>Ablation is considered when medications do not work or cause side-effects. It can be especially successful for patients with paroxysmal AFib (intermittent episodes).</p>
+              <p>Ablation has a higher success rate in keeping sinus rhythm compared to medications alone but requires a procedure and has potential for risks.</p>
+            </Col>
+          </Row>
+          <Row className="flex-column-xs-reverse mt-5">
+            <Col md="8" sm="12" className="abouttop pe-5">
+              <strong>Surgical Approaches (e.g., Maze Procedure or epicardial ablation)</strong>
+              <p className="mt-3">The Maze procedure is a surgery on the outside of the heart. Scar tissue is created in the top part of the heart (atrium) to block abnormal electrical pathways.</p>
+              <p>Usually, the procedure is done with other open-heart surgeries like coronary bypass or valve replacement.</p>
+            </Col>
+            <Col md="4" sm="12">
+              <img src={surgicalappr} alt="" className="cs_radius_20" />
             </Col>
           </Row>
         </div>

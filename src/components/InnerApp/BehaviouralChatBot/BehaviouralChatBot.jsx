@@ -11,7 +11,7 @@ import ModalView from "../../Utilities/ModalView";
 import Loading from "../LoadingComponent";
 
 export default function BehaviouralBotManager() {
-  pageTitle("Behavioural Chat");
+  pageTitle("Behavioral Chat");
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
@@ -329,7 +329,7 @@ export default function BehaviouralBotManager() {
                     <i className="icon_alfred_search h-auto"></i>
                     <input
                       type="text"
-                      placeholder="Ask a question"
+                      placeholder="Ask a question about Atrial Fibrillation"
                       name="message"
                       value={userValue} // input value
                       onChange={handleInputChange} // handle changes

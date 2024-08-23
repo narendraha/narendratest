@@ -76,7 +76,7 @@ export default function About() {
       </Section>
       <Section topMd={85} topLg={85} topXl={85} bottomMd={50} bottomLg={50}>
         <Row className='w-80 mx-auto aboutsecond'>
-          <Col lg="4" sm="12">
+          <Col md="4" sm="12">
             <Card>
               <CardBody>
                 <div className='imghoverbg'>
@@ -87,7 +87,7 @@ export default function About() {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="4" sm="12">
+          <Col md="4" sm="12">
             <Card>
               <CardBody>
                 <div className='imghoverbg'>
@@ -98,7 +98,7 @@ export default function About() {
               </CardBody>
             </Card>
           </Col>
-          <Col lg="4" sm="12">
+          <Col md="4" sm="12">
             <Card>
               <CardBody>
                 <div className='imghoverbg'>

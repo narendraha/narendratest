@@ -448,7 +448,7 @@ export default function HistoryChatBot() {
                         ></i>
                         <input
                           type="text"
-                          placeholder="Ask a question"
+                          placeholder="Ask a question about Atrial Fibrillation"
                           name="message"
                           value={inputValue} // input value
                           onChange={handleInputChange} // handle changes

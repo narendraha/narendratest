@@ -289,6 +289,7 @@ a.w_signin {
         border-radius: 15px;
         box-shadow: 0 4px 50px rgba(0, 0, 0, 0.04);
         text-align: center;
+        height: 100%;
 
         .card-body {
             padding: 25px;
@@ -439,6 +440,12 @@ section:not(.cs_banner) {
 
         label {
             margin-bottom: 5px;
+        }
+
+        .imghoverbg {
+            img {
+                width: 40px;
+            }
         }
     }
 }

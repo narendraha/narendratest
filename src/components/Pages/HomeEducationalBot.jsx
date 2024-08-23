@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Card, CardBody } from 'reactstrap';
 import { pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
@@ -110,6 +110,37 @@ const HomeEducationalBot = () => {
                                     isInputDisable={isInputDisable}
                                 />
                             </div>
+
+                            <Row className="mt-3 al_promptcard">
+                                <Col xs="6" className="mb-3">
+                                    <Card className='al_cardview pointer'>
+                                        <CardBody className='p-3'>
+                                            <div className="text-xs-small lh-normal">What is Atrial Fibrillation?</div>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col xs="6" className="mb-3">
+                                    <Card className='al_cardview pointer'>
+                                        <CardBody className='p-3'>
+                                            <div className="text-xs-small lh-normal">Is Atrial Fibrillation dangerous?</div>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col xs="6" className="mb-3">
+                                    <Card className='al_cardview pointer'>
+                                        <CardBody className='p-3'>
+                                            <div className="text-xs-small lh-normal">How do you diagnose Atrial Fibrillation?</div>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                                <Col xs="6" className="mb-3">
+                                    <Card className='al_cardview pointer'>
+                                        <CardBody className='p-3'>
+                                            <div className="text-xs-small lh-normal">What are the symptoms of Atrial Fibrillation?</div>
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 }

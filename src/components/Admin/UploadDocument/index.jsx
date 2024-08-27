@@ -68,7 +68,7 @@ export default function UploadDocument() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>BotBehaviour</td>
+                                            <td>BotBehavior</td>
                                             <td>Charlotte</td>
                                             <td>16-04-2024</td>
                                             <td>5MB</td>
@@ -145,7 +145,7 @@ export default function UploadDocument() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>BotBehaviour</td>
+                                                <td>BotBehavior</td>
                                                 <td>5MB</td>
                                                 <td>DOC</td>
                                                 <td>

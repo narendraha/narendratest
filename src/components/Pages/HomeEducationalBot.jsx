@@ -111,7 +111,7 @@ const HomeEducationalBot = () => {
                                 />
                             </div>
 
-                            <Row className="mt-3 al_promptcard">
+                            {/* <Row className="mt-3 al_promptcard">
                                 <Col xs="6" className="mb-3">
                                     <Card className='al_cardview pointer'>
                                         <CardBody className='p-3'>
@@ -140,7 +140,7 @@ const HomeEducationalBot = () => {
                                         </CardBody>
                                     </Card>
                                 </Col>
-                            </Row>
+                            </Row> */}
                         </Col>
                     </Row>
                 }

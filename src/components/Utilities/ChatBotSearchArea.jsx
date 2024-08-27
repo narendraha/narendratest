@@ -29,7 +29,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
         <i className="icon_alfred_search h-auto"></i>
         <input
           type="text"
-          placeholder="Ask a question"
+          placeholder="Ask a question about Atrial Fibrillation"
           name="message"
           value={inputValue}
           onChange={(e) => handleInputChange(e?.target?.value)}

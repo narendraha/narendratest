@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, UncontrolledTooltip } from 'reactstrap';
+import { Col, Row, UncontrolledTooltip, Modal, ModalBody, FormGroup } from 'reactstrap';
 import { getRole } from '../../_mock/internalJsControl';
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from "../../images/usericon.svg";
@@ -53,12 +53,46 @@ const ChatBotMsgInterface = ({ props }) => {
             <div>{chatHistory?.content}</div> :
             <div><EducationalBotHTMLcontent props={chatHistory?.content} />{chatBotLoadingIndex === index && <div className="al_chatloading my-1"></div>}</div>
           }
-          {!isUser && (
+          {!isUser && (<>
             <p className="mb-0 mt-2 al_chatfeedbackactions">
               <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', chatHistory?.content)}></i>
               <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', chatHistory?.content)}></i>
+              <i className="icon_alfred_chat pointer me-3" onClick={() => { }}></i>
             </p>
-          )}
+            <Modal className='modal-sm detailsModal' isOpen={false} wrapClassName="al_outerparentwp">
+              <div className='d-flex align-items-center justify-content-between p-4'>
+                <h6 className='mb-0'>Submit Feedback to Hello Alfred</h6>
+                {/* <i className="icon_alfred_close pointer" title="Close" onClick={() => { }}></i> */}
+              </div>
+              <ModalBody className="wflexLayout p-0">
+                <div className='wflexScroll px-4 my-4'>
+                  <FormGroup>
+                    <textarea
+                      type="text"
+                      name="remarks"
+                      placeholder='Enter Remarks'
+                      className='form-control'
+                      rows={4}
+                    />
+                  </FormGroup>
+                  <div className='mt-4'>
+                    <button
+                      type="submit"
+                      className="al_button_add me-3"
+                    >Submit
+                    </button>
+                    <button
+                      type="button"
+                      className="al_button_cancel"
+                      onClick={() => { }}
+                    >Cancel
+                    </button>
+                  </div>
+                </div>
+
+              </ModalBody>
+            </Modal>
+          </>)}
         </Col>
       </Row>
       <div ref={messagesEndRef} />

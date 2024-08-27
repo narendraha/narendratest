@@ -36,12 +36,142 @@ a.al_text_link {
   }
 }
 
+button:focus,
+button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.al_border_right {
+  border-right: 1px solid #f2f2f2;
+}
+
 .pointer {
   cursor: pointer;
 }
 
 .h-auto {
   height: auto !important;
+}
+
+.al_npsscore {
+  margin-top: 15px;
+  background-color: transparent !important;
+  padding: 0 !important;
+
+  >div {
+    border-radius: 8px;
+    min-width: 42px;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    color: #212529;
+    cursor: pointer;
+
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      border: 2px solid #EB3134;
+
+      &.selected,
+      &:hover {
+        background-color: #EB3134;
+      }
+    }
+
+    &:nth-child(5),
+    &:nth-child(6) {
+      border: 2px solid #EF632D;
+
+      &.selected,
+      &:hover {
+        background-color: #EF632D;
+      }
+    }
+
+    &:nth-child(7),
+    &:nth-child(8) {
+      border: 2px solid #FFB931;
+
+      &.selected,
+      &:hover {
+        background-color: #FFB931;
+      }
+    }
+
+    &:nth-child(9),
+    &:nth-child(10) {
+      border: 2px solid #78BC4F;
+
+      &.selected,
+      &:hover {
+        background-color: #78BC4F;
+      }
+    }
+
+    &.selected {
+      color: #ffffff;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .al_npsscore>div {
+    border-radius: 5px;
+    min-width: 23px;
+    font-size: 10px;
+    padding: 4px 0;
+  }
+}
+
+.text-xs-small {
+  font-size: 12px;
+  color: #4F4F4F;
+}
+
+.al_promptcard {
+  .card {
+    border: 1px solid #e5ecf5;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .col-6 {
+    &:nth-child(1) {
+      .card {
+        &:hover {
+          background-color: #FFF2F2;
+        }
+      }
+    }
+
+    &:nth-child(2) {
+      .card {
+        &:hover {
+          background-color: #FCF4E1;
+        }
+      }
+    }
+
+    &:nth-child(3) {
+      .card {
+        &:hover {
+          background-color: #E2FCE1;
+        }
+      }
+    }
+
+    &:nth-child(4) {
+      .card {
+        &:hover {
+          background-color: #DCF1FD;
+        }
+      }
+    }
+  }
 }
 
 .al_chat {

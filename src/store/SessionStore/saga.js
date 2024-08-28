@@ -41,13 +41,13 @@ const menus = [
     },
     {
         moduleId: "3",
-        name: "Behavioural",
+        name: "Behavioral",
         link: "chat",
         icon: "icon_alfred_bot",
         subModules: [
             {
                 id: "1",
-                name: "Behavioural Chat",
+                name: "Behavioral Chat",
                 link: "chat",
                 icon: "icon_alfred_bot",
             },

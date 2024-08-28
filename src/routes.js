@@ -37,6 +37,9 @@ const Smoking = React.lazy(() => import("./components/Pages/Smoking"));
 const Sleepapnea = React.lazy(() => import("./components/Pages/Sleepapnea"));
 const Symptoms = React.lazy(() => import("./components/Pages/Symptoms"));
 const Vascular = React.lazy(() => import("./components/Pages/Vascular"));
+const RateControl = React.lazy(() => import("./components/Pages/RateControl"));
+const RhythmControl = React.lazy(() => import("./components/Pages/RhythmControl"));
+const StrokeRisk = React.lazy(() => import("./components/Pages/StrokeRisk"));
 const TermsAndConditionExternal = React.lazy(() => import("./components/Pages/TermsAndConditionExternal"));
 
 // auth-user
@@ -93,6 +96,9 @@ const AllRoutes = ({ authenticated }) => {
               <Route path="affaq" element={<Affaq />} />
               <Route path="symptoms" element={<Symptoms />} />
               <Route path="medications" element={<Medications />} />
+              <Route path="ratecontrol" element={<RateControl />} />
+              <Route path="rhythmcontrol" element={<RhythmControl />} />
+              <Route path="strokerisk" element={<StrokeRisk />} />
               <Route path="ablation" element={<Ablation />} />
               <Route path="devicepacemaker" element={<DevicePacemaker />} />
               <Route path="obesity" element={<Obesity />} />

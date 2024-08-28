@@ -29,7 +29,6 @@ export default function Topbar(props) {
     navigate('/signin')
   }
 
-
   const lPathName = useLocation().pathname;
   const sideMenu = lPathName === "/" ? menuData?.[0] : menuData?.find(s => '/' + s.link === lPathName?.replace('/*', '') || s.subModules.findIndex(y => '/' + y.link === lPathName?.replace('/*', '')) !== -1)
   const sideSubMenu = lPathName === "/" ? sideMenu?.subModules?.[0] : sideMenu?.subModules?.find(y => ('/' + y.link === lPathName?.replace('/*', '')));

@@ -55,24 +55,24 @@ export default function Header({ logoSrc, variant }) {
         { id: "1", name: "AF FAQ's", link: 'affaq' },
         { id: "2", name: "Symptoms", link: 'symptoms' },
         {
-          id: "3", name: "Rhythm Management", link: '',
+          id: "3", name: "Four Pillars of Treatment", link: '',
+          // innerModules: [
+          //   { id: "31", name: "Medications", link: 'medications' },
+          //   { id: "32", name: "Ablation", link: 'ablation' },
+          //   { id: "33", name: "Device/Pacemaker", link: 'devicepacemaker' }
+          // ]
           innerModules: [
-            { id: "31", name: "Medications", link: 'medications' },
-            { id: "32", name: "Ablation", link: 'ablation' },
-            { id: "33", name: "Device/Pacemaker", link: 'devicepacemaker' }
-          ]
-        },
-        {
-          id: "4", name: "Risk Factors", link: '',
-          innerModules: [
-            { id: "41", name: "Obesity", link: 'obesity' },
-            { id: "42", name: "Sleep apnea", link: 'sleepapnea' },
+            { id: "31", name: "Rate Control", link: 'ratecontrol' },
+            { id: "32", name: "Rhythm Control", link: 'rhythmcontrol' },
+            { id: "33", name: "Stroke Risk", link: 'strokerisk' },
             {
-              id: "43", name: "Habits", link: '',
+              id: "34", name: "Risk Factors", link: '',
               innersubModules: [
-                { id: "431", name: "Alcohol", link: 'alocohol' },
-                { id: "432", name: "Smoking", link: 'smoking' },
-                { id: "433", name: "Exercise", link: 'exercise' }
+                { id: "341", name: "Obesity", link: 'obesity' },
+                { id: "342", name: "Sleep apnea", link: 'sleepapnea' },
+                { id: "343", name: "Alcohol", link: 'alocohol' },
+                { id: "345", name: "Smoking", link: 'smoking' },
+                { id: "346", name: "Exercise", link: 'exercise' }
               ]
             }
           ]

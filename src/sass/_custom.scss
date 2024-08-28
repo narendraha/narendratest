@@ -134,44 +134,69 @@ button:focus-visible {
 
 .al_promptcard {
   .card {
-    border: 1px solid #e5ecf5;
-    border-radius: 10px;
+    border: 1px solid #c1f9ff;
+    border-radius: 15px;
     box-shadow: none;
-  }
+    transition: all .6s ease-out;
+    background: linear-gradient(to right, #e3f5ff 50%, #ffffff 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
 
-  .col-6 {
-    &:nth-child(1) {
-      .card {
-        &:hover {
-          background-color: #FFF2F2;
-        }
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      i {
+        color: #ffffff;
+        font-size: 12px;
+        transform: rotateY(180deg);
       }
     }
 
-    &:nth-child(2) {
-      .card {
-        &:hover {
-          background-color: #FCF4E1;
-        }
-      }
-    }
+    &:hover {
+      background-position: left bottom;
 
-    &:nth-child(3) {
-      .card {
-        &:hover {
-          background-color: #E2FCE1;
-        }
-      }
-    }
-
-    &:nth-child(4) {
-      .card {
-        &:hover {
-          background-color: #DCF1FD;
-        }
+      i {
+        color: #04C1D6;
       }
     }
   }
+
+  // .col-6 {
+  //   &:nth-child(1) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #FFF2F2;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(2) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #FCF4E1;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(3) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #E2FCE1;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(4) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #DCF1FD;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .al_chat {

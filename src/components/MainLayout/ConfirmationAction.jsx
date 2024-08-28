@@ -1,8 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Modal, ModalBody } from "reactstrap";
+import { Button, Modal, ModalBody, FormGroup, Label } from "reactstrap";
 import { getActionTypes } from "../../_mock/internalJsControl";
 import { setConfirmationClose } from "../../store/UtilityCallFunction/slice";
+import { Icon } from "@iconify/react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from 'yup';
 
 export default function ConfirmationAction() {
   const dispatch = useDispatch();
@@ -42,7 +45,7 @@ export default function ConfirmationAction() {
             </h5>
           </ModalBody>
 
-          <div className="modelFooter text-center mb-3">
+          <div className="modelFooter text-center my-3">
             <Button
               type="button"
               className="text-capitalize btn al_button_add"

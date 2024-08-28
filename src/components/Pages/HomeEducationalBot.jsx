@@ -115,28 +115,32 @@ const HomeEducationalBot = () => {
                                 <Col xs="6" className="mb-3">
                                     <Card className='al_cardview pointer'>
                                         <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">What is Atrial Fibrillation?</div>
+                                            <div className="text-xs-small lh-normal me-1">What is Atrial Fibrillation?</div>
+                                            <i className="icon_alfred_back-arrow"></i>
                                         </CardBody>
                                     </Card>
                                 </Col>
                                 <Col xs="6" className="mb-3">
                                     <Card className='al_cardview pointer'>
                                         <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">Is Atrial Fibrillation dangerous?</div>
+                                            <div className="text-xs-small lh-normal me-1">Is Atrial Fibrillation dangerous?</div>
+                                            <i className="icon_alfred_back-arrow"></i>
                                         </CardBody>
                                     </Card>
                                 </Col>
                                 <Col xs="6" className="mb-3">
                                     <Card className='al_cardview pointer'>
                                         <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">How do you diagnose Atrial Fibrillation?</div>
+                                            <div className="text-xs-small lh-normal me-1">How do you diagnose Atrial Fibrillation?</div>
+                                            <i className="icon_alfred_back-arrow"></i>
                                         </CardBody>
                                     </Card>
                                 </Col>
                                 <Col xs="6" className="mb-3">
                                     <Card className='al_cardview pointer'>
                                         <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">What are the symptoms of Atrial Fibrillation?</div>
+                                            <div className="text-xs-small lh-normal me-1">What are the symptoms of Atrial Fibrillation?</div>
+                                            <i className="icon_alfred_back-arrow"></i>
                                         </CardBody>
                                     </Card>
                                 </Col>

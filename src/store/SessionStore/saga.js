@@ -335,10 +335,10 @@ function* setAccountCreateConfirmation(action) {
 
 // TO LOGIN USER 
 function* userLoginRequest(action) {
-    let { values, navigate, isGoogleLogin } = action?.payload;
+    let { values, navigate, isGoogleLogin, isAppleLogin } = action?.payload;
     store.dispatch(setLoading(true));
 
-    let url = isGoogleLogin ? "googleauth" : "login_account";
+    let url = isGoogleLogin ? "googleauth" : isAppleLogin ? "" : "login_account";
 
     let isAuthenticated = false,
         menuData = [],

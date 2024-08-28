@@ -1,7 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/MainLayout/Layout";
 import MainLayout from "./components/MainLayout/index";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
@@ -63,14 +61,14 @@ const AllRoutes = ({ authenticated }) => {
 
   return (
     <>
-      <ToastContainer theme="light" />
       <Routes>
         {authenticated ? (
           <>
             <Route path="/" element={<MainLayout />}>
+              <Route index path="/" element={<Home />} />
+              <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="home" element={<Home />} />
               <Route path="chat" element={<BehavioralChat />} />
               <Route path="historychat" element={<HistoryChat />} />
               <Route path="transcriptsummary" element={<HistorySummary />} />

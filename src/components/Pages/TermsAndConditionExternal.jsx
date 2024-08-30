@@ -1,8 +1,10 @@
 import React from "react";
-import alfredlogo from "../../images/alfredlogo.svg";
 import { Link } from 'react-router-dom';
+import { pageTitle } from "../../_mock/internalJsControl";
+import alfredlogo from "../../images/alfredlogo.svg";
 
 export default function Terms() {
+    pageTitle("Terms & Conditions")
     return (
         <div className='py-4 px-5'>
             <div className="wflexScroll" style={{ fontSize: "14px" }}>

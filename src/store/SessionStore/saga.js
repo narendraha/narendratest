@@ -376,7 +376,8 @@ function* userLoginRequest(action) {
         }
         toast(response?.message, {
             position: "top-right",
-            type: response?.status && response?.statuscode === 200 ? "success" : "error",
+            //  socialauth first register statuscode 201 for success case
+            type: response?.status && (response?.statuscode === 200 || response?.statuscode === 201) ? "success" : "error",
         });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {

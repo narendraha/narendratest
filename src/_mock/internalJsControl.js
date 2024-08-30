@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { AxiosInstance } from '../_mock/utilities';
 import ChatFemaleuser from "../images/femaleuserImg.jpg";
 import ChatMaleuser from "../images/userprofile.jpg";
@@ -30,7 +31,8 @@ export const getActionTypes = {
     UNSELECT: 0,
     EDIT: 1,
     ISCONFIRM: 2,
-    SELECT: 3
+    SELECT: 3,
+    CHATCOMMETOPEN: 4
 }
 
 // profile page sub componets 
@@ -54,7 +56,7 @@ export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
 { type: 'alphaspace', pattern: /^[a-zA-Z ]*$/, message: 'alphaspace', alowChar: '^[a-zA-Z {spacial}]*$' },
 { type: 'number', pattern: /^[0-9]{1,20}$/, message: 'number', alowChar: null },
-
+{ type: 'alphaNumeric', pattern: /^[a-zA-Z0-9 ]+$/, message: 'alphaNumeric', alowChar: '^[a-zA-Z0-9 {spacial}]*$' },
 ]
 
 // roles
@@ -198,3 +200,19 @@ export const pageTitle = (title) => {
 export const getProfilePictureByGender = (getProfileDetails) => {
     return ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url)
 }
+
+
+export const getDecodedTokenFromLocalStorage = () => {
+    const token = localStorage.getItem("token"); // get the token from local storage
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+            return decoded;
+        } catch (error) {
+            console.error("Error decoding token:", error);
+            return null;
+        }
+    } else {
+        return null;
+    }
+};

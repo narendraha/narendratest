@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
-import { toast } from "react-toastify";
-import { Card, CardBody, Modal, ModalBody, Label } from "reactstrap";
-import { AxiosInstance } from "../../../_mock/utilities";
-import Loading from "../LoadingComponent";
+import React, { useEffect, useRef, useState } from "react";
+import DOMPurify from "dompurify";
+import { useNavigate } from "react-router";
+import { Link } from 'react-router-dom';
 import generatePDF, { Margin, Resolution } from 'react-to-pdf';
+import { toast } from "react-toastify";
+import { Card, CardBody, Label, Modal, ModalBody } from "reactstrap";
+import { getProfileCmpDetails } from '../../../_mock/helperIndex';
+import { AxiosInstance } from "../../../_mock/utilities";
 import logo from '../../../images/alfredlogo.svg';
-import webicon from '../../../images/websiteicon.svg';
 import footerbg from '../../../images/footerbg.svg';
 import watermark from '../../../images/watermark.png';
-import { Link } from 'react-router-dom';
+import webicon from '../../../images/websiteicon.svg';
 import ModalView from "../../Utilities/ModalView";
-import { getProfileCmpDetails } from '../../../_mock/helperIndex';
-import { useNavigate } from "react-router";
+import Loading from "../LoadingComponent";
 
 export default function HistorySummary() {
   const navigate = useNavigate();
@@ -93,6 +94,8 @@ export default function HistorySummary() {
       fetchProfileComplitionDetails(data?.path, true)
   }
 
+  const sanitizedHTMLTranscript = DOMPurify.sanitize(transcript);
+
   return (
     <>
       {isLoading && <Loading />}
@@ -134,7 +137,8 @@ export default function HistorySummary() {
                           </td>
                         </tr>
                         <tr className="w-100 flex-grow-1" style={{ height: `calc(100vh - 142px)` }}>
-                          <td className="px-4 pb-3" style={{ verticalAlign: "top" }} dangerouslySetInnerHTML={{ __html: transcript }}>
+                          {/* <td className="px-4 pb-3" style={{ verticalAlign: "top" }} dangerouslySetInnerHTML={{ __html: transcript }}> */}
+                          <td className="px-4 pb-3" style={{ verticalAlign: "top" }} dangerouslySetInnerHTML={{ __html: sanitizedHTMLTranscript }}>
                           </td>
                         </tr>
                         <tr className="w-100" style={{ height: "32px" }}>

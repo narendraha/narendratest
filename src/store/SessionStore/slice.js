@@ -12,6 +12,10 @@ const initialState = {
     authToken: "",
     authRedirectionRoute: "",
     forgotPasswordFormData: "",
+    isSessionTimeStart: false,
+    isSessionExpiring: false,
+    countDown: 0,
+    timerColor: "",
 };
 
 const sessionStoreSlice = createSlice({
@@ -72,7 +76,19 @@ const sessionStoreSlice = createSlice({
         updatePasswordFromForgotPasswrodRequest: () => { },
         setNonAuthSessionIdReuqest: (state, action) => {
             state.nonAuthSessionId = action?.payload
-        }
+        },
+        setSessionTimeStart: (state, action) => {
+            state.isSessionTimeStart = action.payload
+        },
+        setSessionExpiring: (state, action) => {
+            state.isSessionExpiring = action.payload;
+        },
+        setCountDown: (state, action) => {
+            state.countDown = action.payload;
+        },
+        setTimerColor: (state, action) => {
+            state.timerColor = action.payload;
+        },
     },
 });
 
@@ -90,7 +106,11 @@ export const {
     logoutRequest,
     setAuthRoutes,
     updatePasswordFromForgotPasswrodRequest, updatePasswordFromForgotPasswrodResponse,
-    setNonAuthSessionIdReuqest
+    setNonAuthSessionIdReuqest,
+    setSessionTimeStart,
+    setSessionExpiring,
+    setCountDown,
+    setTimerColor,
 } = actions;
 
 export default reducer;

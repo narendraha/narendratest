@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
-import { getActionTypes, getProfileTabs } from '../../../_mock/helperIndex';
+import { getActionTypes, getProfileTabs, pageTitle } from '../../../_mock/helperIndex';
 import { setResetProfileSliceData } from "../../../store/Profile/slice";
 import { getPatientDetailsRequest, setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
 import { ProfileSettings } from "./ProfileSettings";
@@ -12,6 +12,7 @@ import ProfileImageUpload from './profileImageUpload';
 import { ProfileViewDetails } from './profileViewDetails';
 
 export default function ProfileManager() {
+  pageTitle("Profile")
   const dispatch = useDispatch();
 
   const { actionType, actionData } = useSelector((state) => state?.utilityCallFunctionSlice)

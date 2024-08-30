@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getProfileCmpDetails } from '../../_mock/helperIndex';
 import smalllogo from "../../images/alfredlogoicon.svg";
 import logo from "../../images/alfredlogowhite.svg";
 import ModalView from "../Utilities/ModalView";
-import { UncontrolledTooltip } from "reactstrap";
-import { useSelector } from "react-redux";
 
 export default function SideNav(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
-  let { menuData } = useSelector((state) => (state?.sessionStoreSlice));
+  const { menuData } = useSelector((state) => (state?.sessionStoreSlice));
 
   useEffect(() => { }, [props.isShowmenu]);
 
@@ -68,9 +67,9 @@ export default function SideNav(props) {
                   <React.Fragment key={index} >
                     {menu?.subModules && menu?.subModules?.map((subModules, subIndex) => (
                       <div className="al_submenu w-100" key={subIndex} >
-                        <div className={"menu-item " + (location.pathname === "/" + subModules.link ? "active" : "")}>
+                        <div className={"menu-item " + (((location.pathname === "/" + subModules.link) || (location.pathname === "/" && index === 0)) ? "active" : "")}>
                           < div
-                            id={subModules.link}
+                            id={location.pathname === `/${subModules.link}` ? subModules.link : subIndex}
                             onClick={() => handleMenuClick(subModules.link)}
                           >
                             <i className={subModules.icon} > </i>

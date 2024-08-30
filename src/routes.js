@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/MainLayout/Layout";
+import SessionTimeoutModal from "./components/MainLayout/SessionTimeoutModal";
 import MainLayout from "./components/MainLayout/index";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 import BackToHomeErrorPage from "./components/Pages/BackToHomeErrorPage";
@@ -67,13 +68,15 @@ const AllRoutes = ({ authenticated }) => {
   return (
     <>
       <ToastContainer theme="light" />
+      <SessionTimeoutModal />
       <Routes>
         {authenticated ? (
           <>
             <Route path="/" element={<MainLayout />}>
+              <Route index path="/" element={<Home />} />
+              <Route path="home" element={<Home />} />
               <Route path="profile" element={<Profile />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="home" element={<Home />} />
               <Route path="chat" element={<BehavioralChat />} />
               <Route path="historychat" element={<HistoryChat />} />
               <Route path="transcriptsummary" element={<HistorySummary />} />
@@ -85,8 +88,8 @@ const AllRoutes = ({ authenticated }) => {
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
-              <Route path="*" element={<BackToHomeErrorPage />} />
             </Route>
+            <Route path="*" element={<BackToHomeErrorPage />} />
           </>
         ) : (
           <>
@@ -130,6 +133,7 @@ const AllRoutes = ({ authenticated }) => {
               <Route path="privacypolicy" element={<PrivaycPolicy />} />
               <Route path="*" element={<BackToSignInErrorPage />} />
             </Route>
+            <Route path="*" element={<BackToSignInErrorPage />} />
           </>
         )}
       </Routes>

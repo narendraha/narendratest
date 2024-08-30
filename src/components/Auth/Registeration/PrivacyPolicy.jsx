@@ -1,7 +1,9 @@
 import React from "react";
+import { pageTitle } from "../../../_mock/internalJsControl";
 import alfredlogo from "../../../images/alfredlogo.svg";
 
 export default function PrivacyPolicy() {
+    pageTitle("Privacy Policies")
     return (
         <div className='py-4 px-5'>
             <div className="wflexScroll" style={{ fontSize: "14px" }}>

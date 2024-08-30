@@ -58,9 +58,9 @@ export const RegisterTypeSelection = () => {
                                     <small className="text-muted mb-0 me-4 pe-5 mt-1">Joining hands for well-being.</small>
                                 </div>
                             </div>
-                            <div className="mt-3 text-medium" onClick={backToSignInHandle}>
+                            <div className="mt-3 text-medium">
                                 Already have an account?{" "}
-                                <Link to="/signin" className="al_text_link cs_medium">
+                                <Link to="/signin" className="al_text_link cs_medium" onClick={backToSignInHandle}>
                                     Sign in
                                 </Link>
                             </div>

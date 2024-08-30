@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Carousel, CarouselIndicators, CarouselItem, Col, Row } from "reactstrap";
 import { getActivetab } from "../../../../_mock/internalJsControl";
-import { getActiveTabRequest, setActiveTabRequest, setHealthHubSkippedWeekRequest } from "../../../../store/Home/slice";
+import { setActiveTabRequest, setHealthHubSkippedWeekRequest } from "../../../../store/Home/slice";
 
 const HealthHubContentView = () => {
     const dispatch = useDispatch();

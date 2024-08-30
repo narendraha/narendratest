@@ -1,6 +1,8 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 
 const EducationalBotHTMLcontent = ({ props }) => {
+
   const htmlContent = `
 <!DOCTYPE html>
 <html>
@@ -41,8 +43,11 @@ const EducationalBotHTMLcontent = ({ props }) => {
     </html
   `;
 
+  const sanitizedHTML = DOMPurify.sanitize(htmlContent);
+
   return (
-    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    // <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
   );
 };
 

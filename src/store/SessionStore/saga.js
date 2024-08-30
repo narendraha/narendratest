@@ -105,6 +105,7 @@ const menus = [
     //     { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
     //     { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' },
     //     { id: "5", name: "Approve Users", link: 'approveusers', icon: 'icon_alfred_approveusers' }
+    //     { id: "6", name: "List of Admins", link: 'listofadmins', icon: 'icon_alfred_menu_client_user' }
     //   ]
     // },
     // {

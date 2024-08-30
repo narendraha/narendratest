@@ -254,7 +254,7 @@ export default function BehaviouralBotManager() {
                               <div>{message.alfred}</div>
                               {/* {message?.question && <div className="d-flex al_npsscore">
                                 {numberRangeOptions?.map((num) => (
-                                  <div onClick={() => handleFormSubmit(null, num)}>{num}</div>
+                                  <div key={num} onClick={() => handleFormSubmit(null, num)}>{num}</div>
                                 ))}
                               </div>} */}
                             </>

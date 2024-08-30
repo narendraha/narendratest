@@ -96,7 +96,7 @@ export const Signin = () => {
                         src={handwave}
                         alt=""
                         width={25}
-                        className="mb-2"
+                        className="mb-2 wave"
                       />
                     </span>
                   </span>

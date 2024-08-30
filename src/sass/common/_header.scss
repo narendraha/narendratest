@@ -246,8 +246,8 @@
       max-width: 100%;
       outline: none;
       transition: all 0.3s ease;
-      border: 1px solid #D0D5DD;
       font-size: 1em;
+      border: 1px solid #73d8e4;
 
       &::placeholder {
         font-size: 1em;
@@ -256,7 +256,6 @@
       }
 
       &:focus {
-        border: 1px solid #a8cbdf;
         box-shadow: 0 4px 8px rgba(0, 98, 153, 0.2) !important;
       }
     }
@@ -823,9 +822,9 @@
       background-color: #fff;
       color: $primary;
       padding: 10px 0;
-      top: 80px;
+      top: 60px;
       overflow: auto;
-      height: calc(100vh - 80px);
+      height: calc(100vh - 60px);
       line-height: 1.6em;
       transition: all 0.4s ease;
 
@@ -936,7 +935,11 @@
   }
 
   .cs_site_header.cs_style1 .cs_main_header_in {
-    height: 80px;
+    height: 60px;
+  }
+
+  .cs_site_branding img {
+    height: 50px;
   }
 
   .cs_site_header .current-menu-item>a:before {

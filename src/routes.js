@@ -1,6 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Layout from "./components/MainLayout/Layout";
+import SessionTimeoutModal from "./components/MainLayout/SessionTimeoutModal";
 import MainLayout from "./components/MainLayout/index";
 import NonAuthLayout from './components/MainLayout/nonAuthLayout';
 import BackToHomeErrorPage from "./components/Pages/BackToHomeErrorPage";
@@ -64,6 +67,8 @@ const AllRoutes = ({ authenticated }) => {
 
   return (
     <>
+      <ToastContainer theme="light" />
+      <SessionTimeoutModal />
       <Routes>
         {authenticated ? (
           <>

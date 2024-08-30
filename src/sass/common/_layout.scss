@@ -2272,18 +2272,25 @@ ul.standardPlans {
         }
     }
 
-    .al_button_add {
-        background: #2C2C37;
-        padding: 7px 25px;
-        border: 1px solid #2C2C37;
+    .al_button_save {
+        border: 1px solid #04C1D6;
+        background-color: #04C1D6;
         border-radius: 5px;
-        color: $white;
-        font-weight: 500;
+        min-width: 110px;
+        padding: 6px 25px;
+        color: #fff;
 
         &:hover {
-            background: #1AC9DD;
-            border-color: #1AC9DD;
+            background-color: #00a4b6;
+            border: 1px solid #00a4b6;
         }
+
+        &.al_timerbutton_save{
+            min-width: 80px;
+            padding: 7px 14px;
+            font-size: 0.75rem;
+        }
+
     }
 
     .al_button_cancel {
@@ -2302,6 +2309,12 @@ ul.standardPlans {
             i {
                 color: #ffffff;
             }
+        }
+
+        &.al_timerbutton_cancel {
+            font-size: 0.75rem;
+            padding: 7px 14px;
+            min-width: 80px;
         }
     }
 
@@ -2340,6 +2353,42 @@ ul.standardPlans {
             color: #404567;
             font-weight: $font_w500;
         }
+    }
+
+    .al_session_modal{
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        height: 100%;
+        margin: 0 auto;
+        padding: 30px 0;
+
+        .modal-content {
+            padding: 20px;
+            border-color: #ffffff;
+            max-height: 100%;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .al_modal_heading {
+            font-size: 1rem;
+            font-weight: $font_w500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .al_modal_subheading {
+            font-size: 0.75rem;
+            color: #404567;
+            font-weight: $font_w400;
+        }
+        h5{font-size: 0.75rem; margin-bottom: 0.5rem; font-weight: $font_w500;}
     }
 
     .message-formatting {
@@ -2763,5 +2812,20 @@ button.al_upgrade_btn {
                 background-color: #fffbeb;
             }
         }
+    }
+}
+
+.al_zoom-text{
+    display: inline-block;
+    animation: zoomInOut 3s infinite;
+    min-width: 4vw;
+}
+
+@keyframes zoomInOut {
+    0%, 100% {
+        transform: scale(1); /* No zoom */
+    }
+    50% {
+        transform: scale(1.2); /* Zoom in */
     }
 }

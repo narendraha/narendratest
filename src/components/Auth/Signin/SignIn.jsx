@@ -22,7 +22,7 @@ export const Signin = () => {
   const signInToGooglehandle = async () => {
     await signInWithPopup(googleAuth, googleAuthprovider)
       .then((data) => {
-        dispatch(loginRequest({ values: data?.user, navigate, isGoogleLogin: true }))
+        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
       })
       .catch((error) => { });
   }
@@ -37,7 +37,7 @@ export const Signin = () => {
   const signInToApplehandle = async () => {
     await signInWithPopup(appleAuth, appleAuthProvider)
       .then((data) => {
-        dispatch(loginRequest({ values: data?.user, navigate, isAppleLogin: true }))
+        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
       })
       .catch((error) => { });
   };

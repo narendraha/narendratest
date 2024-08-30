@@ -14,7 +14,8 @@ let controleErrors = {
     "min": "Minimum {min} {type} are required",
     "max": "Max {max} {type} are allowed",
     "alphasp": "Allow only alpha and {spacial} but not allowed Space",
-    "alphaspace": "Allow only alpha Characters "
+    "alphaspace": "Allow only alpha Characters ",
+    "alphaNumeric": "Allow only alpha numercis"
 }
 
 var N = (e, s, t) => new Promise((a, n) => {

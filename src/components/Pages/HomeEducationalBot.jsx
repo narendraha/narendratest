@@ -22,7 +22,7 @@ const HomeEducationalBot = () => {
     const [openChatUI, setOpenChatUI] = useState(false);
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { assetUrl, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
     const { nonAuthSessionId } = useSelector((state) => (state?.sessionStoreSlice))
 
     let generateNonAuthSessionId = () => {
@@ -63,7 +63,7 @@ const HomeEducationalBot = () => {
                             <div className="flex-grow-1">
                                 <div className="scrolldiv">
                                     {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                        return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index }} />
+                                        return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index, isInputDisable, actionType }} />
                                     })}
                                     {isChatBotLoading &&
                                         <Row className="mb-4 al_chatcontent al_bot-reply">

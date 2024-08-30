@@ -31,7 +31,8 @@ export const getActionTypes = {
     UNSELECT: 0,
     EDIT: 1,
     ISCONFIRM: 2,
-    SELECT: 3
+    SELECT: 3,
+    CHATCOMMETOPEN: 4
 }
 
 // profile page sub componets 
@@ -55,7 +56,7 @@ export const customPatterns = [{},
 { type: 'alphasp', pattern: /^[a-zA-Z]*$/, message: 'alphasp', alowChar: '^[a-zA-Z{spacial}]*$' },
 { type: 'alphaspace', pattern: /^[a-zA-Z ]*$/, message: 'alphaspace', alowChar: '^[a-zA-Z {spacial}]*$' },
 { type: 'number', pattern: /^[0-9]{1,20}$/, message: 'number', alowChar: null },
-
+{ type: 'alphaNumeric', pattern: /^[a-zA-Z0-9 ]+$/, message: 'alphaNumeric', alowChar: '^[a-zA-Z0-9 {spacial}]*$' },
 ]
 
 // roles

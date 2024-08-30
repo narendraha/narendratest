@@ -8,6 +8,7 @@ import App from '../App';
 import { store } from '../store/store';
 import { customPatterns } from './helperIndex';
 import { PersistGate } from 'redux-persist/integration/react';
+import Loading from '../components/MainLayout/Loading';
 
 let controleErrors = {
     "min": "Minimum {min} {type} are required",
@@ -41,12 +42,15 @@ export var loadPreDataAndApp = (e = !1) => N(void 0, null, function* () {
     process.env.NODE_ENV === "production" && (console.log = function () { })
     let app = React.createElement(Provider, {
         store: store
-    }, React.createElement(PersistGate, {
-        persistor: persistStore(store)
-    },
+    }, React.createElement(
+        PersistGate,
+        {
+            persistor: persistStore(store),
+            loading: React.createElement(Loading, { storeLoading: true, rehydrating: true }) // Add the loading component here
+        },
         React.createElement(Router, null, React.createElement(App, null))))
     parseInt(React.version) >= 18 ? ReactDOM.createRoot(document.getElementById("root")).render(app) : ReactDOM.replace(app, document.getElementById("root"))
-})
+});
 
 // Custom Validations 
 let getCustomPatten = (msgType) => {

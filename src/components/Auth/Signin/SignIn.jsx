@@ -11,7 +11,8 @@ import apple from '../../../images/apple.svg';
 import google from '../../../images/google.svg';
 import handwave from '../../../images/handwave.png';
 import { loginRequest, setActiveRegistrationForm, setAuthRoutes } from "../../../store/SessionStore/slice";
-import { auth, provider } from "../../Firebase";
+import { appleAuth, appleAuthProvider } from '../../Firebase/appleFirebase';
+import { googleAuth, googleAuthprovider } from "../../Firebase/googleFirebase";
 
 export const Signin = () => {
   pageTitle('Signin');
@@ -19,9 +20,9 @@ export const Signin = () => {
   const dispatch = useDispatch();
 
   const signInToGooglehandle = async () => {
-    await signInWithPopup(auth, provider)
+    await signInWithPopup(googleAuth, googleAuthprovider)
       .then((data) => {
-        dispatch(loginRequest({ values: data?.user, navigate, isGoogleLogin: true }))
+        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
       })
       .catch((error) => { });
   }
@@ -32,6 +33,14 @@ export const Signin = () => {
     if (isRegister)
       dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION))
   }
+
+  const signInToApplehandle = async () => {
+    await signInWithPopup(appleAuth, appleAuthProvider)
+      .then((data) => {
+        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
+      })
+      .catch((error) => { });
+  };
 
   return (
     <React.Fragment>
@@ -189,7 +198,10 @@ export const Signin = () => {
                   />
                   Sign in / Sign up With Google
                 </button>
-                <button type="button" className="al_signinbuttons">
+                <button type="button"
+                  className="al_signinbuttons"
+                  onClick={signInToApplehandle}
+                >
                   <img
                     src={apple}
                     alt="apple"

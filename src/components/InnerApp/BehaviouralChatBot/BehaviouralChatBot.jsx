@@ -1,17 +1,17 @@
+import _ from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { Col, Row, UncontrolledTooltip } from "reactstrap";
-import { getProfileCmpDetails, pageTitle } from '../../../_mock/helperIndex';
+import { pageTitle } from '../../../_mock/helperIndex';
 import { AxiosInstance } from "../../../_mock/utilities";
 import Chatbot from "../../../images/alfredicon.svg";
 import ChatFemaleuser from "../../../images/femaleuserImg.jpg";
 import ChatMaleuser from "../../../images/userprofile.jpg";
-import ModalView from "../../Utilities/ModalView";
 import Loading from "../LoadingComponent";
 
 export default function BehaviouralBotManager() {
-  pageTitle("Behavioral Chat");
+  pageTitle("Behavioural Chat");
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false); // loading status of api call
@@ -26,20 +26,13 @@ export default function BehaviouralBotManager() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [getProfileDetails, setGetProfileDetails] = useState([]);
-  const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
-  let { redirectionPath, isModalVisible, modalMessage, navigationLink } = profileCmpModalProps;
   const [isFormLoading, setIsFormLoading] = useState(false);
   // get questions using useeffect
   useEffect(() => {
     setIsFormLoading(true);
-    fetchProfileComplitionDetails()
+    getQuestion();
   }, []);
-
-  useEffect(() => {
-    if (navigationLink && navigationLink !== "")
-      getQuestion();
-  }, [navigationLink])
 
   const getRandomQuestion = (index) => {
     if (questions?.length > 0 && responseStatus !== 99) {
@@ -53,7 +46,7 @@ export default function BehaviouralBotManager() {
   useEffect(() => {
     setConversation((prevConversation) => [
       ...prevConversation,
-      { alfred: getRandomQuestion(currentQuestionIndex) },
+      { alfred: getRandomQuestion(currentQuestionIndex), question: true },
     ]);
   }, [currentQuestionIndex, questions]);
 
@@ -88,14 +81,23 @@ export default function BehaviouralBotManager() {
     scrollToBottom(); // Scroll to bottom whenever messages change
   }, [conversation]);
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e, selectedNum = null) => {
     profileDetails();
     setIsInputShow(true);
-    e.preventDefault();
-    if (!userValue.trim()) return; // Do not submit empty input
+    if (e) {
+      e?.preventDefault();
+      if (!userValue.trim()) return; // Do not submit empty input
+    }
+    // setConversation((prevConversation) => [
+    //   ...prevConversation,
+    //   { user: selectedNum || userValue },
+    // ]);
     setConversation((prevConversation) => [
-      ...prevConversation,
-      { user: userValue },
+      ...prevConversation.map((obj) => ({
+        ...obj,
+        question: false,
+      })),
+      { user: selectedNum || userValue }
     ]);
     setUserValue("");
 
@@ -105,7 +107,7 @@ export default function BehaviouralBotManager() {
     // request data
     const payload = {
       alfred: currentQuestion,
-      user: userValue,
+      user: selectedNum || userValue,
       questionno: currentQuestionIndex + 1,
     };
     // api integration
@@ -164,35 +166,12 @@ export default function BehaviouralBotManager() {
       .catch((er) => { });
   };
 
-  const fetchProfileComplitionDetails = async (path = "", reOpenModel = false) => {
-    let link = reOpenModel ? path : 'chat'
-    const result = await getProfileCmpDetails(link);
-    setProfileCmpModalProps(result);
-    if (result?.navigationLink && result?.navigationLink !== "")
-      navigate(`/${result?.navigationLink}`)
-  };
-
-  const handleClose = _ => {
-    setProfileCmpModalProps({ ...profileCmpModalProps, isModalVisible: false });
-  }
-
-  const getIsmodalVisibleProp = (data) => {
-    if (data?.isModalVisible)
-      fetchProfileComplitionDetails(data?.path, true)
-  }
+  const numberRange = _.range(1, 11)
+  const numberRangeOptions = numberRange.map(String)
 
   const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? ChatFemaleuser : ChatMaleuser) : getProfileDetails?.profile_url);
   return (
     <>
-      {isModalVisible && (
-        <ModalView
-          msg={modalMessage}
-          handleClose={handleClose}
-          isModalVisible={isModalVisible}
-          path={redirectionPath}
-          modelVisibleProp={getIsmodalVisibleProp}
-        />
-      )}
       <div className="cs_homepage mt-0 h-100">
         {isFormLoading && <Loading />}
         <div className="w-50 al_chatbotauth p-0">
@@ -273,18 +252,11 @@ export default function BehaviouralBotManager() {
                           {message.alfred && (
                             <>
                               <div>{message.alfred}</div>
-                              <div className="d-flex al_npsscore">
-                                <div>1</div>
-                                <div>2</div>
-                                <div>3</div>
-                                <div>4</div>
-                                <div>5</div>
-                                <div>6</div>
-                                <div>7</div>
-                                <div>8</div>
-                                <div>9</div>
-                                <div>10</div>
-                              </div>
+                              {/* {message?.question && <div className="d-flex al_npsscore">
+                                {numberRangeOptions?.map((num) => (
+                                  <div onClick={() => handleFormSubmit(null, num)}>{num}</div>
+                                ))}
+                              </div>} */}
                             </>
                           )}
                           {message.user !== undefined && (
@@ -329,7 +301,7 @@ export default function BehaviouralBotManager() {
                     <i className="icon_alfred_search h-auto"></i>
                     <input
                       type="text"
-                      placeholder="Ask a question about Atrial Fibrillation"
+                      placeholder="Ask a question"
                       name="message"
                       value={userValue} // input value
                       onChange={handleInputChange} // handle changes

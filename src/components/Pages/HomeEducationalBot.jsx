@@ -41,8 +41,6 @@ const HomeEducationalBot = () => {
         }
     }, []);
 
-    console.log("0809808098098080", nonAuthSessionId)
-
     console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {
         // e.preventDefault();

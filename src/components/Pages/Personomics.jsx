@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { pageTitle } from '../../_mock/helperIndex';
-import { getAssetsRequest } from '../../store/UtilityCallFunction/slice';
 import Spacing from '../DefaultPages/Spacing';
 import TestimonialCarouselStyle2 from '../DefaultPages/TesimonialCarouselSlider';
 import Section from './Section';
@@ -29,17 +27,8 @@ const personomicsData = [
   }
 ];
 
-let animation = "animation.mp4";
-
 export default function Personomics() {
   pageTitle('Personomics');
-
-  const dispatch = useDispatch();
-  const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
-
-  useEffect(() => {
-    dispatch(getAssetsRequest(animation))
-  }, []);
 
   return (
     <>

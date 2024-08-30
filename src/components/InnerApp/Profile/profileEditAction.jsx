@@ -102,8 +102,8 @@ export const ProfileEditAction = () => {
                         .required("Dob is required").nullable(),
                     gender: Yup.string().required("This field is required"),
                     bloodtype: Yup.string().required("Blood Type is required"),
-                    // rtype: Yup.string().required("This field is required"),
-                    // education: Yup.string().required("Education is required"),
+                    rtype: Yup.string().required("This field is required"),
+                    education: Yup.string().required("Education is required"),
                     ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
                     feet: Yup.string()
                         .test('is-greater-than-one','Height must be atleast 3 feet',
@@ -354,7 +354,7 @@ export const ProfileEditAction = () => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    {/* <Col md="4" sm="12">
+                                    <Col md="4" sm="12">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>
@@ -376,8 +376,8 @@ export const ProfileEditAction = () => {
                                                 className="text-danger"
                                             />
                                         </FormGroup>
-                                    </Col> */}
-                                    {/* <Col md="4" sm="12">
+                                    </Col>
+                                    <Col md="4" sm="12">
                                         <FormGroup>
                                             <Label>
                                                 <span className="requiredLabel">*</span>
@@ -400,7 +400,7 @@ export const ProfileEditAction = () => {
                                                 className="text-danger"
                                             />
                                         </FormGroup>
-                                    </Col> */}
+                                    </Col>
                                     <Col md="8" sm="12">
                                         <FormGroup>
                                             <Label>Name of Insurance Provider</Label>

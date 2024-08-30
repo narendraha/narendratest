@@ -2272,6 +2272,20 @@ ul.standardPlans {
         }
     }
 
+    .al_button_add {
+        background: #2C2C37;
+        padding: 7px 25px;
+        border: 1px solid #2C2C37;
+        border-radius: 5px;
+        color: $white;
+        font-weight: 500;
+
+        &:hover {
+            background: #1AC9DD;
+            border-color: #1AC9DD;
+        }
+    }
+
     .al_button_save {
         border: 1px solid #04C1D6;
         background-color: #04C1D6;
@@ -2285,12 +2299,11 @@ ul.standardPlans {
             border: 1px solid #00a4b6;
         }
 
-        &.al_timerbutton_save{
+        &.al_timerbutton_save {
             min-width: 80px;
             padding: 7px 14px;
             font-size: 0.75rem;
         }
-
     }
 
     .al_button_cancel {
@@ -2359,7 +2372,7 @@ ul.standardPlans {
         }
     }
 
-    .al_session_modal{
+    .al_session_modal {
         display: flex;
         align-items: start;
         justify-content: center;
@@ -2392,7 +2405,12 @@ ul.standardPlans {
             color: #404567;
             font-weight: $font_w400;
         }
-        h5{font-size: 0.75rem; margin-bottom: 0.5rem; font-weight: $font_w500;}
+
+        h5 {
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-weight: $font_w500;
+        }
     }
 
     .message-formatting {
@@ -2819,17 +2837,22 @@ button.al_upgrade_btn {
     }
 }
 
-.al_zoom-text{
+.al_zoom-text {
     display: inline-block;
     animation: zoomInOut 3s infinite;
     min-width: 4vw;
 }
 
 @keyframes zoomInOut {
-    0%, 100% {
-        transform: scale(1); /* No zoom */
+
+    0%,
+    100% {
+        transform: scale(1);
+        /* No zoom */
     }
+
     50% {
-        transform: scale(1.2); /* Zoom in */
+        transform: scale(1.2);
+        /* Zoom in */
     }
 }

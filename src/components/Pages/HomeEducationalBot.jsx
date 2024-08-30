@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row, Card, CardBody } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
@@ -11,6 +11,7 @@ import { setNonAuthSessionIdReuqest } from "../../store/SessionStore/slice";
 import { getAssetsRequest } from "../../store/UtilityCallFunction/slice";
 import ChatBotMsgInterface from "../Utilities/ChatBotMsgInterface";
 import ChatBotSearchArea from "../Utilities/ChatBotSearchArea";
+import HomeEducationalBotPrompt from "./HomeEducationalBotPrompt";
 
 let homeleftmobile = 'homeleftmobile.gif'
 
@@ -21,7 +22,7 @@ const HomeEducationalBot = () => {
     const [openChatUI, setOpenChatUI] = useState(false);
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { assetUrl, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
     const { nonAuthSessionId } = useSelector((state) => (state?.sessionStoreSlice))
 
     let generateNonAuthSessionId = () => {
@@ -40,8 +41,6 @@ const HomeEducationalBot = () => {
             dispatch(setResetPendingEducationalBotRequest())
         }
     }, []);
-
-    console.log("0809808098098080", nonAuthSessionId)
 
     console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {
@@ -64,7 +63,7 @@ const HomeEducationalBot = () => {
                             <div className="flex-grow-1">
                                 <div className="scrolldiv">
                                     {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                        return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index }} />
+                                        return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index, isInputDisable, actionType }} />
                                     })}
                                     {isChatBotLoading &&
                                         <Row className="mb-4 al_chatcontent al_bot-reply">
@@ -111,36 +110,8 @@ const HomeEducationalBot = () => {
                                 />
                             </div>
 
-                            {/* <Row className="mt-3 al_promptcard">
-                                <Col xs="6" className="mb-3">
-                                    <Card className='al_cardview pointer'>
-                                        <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">What is Atrial Fibrillation?</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xs="6" className="mb-3">
-                                    <Card className='al_cardview pointer'>
-                                        <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">Is Atrial Fibrillation dangerous?</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xs="6" className="mb-3">
-                                    <Card className='al_cardview pointer'>
-                                        <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">How do you diagnose Atrial Fibrillation?</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col xs="6" className="mb-3">
-                                    <Card className='al_cardview pointer'>
-                                        <CardBody className='p-3'>
-                                            <div className="text-xs-small lh-normal">What are the symptoms of Atrial Fibrillation?</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row> */}
+                            {/* Educational Bot Prompts */}
+                            <HomeEducationalBotPrompt props={{ handleFormSubmit }} />
                         </Col>
                     </Row>
                 }

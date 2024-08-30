@@ -54,6 +54,25 @@ button:focus-visible {
   height: auto !important;
 }
 
+.wave {
+  animation-name: wave-animation;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite; 
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+  0% { transform: rotate( 0.0deg) }
+ 10% { transform: rotate(14.0deg) }
+ 20% { transform: rotate(-8.0deg) }
+ 30% { transform: rotate(14.0deg) }
+ 40% { transform: rotate(-4.0deg) }
+ 50% { transform: rotate(10.0deg) }
+ 60% { transform: rotate( 0.0deg) }
+100% { transform: rotate( 0.0deg) }
+}
+
 .al_npsscore {
   margin-top: 15px;
   background-color: transparent !important;
@@ -74,31 +93,31 @@ button:focus-visible {
     &:nth-child(2),
     &:nth-child(3),
     &:nth-child(4) {
-      border: 2px solid #EB3134;
+      border: 2px solid #ff6e70;
 
       &.selected,
       &:hover {
-        background-color: #EB3134;
+        background-color: #ff6e70;
       }
     }
 
     &:nth-child(5),
     &:nth-child(6) {
-      border: 2px solid #EF632D;
+      border: 2px solid #ffa751;
 
       &.selected,
       &:hover {
-        background-color: #EF632D;
+        background-color: #ffa751;
       }
     }
 
     &:nth-child(7),
     &:nth-child(8) {
-      border: 2px solid #FFB931;
+      border: 2px solid #f7c02e;
 
       &.selected,
       &:hover {
-        background-color: #FFB931;
+        background-color: #f7c02e;
       }
     }
 
@@ -134,44 +153,69 @@ button:focus-visible {
 
 .al_promptcard {
   .card {
-    border: 1px solid #e5ecf5;
-    border-radius: 10px;
+    border: 1px solid #c1f9ff;
+    border-radius: 15px;
     box-shadow: none;
-  }
+    transition: all .6s ease-out;
+    background: linear-gradient(to right, #e3f5ff 50%, #ffffff 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
 
-  .col-6 {
-    &:nth-child(1) {
-      .card {
-        &:hover {
-          background-color: #FFF2F2;
-        }
+    .card-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      i {
+        color: #ffffff;
+        font-size: 12px;
+        transform: rotateY(180deg);
       }
     }
 
-    &:nth-child(2) {
-      .card {
-        &:hover {
-          background-color: #FCF4E1;
-        }
-      }
-    }
+    &:hover {
+      background-position: left bottom;
 
-    &:nth-child(3) {
-      .card {
-        &:hover {
-          background-color: #E2FCE1;
-        }
-      }
-    }
-
-    &:nth-child(4) {
-      .card {
-        &:hover {
-          background-color: #DCF1FD;
-        }
+      i {
+        color: #04C1D6;
       }
     }
   }
+
+  // .col-6 {
+  //   &:nth-child(1) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #FFF2F2;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(2) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #FCF4E1;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(3) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #E2FCE1;
+  //       }
+  //     }
+  //   }
+
+  //   &:nth-child(4) {
+  //     .card {
+  //       &:hover {
+  //         background-color: #DCF1FD;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .al_chat {

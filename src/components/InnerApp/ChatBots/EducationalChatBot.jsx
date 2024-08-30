@@ -12,7 +12,7 @@ const EducationalChatBot2 = (props) => {
     const dispatch = useDispatch();
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { getProfileDetails } = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { getProfileDetails ,actionType} = useSelector((state) => state?.utilityCallFunctionSlice);
     const profilePicture = getProfilePictureByGender(getProfileDetails);
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const EducationalChatBot2 = (props) => {
                                     </Col>
                                 </Row>
                                 {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                    return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index: index, profilePicture, getProfileDetails }} />
+                                    return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index, profilePicture, getProfileDetails, isInputDisable, actionType }} />
                                 })}
                                 {isChatBotLoading &&
                                     <Row className="mb-4 al_chatcontent al_bot-reply">

@@ -1,4 +1,5 @@
 import moment from "moment";
+import { nanoid } from 'nanoid';
 import { toast } from "react-toastify";
 import { call, put, select, takeLeading } from "redux-saga/effects";
 import { callAPI, getAuthRoute, getRole } from "../../_mock/internalJsControl";
@@ -14,11 +15,11 @@ import {
     setAuthRoutes,
     setResetPasswordRequest,
     setResetPasswordResponse,
+    setSessionTimeStart,
+    updatePasswordFromForgotPasswrodRequest,
     verifyRegistrationOtpRequest,
-    verifyRegistrationOtpResponse,
-    updatePasswordFromForgotPasswrodRequest
+    verifyRegistrationOtpResponse
 } from "./slice";
-import { nanoid } from 'nanoid';
 
 const menus = [
     // {
@@ -335,22 +336,25 @@ function* setAccountCreateConfirmation(action) {
 
 // TO LOGIN USER 
 function* userLoginRequest(action) {
-    let { values, navigate, isGoogleLogin } = action?.payload;
+    let { values, navigate, isGoogleOrAppleLogin } = action?.payload;
     store.dispatch(setLoading(true));
 
-    let url = isGoogleLogin ? "googleauth" : "login_account";
+    let url = isGoogleOrAppleLogin ? "socialauth" : "login_account";
 
     let isAuthenticated = false,
         menuData = [],
         authToken = "",
+        randomId = nanoid(),
         sessionId = "";
 
-    let reqObj = isGoogleLogin ? {
+    let reqObj = isGoogleOrAppleLogin ? {
         username: values?.displayName,
-        email: values?.email
+        email: values?.email,
+        session_id: randomId
     } : {
         username: values?.username,
         password: values?.password,
+        session_id: randomId
     }
 
     try {
@@ -367,11 +371,13 @@ function* userLoginRequest(action) {
             navigate(`/${menuData?.[0]?.link}`)
             authToken = response?.data?.token
             localStorage.setItem("token", authToken)
-            sessionId = nanoid();
+            sessionId = randomId;
+            yield put(setSessionTimeStart(true))
         }
         toast(response?.message, {
             position: "top-right",
-            type: response?.status && response?.statuscode === 200 ? "success" : "error",
+            //  socialauth first register statuscode 201 for success case
+            type: response?.status && (response?.statuscode === 200 || response?.statuscode === 201) ? "success" : "error",
         });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {
@@ -382,6 +388,7 @@ function* userLoginRequest(action) {
     yield put(loginResponse({ isAuthenticated, menuData, authToken, sessionId }))
     store.dispatch(setLoading(false));
 }
+
 
 // TO UPDATE PASSWORD THROUGH FORGOT PASSWORD 
 function* updatePassword(action) {

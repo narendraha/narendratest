@@ -38,7 +38,8 @@ const educationalChatBotSlice = createSlice({
         },
         setInputDisableRequest: (state, action) => {
             state.isInputDisable = action.payload
-        }
+        },
+        setChatFeedBackCommentRequest: () => { }
     }
 });
 
@@ -49,7 +50,8 @@ export const {
     setChatHistoryRequest,
     setInputDisableRequest,
     updateChatPreferenceRequest, updateChatPreferenceResponse,
-    getChatStreamRequest, getChatStreamResponse
+    getChatStreamRequest, getChatStreamResponse,
+    setChatFeedBackCommentRequest
 } = actions;
 
 export default reducer;

@@ -42,7 +42,7 @@ export default function ConfirmationAction() {
             </h5>
           </ModalBody>
 
-          <div className="modelFooter text-center mb-3">
+          <div className="modelFooter text-center my-3">
             <Button
               type="button"
               className="text-capitalize btn al_button_add"

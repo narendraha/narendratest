@@ -1,10 +1,17 @@
 import { toast } from "react-toastify";
 import { call, put, select, takeLeading } from 'redux-saga/effects';
-import { callAPI } from "../../_mock/helperIndex";
-import { setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
+import { callAPI, getActionTypes } from "../../_mock/helperIndex";
+import { setActionTypeAndActionData, setChatBotLoadingIndex } from "../UtilityCallFunction/slice";
 import { store } from '../store';
-import { getChatStreamRequest, getChatStreamResponse, setInputDisableRequest, updateChatPreferenceRequest } from "./slice";
+import {
+    getChatStreamRequest,
+    getChatStreamResponse,
+    setChatFeedBackCommentRequest,
+    setInputDisableRequest,
+    updateChatPreferenceRequest
+} from "./slice";
 
+// LIKE DISLIKE CHAT RESPONSE
 function* updateChatPreference(action) {
     try {
 
@@ -145,13 +152,13 @@ function* getEducationalBotChatStream(action) {
         if (isUpdated) {
             let URL = `https://api.stream.helloalfred.ai/${innerBot ? `educational-bot-answer-dump` : `educational-bot-home-answer-dump`}`;
             let reqObj = {
-                patient_id:innerBot ? authToken:"1234-9876-54321",
+                patient_id: innerBot ? authToken : "1234-9876-54321",
                 session_id: innerBot ? sessionId : nonAuthSessionId,
                 alfred: updatedHistory?.[updatedHistory?.length - 1]?.content,
                 user: updatedHistory?.[updatedHistory?.length - 2]?.content,
             }
             let dumpBotChatResponse = yield call(callAPI, {
-                url : URL,
+                url: URL,
                 method: 'POST',
                 data: reqObj,
                 contentType: 'application/json',
@@ -167,11 +174,41 @@ function* getEducationalBotChatStream(action) {
     }
 }
 
+// TO SET FEEDBACK
+function* setChatFeedBackComment(action) {
 
+    let { comment, botResponse } = action?.payload;
+
+    let reqObj = {
+        question: botResponse,
+        comment: comment
+    }
+    try {
+        const response = yield call(callAPI, {
+            url: '/chat_comment',
+            method: 'POST',
+            data: reqObj,
+            contentType: 'application/json',
+        });
+        if (response?.status && response?.statuscode === 200) {
+            store.dispatch(setActionTypeAndActionData(getActionTypes.UNSELECT))
+        }
+        toast(response?.message, {
+            position: "top-right",
+            type: response?.status && response?.statuscode === 200 ? "success" : "error",
+        });
+    } catch (error) {
+        // toast(error?.response?.data?.detail, {
+        //     position: "top-right",
+        //     type: "error",
+        // });
+    }
+}
 
 function* watchHomeEducationalBotSaga() {
     yield takeLeading(updateChatPreferenceRequest.type, updateChatPreference)
     yield takeLeading(getChatStreamRequest.type, getEducationalBotChatStream)
+    yield takeLeading(setChatFeedBackCommentRequest.type, setChatFeedBackComment)
 }
 
 export default watchHomeEducationalBotSaga;

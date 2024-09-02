@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, UncontrolledTooltip } from 'reactstrap';
+import { Col, Row, UncontrolledTooltip, Alert } from 'reactstrap';
 import { getActionTypes, getRole } from '../../_mock/internalJsControl';
 import Chatbot from "../../images/alfredicon.svg";
 import Chatuser from "../../images/usericon.svg";
@@ -66,6 +66,7 @@ const ChatBotMsgInterface = ({ props }) => {
               <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', chatHistory?.content)}></i>
               <i className="icon_alfred_chat pointer me-3" onClick={() => commentModalHandle(getActionTypes.CHATCOMMETOPEN)}></i>
             </p>
+            {/* {selectedIcons[index]?.reaction === 'like' && <Alert color="success" className='mt-2 d-inline-flex align-items-center'><i className="icon_alfred_smile_emoji me-1" style={{ fontSize: "15px" }}></i>Glad you liked this answer!</Alert>} */}
             {actionType === getActionTypes.CHATCOMMETOPEN && <ChatBotFeedBackModal props={{ commentModalHandle, botResponse: chatHistory?.content }} />}
           </>)}
         </Col>

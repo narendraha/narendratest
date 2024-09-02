@@ -51,7 +51,8 @@ const Profile = React.lazy(() => import("./components/InnerApp/Profile/ProfileMa
 const Dashboard = React.lazy(() => import("./components/InnerApp/Dashboard/Dashboard"));
 const HistorySummary = React.lazy(() => import("./components/InnerApp/HistorySummary/HistorySummary"));
 const HistoryChat = React.lazy(() => import("./components/InnerApp/HistoryChatBot/HistoryChatBot"));
-const BehavioralChat = React.lazy(() => import("./components/InnerApp/BehaviouralChatBot/BehaviouralChatBot"));
+// const BehavioralChat = React.lazy(() => import("./components/InnerApp/BehaviouralChatBot/BehaviouralChatBot"));
+const BehavioralChat = React.lazy(() => import("./components/InnerApp/ChatBots/BehaviouralChatBot"));
 
 // Admin
 const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/index"));

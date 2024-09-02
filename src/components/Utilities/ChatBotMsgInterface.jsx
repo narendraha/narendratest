@@ -12,14 +12,14 @@ import EducationalBotHTMLcontent from './EducationalBotHTMLcontent';
 const ChatBotMsgInterface = ({ props }) => {
   const dispatch = useDispatch()
 
-  const { chatHistory, index, profilePicture, getProfileDetails, isInputDisable, actionType } = props;
+  const { chatHistory, index, profilePicture, getProfileDetails, isInputDisable, actionType, isBVBot } = props;
 
   const messagesEndRef = useRef(null);
 
   const [selectedIcons, setSelectedIcons,] = useState([]); // State to track selected icons
 
   const { chatBotLoadingIndex } = useSelector((state) => state?.utilityCallFunctionSlice);
-  const isUser = chatHistory?.role === getRole.USER;
+  const isUser = isBVBot ? Object.keys(chatHistory)?.[0] === getRole.USER : chatHistory?.role === getRole.USER;
 
   const handleAction = (messageId, iconType, alfredValue, userValue) => {
     setSelectedIcons(prevIcons => ({
@@ -58,9 +58,16 @@ const ChatBotMsgInterface = ({ props }) => {
         <Col>
           {isUser ?
             <div>{chatHistory?.content}</div> :
-            <div><EducationalBotHTMLcontent props={chatHistory?.content} />{chatBotLoadingIndex === index && <div className="al_chatloading my-1"></div>}</div>
+            <div>
+              {isBVBot ?
+                chatHistory?.Alfred
+                :
+                <div><EducationalBotHTMLcontent props={chatHistory?.content} />{chatBotLoadingIndex === index && <div className="al_chatloading my-1"></div>}</div>
+              }
+            </div>
           }
-          {!isUser && !isInputDisable && (<>
+          {/* These funcationality is only for educational bot */}
+          {!isUser && !isInputDisable && !isBVBot && (<>
             <p className="mb-0 mt-2 al_chatfeedbackactions">
               <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', chatHistory?.content)}></i>
               <i className={"icon_alfred_dislike pointer me-3 " + (selectedIcons[index]?.reaction === 'dislike' ? 'text-danger mt-0' : '')} onClick={() => handleAction(index, 'dislike', chatHistory?.content)}></i>

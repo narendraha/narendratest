@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import behaviouralChatBotSlice from './BehaviouralChatBot/slice';
 import educationalChatBotSlice from './EducationaChatBot/slice';
 import homePageSlice from './Home/slice';
 import profileSlice from './Profile/slice';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   profileSlice,
   homePageSlice,
   educationalChatBotSlice,
+  behaviouralChatBotSlice,
   sessionStoreSlice,
 });
 

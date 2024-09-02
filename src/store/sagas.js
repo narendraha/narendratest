@@ -1,4 +1,5 @@
 import { all } from 'redux-saga/effects';
+import watchBehaviouralBotSaga from './BehaviouralChatBot/saga';
 import watchHomeEducationalBotSaga from './EducationaChatBot/saga';
 import watchHomePageSaga from './Home/saga';
 import watchProfileSaga from './Profile/saga';
@@ -11,7 +12,8 @@ function* rootSaga() {
     watchProfileSaga(),
     watchHomePageSaga(),
     watchHomeEducationalBotSaga(),
-    watchSessionStateSaga() 
+    watchBehaviouralBotSaga(),
+    watchSessionStateSaga()
   ]);
 }
 

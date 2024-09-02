@@ -62,6 +62,7 @@ const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagemen
 const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
 const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
 const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
+const ListofAdmins = React.lazy(() => import("./components/Admin/ListofAdmins/index"));
 
 const AllRoutes = ({ authenticated }) => {
 
@@ -88,6 +89,7 @@ const AllRoutes = ({ authenticated }) => {
               <Route path="roles" element={<RoleManagement />} />
               <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
+              <Route path="listofadmins" element={<ListofAdmins />} />
             </Route>
             <Route path="*" element={<BackToHomeErrorPage />} />
           </>

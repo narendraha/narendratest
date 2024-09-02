@@ -139,12 +139,18 @@ export default function ListofAdmins() {
                                                             <Col sm="4">
                                                                 <FormGroup>
                                                                     <Label><span className='requiredLabel'>*</span>Mobile</Label>
-                                                                    <Field
+                                                                    {/* <Field
                                                                         type="text"
                                                                         name="Mobile"
                                                                         placeholder="Enter Mobile Number"
                                                                         className="form-control"
-                                                                    />
+                                                                    /> */}
+                                                                    <div className="input-group">
+                                                                        <PhoneInput
+                                                                            country={values?.countryCode}
+                                                                            value={values.mobile}
+                                                                            onChange={() => { }} />
+                                                                    </div>
                                                                 </FormGroup>
                                                             </Col>
                                                             <Col sm="4">

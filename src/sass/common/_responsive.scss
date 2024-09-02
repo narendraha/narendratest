@@ -224,7 +224,7 @@
         max-width: 50% !important;
     }
 
-    .al_approveusers {
+    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
         width: 150%;
     }
 
@@ -266,7 +266,7 @@
         border-right: none !important;
     }
 
-    .al_approveusers {
+    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
         width: 320%;
     }
 
@@ -367,7 +367,7 @@
 
 @media screen and (max-width: 767px) {
 
-    .al_approveusers {
+    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
         width: 200%;
     }
 

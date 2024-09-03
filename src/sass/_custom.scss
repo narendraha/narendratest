@@ -730,13 +730,13 @@ textarea {
 
   input.form-control {
     background-color: #ffffff !important;
-    border: 1px solid #F6F6FA !important;
+    border: 1px solid #e9e9e9 !important;
     padding: 9px 18px 9px 30px;
     font-size: $font_14;
     font-weight: $font_w500;
     transition: 0.3s ease all;
     border-radius: 8px !important;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1) inset !important;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3) inset !important;
 
     &:focus {
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07) !important;

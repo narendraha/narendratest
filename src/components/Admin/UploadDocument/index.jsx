@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Row, Col, Label, Card, CardBody } from 'reactstrap';
 import fileupload from '../../../images/fileupload.svg';
-import Stepper from '@keyvaluesystems/react-stepper';
 
 export default function UploadDocument() {
     const [view, setView] = useState("view");
@@ -139,12 +138,13 @@ export default function UploadDocument() {
                                                 </label>
                                             </div>
                                         </div>
-                                        {/* <div className='al_upload_steps'>
-                                            <Card className='mb-3'>
+                                        <div className='al_upload_steps'>
+                                            <Card className='mb-3 completedstep'>
                                                 <CardBody>
                                                     <div className='d-flex align-items-center justify-content-between'>
                                                         <div className='d-flex align-items-center'>
                                                             <div className='al_stepnumber'>1</div>
+                                                            <div class="line"></div>
                                                             <div>
                                                                 <small className='mb-1 fw-semibold text-dark'>Step 1</small>
                                                                 <div>Uploading File</div>
@@ -159,6 +159,7 @@ export default function UploadDocument() {
                                                     <div className='d-flex align-items-center justify-content-between'>
                                                         <div className='d-flex align-items-center'>
                                                             <div className='al_stepnumber'>2</div>
+                                                            <div class="line"></div>
                                                             <div>
                                                                 <small className='mb-1 fw-semibold text-dark'>Step 2</small>
                                                                 <div>Processing Data</div>
@@ -182,30 +183,7 @@ export default function UploadDocument() {
                                                     </div>
                                                 </CardBody>
                                             </Card>
-                                        </div> */}
-
-                                        {/* <Stepper
-                                            orientation="vertical"
-                                            steps={[
-                                                {
-                                                    stepLabel: "Step 1",
-                                                    stepDescription: "Uploading File",
-                                                    completed: true,
-                                                },
-                                                {
-                                                    stepLabel: "Step 2",
-                                                    stepDescription: "Processing Data",
-                                                    completed: false,
-                                                },
-                                                {
-                                                    stepLabel: "Step 3",
-                                                    stepDescription: "Finalizing Upload",
-                                                    completed: false,
-                                                },
-                                            ]}
-                                            currentStepIndex={currentStep}
-                                            onStepClick={handleStepClick}
-                                        /> */}
+                                        </div>
                                     </div>
                                 </Col>
                                 <Col lg="6" md="6" sm="12" className='px-0'>

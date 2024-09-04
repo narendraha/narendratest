@@ -788,11 +788,10 @@ textarea {
 }
 
 .al_upload_steps {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 25%;
+  margin: 0 auto;
   transition: opacity 0.5s ease;
+
   .card {
     background-color: #eaf8ff;
     border: none;
@@ -819,8 +818,22 @@ textarea {
     }
 
     &.completedstep {
-      background-color: #04C1D6;
-      color: #ffffff;
+
+      &:nth-child(1) {
+        background-color: #E6F9FB;
+      }
+
+      &:nth-child(2) {
+        background-color: #B3ECF3;
+      }
+
+      &:nth-child(3) {
+        background-color: #03C1D6;
+
+        i {
+          color: #ffffff;
+        }
+      }
 
       i {
         opacity: 1;
@@ -849,35 +862,15 @@ textarea {
       align-items: center;
       justify-content: center;
       margin-right: 10px;
+      font-weight: bold;
+      border: 1px solid #DEDEDE;
     }
   }
 }
 
-/* General styling for the upload steps */
-.al_upload_steps {
-  transition: opacity 0.5s ease;
-}
-
-.completedstep .al_stepnumber {
-  background-color: #28a745;
-}
-
-.al_stepnumber {
+.spinner-border {
   width: 30px;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #007bff;
-  color: white;
-  border-radius: 50%;
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.spinner-border {
-  width: 20px;
-  height: 20px;
   margin-right: 10px;
 }
 
@@ -899,14 +892,13 @@ textarea {
   font-size: 16px;
 }
 
-/* Final checkmark overlay */
 .final-check-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -917,31 +909,35 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   animation: popUp 0.5s ease-in-out forwards;
 }
 
 .big-checkmark {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   background-color: #28a745;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 50px;
+  font-size: 30px;
 }
 
 /* Pop-up animation */
 @keyframes popUp {
   0% {
-      transform: scale(0);
+    transform: scale(0);
   }
+
   80% {
-      transform: scale(1.2);
+    transform: scale(1.2);
   }
+
   100% {
-      transform: scale(1);
+    transform: scale(1);
   }
 }
 

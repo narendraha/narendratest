@@ -788,6 +788,11 @@ textarea {
 }
 
 .al_upload_steps {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease;
   .card {
     background-color: #eaf8ff;
     border: none;
@@ -845,6 +850,98 @@ textarea {
       justify-content: center;
       margin-right: 10px;
     }
+  }
+}
+
+/* General styling for the upload steps */
+.al_upload_steps {
+  transition: opacity 0.5s ease;
+}
+
+.completedstep .al_stepnumber {
+  background-color: #28a745;
+}
+
+.al_stepnumber {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.spinner-border {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.checkmark-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+}
+
+/* Final checkmark overlay */
+.final-check-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.final-check-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popUp 0.5s ease-in-out forwards;
+}
+
+.big-checkmark {
+  width: 100px;
+  height: 100px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 50px;
+}
+
+/* Pop-up animation */
+@keyframes popUp {
+  0% {
+      transform: scale(0);
+  }
+  80% {
+      transform: scale(1.2);
+  }
+  100% {
+      transform: scale(1);
   }
 }
 

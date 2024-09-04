@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Row, Col, Label, Card, CardBody } from 'reactstrap';
 import fileupload from '../../../images/fileupload.svg';
+import { FileUploadAnimation } from './fileUploadAnimation';
 
 export default function UploadDocument() {
+    const [fileUpload, setFileUpload] = useState("");
+
     const [view, setView] = useState("view");
     const handleDragEnter = e => {
         e.preventDefault();
@@ -25,6 +28,9 @@ export default function UploadDocument() {
 
     const handleStepClick = (step, index) => setCurrentStep(index);
 
+    const handleFileUpload = () =>{
+        setFileUpload("")
+    }
     return (
         <>
             {view === "view" &&
@@ -129,7 +135,7 @@ export default function UploadDocument() {
                                                 type="file"
                                                 id="document"
                                                 hidden
-                                                onChange={(e) => { }}
+                                                onChange={(e) => setFileUpload(e?.target?.files)}
                                             />
 
                                             <div id="al_blockele">
@@ -138,52 +144,8 @@ export default function UploadDocument() {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className='al_upload_steps'>
-                                            <Card className='mb-3 completedstep'>
-                                                <CardBody>
-                                                    <div className='d-flex align-items-center justify-content-between'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <div className='al_stepnumber'>1</div>
-                                                            <div class="line"></div>
-                                                            <div>
-                                                                <small className='mb-1 fw-semibold text-dark'>Step 1</small>
-                                                                <div>Uploading File</div>
-                                                            </div>
-                                                        </div>
-                                                        <i className='icon_alfred_uploaddocument'></i>
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                            <Card className='mb-3'>
-                                                <CardBody>
-                                                    <div className='d-flex align-items-center justify-content-between'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <div className='al_stepnumber'>2</div>
-                                                            <div class="line"></div>
-                                                            <div>
-                                                                <small className='mb-1 fw-semibold text-dark'>Step 2</small>
-                                                                <div>Processing Data</div>
-                                                            </div>
-                                                        </div>
-                                                        <i className='icon_alfred_sync'></i>
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                            <Card className='mb-3'>
-                                                <CardBody>
-                                                    <div className='d-flex align-items-center justify-content-between'>
-                                                        <div className='d-flex align-items-center'>
-                                                            <div className='al_stepnumber'>3</div>
-                                                            <div>
-                                                                <small className='mb-1 fw-semibold text-dark'>Step 3</small>
-                                                                <div>Finalizing Upload</div>
-                                                            </div>
-                                                        </div>
-                                                        <i className='icon_alfred_circle_check_solid'></i>
-                                                    </div>
-                                                </CardBody>
-                                            </Card>
-                                        </div>
+                                        {/* File Upload animation */}
+                                        <FileUploadAnimation props={{fileUpload, handleFileUpload}} />
                                     </div>
                                 </Col>
                                 <Col lg="6" md="6" sm="12" className='px-0'>
@@ -242,7 +204,7 @@ export default function UploadDocument() {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div >
             }
         </>
     )

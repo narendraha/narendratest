@@ -57,20 +57,43 @@ button:focus-visible {
 .wave {
   animation-name: wave-animation;
   animation-duration: 2.5s;
-  animation-iteration-count: infinite; 
+  animation-iteration-count: infinite;
   transform-origin: 70% 70%;
   display: inline-block;
 }
 
 @keyframes wave-animation {
-  0% { transform: rotate( 0.0deg) }
- 10% { transform: rotate(14.0deg) }
- 20% { transform: rotate(-8.0deg) }
- 30% { transform: rotate(14.0deg) }
- 40% { transform: rotate(-4.0deg) }
- 50% { transform: rotate(10.0deg) }
- 60% { transform: rotate( 0.0deg) }
-100% { transform: rotate( 0.0deg) }
+  0% {
+    transform: rotate(0.0deg)
+  }
+
+  10% {
+    transform: rotate(14.0deg)
+  }
+
+  20% {
+    transform: rotate(-8.0deg)
+  }
+
+  30% {
+    transform: rotate(14.0deg)
+  }
+
+  40% {
+    transform: rotate(-4.0deg)
+  }
+
+  50% {
+    transform: rotate(10.0deg)
+  }
+
+  60% {
+    transform: rotate(0.0deg)
+  }
+
+  100% {
+    transform: rotate(0.0deg)
+  }
 }
 
 .al_npsscore {
@@ -742,6 +765,10 @@ textarea {
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07) !important;
     }
 
+    &:disabled {
+      background-color: #e9ecef !important;
+    }
+
     &::placeholder,
     &::-moz-placeholder {
       color: #A0A3B5;
@@ -758,6 +785,66 @@ textarea {
     font-weight: 700;
   }
 
+}
+
+.al_upload_steps {
+  .card {
+    background-color: #eaf8ff;
+    border: none;
+    transition: all 0.4s ease;
+    border-radius: 15px;
+
+    i {
+      font-size: 30px;
+      opacity: 0.7;
+
+      &.icon_alfred_sync {
+        font-size: 36px;
+      }
+    }
+
+    &.completedstep {
+      animation: zoomInOutCard 2s;
+      background-color: #04C1D6;
+      color: #ffffff;
+
+      i {
+        opacity: 1;
+      }
+
+      .al_stepnumber {
+        opacity: 1;
+        background-color: #ffffff;
+        color: #2C2C37;
+      }
+    }
+
+    .al_stepnumber {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      opacity: 0.7;
+      background-color: #cccccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+  }
+}
+
+@keyframes zoomInOutCard {
+
+  0%,
+  100% {
+    transform: scale(1);
+    /* No zoom */
+  }
+
+  50% {
+    transform: scale(1.04);
+    /* Zoom in */
+  }
 }
 
 .al_goalslist {

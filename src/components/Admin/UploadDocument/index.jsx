@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Table, Row, Col, Label } from 'reactstrap';
+import { Table, Row, Col, Label, Card, CardBody } from 'reactstrap';
 import fileupload from '../../../images/fileupload.svg';
+import Stepper from '@keyvaluesystems/react-stepper';
 
 export default function UploadDocument() {
     const [view, setView] = useState("view");
@@ -20,6 +21,11 @@ export default function UploadDocument() {
         e.preventDefault();
         e.stopPropagation();
     };
+
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const handleStepClick = (step, index) => setCurrentStep(index);
+
     return (
         <>
             {view === "view" &&
@@ -104,11 +110,13 @@ export default function UploadDocument() {
                 <div className="wflexLayout">
                     <div className='wflexScroll d-flex flex-column'>
                         <div className='flex-grow-1'>
-                            <Row className='mx-0'>
-                                <Col lg="5" md="7" sm="12" className='px-0'>
+                            <div className='al-pad pb-0'>
+                                <h3 className='bc_main_text mb-1 me-4'>Upload Document</h3>
+                                <Label>Upload document to Alfred chatbot for real-time responses.</Label>
+                            </div>
+                            <Row className='mx-0 al_uploaddoc'>
+                                <Col xl="4" lg="5" md="6" sm="12" className='px-0'>
                                     <div className='al-pad pb-0'>
-                                        <h3 className='bc_main_text mb-2 me-4'>Upload Document</h3>
-                                        <Label>Upload document to Alfred chatbot for real-time responses.</Label>
                                         <div className='al_filedragupload'
                                             onDrop={e => handleDrop(e)}
                                             onDragOver={e => handleDragOver(e)}
@@ -131,41 +139,113 @@ export default function UploadDocument() {
                                                 </label>
                                             </div>
                                         </div>
+                                        {/* <div className='al_upload_steps'>
+                                            <Card className='mb-3'>
+                                                <CardBody>
+                                                    <div className='d-flex align-items-center justify-content-between'>
+                                                        <div className='d-flex align-items-center'>
+                                                            <div className='al_stepnumber'>1</div>
+                                                            <div>
+                                                                <small className='mb-1 fw-semibold text-dark'>Step 1</small>
+                                                                <div>Uploading File</div>
+                                                            </div>
+                                                        </div>
+                                                        <i className='icon_alfred_uploaddocument'></i>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                            <Card className='mb-3'>
+                                                <CardBody>
+                                                    <div className='d-flex align-items-center justify-content-between'>
+                                                        <div className='d-flex align-items-center'>
+                                                            <div className='al_stepnumber'>2</div>
+                                                            <div>
+                                                                <small className='mb-1 fw-semibold text-dark'>Step 2</small>
+                                                                <div>Processing Data</div>
+                                                            </div>
+                                                        </div>
+                                                        <i className='icon_alfred_sync'></i>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                            <Card className='mb-3'>
+                                                <CardBody>
+                                                    <div className='d-flex align-items-center justify-content-between'>
+                                                        <div className='d-flex align-items-center'>
+                                                            <div className='al_stepnumber'>3</div>
+                                                            <div>
+                                                                <small className='mb-1 fw-semibold text-dark'>Step 3</small>
+                                                                <div>Finalizing Upload</div>
+                                                            </div>
+                                                        </div>
+                                                        <i className='icon_alfred_circle_check_solid'></i>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                        </div> */}
+
+                                        {/* <Stepper
+                                            orientation="vertical"
+                                            steps={[
+                                                {
+                                                    stepLabel: "Step 1",
+                                                    stepDescription: "Uploading File",
+                                                    completed: true,
+                                                },
+                                                {
+                                                    stepLabel: "Step 2",
+                                                    stepDescription: "Processing Data",
+                                                    completed: false,
+                                                },
+                                                {
+                                                    stepLabel: "Step 3",
+                                                    stepDescription: "Finalizing Upload",
+                                                    completed: false,
+                                                },
+                                            ]}
+                                            currentStepIndex={currentStep}
+                                            onStepClick={handleStepClick}
+                                        /> */}
                                     </div>
-                                    <Table borderless responsive className='al_listtable al-pad al_adduploadtable mb-0'>
-                                        <tbody>
-                                            <tr>
-                                                <td>BotEducation</td>
-                                                <td>12MB</td>
-                                                <td>PDF</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>BotBehavior</td>
-                                                <td>5MB</td>
-                                                <td>DOC</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>BotIntro</td>
-                                                <td>2MB</td>
-                                                <td>TXT</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
+                                </Col>
+                                <Col lg="6" md="6" sm="12" className='px-0'>
+                                    <div className='al-pad'>
+                                        <h6 className='mb-1'>Recently Uploaded Documents</h6>
+                                        <Table borderless responsive className='al_listtable al_adduploadtable mb-0'>
+                                            <tbody>
+                                                <tr>
+                                                    <td>BotEducation</td>
+                                                    <td>12MB</td>
+                                                    <td>PDF</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BotBehavior</td>
+                                                    <td>5MB</td>
+                                                    <td>DOC</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BotIntro</td>
+                                                    <td>2MB</td>
+                                                    <td>TXT</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </Table>
+                                    </div>
                                 </Col>
                             </Row>
                         </div>

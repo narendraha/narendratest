@@ -202,7 +202,7 @@
         }
     }
 
-    .abouttop .tab-pane .w-auto img{
+    .abouttop .tab-pane .w-auto img {
         width: 170px !important;
     }
 
@@ -224,7 +224,9 @@
         max-width: 50% !important;
     }
 
-    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 150%;
     }
 
@@ -266,7 +268,9 @@
         border-right: none !important;
     }
 
-    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 320%;
     }
 
@@ -367,7 +371,9 @@
 
 @media screen and (max-width: 767px) {
 
-    .al_approveusers, .al_patientslisttable, .al_adminslisttable {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 200%;
     }
 
@@ -668,6 +674,15 @@
 @media screen and (min-width: 1200px) and (max-width: 4000px) {
     .mobileanim {
         height: 85%;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .al_uploaddoc {
+        .col-xl-4 {
+            max-width: 40%;
+            flex: 0 0 40%;
+        }
     }
 }
 

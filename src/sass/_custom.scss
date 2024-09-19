@@ -926,6 +926,11 @@ textarea {
   font-size: 30px;
 }
 
+.error_alert {
+  background-color: #fff3f3 !important;
+  border: 1px solid #ffd3d2;
+}
+
 /* Pop-up animation */
 @keyframes popUp {
   0% {

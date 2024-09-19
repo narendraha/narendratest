@@ -12,7 +12,7 @@ const EducationalChatBot2 = (props) => {
     const dispatch = useDispatch();
 
     const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { getProfileDetails ,actionType} = useSelector((state) => state?.utilityCallFunctionSlice);
+    const { getProfileDetails, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
     const profilePicture = getProfilePictureByGender(getProfileDetails);
 
     useEffect(() => {
@@ -72,6 +72,7 @@ const EducationalChatBot2 = (props) => {
                                     </div>
                                     <Col>
                                         <div>Hello, I am Alfred! How can i assist you today?</div>
+                                        {/* <div className='error_alert'>Sorry Unable to reach server at that moment can you please try again</div> */}
                                     </Col>
                                 </Row>
                                 {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
@@ -101,6 +102,10 @@ const EducationalChatBot2 = (props) => {
                             <div className="al_note pt-1">
                                 Disclaimer: Not a medical advice
                             </div>
+                            {/* Regenarate button */}
+                            {/* <div className='text-center'>
+                                <button type="button" className='al_savebtn'><i className="icon_alfred_sync me-2" style={{ verticalAlign: "middle", fontSize: "16px" }}></i>Regenerate</button>
+                            </div> */}
                         </div>
                     </CardBody>
                 </Card>

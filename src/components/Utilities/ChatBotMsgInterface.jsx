@@ -60,6 +60,8 @@ const ChatBotMsgInterface = ({ props }) => {
             <div>{chatHistory?.content}</div> :
             <div><EducationalBotHTMLcontent props={chatHistory?.content} />{chatBotLoadingIndex === index && <div className="al_chatloading my-1"></div>}</div>
           }
+          {/* <div className='error_alert'>Sorry Unable to reach server at that moment can you please try again</div> */}
+
           {!isUser && !isInputDisable && (<>
             <p className="mb-0 mt-2 al_chatfeedbackactions">
               <i className={"icon_alfred_like pointer me-3 " + (selectedIcons[index]?.reaction === 'like' ? 'like' : '')} onClick={() => handleAction(index, 'like', chatHistory?.content)}></i>

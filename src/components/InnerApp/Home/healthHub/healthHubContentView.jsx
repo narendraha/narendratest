@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Carousel, CarouselIndicators, CarouselItem, Col, Row } from "reactstrap";
 import { getActivetab } from "../../../../_mock/internalJsControl";
 import { setActiveTabRequest, setHealthHubSkippedWeekRequest } from "../../../../store/Home/slice";
+import { Button, Modal, ModalBody } from "reactstrap";
+import congrats from '../../../../images/congrats.png';
 
 const HealthHubContentView = () => {
     const dispatch = useDispatch();
@@ -141,6 +143,31 @@ const HealthHubContentView = () => {
                     Proceed
                 </button>
             </div>
+            <Modal
+                isOpen={false}
+                className="al_confirm_modal"
+                wrapClassName="al_outerparentwp"
+            >
+                <ModalBody className="text-center">
+                    <img src={congrats} alt="congrats" width={130} />
+                    <h5 className="text-info text-wrap al_modal_heading mt-3 mb-1">
+                        Congratulations
+                    </h5>
+                    <h5 className="text-wrap al_modal_subheading">
+                        on completing your weekly health hub study plan
+                    </h5>
+                </ModalBody>
+
+                <div className="modelFooter text-center my-3">
+                    <Button
+                        type="button"
+                        className="text-capitalize btn al_button_add"
+                        onClick={() => { }}
+                    >
+                        OK
+                    </Button>
+                </div>
+            </Modal>
         </React.Fragment>
     );
 }

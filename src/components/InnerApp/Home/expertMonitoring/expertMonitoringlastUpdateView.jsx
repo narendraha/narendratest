@@ -32,9 +32,9 @@ const ExpertMonitoringLastUpdateView = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>{lastUpdatedVitalDetails?.weight}</th>
-                                    <th>{lastUpdatedVitalDetails?.bloodp}</th>
-                                    <th>{lastUpdatedVitalDetails?.pulse}</th>
+                                    <td>{lastUpdatedVitalDetails?.weight}</td>
+                                    <td>{lastUpdatedVitalDetails?.bloodp}</td>
+                                    <td>{lastUpdatedVitalDetails?.pulse}</td>
                                 </tr>
                             </tbody>
                         </Table>

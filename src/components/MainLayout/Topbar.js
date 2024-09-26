@@ -89,8 +89,8 @@ export default function Topbar(props) {
               <div className="pointer">
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
-                    <div className="al_progresscontainer">
-                      <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
+                    <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
+                    {/* <div className="al_progresscontainer">
                       <div className='al_progressbar'>
                         <CircularProgressbar
                           value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}
@@ -101,8 +101,8 @@ export default function Topbar(props) {
                           })}
                         />
                       </div>
-                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
-                    </div>
+                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div> 
+                    </div>*/}
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2 text-capitalize'>

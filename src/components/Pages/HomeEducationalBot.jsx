@@ -83,6 +83,9 @@ const HomeEducationalBot = () => {
                                     handleFormSubmit={handleFormSubmit}
                                     isInputDisable={isInputDisable}
                                 />
+                                {/* <div className='text-center'>
+                                    <button type="button" className='al_savebtn'><i className="icon_alfred_sync me-2" style={{ verticalAlign: "middle", fontSize: "16px" }}></i>Regenerate</button>
+                                </div> */}
                             </div>
                         </div>
                     </div>

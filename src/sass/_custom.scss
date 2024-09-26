@@ -57,20 +57,43 @@ button:focus-visible {
 .wave {
   animation-name: wave-animation;
   animation-duration: 2.5s;
-  animation-iteration-count: infinite; 
+  animation-iteration-count: infinite;
   transform-origin: 70% 70%;
   display: inline-block;
 }
 
 @keyframes wave-animation {
-  0% { transform: rotate( 0.0deg) }
- 10% { transform: rotate(14.0deg) }
- 20% { transform: rotate(-8.0deg) }
- 30% { transform: rotate(14.0deg) }
- 40% { transform: rotate(-4.0deg) }
- 50% { transform: rotate(10.0deg) }
- 60% { transform: rotate( 0.0deg) }
-100% { transform: rotate( 0.0deg) }
+  0% {
+    transform: rotate(0.0deg)
+  }
+
+  10% {
+    transform: rotate(14.0deg)
+  }
+
+  20% {
+    transform: rotate(-8.0deg)
+  }
+
+  30% {
+    transform: rotate(14.0deg)
+  }
+
+  40% {
+    transform: rotate(-4.0deg)
+  }
+
+  50% {
+    transform: rotate(10.0deg)
+  }
+
+  60% {
+    transform: rotate(0.0deg)
+  }
+
+  100% {
+    transform: rotate(0.0deg)
+  }
 }
 
 .al_npsscore {
@@ -730,16 +753,20 @@ textarea {
 
   input.form-control {
     background-color: #ffffff !important;
-    border: 1px solid #F6F6FA !important;
+    border: 1px solid #e9e9e9 !important;
     padding: 9px 18px 9px 30px;
     font-size: $font_14;
     font-weight: $font_w500;
     transition: 0.3s ease all;
     border-radius: 8px !important;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1) inset !important;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3) inset !important;
 
     &:focus {
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07) !important;
+    }
+
+    &:disabled {
+      background-color: #e9ecef !important;
     }
 
     &::placeholder,
@@ -758,6 +785,179 @@ textarea {
     font-weight: 700;
   }
 
+}
+
+.al_upload_steps {
+  width: 25%;
+  margin: 0 auto;
+  transition: opacity 0.5s ease;
+
+  .card {
+    background-color: #eaf8ff;
+    border: none;
+    transition: all 0.4s ease;
+    border-radius: 15px;
+
+    i {
+      font-size: 30px;
+      opacity: 0.7;
+
+      &.icon_alfred_sync {
+        font-size: 36px;
+      }
+    }
+
+    .line {
+      position: absolute;
+      border-left: 3px solid gray;
+      top: 53px;
+      left: 30px;
+      height: 0;
+      z-index: 1;
+      transition: all 0.5s ease;
+    }
+
+    &.completedstep {
+
+      &:nth-child(1) {
+        background-color: #E6F9FB;
+      }
+
+      &:nth-child(2) {
+        background-color: #B3ECF3;
+      }
+
+      &:nth-child(3) {
+        background-color: #03C1D6;
+
+        i {
+          color: #ffffff;
+        }
+      }
+
+      i {
+        opacity: 1;
+      }
+
+      .line {
+        border-left: 3px solid #b6f8ff;
+        height: 75%;
+      }
+
+      .al_stepnumber {
+        opacity: 1;
+        background-color: #ffffff;
+        color: #2C2C37;
+      }
+    }
+
+    .al_stepnumber {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      border-radius: 50%;
+      opacity: 0.7;
+      background-color: #cccccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-weight: bold;
+      border: 1px solid #DEDEDE;
+    }
+  }
+}
+
+.spinner-border {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.checkmark-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+}
+
+.final-check-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.final-check-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  animation: popUp 0.5s ease-in-out forwards;
+}
+
+.big-checkmark {
+  width: 60px;
+  height: 60px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 30px;
+}
+
+.error_alert {
+  background-color: #fff3f3 !important;
+  border: 1px solid #ffd3d2;
+}
+
+/* Pop-up animation */
+@keyframes popUp {
+  0% {
+    transform: scale(0);
+  }
+
+  80% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomInOutCard {
+
+  0%,
+  100% {
+    transform: scale(1);
+    /* No zoom */
+  }
+
+  50% {
+    transform: scale(1.02);
+    /* Zoom in */
+  }
 }
 
 .al_goalslist {

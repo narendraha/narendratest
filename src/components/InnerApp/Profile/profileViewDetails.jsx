@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Col, Label, Row, UncontrolledTooltip } from "reactstrap";
 import { getActionTypes, getProfileTabs } from '../../../_mock/internalJsControl';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 
 export const ProfileViewDetails = () => {
     const dispatch = useDispatch();
@@ -24,32 +27,52 @@ export const ProfileViewDetails = () => {
 
     return (
         <React.Fragment>
-            <h2 className="cs_semibold mb-1 text-capitalize">
-                {getProfileDetails?.username}
-            </h2>
-            <h6 className="al_profile_role mb-2">
-                {getProfileDetails?.email}
-            </h6>
-            <div className="al_pointsearned mb-4">
-                Points Earned: 89
-            </div>
             <Row>
-                <Col>
-                    <div className="al_profiledata">
-                        <div>{getProfileDetails?.subscription === "NA" ? "No Plan is Available" : "N/A"}</div>
-                        <Label>Your Subscription Plan</Label>
+                <Col md="8" sm="12">
+                    <h2 className="cs_semibold mb-1 text-capitalize">
+                        {getProfileDetails?.username}
+                    </h2>
+                    <h6 className="al_profile_role mb-2">
+                        {getProfileDetails?.email}
+                    </h6>
+                    <div className="al_pointsearned mb-4">
+                        Points Earned: 89
+                    </div>
+                    <Row>
+                        <Col md="6" sm="12">
+                            <div className="al_profiledata">
+                                <div>{getProfileDetails?.subscription === "NA" ? "No Plan is Available" : "N/A"}</div>
+                                <Label>Your Subscription Plan</Label>
+                            </div>
+                        </Col>
+                        <Col md="6" sm="12">
+                            <button
+                                type="button"
+                                className="al_upgrade_btn al_basic"
+                                disabled={true}
+                            >
+                                Upgrade Plan
+                                <i className="ps-1 icon_alfred_password"></i>
+                            </button>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col md="4" sm="12">
+                    <div className="al_progresscontainer">
+                        <div className='al_progressbar'>
+                            <CircularProgressbar
+                                value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}
+                                styles={buildStyles({
+                                    strokeLinecap: 'round',
+                                    trailColor: '#d9fbff',
+                                    backgroundColor: '#3bc0c3',
+                                    pathColor: "#04C1D6"
+                                })}
+                            />
+                        </div>
+                        <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
                     </div>
                 </Col>
-                <div className="px-3 w-auto">
-                    <button
-                        type="button"
-                        className="al_upgrade_btn al_basic"
-                        disabled={true}
-                    >
-                        Upgrade Plan
-                        <i className="ps-1 icon_alfred_password"></i>
-                    </button>
-                </div>
             </Row>
             <hr />
             <Row>

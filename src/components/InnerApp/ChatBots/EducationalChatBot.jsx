@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, Col, Row, UncontrolledTooltip } from "reactstrap";
-import { getProfilePictureByGender } from '../../../_mock/helperIndex';
+import { getActionTypes, getProfilePictureByGender } from '../../../_mock/helperIndex';
 import Chatbot from "../../../images/alfredicon.svg";
 import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest, setResetPendingEducationalBotRequest } from "../../../store/EducationaChatBot/slice";
-import { getPatientDetailsRequest } from '../../../store/UtilityCallFunction/slice';
+import { getUsersDetailsRequest } from '../../../store/UtilityCallFunction/slice';
 import ChatBotMsgInterface from '../../Utilities/ChatBotMsgInterface';
 import ChatBotSearchArea from '../../Utilities/ChatBotSearchArea';
 
 const EducationalChatBot2 = (props) => {
     const dispatch = useDispatch();
 
-    const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { getProfileDetails ,actionType} = useSelector((state) => state?.utilityCallFunctionSlice);
+    const chatHistory = useSelector((state) => state?.educationalChatBotSlice?.chatHistory || undefined);
+    const isInputDisable = useSelector((state) => state?.educationalChatBotSlice?.isInputDisable);
+    const isChatBotLoading = useSelector((state) => state?.educationalChatBotSlice?.isChatBotLoading);
+    const regenerateResponse = useSelector((state) => state?.educationalChatBotSlice?.regenerateResponse);
+
+    const getProfileDetails = useSelector((state) => state?.utilityCallFunctionSlice?.getProfileDetails || undefined);
+    const actionType = useSelector((state) => state?.utilityCallFunctionSlice?.actionType || getActionTypes.UNSELECT);
     const profilePicture = getProfilePictureByGender(getProfileDetails);
 
     useEffect(() => {
-        dispatch(getPatientDetailsRequest())
+        dispatch(getUsersDetailsRequest())
         return () => {
             dispatch(setResetPendingEducationalBotRequest())
         }
-    }, []);
+    }, [dispatch]);
 
     const handleFormSubmit = (e) => {
         // e.preventDefault();
@@ -36,6 +41,10 @@ const EducationalChatBot2 = (props) => {
         dispatch(setChatHistoryRequest(null))
     }
 
+    const handleRegenerateResponse = () => {
+        // sending last user input text
+        handleFormSubmit(chatHistory?.[chatHistory?.length - 2]?.content)
+    }
 
     return (
         <React.Fragment>
@@ -72,10 +81,19 @@ const EducationalChatBot2 = (props) => {
                                     </div>
                                     <Col>
                                         <div>Hello, I am Alfred! How can i assist you today?</div>
+                                        {/* <div className='error_alert'>Sorry Unable to reach server at that moment can you please try again</div> */}
                                     </Col>
                                 </Row>
                                 {chatHistory?.length > 0 && chatHistory?.map((x, index) => {
-                                    return <ChatBotMsgInterface key={index} props={{ chatHistory: x, index, profilePicture, getProfileDetails, isInputDisable, actionType }} />
+                                    return <ChatBotMsgInterface key={index} props={{
+                                        chatHistory: x,
+                                        index,
+                                        profilePicture,
+                                        getProfileDetails,
+                                        isInputDisable,
+                                        actionType,
+                                        toatlHistory: chatHistory
+                                    }} />
                                 })}
                                 {isChatBotLoading &&
                                     <Row className="mb-4 al_chatcontent al_bot-reply">
@@ -94,13 +112,20 @@ const EducationalChatBot2 = (props) => {
                             className="cs_mainsearch al_chatfooter p-3"
                             style={{ backgroundColor: "#E2E5ED" }}
                         >
-                            <ChatBotSearchArea
-                                handleFormSubmit={handleFormSubmit}
-                                isInputDisable={isInputDisable}
-                            />
-                            <div className="al_note pt-1">
-                                Disclaimer: Not a medical advice
-                            </div>
+                            {regenerateResponse ?
+                                <div className='text-center'>
+                                    <button type="button" className='al_savebtn' onClick={handleRegenerateResponse}><i className="icon_alfred_sync me-2" style={{ verticalAlign: "middle", fontSize: "16px" }}></i>Regenerate</button>
+                                </div>
+                                :
+                                <>
+                                    <ChatBotSearchArea
+                                        handleFormSubmit={handleFormSubmit}
+                                        isInputDisable={isInputDisable}
+                                    />
+                                    <div className="al_note pt-1">
+                                        Disclaimer: Not a medical advice
+                                    </div>
+                                </>}
                         </div>
                     </CardBody>
                 </Card>

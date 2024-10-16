@@ -89,6 +89,7 @@ export default function HealthHubBuilder() {
                         title={item.altText}
                         frameBorder="0"
                         allowFullScreen
+                        rel="noreferrer"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
                     ></iframe>
                 }

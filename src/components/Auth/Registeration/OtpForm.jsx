@@ -2,19 +2,20 @@ import React, { useRef } from 'react';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import OtpInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router';
 import { FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
 import { getRegForm } from "../../../_mock/internalJsControl";
-import { setActiveRegistrationForm, verifyRegistrationOtpRequest, getRegistrationOtpRequest } from "../../../store/SessionStore/slice";
+import { getRegistrationOtpRequest, setActiveRegistrationForm, verifyRegistrationOtpRequest } from "../../../store/SessionStore/slice";
 import ResendOTP from "./ResendOtp";
-
 
 const OtpForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const inputRefs = useRef(Array(4).fill(null));
 
-    const { otpMessage, regActiveForm, regFormData } = useSelector((state) => (state?.sessionStoreSlice));
+    const { otpMessage, regActiveForm, regFormData, isAdminFirstLogin } = useSelector((state) => (state?.sessionStoreSlice));
 
     // to get otp again
     const resendOtpHandle = () => {
@@ -24,8 +25,12 @@ const OtpForm = () => {
     const handleSubmit = (values, activeForm) => {
         if (values)
             dispatch(verifyRegistrationOtpRequest({ values, activeForm }));
-        else
-            dispatch(setActiveRegistrationForm(activeForm))
+        else {
+            if (isAdminFirstLogin)
+                navigate("/signin")
+            else
+                dispatch(setActiveRegistrationForm(activeForm))
+        }
     }
 
     return (
@@ -50,11 +55,11 @@ const OtpForm = () => {
                         <Form className="wflexLayout">
                             <div className="wflexLayout al_mx-auto">
                                 <div className="wflex-items-center wflexLayout">
-                                    <h5 className={"mb-0 text-center"}>One Time Password [ 2FA ] Verification</h5>
+                                    <h5 className={"mb-0 text-center"}>One Time Passcode [ 2FA ] Verification</h5>
                                     <div className="al_login-form al_registrationform wflexScroll">
                                         <div className="text-center">
                                             <FormGroup className="mt-3">
-                                                <Label>{otpMessage || "One Time Password sent on your mail "}</Label>
+                                                <Label>{otpMessage || "One Time Passcode sent on your mail "}</Label>
                                                 {/* <div className="al_text_link text-small" style={{textDecoration: "underline"}}>Change Mobile Number/Email ID</div> */}
                                                 <Row className="mx-0 al_otpfields">
                                                     <Field name="otp">

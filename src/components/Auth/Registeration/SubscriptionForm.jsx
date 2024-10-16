@@ -32,11 +32,10 @@ const SubscriptionForm = () => {
                 }}
             >{({ values, errors }) => (
                 <>
-                    <Form>
+                    <Form className="wflexLayout">
                         <div className="wflexLayout al_mx-auto">
-                            {console.log("879797987987987987979", values, errors)}
                             <div className="wflex-items-center wflexLayout">
-                                <h5 className={"mb-0"}>Type of subscription</h5>
+                                <h5 className="mb-0">Type of subscription</h5>
                                 <div className="al_login-form al_registrationform wflexScroll">
                                     <Row className="planscard mt-2">
                                         <Col sm="10">

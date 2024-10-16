@@ -4,7 +4,7 @@ import "rc-slider/assets/index.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, FormGroup, Label, Row, UncontrolledTooltip } from "reactstrap";
-import { getActionTypes, getActivetab } from "../../../../_mock/helperIndex";
+import { getActionTypes, getActivetab, getLsitOfSymptoms } from "../../../../_mock/helperIndex";
 import bulb from "../../../../images/idea.png";
 import { addSymptomsDetailRequest, getSymptomsDetailsLastUpdateRequest, getSymptomsDetailsRequest, setActiveTabRequest } from "../../../../store/Home/slice";
 import { setActionTypeAndActionData, setConfirmationOpen } from "../../../../store/UtilityCallFunction/slice";
@@ -19,20 +19,7 @@ const horizontalLabels = {
 
 let frequencyList = ["Never", "Occasionally", "Often", "Always"];
 
-let lsitOfSymptoms = [
-    { key: "breathnessda", symptomName: "Breathlessness during activity", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "breathnessea", symptomName: "Breathlessness even at rest", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "dizziness", symptomName: "Dizziness", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "col_swet", symptomName: "Cold sweat", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "chest_pain", symptomName: "Chest pain", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "pressurechest", symptomName: "Pressure / discomfort in chest", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "worry", symptomName: "Worry", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "weakness", symptomName: "Weakness", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "infirmity", symptomName: "Infirmity", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "nsynacpe", symptomName: "Near syncope", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "syncope", symptomName: "Syncope", frequency: "", serverity: "", isAffectingLife: "" },
-    { key: "tirednessafterwards", symptomName: "Tiredness afterwards", frequency: "", serverity: "", isAffectingLife: "" }
-];
+let lsitOfSymptoms = getLsitOfSymptoms;
 
 export const SymptomsListForm = () => {
 

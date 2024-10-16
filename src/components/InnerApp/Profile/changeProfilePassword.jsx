@@ -12,14 +12,10 @@ import { setActionTypeAndActionData } from "../../../store/UtilityCallFunction/s
 export const ChangeProfilePassword = ({ props }) => {
     const dispatch = useDispatch();
 
-    const { error } = useSelector((state) => (state?.profileSlice));
+    const  error = useSelector((state) => (state?.profileSlice?.error));
 
     const handleSubmit = (formData) => {
-        let reqObj = {
-            old_password: formData?.currentPassword,
-            new_password: formData?.newPassword
-        }
-        dispatch(changeProfilePasswordRequest(reqObj))
+        dispatch(changeProfilePasswordRequest(formData))
     }
 
     const handleClose = () => {

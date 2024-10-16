@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from "reactstrap";
-import { getActionTypes, getProfileTabs, pageTitle } from '../../../_mock/helperIndex';
+import { getActionTypes, getProfileTabs, loginRoles, pageTitle } from '../../../_mock/helperIndex';
 import { setResetProfileSliceData } from "../../../store/Profile/slice";
-import { getPatientDetailsRequest, setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
+import { getUsersDetailsRequest, setActionTypeAndActionData } from "../../../store/UtilityCallFunction/slice";
 import { ProfileSettings } from "./ProfileSettings";
+import { AdminProfileEditAction } from "./adminProfileEditAction";
 import { BankDetails } from "./bankDetails";
 import { ChangeProfilePassword } from "./changeProfilePassword";
 import { ProfileEditAction } from "./profileEditAction";
@@ -15,10 +16,12 @@ export default function ProfileManager() {
   pageTitle("Profile")
   const dispatch = useDispatch();
 
-  const { actionType, actionData } = useSelector((state) => state?.utilityCallFunctionSlice)
+  const actionType = useSelector((state) => state?.utilityCallFunctionSlice?.actionType);
+  const actionData = useSelector((state) => state?.utilityCallFunctionSlice?.actionData);
+  const getProfileDetails = useSelector((state) => state?.utilityCallFunctionSlice?.getProfileDetails);
 
   useEffect(() => {
-    dispatch(getPatientDetailsRequest())
+    dispatch(getUsersDetailsRequest())
     return () => {
       dispatch(setResetProfileSliceData())
       dispatch(setActionTypeAndActionData(""))
@@ -35,7 +38,9 @@ export default function ProfileManager() {
               <ProfileImageUpload />
             </Col>
             <Col xl="7" lg="8" md="8" sm="8" className="px-5">
-              {actionType === getActionTypes.EDIT ? <ProfileEditAction /> : <ProfileViewDetails />}
+              {actionType === getActionTypes.EDIT ?
+                (getProfileDetails?.role_id == loginRoles.ADMIN ? <AdminProfileEditAction /> : <ProfileEditAction />) :
+                <ProfileViewDetails />}
             </Col>
           </Row>
         </div>

@@ -14,7 +14,7 @@ export default function Ablation() {
 
   useEffect(() => {
     dispatch(getAssetsRequest(faq))
-  }, []);
+  }, [dispatch]);
 
   const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
 

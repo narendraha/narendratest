@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row } from 'reactstrap';
-import { pageTitle } from "../../_mock/internalJsControl";
+import { getActionTypes, pageTitle } from "../../_mock/internalJsControl";
 import Chatbot from "../../images/alfredicon.svg";
 import homebotimg from '../../images/doctorbot.png';
+import homeleftmobileLocal from "../../images/homeleftmobile.gif";
 import homeright from '../../images/homeright.gif';
 import { getChatStreamRequest, setChatHistoryRequest, setInputDisableRequest, setResetPendingEducationalBotRequest } from "../../store/EducationaChatBot/slice";
 import { setNonAuthSessionIdReuqest } from "../../store/SessionStore/slice";
@@ -21,18 +22,23 @@ const HomeEducationalBot = () => {
 
     const [openChatUI, setOpenChatUI] = useState(false);
 
-    const { chatHistory, isInputDisable, isChatBotLoading } = useSelector((state) => state?.educationalChatBotSlice);
-    const { assetUrl, actionType } = useSelector((state) => state?.utilityCallFunctionSlice);
-    const { nonAuthSessionId } = useSelector((state) => (state?.sessionStoreSlice))
+    const chatHistory = useSelector((state) => state?.educationalChatBotSlice?.chatHistory || undefined);
+    const isInputDisable = useSelector((state) => state?.educationalChatBotSlice?.isInputDisable);
+    const isChatBotLoading = useSelector((state) => state?.educationalChatBotSlice?.isChatBotLoading);
+    const regenerateResponse = useSelector((state) => state?.educationalChatBotSlice?.regenerateResponse);
 
-    let generateNonAuthSessionId = () => {
+    const actionType = useSelector((state) => state?.utilityCallFunctionSlice?.actionType || getActionTypes.UNSELECT);
+    const assetUrl = useSelector((state) => state?.utilityCallFunctionSlice?.assetUrl);
+    const nonAuthSessionId = useSelector((state) => (state?.sessionStoreSlice?.nonAuthSessionId))
+
+    let generateNonAuthSessionId = useCallback(() => {
         let sessionId;
         if (!nonAuthSessionId)
             sessionId = nanoid()
         else
             sessionId = nonAuthSessionId
         return sessionId;
-    }
+    }, [nonAuthSessionId]);
 
     useEffect(() => {
         dispatch(getAssetsRequest(homeleftmobile))
@@ -40,7 +46,7 @@ const HomeEducationalBot = () => {
         return () => {
             dispatch(setResetPendingEducationalBotRequest())
         }
-    }, []);
+    }, [dispatch, generateNonAuthSessionId]);
 
     console.log("assetUrlassetUrl", assetUrl?.["homeleftmobile"])
     const handleFormSubmit = (e) => {
@@ -53,6 +59,10 @@ const HomeEducationalBot = () => {
         dispatch(getChatStreamRequest(inputValue))
     };
 
+    const handleRegenerateResponse = () => {
+        // sending last user input text
+        handleFormSubmit(chatHistory?.[chatHistory?.length - 2]?.content)
+    }
 
     return (
         <React.Fragment>
@@ -79,17 +89,28 @@ const HomeEducationalBot = () => {
                                 </div>
                             </div>
                             <div className="cs_mainsearch mb-2">
-                                <ChatBotSearchArea
-                                    handleFormSubmit={handleFormSubmit}
-                                    isInputDisable={isInputDisable}
-                                />
+                                {regenerateResponse ?
+                                    <div className='text-center'>
+                                        <button type="button" className='al_savebtn' onClick={handleRegenerateResponse}><i className="icon_alfred_sync me-2" style={{ verticalAlign: "middle", fontSize: "16px" }}></i>Regenerate</button>
+                                    </div>
+                                    :
+                                    <>
+                                        <ChatBotSearchArea
+                                            handleFormSubmit={handleFormSubmit}
+                                            isInputDisable={isInputDisable}
+                                        />
+                                        <div className="al_note pt-1">
+                                            Disclaimer: Not a medical advice
+                                        </div>
+                                    </>}
                             </div>
                         </div>
                     </div>
                     :
                     <Row className="w-75 align-items-center wflexLayout">
                         <Col sm="4" className="h-100 d-flex align-items-center d-xs-none">
-                            <img src={assetUrl?.["homeleftmobile"]} alt="chatbot" className="mobileanim" />
+                            {/* <img src={assetUrl?.["homeleftmobile"]} alt="chatbot" className="mobileanim" /> */}
+                            <img src={homeleftmobileLocal} alt="chatbot" className="mobileanim" />
                         </Col>
                         <Col sm="8" className="h-100 d-flex flex-column justify-content-center">
                             <Row className="al_hometop">

@@ -15,7 +15,7 @@ export default function Coronary() {
 
   useEffect(() => {
     dispatch(getAssetsRequest(coronarybg))
-  }, []);
+  }, [dispatch]);
 
   const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
 

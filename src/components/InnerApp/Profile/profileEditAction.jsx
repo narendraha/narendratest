@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from 'yup';
-import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getResidenceoptions } from '../../../_mock/helperIndex';
+import { allowedNumbersOnField, customContentValidation, getActionTypes, getEductaionOptions, getGenderoptions, getmobileLengthWithoutCO, getResidenceoptions } from '../../../_mock/helperIndex';
 import { addProfileImageRequest, profileDetailsAndProfileImageUpdateRequest } from '../../../store/Profile/slice';
 import { getMobileValidationLengthByCountryCodeRequest, setActionTypeAndActionData, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 
@@ -40,7 +40,7 @@ export const ProfileEditAction = () => {
     useEffect(() => {
         if (mobileFieldValidation === null)
             mobileFieldValidation = getProfileDetails?.mobile_checks?.max_len
-    }, [getProfileDetails]);
+    }, [getProfileDetails, mobileFieldValidation]);
 
     const handleSubmit = (data) => {
         dispatch(profileDetailsAndProfileImageUpdateRequest(data))
@@ -49,10 +49,6 @@ export const ProfileEditAction = () => {
     const handleCancel = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
         dispatch(addProfileImageRequest(""))
-    }
-
-    let getmobileLengthWithoutCO = (value, country = null, dialCode = null) => {
-        return value?.replace(country?.dialCode || dialCode, "")?.length
     }
 
     const getMobileValueWithoutCountryCode = async (value, country, setFieldValue) => {
@@ -90,15 +86,15 @@ export const ProfileEditAction = () => {
                     bloodtype: getProfileDetails?.bloodtype !== "NA" ? getProfileDetails?.bloodtype : "",
                     nationality: getProfileDetails?.nationality !== "NA" ? getProfileDetails?.nationality : "",
                     profile_url: profilePicture || "",
-                    mobileValueLengthWithoutCountryCode: (getProfileDetails?.mobile_checks?.dialCode && getmobileLengthWithoutCO(getProfileDetails?.mobile_checks?.dialCode)) || null,
+                    mobileValueLengthWithoutCountryCode: (getProfileDetails?.mobile_checks?.Dial_Code && getmobileLengthWithoutCO(getProfileDetails?.mobile, null, getProfileDetails?.mobile_checks?.Dial_Code)) || null,
                     country: getProfileDetails?.mobile_checks?.country_code || 'us',
                     dialCode: getProfileDetails?.mobile_checks?.Dial_Code,
                 }}
                 validationSchema={Yup.object().shape({
                     username: customContentValidation('Full Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
                     dob: Yup.date()
-                        .max(new Date(Date.now() - 567648000000),"Your age must be at least 18 years old")
-                        .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000),"Your age must be below 120 years old")
+                        .max(new Date(Date.now() - 567648000000), "Your age must be at least 18 years old")
+                        .min(new Date(Date.now() - 120 * 365.25 * 24 * 60 * 60 * 1000), "Your age must be below 120 years old")
                         .required("Dob is required").nullable(),
                     gender: Yup.string().required("This field is required"),
                     bloodtype: Yup.string().required("Blood Type is required"),
@@ -106,9 +102,9 @@ export const ProfileEditAction = () => {
                     education: Yup.string().required("Education is required"),
                     ssn: customContentValidation('', { patternType: 'number', message: 'number' }, 9, 9),
                     feet: Yup.string()
-                        .test('is-greater-than-one','Height must be atleast 3 feet',
+                        .test('is-greater-than-one', 'Height must be atleast 3 feet',
                             value => value && parseFloat(value) > 3
-                        ).test('is-less-than-nine',"Height can not be more than 9 feet",
+                        ).test('is-less-than-nine', "Height can not be more than 9 feet",
                             value => value && parseFloat(value) <= 9
                         )
                         .required("Height is required"),

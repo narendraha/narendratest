@@ -33,7 +33,7 @@ const ResendOTP = (props) => {
           cursor: isDisabled ? "default" : "pointer"
         }}
       >
-        Resend OTP {isDisabled ? `(${seconds}s)` : ""}
+        Resend Passcode {isDisabled ? `(${seconds}s)` : ""}
       </p>
     </div>
   );

@@ -364,7 +364,7 @@ export const DoctorRegister = () => {
                                     <div className="d-flex">
                                         <button
                                             type="button"
-                                            style={{ width: "50px" }}
+                                            style={{ width: "45px", minWidth: "45px" }}
                                             className="al_login_button_back me-3 mb-0 d-flex align-items-center justify-content-center"
                                             onClick={() => handleSubmit(null, getRegForm.REGTYPESELECTION)}
                                         >

@@ -8,7 +8,7 @@ import { setNonAuthSessionIdReuqest } from "./store/SessionStore/slice";
 export default function App() {
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector((state) => state?.sessionStoreSlice);
+  const { isAuthenticated, authUser } = useSelector((state) => state?.sessionStoreSlice);
 
   useEffect(() => {
     return () => {
@@ -17,6 +17,6 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <AllRoutes authenticated={isAuthenticated} />
+    <AllRoutes authenticated={{ isAuthenticated, role: authUser?.role }} />
   );
 }

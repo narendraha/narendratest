@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import { call, put, takeLeading } from 'redux-saga/effects';
-import { callAPI } from '../../_mock/internalJsControl';
+import { call, put, select, takeLeading } from 'redux-saga/effects';
+import { callAPI, loginRoles } from '../../_mock/internalJsControl';
 import { store } from '../store';
 import {
     contactUsRequest,
@@ -8,18 +8,22 @@ import {
     getAssetsResponse,
     getMobileValidationLengthByCountryCodeRequest,
     getMobileValidationLengthByCountryCodeResponse,
-    getPatientDetailsRequest,
-    getPatientDetailsResponse,
+    getUsersDetailsRequest,
+    getUsersDetailsResponse,
     sendEmailPdfRequest,
     setLoading
 } from './slice';
 
-// TO GET PATIENT DETAILS
-function* getPatientDetails(action) {
-    let profileDetails = ""
+// TO GET PATIENT/ADMIN/SUPERADMIN USERS DETAILS
+function* getUsersDetails() {
+
+    const authUser = yield select(state => state.sessionStoreSlice?.authUser);
+    let url = authUser?.role === loginRoles.PATIENT ? '/userdetails' : '/getadmin_details';
+
+    let profileDetails = "";
     try {
         const response = yield call(callAPI, {
-            url: '/userdetails',
+            url: url,
             method: 'GET',
             data: null,
             contentType: 'application/json',
@@ -33,12 +37,12 @@ function* getPatientDetails(action) {
         });
     }
 
-    yield put(getPatientDetailsResponse(profileDetails))
+    yield put(getUsersDetailsResponse(profileDetails))
 }
 
 // TO GET THE ASSETS
 function* getAssetsFile(action) {
-    store.dispatch(setLoading(true))
+    // store.dispatch(setLoading(true))
     let key = action?.payload?.split(".")?.[0];
     let asset;
 
@@ -62,9 +66,9 @@ function* getAssetsFile(action) {
     }
 
     yield put(getAssetsResponse(asset))
-    setTimeout(() => {
-        store.dispatch(setLoading(false))
-    }, 1000)
+    // setTimeout(() => {
+    //     store.dispatch(setLoading(false))
+    // }, 1000)
 }
 
 // CONTACT US FORM REQUEST
@@ -154,7 +158,7 @@ function* sendPdfOnEmailRequest(action) {
 }
 
 function* watchUtilityCallFunctionSaga() {
-    yield takeLeading(getPatientDetailsRequest.type, getPatientDetails);
+    yield takeLeading(getUsersDetailsRequest.type, getUsersDetails);
     yield takeLeading(getAssetsRequest.type, getAssetsFile);
     yield takeLeading(contactUsRequest.type, contactUsFormRequest)
     yield takeLeading(getMobileValidationLengthByCountryCodeRequest.type, getMobileValidationLengthByCountryCode)

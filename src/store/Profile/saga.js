@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { all, call, put, select, takeLeading } from 'redux-saga/effects';
-import { callAPI, getActionTypes } from '../../_mock/internalJsControl';
-import { getPatientDetailsRequest, setActionTypeAndActionData, setLoading } from '../UtilityCallFunction/slice';
+import { callAPI, getActionTypes, loginRoles } from '../../_mock/internalJsControl';
+import { getUsersDetailsRequest, setActionTypeAndActionData, setLoading } from '../UtilityCallFunction/slice';
 import { store } from '../store';
 import {
     changeProfilePasswordRequest,
@@ -25,15 +25,17 @@ function* updateProfileDetailsAndProfileImage(action) {
     let isUpdated = false;
 
     const uploadedProfileImageData = (yield select())['profileSlice']?.uploadedProfileImage?.formData || "";
+    let { data, isAdmin } = action?.payload;
+    let url = isAdmin ? '/updateadminaccount' : '/update_details';
 
-    let reqObj = { ...action.payload };
+    let reqObj = data ? { ...data } : action?.payload;
     if (uploadedProfileImageData !== "")
         reqObj["profile_url"] = uploadedProfileImageData
 
     try {
         let uploadProfileImageRequest;
         let updateProfileDatialsRequest = yield call(callAPI, {
-            url: '/update_details',
+            url: url,
             method: 'PUT',
             data: reqObj,
             contentType: 'application/json',
@@ -61,7 +63,7 @@ function* updateProfileDetailsAndProfileImage(action) {
             if (!uploadProfileImageResponse || (uploadProfileImageResponse && uploadProfileImageResponse?.data && uploadProfileImageResponse?.status && uploadProfileImageResponse?.statuscode === 200)) {
                 if (updateProfileDetailsResponse && updateProfileDetailsResponse?.status && updateProfileDetailsResponse.statuscode === 200) {
                     if (!uploadProfileImageResponse)
-                        store.dispatch(getPatientDetailsRequest())
+                        store.dispatch(getUsersDetailsRequest())
                     toast(updateProfileDetailsResponse?.message, {
                         position: "top-right",
                         type: "success",
@@ -100,13 +102,32 @@ function* updateProfileDetailsAndProfileImage(action) {
 
 // TO CHANGE PROFILE PASSWORD
 function* changeProfilePassword(action) {
-    store.dispatch(setLoading(true))
-    let errorMessages = ""
+    store.dispatch(setLoading(true));
+    const authUserRole = yield select(state => state?.sessionStoreSlice?.authUser);
+    const isAdminUser = authUserRole?.role === loginRoles.ADMIN;
+
+    let { currentPassword, newPassword } = action?.payload;
+
+    let patientReqObj = {
+        old_password: currentPassword,
+        new_password: newPassword
+    };
+
+    let adminReqObj = {
+        temporary_password: currentPassword,
+        new_password: newPassword
+    };
+
+    let { url, reqObj } = isAdminUser ?
+        { url: "/admin/change_admin_password", reqObj: adminReqObj } :
+        { url: "/change-password", reqObj: patientReqObj };
+
+    let errorMessages = "";
     try {
         let response = yield call(callAPI, {
-            url: '/change-password',
+            url: url,
             method: 'PUT',
-            data: action.payload,
+            data: reqObj,
             contentType: 'application/json',
         });
         if (response && response.status && response?.statuscode === 200) {

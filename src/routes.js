@@ -10,42 +10,43 @@ import BackToHomeErrorPage from "./components/Pages/BackToHomeErrorPage";
 import BackToSignInErrorPage from "./components/Pages/BackToSIgninErrorPage";
 
 // auth
+import { loginRoles } from "./_mock/helperIndex";
 import AuthManagerForSignInAndReg from "./components/Auth/AuthManager";
 import PrivaycPolicy from "./components/Auth/Registeration/PrivacyPolicy";
 
-// non-auth 
-const About = React.lazy(() => import("./components/Pages/About"));
-const ContactUs = React.lazy(() => import("./components/Pages/ContactUs"));
-const Ablation = React.lazy(() => import("./components/Pages/Ablation"));
-const ACO = React.lazy(() => import("./components/Pages/Aco"));
-const Affaq = React.lazy(() => import("./components/Pages/Affaq"));
-const Alcohol = React.lazy(() => import("./components/Pages/Alcohol"));
-const Appointments = React.lazy(() => import("./components/Pages/Appointments"));
-const CommunityResources = React.lazy(() => import("./components/Pages/CommunityResources"));
-const Congestive = React.lazy(() => import("./components/Pages/Congestive"));
-const Coronary = React.lazy(() => import("./components/Pages/Coronary"));
-const DevicePacemaker = React.lazy(() => import("./components/Pages/DevicePacemaker"));
-const Dietician = React.lazy(() => import("./components/Pages/Dietician"));
-const EcoPharmacy = React.lazy(() => import("./components/Pages/EcoPharmacy"));
-const Exercise = React.lazy(() => import("./components/Pages/Exercise"));
-const HealthPlan = React.lazy(() => import("./components/Pages/HealthPlan"));
-const HealthcareConsultant = React.lazy(() => import("./components/Pages/HealthcareConsultant"));
-const HomeEducationalBot = React.lazy(() => import("./components/Pages/HomeEducationalBot"));
-const Medications = React.lazy(() => import("./components/Pages/Medications"));
-const HeartValves = React.lazy(() => import("./components/Pages/HeartValves"));
-const Obesity = React.lazy(() => import("./components/Pages/Obesity"));
-const Personomics = React.lazy(() => import("./components/Pages/Personomics"));
-const Pharmacy = React.lazy(() => import("./components/Pages/Pharmacy"));
-const Smoking = React.lazy(() => import("./components/Pages/Smoking"));
-const Sleepapnea = React.lazy(() => import("./components/Pages/Sleepapnea"));
-const Symptoms = React.lazy(() => import("./components/Pages/Symptoms"));
-const Vascular = React.lazy(() => import("./components/Pages/Vascular"));
-const RateControl = React.lazy(() => import("./components/Pages/RateControl"));
-const RhythmControl = React.lazy(() => import("./components/Pages/RhythmControl"));
-const StrokeRisk = React.lazy(() => import("./components/Pages/StrokeRisk"));
-const TermsAndConditionExternal = React.lazy(() => import("./components/Pages/TermsAndConditionExternal"));
+// non-auth components (no lazy loading)
+import Ablation from "./components/Pages/Ablation";
+import About from "./components/Pages/About";
+import ACO from "./components/Pages/Aco";
+import Affaq from "./components/Pages/Affaq";
+import Alcohol from "./components/Pages/Alcohol";
+import Appointments from "./components/Pages/Appointments";
+import CommunityResources from "./components/Pages/CommunityResources";
+import Congestive from "./components/Pages/Congestive";
+import ContactUs from "./components/Pages/ContactUs";
+import Coronary from "./components/Pages/Coronary";
+import DevicePacemaker from "./components/Pages/DevicePacemaker";
+import Dietician from "./components/Pages/Dietician";
+import EcoPharmacy from "./components/Pages/EcoPharmacy";
+import Exercise from "./components/Pages/Exercise";
+import HealthPlan from "./components/Pages/HealthPlan";
+import HealthcareConsultant from "./components/Pages/HealthcareConsultant";
+import HeartValves from "./components/Pages/HeartValves";
+import HomeEducationalBot from "./components/Pages/HomeEducationalBot";
+import Medications from "./components/Pages/Medications";
+import Obesity from "./components/Pages/Obesity";
+import Personomics from "./components/Pages/Personomics";
+import Pharmacy from "./components/Pages/Pharmacy";
+import RateControl from "./components/Pages/RateControl";
+import RhythmControl from "./components/Pages/RhythmControl";
+import Sleepapnea from "./components/Pages/Sleepapnea";
+import Smoking from "./components/Pages/Smoking";
+import StrokeRisk from "./components/Pages/StrokeRisk";
+import Symptoms from "./components/Pages/Symptoms";
+import TermsAndConditionExternal from "./components/Pages/TermsAndConditionExternal";
+import Vascular from "./components/Pages/Vascular";
 
-// auth-user
+// Patient auth-user
 const Home = React.lazy(() => import("./components/InnerApp/Home/HomeManager"));
 const Profile = React.lazy(() => import("./components/InnerApp/Profile/ProfileManager"));
 const Dashboard = React.lazy(() => import("./components/InnerApp/Dashboard/Dashboard"));
@@ -54,40 +55,63 @@ const HistoryChat = React.lazy(() => import("./components/InnerApp/HistoryChatBo
 const BehavioralChat = React.lazy(() => import("./components/InnerApp/BehaviouralChatBot/BehaviouralChatBot"));
 
 // Admin
-const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/index"));
-const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
 const ListofPatients = React.lazy(() => import("./components/Admin/ListofPatients/index"));
+const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/ApproveUsersManager"));
+const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/UploadDocumentManager"));
+const AdminEducationBot = React.lazy(() => import("./components/Admin/EducationBot/AdminEducationalBotManager"));
+
+const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
 const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/index"));
 const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
 const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
-const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/index"));
 const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
+const UserFeedback = React.lazy(() => import("./components/Admin/UserFeedback/index"));
+
+// SuperAdmin
+const AdminCreation = React.lazy(() => import("./components/SuperAdmin/AdminCreation/AdminCreationManager"));
 
 const AllRoutes = ({ authenticated }) => {
+
+  let { isAuthenticated, role } = authenticated;
 
   return (
     <>
       <ToastContainer theme="light" />
       <SessionTimeoutModal />
       <Routes>
-        {authenticated ? (
+        {isAuthenticated ? (
           <>
             <Route path="/" element={<MainLayout />}>
-              <Route index path="/" element={<Home />} />
-              <Route path="home" element={<Home />} />
+              {role === loginRoles.PATIENT &&
+                <>
+                  <Route index path="/" element={<Home />} />
+                  <Route path="home" element={<Home />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="chat" element={<BehavioralChat />} />
+                  <Route path="historychat" element={<HistoryChat />} />
+                  <Route path="transcriptsummary" element={<HistorySummary />} />
+                </>
+              }
+              {role === loginRoles.SUPERADMIN &&
+                <>
+                  <Route index path="/" element={<AdminCreation />} />
+                  <Route path="admincreation" element={<AdminCreation />} />
+                </>}
+              {role === loginRoles.ADMIN &&
+                <>
+                  <Route index path="/" element={<ApproveUsers />} />
+                  <Route path="approveusers" element={<ApproveUsers />} />
+                  <Route path="uploaddocument" element={<UploadDocument />} />
+                  <Route path="educationbot" element={<AdminEducationBot />} />
+                </>}
               <Route path="profile" element={<Profile />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="chat" element={<BehavioralChat />} />
-              <Route path="historychat" element={<HistoryChat />} />
-              <Route path="transcriptsummary" element={<HistorySummary />} />
               <Route path="botquestionnaire" element={<BotQuestionnaire />} />
-              <Route path="approveusers" element={<ApproveUsers />} />
               <Route path="patientslist" element={<ListofPatients />} />
               <Route path="doctorslist" element={<DoctorsList />} />
               <Route path="users" element={<UserManagement />} />
               <Route path="roles" element={<RoleManagement />} />
-              <Route path="uploaddocument" element={<UploadDocument />} />
               <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
+              <Route path="userFeedback" element={<UserFeedback />} />
             </Route>
             <Route path="*" element={<BackToHomeErrorPage />} />
           </>
@@ -117,8 +141,7 @@ const AllRoutes = ({ authenticated }) => {
               <Route path="vascular" element={<Vascular />} />
               <Route path="appointments" element={<Appointments />} />
               <Route path="pharmacy" element={<Pharmacy />} />
-              <Route path="communityresources" element={<CommunityResources />}
-              />
+              <Route path="communityresources" element={<CommunityResources />} />
               <Route path="healthplan" element={<HealthPlan />} />
               <Route path="aco" element={<ACO />} />
               <Route path="ecopharmacy" element={<EcoPharmacy />} />
@@ -141,4 +164,4 @@ const AllRoutes = ({ authenticated }) => {
   );
 };
 
-export default AllRoutes
+export default AllRoutes;

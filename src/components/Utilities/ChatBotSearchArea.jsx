@@ -3,7 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) {
   const inputRef = useRef();
-  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript, finalTranscript } = useSpeechRecognition();
 
   const [inputValue, setInputValue] = useState(""); // user input
   const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show send button if input is not empty
@@ -17,13 +17,12 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
   }, []);
 
   useEffect(() => {
-    if (transcript) {
-      setInputValue(prevInput => prevInput + transcript);
-      if (inputValue + transcript) {
-        setIsShowSendBtn(true);
-      }
+    if (finalTranscript) {
+      setInputValue(prevInput => prevInput + finalTranscript);
+      setIsShowSendBtn(true);
+      resetTranscript();
     }
-  }, [transcript]);
+  }, [finalTranscript]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -82,7 +81,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
           type="text"
           placeholder="Ask a question about Atrial Fibrillation"
           name="message"
-          value={inputValue}
+          value={transcript || inputValue}
           onChange={handleInputChange}
           disabled={isInputDisable}
           ref={inputRef}

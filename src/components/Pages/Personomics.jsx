@@ -19,7 +19,7 @@ const personomicsData = [
     href: '/registration',
   },
   {
-    title: 'Educational BOT',
+    title: 'Knowledgeable Bot',
     subTitle:
       'The educational bot is an AI-driven tool designed to assist patients with accurate and empathetic responses at any moment of time. It leverages a specialized knowledge base from healthcare expert-approved PDFs, ensuring reliable information. The bot excels in emotional intelligence, providing clear, concise, and emotionally supportive answers.',
     iconUrl: 'images/edbot.jpg',
@@ -43,6 +43,7 @@ export default function Personomics() {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             frameBorder="0"
+            rel="noreferrer"
           ></iframe>
         </div>
         <div className="container">

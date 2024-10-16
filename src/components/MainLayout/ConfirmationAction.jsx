@@ -48,14 +48,14 @@ export default function ConfirmationAction() {
               className="text-capitalize btn al_button_add"
               onClick={() => handleConfirmationYesOrNo(true)}
             >
-              OK
+              {confirmationData?.options?.[0] || 'OK'}
             </Button>
             <Button
               type="button"
               className="text-capitalize btn al_button_cancel"
               onClick={() => handleConfirmationYesOrNo(false)}
             >
-              Cancel
+              {confirmationData?.options?.[1] || 'Cancel'}
             </Button>
           </div>
         </Modal>

@@ -1,19 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalBody, Table } from "reactstrap";
-import { getActionTypes } from '../../../../_mock/helperIndex';
+import { getActionTypes, getLsitOfSymptoms } from '../../../../_mock/helperIndex';
 import { setActionTypeAndActionData } from '../../../../store/UtilityCallFunction/slice';
+
+let lsitOfSymptoms = getLsitOfSymptoms;
 
 const SymptomsLastUpdatedView = () => {
     const dispatch = useDispatch();
 
-    const { symptomsData } = useSelector((state) => state?.homePageSlice);
+    const symptomsData = useSelector((state) => state?.homePageSlice?.symptomsData);
 
     const formatedData = Object.keys(symptomsData).reduce((acc, symptom) => {
-        const { severity, frequency, quality_of_life } = symptomsData[symptom];
+        const { severity, frequency, quality_of_life, symptoms_key } = symptomsData[symptom];
         if (severity || frequency || quality_of_life) {
             acc.push({
-                symptom: symptom,
+                symptom: lsitOfSymptoms?.find((x) => x.key === symptoms_key)?.symptomName,
                 frequency: frequency || "None",
                 severity: severity || "None",
                 quality_of_life: quality_of_life || "None"

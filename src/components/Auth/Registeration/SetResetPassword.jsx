@@ -1,13 +1,19 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { ErrorMessage, Field, Formik, Form } from "formik";
-import { useDispatch } from "react-redux";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FormGroup, Label } from "reactstrap";
 import * as Yup from 'yup';
 import { passwordReg } from "../../../_mock/RegularExp";
 import { getAuthRoute, getRegForm } from "../../../_mock/helperIndex";
-import { setActiveRegistrationForm, setAuthRoutes, setResetPasswordRequest, updatePasswordFromForgotPasswrodRequest } from "../../../store/SessionStore/slice";
+import {
+    setActiveRegistrationForm,
+    setAuthRoutes,
+    setResetAdminPasswordRequest,
+    setResetPasswordRequest,
+    updatePasswordFromForgotPasswrodRequest
+} from "../../../store/SessionStore/slice";
 
 const SetResetPasswordForm = ({ props }) => {
     const dispatch = useDispatch();
@@ -15,9 +21,13 @@ const SetResetPasswordForm = ({ props }) => {
 
     let { isForgotPassword } = props || false;
 
+    const { isAdminFirstLogin } = useSelector((state) => (state?.sessionStoreSlice));
+
     const handleSubmit = (values) => {
         if (isForgotPassword)
             dispatch(updatePasswordFromForgotPasswrodRequest({ values, navigate }))
+        else if (isAdminFirstLogin)
+            dispatch(setResetAdminPasswordRequest({ values, activeForm: getRegForm.REGTYPESELECTION, navigate }))
         else
             dispatch(setResetPasswordRequest({ values, activeForm: getRegForm.SUBSCRIPTIONFORM }))
     }

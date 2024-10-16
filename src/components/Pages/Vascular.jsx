@@ -16,7 +16,7 @@ export default function Vascular() {
 
   useEffect(() => {
     dispatch(getAssetsRequest(vascular))
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

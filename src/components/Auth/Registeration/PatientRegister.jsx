@@ -9,17 +9,17 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Col, FormGroup, Label, Row } from "reactstrap";
 import * as Yup from "yup";
-import { customContentValidation, getAuthRoute, getGenderoptions, getRegForm } from "../../../_mock/helperIndex";
+import { customContentValidation, getActionTypes, getAuthRoute, getGenderoptions, getRegForm } from "../../../_mock/helperIndex";
 import { getRegistrationOtpRequest, setActiveRegistrationForm, setAuthRoutes, setPersistActionData } from "../../../store/SessionStore/slice";
-import { getMobileValidationLengthByCountryCodeRequest } from "../../../store/UtilityCallFunction/slice";
+import { getMobileValidationLengthByCountryCodeRequest, setConfirmationOpen } from "../../../store/UtilityCallFunction/slice";
 import { Terms } from "./Terms&Confition";
 
 export const PatientRegister = () => {
     const dispatch = useDispatch();
     const genderoptions = getGenderoptions;
 
-    const { regFormData } = useSelector((state) => (state?.sessionStoreSlice));
-    const { mobileFieldValidation } = useSelector((state) => (state?.utilityCallFunctionSlice));
+    const regFormData = useSelector((state) => (state?.sessionStoreSlice?.regFormData));
+    const mobileFieldValidation = useSelector((state) => (state?.utilityCallFunctionSlice?.mobileFieldValidation));
 
     const handleSubmit = (values, activeForm) => {
         if (values)
@@ -42,8 +42,13 @@ export const PatientRegister = () => {
         dispatch(setAuthRoutes(getAuthRoute.SIGNIN))
     }
 
-    const regFormResetHandle = () => {
+    let resetActionDispatch = () => {
         dispatch(setPersistActionData(""))
+    }
+
+    const regFormResetHandle = (values) => {
+        dispatch(setPersistActionData(values))
+        dispatch(setConfirmationOpen({ actionType: getActionTypes.ISCONFIRM, message: "Are you sure, you want to reset?", options: ["Yes", "No"], callApi: resetActionDispatch }))
     }
 
     const getInitialValues = {
@@ -83,6 +88,7 @@ export const PatientRegister = () => {
     return (
         <React.Fragment>
             <Formik
+                enableReinitialize
                 initialValues={getInitialValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
@@ -360,7 +366,7 @@ export const PatientRegister = () => {
                                             type="reset"
                                             className="al_grey_borderbtn me-3"
                                             style={{ minWidth: "max-content" }}
-                                            onClick={regFormResetHandle}
+                                            onClick={() => regFormResetHandle(values)}
                                         >
                                             Reset
                                         </button>

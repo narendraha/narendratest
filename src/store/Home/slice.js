@@ -11,7 +11,8 @@ const initialState = {
     selectedHealthHubWeek: "",
     currentProgressWeek: "",
     healthHubWeeklyContent: "",
-    lastUpdatedVitalDetails: ""
+    lastUpdatedVitalDetails: "",
+    healthHubVedioContent: []
 }
 
 const homePageSlice = createSlice({
@@ -66,7 +67,11 @@ const homePageSlice = createSlice({
         getVitalDetailsLastUpdateResponse: (state, action) => {
             state.lastUpdatedVitalDetails = action?.payload
         },
-        setHealthHubSkippedWeekRequest: () => { }
+        setHealthHubSkippedWeekRequest: () => { },
+        getHealthHubContentVedioRequest: () => { },
+        getHealthHubContentVedioResponse: (state, action) => {
+            state.healthHubVedioContent = action?.payload
+        },
     }
 });
 
@@ -86,7 +91,8 @@ export const {
     getHealthHubProgressRequest, getHealthHubProgressResponse,
     getWeekWiseHealthHubContentRequest, getWeekWiseHealthHubContentResponse,
     getVitalDetailsLastUpdateRequest, getVitalDetailsLastUpdateResponse,
-    setHealthHubSkippedWeekRequest
+    setHealthHubSkippedWeekRequest,
+    getHealthHubContentVedioRequest, getHealthHubContentVedioResponse
 
 } = actions;
 

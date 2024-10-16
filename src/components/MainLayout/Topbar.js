@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, PopoverBody, UncontrolledPopover } from 'reactstrap';
+import { getActionTypes, loginRoles } from '../../_mock/internalJsControl';
 import noNotifications from '../../images/noNotifications.svg';
 import { logoutRequest } from '../../store/SessionStore/slice';
-import { getPatientDetailsRequest } from '../../store/UtilityCallFunction/slice';
+import { getUsersDetailsRequest } from '../../store/UtilityCallFunction/slice';
 
 export default function Topbar(props) {
   const navigate = useNavigate();
@@ -14,11 +14,13 @@ export default function Topbar(props) {
   const [menu, setMenu] = useState();
   const [isOpenModel, setOpenModel] = useState(false);
 
-  const { getProfileDetails, profilePicture } = useSelector((state) => (state?.utilityCallFunctionSlice));
-  const { menuData } = useSelector((state) => (state?.sessionStoreSlice));
+  const getProfileDetails = useSelector((state) => (state?.utilityCallFunctionSlice?.getProfileDetails));
+  const profilePicture = useSelector((state) => (state?.utilityCallFunctionSlice?.profilePicture));
+  const menuData = useSelector((state) => (state?.sessionStoreSlice?.menuData));
+  const actionType = useSelector((state) => (state?.utilityCallFunctionSlice?.actionType) || getActionTypes.UNSELECT)
 
   useEffect(() => {
-    dispatch(getPatientDetailsRequest())
+    dispatch(getUsersDetailsRequest())
   }, [dispatch]);
 
   const handleProfile = () => {
@@ -36,6 +38,8 @@ export default function Topbar(props) {
   const handleCloseAndOpen = () => {
     setOpenModel(!isOpenModel)
   }
+
+  const getUserRoleName = getProfileDetails?.role_id == loginRoles.SUPERADMIN ? 'Super Admin' : getProfileDetails?.role_id == loginRoles.ADMIN ? 'Admin' : 'User'
 
   return (
     <>
@@ -89,8 +93,8 @@ export default function Topbar(props) {
               <div className="pointer">
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
-                    <div className="al_progresscontainer">
-                      <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
+                    <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
+                    {/* <div className="al_progresscontainer">
                       <div className='al_progressbar'>
                         <CircularProgressbar
                           value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}
@@ -101,16 +105,17 @@ export default function Topbar(props) {
                           })}
                         />
                       </div>
-                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
-                    </div>
+                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div> 
+                    </div>*/}
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2 text-capitalize'>
-                      <span className='al_uName'>{getProfileDetails?.username}</span>
+                      <span className='al_uName'>{getProfileDetails?.username || getProfileDetails?.name}</span>
+                      <span className='text-grey'>{getUserRoleName}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">
-                    <DropdownItem tag="div" onClick={() => handleProfile()} >Profile</DropdownItem>
+                    {getProfileDetails?.role_id != loginRoles.SUPERADMIN && <DropdownItem tag="div" onClick={() => handleProfile()} >Profile</DropdownItem>}
                     <DropdownItem tag="div" onClick={() => handleLogOut()}>Logout</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
@@ -119,7 +124,7 @@ export default function Topbar(props) {
           </div>
         </div>
       </header >
-      {sideMenu && <div className='al_submenu_content'>
+      {sideMenu && actionType === getActionTypes.UNSELECT && <div className='al_submenu_content'>
         <div className='al_menu_name'>{sideMenu.name}<><span><i className='icon_alfred_right_arrow'></i></span><span className='al_header_bc'>{sideSubMenu.name}</span></></div>
       </div>
       }

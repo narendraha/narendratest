@@ -11,6 +11,8 @@ import {
     getHealthDetailsGraphResponse,
     getHealthDetailsLastUpdateRequest,
     getHealthDetailsLastUpdateResponse,
+    getHealthHubContentVedioRequest,
+    getHealthHubContentVedioResponse,
     getHealthHubProgressRequest,
     getHealthHubProgressResponse,
     getSymptomsDetailsLastUpdateRequest,
@@ -423,6 +425,35 @@ function* setHealthHubSkippedWeek(action) {
     store.dispatch(setLoading(false))
 }
 
+// TO GET HEALTHHUB VEDIO CONTENT 
+function* getHealthHubContentVedio() {
+    store.dispatch(setLoading(true))
+    let healthHubVedioContent = []
+    try {
+        const response = yield call(callAPI, {
+            url: '/patient/get_video_link',
+            method: 'POST',
+            data: null,
+            contentType: 'application/json',
+        });
+        if (response?.status && response?.statuscode === 200)
+            healthHubVedioContent = response?.data
+        else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.data?.detail, {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    yield put(getHealthHubContentVedioResponse(healthHubVedioContent))
+    store.dispatch(setLoading(false))
+}
+
 function* watchHomePageSaga() {
     yield takeLeading(getSymptomsDetailsLastUpdateRequest.type, getSymptomsDetailsLast);
     yield takeLeading(getSymptomsDetailsRequest.type, getSymptomsDetails);
@@ -436,6 +467,7 @@ function* watchHomePageSaga() {
     yield takeLeading(getWeekWiseHealthHubContentRequest.type, getWeekWiseHealthContent)
     yield takeLeading(getVitalDetailsLastUpdateRequest.type, getVitalDetailsLastUpdate)
     yield takeLeading(setHealthHubSkippedWeekRequest.type, setHealthHubSkippedWeek)
+    yield takeLeading(getHealthHubContentVedioRequest.type, getHealthHubContentVedio)
 }
 
 export default watchHomePageSaga;

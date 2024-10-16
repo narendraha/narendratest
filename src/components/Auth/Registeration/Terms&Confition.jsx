@@ -9,8 +9,10 @@ export const Terms = ({ props }) => {
 
     let { values, setFieldValue, errors } = props;
 
-    const handleModalCloseClick = () => {
-        setFieldValue('isTermsAndConditionClick', false)
+    const handleModalCloseClick = (isSubmit = false) => {
+        setFieldValue('isTermsAndConditionClick', false);
+        if (!isSubmit)
+            setFieldValue('termsAndConditions', false)
     }
 
     const checkBoxChangeHandle = (e) => {
@@ -26,7 +28,7 @@ export const Terms = ({ props }) => {
             <Modal className='modal-lg detailsModal' isOpen={values?.isTermsAndConditionClick} >
                 <div className='d-flex align-items-center justify-content-between p-4'>
                     <h6 className='mb-0'>Terms & Conditions</h6>
-                    <i className="icon_alfred_close pointer" title="Close" onClick={handleModalCloseClick}></i>
+                    <i className="icon_alfred_close pointer" title="Close" onClick={() => handleModalCloseClick()}></i>
                 </div>
                 <ModalBody className="wflexLayout p-0">
                     <div className='wflexScroll mb-3'>
@@ -198,18 +200,18 @@ export const Terms = ({ props }) => {
                             &nbsp; I have accepted the terms and condition
                         </Label>
                         <div>
-                            <button type="button" className="my-3 al_button al_savebtn me-2" onClick={handleModalCloseClick}>Submit</button>
+                            <button type="button" className="my-3 al_button al_savebtn me-2" onClick={() => handleModalCloseClick(true)}>Submit</button>
                             <button type="button" className="al_testbtn"
                                 id="sendEmailPdf"
-                                disabled={!values?.email}
+                                disabled={!values?.email || errors?.email}
                                 onClick={shareEmailHandle}>
                                 <i className="icon_alfred_share me-2"></i>Share to email
                             </button>
-                            <UncontrolledTooltip
+                            {(!values?.email || errors?.email) && <UncontrolledTooltip
                                 modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
                                 placement='top' target="sendEmailPdf">
                                 Please Enter your Email for utilizing this service
-                            </UncontrolledTooltip>
+                            </UncontrolledTooltip>}
                         </div>
                     </div>
                 </ModalBody>

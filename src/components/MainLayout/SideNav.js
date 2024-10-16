@@ -11,7 +11,7 @@ export default function SideNav(props) {
   const navigate = useNavigate();
   const [profileCmpModalProps, setProfileCmpModalProps] = useState("");
 
-  const { menuData } = useSelector((state) => (state?.sessionStoreSlice));
+  const menuData = useSelector((state) => (state?.sessionStoreSlice?.menuData));
 
   useEffect(() => { }, [props.isShowmenu]);
 

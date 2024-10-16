@@ -159,19 +159,19 @@ export default function Dashboard1() {
                         <h6 className='mb-0'>Knowledge Bank</h6>
                         <Row className='mt-3 al_knowldgebank'>
                             <Col lg="2" sm="3">
-                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen rel="noreferrer"></iframe>
                                 <div className='mt-2'>Text of the printing and typesetting industry.</div>
                             </Col>
                             <Col lg="2" sm="3">
-                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen rel="noreferrer"></iframe>
                                 <div className='mt-2'>Text of the printing and typesetting industry.</div>
                             </Col>
                             <Col lg="2" sm="3">
-                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen rel="noreferrer"></iframe>
                                 <div className='mt-2'>Text of the printing and typesetting industry.</div>
                             </Col>
                             <Col lg="2" sm="3">
-                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen rel="noreferrer"></iframe>
                                 <div className='mt-2'>Text of the printing and typesetting industry.</div>
                             </Col>
                         </Row>

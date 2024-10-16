@@ -20,18 +20,21 @@ const utilityCallFunctionSlice = createSlice({
     name: 'utilityCallFunctionSlice',
     initialState,
     reducers: {
+        setResetUtilityActions: (state, action) => {
+            return initialState
+        },
         setActionTypeAndActionData: (state, action) => {
             state.actionType = action.payload?.actionType;
             state.actionData = action.payload?.actionData;
         },
-        getPatientDetailsRequest: (state) => {
+        getUsersDetailsRequest: (state) => {
             state.isLoading = true;
         },
-        getPatientDetailsResponse: (state, action) => {
+        getUsersDetailsResponse: (state, action) => {
             state = {
                 ...state,
                 getProfileDetails: action.payload,
-                profilePicture: ((action.payload?.profile_url === "NA") ? (action.payload.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : action.payload?.profile_url),
+                profilePicture: ((action.payload?.profile_url === "NA") ? (action.payload.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : action.payload?.profile_url) || maleuserImg,
                 isLoading: false,
                 isProfileImageEnableToDelete: action.payload?.profile_url !== "NA"
             }
@@ -68,11 +71,12 @@ export const {
     setChatBotLoadingIndex,
     setActionTypeAndActionData,
     setConfirmationOpen, setConfirmationClose,
-    getPatientDetailsRequest, getPatientDetailsResponse,
+    getUsersDetailsRequest, getUsersDetailsResponse,
     getAssetsRequest, getAssetsResponse,
     contactUsRequest,
     getMobileValidationLengthByCountryCodeRequest, getMobileValidationLengthByCountryCodeResponse,
-    sendEmailPdfRequest
+    sendEmailPdfRequest,
+    setResetUtilityActions,
 } = actions;
 
 export default reducer;

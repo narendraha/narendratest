@@ -122,6 +122,31 @@
         width: 100% !important;
     }
 
+    .al_edbot_expcon .al_left_data>div p {
+        font-size: 10px !important;
+    }
+
+    .al_pdf_expand {
+        position: fixed !important;
+        right: 0;
+        margin-right: 0;
+        z-index: 9;
+        width: 85% !important;
+    }
+
+    .al_edbot_expcon .al_pdf_expand.al_pdf_slide_out {
+        margin-right: -85% !important;
+    }
+
+    .al_edbot_expand {
+        width: 180px !important;
+        padding-left: 15px !important;
+    }
+
+    .al_edbot_container.ms-4 {
+        margin-left: 30px !important;
+    }
+
     .al_listtable th,
     td {
         font-size: 12px;
@@ -202,7 +227,12 @@
         }
     }
 
-    .abouttop .tab-pane .w-auto img{
+    .al_pdf_expand,
+    .al_edbot_expand {
+        width: 230px !important;
+    }
+
+    .abouttop .tab-pane .w-auto img {
         width: 170px !important;
     }
 
@@ -224,7 +254,9 @@
         max-width: 50% !important;
     }
 
-    .al_approveusers {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 150%;
     }
 
@@ -266,7 +298,9 @@
         border-right: none !important;
     }
 
-    .al_approveusers {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 320%;
     }
 
@@ -367,12 +401,22 @@
 
 @media screen and (max-width: 767px) {
 
-    .al_approveusers {
+    .al_approveusers,
+    .al_patientslisttable,
+    .al_adminslisttable {
         width: 200%;
     }
 
     .p-5 {
         padding: 1rem !important;
+    }
+
+    .ps-4 {
+        padding-left: 1rem !important;
+    }
+
+    .al_edbot_container .cs_homepage img {
+        height: 30px;
     }
 
     .w-80,
@@ -671,6 +715,15 @@
     }
 }
 
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .al_uploaddoc {
+        .col-xl-4 {
+            max-width: 40%;
+            flex: 0 0 40%;
+        }
+    }
+}
+
 @media screen and (min-width: 769px) and (max-width: 1200px) {
     .mobileanim {
         max-height: 75%;
@@ -716,5 +769,14 @@
 @media screen and (min-width: 1080px) and (max-width: 1250px) {
     .w-50 {
         width: 70% !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .al_edbot_expand {
+        position: absolute !important;
+        z-index: 10;
+        height: 95% !important;
+        width: 230px !important;
     }
 }

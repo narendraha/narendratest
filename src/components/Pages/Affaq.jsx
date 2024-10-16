@@ -63,7 +63,7 @@ export default function Affaq() {
 
   useEffect(() => {
     dispatch(getAssetsRequest(faq))
-  }, []);
+  }, [dispatch]);
 
   const { assetUrl } = useSelector((state) => state?.utilityCallFunctionSlice);
   return (

@@ -1,6 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { Button, Popover, PopoverBody } from 'reactstrap';
+import { loginRoles } from '../../_mock/internalJsControl';
 import chatBot from '../../images/chatboticon.svg';
 import EducationalChatBot from '../InnerApp/ChatBots/EducationalChatBot';
 import ConfirmationAction from './ConfirmationAction';
@@ -12,6 +14,9 @@ export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
     const [isShowmenu, setIsShowmenu] = useState(true);
     const [popOverClose, setPopOverClose] = useState(true);
+
+    const authUser = useSelector((state) => (state?.sessionStoreSlice?.authUser));
+    let isPatientLogin = authUser?.role === loginRoles.PATIENT;
 
     useEffect(() => {
         setBotIsOpen(false);
@@ -28,29 +33,33 @@ export default function MainLayout() {
                             <Outlet />
                         </main>
                     </div>
-                    {botisOpen && <EducationalChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
+                    {isPatientLogin && botisOpen && <EducationalChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
                 </div>
             </Suspense>
-            <Button id="homechatpopover" type="button" className='p-0 al_chat'>
-                {!botisOpen &&
-                    <img src={chatBot} alt="bot" id="homechatpopover" onClick={() => setBotIsOpen(!botisOpen)} />
-                }
-            </Button>
+            {isPatientLogin &&
+                <>
+                    <Button id="homechatpopover" type="button" className='p-0 al_chat'>
+                        {!botisOpen &&
+                            <img src={chatBot} alt="bot" id="homechatpopover" onClick={() => setBotIsOpen(!botisOpen)} />
+                        }
+                    </Button>
 
-            {!botisOpen && popOverClose &&
-                <Popover
-                    placement="left"
-                    target="homechatpopover"
-                    trigger="legacy"
-                    className='al_popverchat'
-                    isOpen={!botisOpen}
-                    modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
-                >
-                    <PopoverBody>
-                        Hello, I am Alfred! How can I assist you today?
-                        <i className='icon_alfred_closecircle' onClick={() => setPopOverClose(false)}></i>
-                    </PopoverBody>
-                </Popover>
+                    {!botisOpen && popOverClose &&
+                        <Popover
+                            placement="left"
+                            target="homechatpopover"
+                            trigger="legacy"
+                            className='al_popverchat'
+                            isOpen={!botisOpen}
+                            modifiers={[{ preventOverflow: { boundariesElement: 'window' } }]}
+                        >
+                            <PopoverBody>
+                                Hello, I am Alfred! How can I assist you today?
+                                <i className='icon_alfred_closecircle' onClick={() => setPopOverClose(false)}></i>
+                            </PopoverBody>
+                        </Popover>
+                    }
+                </>
             }
         </div>
         <Loading />

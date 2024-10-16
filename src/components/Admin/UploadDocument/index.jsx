@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Table, Row, Col, Label } from 'reactstrap';
+import { Col, Label, Row, Table } from 'reactstrap';
 import fileupload from '../../../images/fileupload.svg';
+import { FileUploadAnimation } from './fileUploadAnimation';
 
 export default function UploadDocument() {
+    const [fileUpload, setFileUpload] = useState("");
+
     const [view, setView] = useState("view");
     const handleDragEnter = e => {
         e.preventDefault();
@@ -20,6 +23,14 @@ export default function UploadDocument() {
         e.preventDefault();
         e.stopPropagation();
     };
+
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const handleStepClick = (step, index) => setCurrentStep(index);
+
+    const handleFileUpload = () =>{
+        setFileUpload("")
+    }
     return (
         <>
             {view === "view" &&
@@ -104,11 +115,13 @@ export default function UploadDocument() {
                 <div className="wflexLayout">
                     <div className='wflexScroll d-flex flex-column'>
                         <div className='flex-grow-1'>
-                            <Row className='mx-0'>
-                                <Col lg="5" md="7" sm="12" className='px-0'>
+                            <div className='al-pad pb-0'>
+                                <h3 className='bc_main_text mb-1 me-4'>Upload Document</h3>
+                                <Label>Upload document to Alfred chatbot for real-time responses.</Label>
+                            </div>
+                            <Row className='mx-0 al_uploaddoc'>
+                                <Col xl="4" lg="5" md="6" sm="12" className='px-0'>
                                     <div className='al-pad pb-0'>
-                                        <h3 className='bc_main_text mb-2 me-4'>Upload Document</h3>
-                                        <Label>Upload document to Alfred chatbot for real-time responses.</Label>
                                         <div className='al_filedragupload'
                                             onDrop={e => handleDrop(e)}
                                             onDragOver={e => handleDragOver(e)}
@@ -122,7 +135,7 @@ export default function UploadDocument() {
                                                 type="file"
                                                 id="document"
                                                 hidden
-                                                onChange={(e) => { }}
+                                                onChange={(e) => setFileUpload(e?.target?.files)}
                                             />
 
                                             <div id="al_blockele">
@@ -131,41 +144,48 @@ export default function UploadDocument() {
                                                 </label>
                                             </div>
                                         </div>
+                                        {/* File Upload animation */}
+                                        <FileUploadAnimation props={{fileUpload, handleFileUpload}} />
                                     </div>
-                                    <Table borderless responsive className='al_listtable al-pad al_adduploadtable mb-0'>
-                                        <tbody>
-                                            <tr>
-                                                <td>BotEducation</td>
-                                                <td>12MB</td>
-                                                <td>PDF</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>BotBehavior</td>
-                                                <td>5MB</td>
-                                                <td>DOC</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>BotIntro</td>
-                                                <td>2MB</td>
-                                                <td>TXT</td>
-                                                <td>
-                                                    <div className='al_cardactions'>
-                                                        <i className='icon_alfred_closecircle'></i>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
+                                </Col>
+                                <Col lg="6" md="6" sm="12" className='px-0'>
+                                    <div className='al-pad'>
+                                        <h6 className='mb-1'>Recently Uploaded Documents</h6>
+                                        <Table borderless responsive className='al_listtable al_adduploadtable mb-0'>
+                                            <tbody>
+                                                <tr>
+                                                    <td>BotEducation</td>
+                                                    <td>12MB</td>
+                                                    <td>PDF</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BotBehavior</td>
+                                                    <td>5MB</td>
+                                                    <td>DOC</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BotIntro</td>
+                                                    <td>2MB</td>
+                                                    <td>TXT</td>
+                                                    <td>
+                                                        <div className='al_cardactions'>
+                                                            <i className='icon_alfred_closecircle'></i>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </Table>
+                                    </div>
                                 </Col>
                             </Row>
                         </div>
@@ -184,7 +204,7 @@ export default function UploadDocument() {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div >
             }
         </>
     )

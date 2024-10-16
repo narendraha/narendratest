@@ -2,7 +2,7 @@ import moment from "moment";
 import { nanoid } from 'nanoid';
 import { toast } from "react-toastify";
 import { call, put, select, takeLeading } from "redux-saga/effects";
-import { callAPI, getAuthRoute, getRole } from "../../_mock/internalJsControl";
+import { callAPI, getAuthRoute, getDecodedTokenFromLocalStorage, getRegForm, getRole, loginRoles } from "../../_mock/helperIndex";
 import { store } from "../store";
 import { setLoading } from "../UtilityCallFunction/slice";
 import {
@@ -12,7 +12,9 @@ import {
     loginResponse,
     setAccountCreateConfirmationRequest,
     setActiveRegistrationForm,
+    setAdminFirstLoginRequest,
     setAuthRoutes,
+    setResetAdminPasswordRequest,
     setResetPasswordRequest,
     setResetPasswordResponse,
     setSessionTimeStart,
@@ -32,6 +34,7 @@ const menus = [
     //   ]
     // },
     {
+        role: loginRoles.PATIENT,
         moduleId: "2",
         name: "Home",
         link: "home",
@@ -41,6 +44,7 @@ const menus = [
         ],
     },
     {
+        role: loginRoles.PATIENT,
         moduleId: "3",
         name: "Behavioral",
         link: "chat",
@@ -55,6 +59,7 @@ const menus = [
         ],
     },
     {
+        role: loginRoles.PATIENT,
         moduleId: "4",
         name: "Bot Manager",
         link: "historychat",
@@ -67,12 +72,6 @@ const menus = [
                 icon: "icon_alfred_botquestionnaire",
             },
             // {
-            //   id: "3",
-            //   name: "Upload Document",
-            //   link: "uploaddocument",
-            //   icon: "icon_alfred_uploaddocument",
-            // },
-            // {
             //   id: "4",
             //   name: "Weekly Curriculum",
             //   link: "healthhubbuilder",
@@ -81,6 +80,7 @@ const menus = [
         ],
     },
     {
+        role: loginRoles.PATIENT,
         moduleId: "5",
         name: "Reports",
         link: "transcriptsummary",
@@ -94,6 +94,96 @@ const menus = [
             },
         ],
     },
+    {
+        role: loginRoles.SUPERADMIN,
+        moduleId: "6",
+        name: "User Management",
+        link: "admincreation",
+        icon: "icon_alfred_menu_client_user",
+        subModules: [
+            {
+                id: "1",
+                name: "List of Admins",
+                link: "admincreation",
+                icon: "icon_alfred_menu_client_user",
+            },
+        ],
+    },
+    // {
+    //     role: loginRoles.ADMIN,
+    //     moduleId: "8",
+    //     name: "Bot Manager",
+    //     link: "uploaddocument",
+    //     icon: "icon_alfred_approveusers",
+    //     subModules: [
+    //         {
+    //             id: "1",
+    //             name: "Upload Documents",
+    //             link: "uploaddocument",
+    //             icon: "icon_alfred_uploaddocument",
+    //         },
+    //     ],
+    // },
+    {
+        role: loginRoles.ADMIN,
+        moduleId: "7",
+        name: "Approval",
+        link: "approveusers",
+        icon: "icon_alfred_approveusers",
+        subModules: [
+            {
+                id: "1",
+                name: "Request for Sign-in",
+                link: "approveusers",
+                icon: "icon_alfred_approveusers",
+            },
+        ],
+    },
+    {
+        role: loginRoles.ADMIN,
+        moduleId: "9",
+        name: "Bot Manager",
+        link: "educationbot",
+        icon: "icon_alfred_bot",
+        subModules: [
+            {
+                id: "1",
+                name: "Education Bot",
+                link: "educationbot",
+                icon: "icon_alfred_bot",
+            },
+        ],
+    },
+    // {
+    //     role: loginRoles.ADMIN,
+    //     moduleId: "8",
+    //     name: "Educational Bot",
+    //     link: "educationbot",
+    //     icon: "icon_alfred_bot",
+    //     subModules: [
+    //         {
+    //             id: "1",
+    //             name: "Request for Sign-in",
+    //             link: "educationbot",
+    //             icon: "icon_alfred_bot",
+    //         },
+    //     ],
+    // },
+    {
+        role: loginRoles.ADMIN,
+        moduleId: "10",
+        name: "User Feedback",
+        link: "userfeedback",
+        icon: "icon_alfred_menu_sms",
+        subModules: [
+            {
+                id: "1",
+                name: "User Feedback",
+                link: "userfeedback",
+                icon: "icon_alfred_menu_sms",
+            },
+        ],
+    },
     // {
     //   moduleId: '6',
     //   name: 'User Management',
@@ -104,25 +194,6 @@ const menus = [
     //     { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' },
     //     { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
     //     { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' },
-    //     { id: "5", name: "Approve Users", link: 'approveusers', icon: 'icon_alfred_approveusers' }
-    //   ]
-    // },
-    // {
-    //   moduleId: '5',
-    //   name: 'Life Style Goals',
-    //   link: 'goals',
-    //   icon: 'icon_alfred_L',
-    //   subModules: [
-    //     { id: "1", name: "Life Style Goals", link: 'goals', icon: 'icon_alfred_L' }
-    //   ]
-    // },
-    // {
-    //   moduleId: '6',
-    //   name: 'Optimal Risk Management',
-    //   link: 'riskmanagement',
-    //   icon: 'icon_alfred_O',
-    //   subModules: [
-    //     { id: "1", name: "Optimal Risk Management", link: 'riskmanagement', icon: 'icon_alfred_O' }
     //   ]
     // },
     // {
@@ -158,7 +229,8 @@ const menus = [
 // TO GET OTP
 function* getRegistrationOtp(action) {
     store.dispatch(setLoading(true));
-    let { values, activeForm } = action?.payload;
+    let { values, activeForm, adminFirstLogin } = action?.payload || action;
+
     const prevActiveForm = yield select(state => state.sessionStoreSlice?.regActiveForm);
     const { authRedirectionRoute } = yield select(state => state.sessionStoreSlice);
     let regFormData, forgotPasswordFormData;
@@ -166,15 +238,15 @@ function* getRegistrationOtp(action) {
     if (authRedirectionRoute === getAuthRoute.FORGOTPASSWORDFROM)
         forgotPasswordFormData = values
     else
-        regFormData = values;
+        regFormData = values || adminFirstLogin;
 
     let regActiveForm = prevActiveForm
     let otpMessage = "";
 
     let reqObj = {
-        email: values?.email,
-        mobile: values?.mobile,
-        username: (values?.username || values?.firstName?.concat(" ").concat(values?.lastName))
+        email: values?.email || adminFirstLogin?.email,
+        mobile: values?.mobile || adminFirstLogin?.mobile,
+        username: (values?.username || adminFirstLogin?.username || values?.firstName?.concat(" ").concat(values?.lastName))
     }
 
     try {
@@ -185,7 +257,7 @@ function* getRegistrationOtp(action) {
             contentType: 'application/json',
         });
         if (response?.status && response?.statuscode === 200)
-            regActiveForm = activeForm
+            regActiveForm = activeForm || regActiveForm
         toast(response?.message, {
             position: "top-right",
             type: response?.status && response?.statuscode === 200 ? "success" : "error",
@@ -345,7 +417,8 @@ function* userLoginRequest(action) {
         menuData = [],
         authToken = "",
         randomId = nanoid(),
-        sessionId = "";
+        sessionId = "",
+        authUser = "";
 
     let reqObj = isGoogleOrAppleLogin ? {
         username: values?.displayName,
@@ -366,26 +439,37 @@ function* userLoginRequest(action) {
         });
         console.log("userLoginRequest=>", { response, reqObj })
         if (response?.status && response?.statuscode === 200) {
-            isAuthenticated = true
-            menuData = menus
-            navigate(`/${menuData?.[0]?.link}`)
+            sessionId = randomId;
+            authUser = getDecodedTokenFromLocalStorage(response?.data?.token);
+            console.log("authUser=>", authUser)
             authToken = response?.data?.token
             localStorage.setItem("token", authToken)
-            sessionId = randomId;
-            yield put(setSessionTimeStart(true))
+            // For first login of admin user
+            if (authUser?.role === loginRoles.ADMIN && authUser?.change_pwd) {
+                navigate('/registration')
+                store.dispatch(setActiveRegistrationForm(getRegForm.OTPFORM))
+                store.dispatch(setAdminFirstLoginRequest({ isAdminFirstLogin: true, adminTempPassword: values?.password }));
+                yield call(getRegistrationOtp, { adminFirstLogin: authUser })
+            } else {
+                menuData = menus?.filter((x) => x?.role === authUser?.role);
+                navigate(`/${menuData?.[0]?.link}`)
+                // yield put(setSessionTimeStart(true))
+                isAuthenticated = true
+            }
         }
-        toast(response?.message, {
-            position: "top-right",
-            //  socialauth first register statuscode 201 for success case
-            type: response?.status && (response?.statuscode === 200 || response?.statuscode === 201) ? "success" : "error",
-        });
+        if (authUser?.role !== loginRoles.ADMIN && !authUser?.change_pwd)
+            toast(response?.message, {
+                position: "top-right",
+                //  socialauth first register statuscode 201 for success case
+                type: response?.status && (response?.statuscode === 200 || response?.statuscode === 201) ? "success" : "error",
+            });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {
             position: "top-right",
             type: "error",
         });
     }
-    yield put(loginResponse({ isAuthenticated, menuData, authToken, sessionId }))
+    yield put(loginResponse({ isAuthenticated, menuData, authToken, sessionId, authUser }))
     store.dispatch(setLoading(false));
 }
 
@@ -424,13 +508,48 @@ function* updatePassword(action) {
     store.dispatch(setLoading(false))
 }
 
+// TO RESET ADMIN PASSWROD FOR FIRST TIME LOGIN
+function* setResetAdminPassword(action) {
+    store.dispatch(setLoading(true));
+
+    let { values, navigate } = action?.payload
+    const { adminTempPassword } = yield select(state => state.sessionStoreSlice);
+
+    let reqObj = {
+        temporary_password: adminTempPassword,
+        new_password: values?.password
+    }
+    try {
+        const response = yield call(callAPI, {
+            url: '/admin/change_admin_password',
+            method: 'PUT',
+            data: reqObj,
+            contentType: 'application/json',
+        });
+        console.log("setResetAdminPassword=>", response);
+        if (response?.status && response?.statuscode === 200) {
+            navigate("/signin")
+        } toast(response?.message, {
+            position: "top-right",
+            type: response?.status && response?.statuscode === 200 ? "success" : "error",
+        });
+    } catch (error) {
+        toast(error?.message || "Sorry, We are unable to reach server!", {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    store.dispatch(setLoading(false))
+}
+
 function* watchSessionStateSaga() {
     yield takeLeading(getRegistrationOtpRequest.type, getRegistrationOtp);
     yield takeLeading(verifyRegistrationOtpRequest.type, veriyRegistrationOtp);
     yield takeLeading(setResetPasswordRequest.type, setResetPasswordAndCreateAccount);
     yield takeLeading(setAccountCreateConfirmationRequest.type, setAccountCreateConfirmation);
-    yield takeLeading(loginRequest.type, userLoginRequest)
-    yield takeLeading(updatePasswordFromForgotPasswrodRequest.type, updatePassword)
+    yield takeLeading(loginRequest.type, userLoginRequest);
+    yield takeLeading(updatePasswordFromForgotPasswrodRequest.type, updatePassword);
+    yield takeLeading(setResetAdminPasswordRequest.type, setResetAdminPassword)
 }
 
 export default watchSessionStateSaga;

@@ -16,6 +16,10 @@ const initialState = {
     isSessionExpiring: false,
     countDown: 0,
     timerColor: "",
+    authUser: "",
+    isAdminFirstLogin: false,
+    adminTempPassword: "",
+    selectedConvoSessionId: null
 };
 
 const sessionStoreSlice = createSlice({
@@ -65,6 +69,7 @@ const sessionStoreSlice = createSlice({
             state.menuData = action?.payload?.menuData
             state.authToken = action?.payload?.authToken
             state.sessionId = action?.payload?.sessionId
+            state.authUser = action?.payload?.authUser
         },
         logoutRequest: (state) => {
             state.isAuthenticated = false
@@ -89,6 +94,17 @@ const sessionStoreSlice = createSlice({
         setTimerColor: (state, action) => {
             state.timerColor = action.payload;
         },
+        setAdminFirstLoginRequest: (state, action) => {
+            state.isAdminFirstLogin = action.payload?.isAdminFirstLogin
+            state.adminTempPassword = action?.payload?.adminTempPassword
+        },
+        setResetAdminPasswordRequest: () => { },
+        setAuthSessionIdRequest: (state, action) => {
+            state.sessionId = action?.payload
+        },
+        setSelectedConversationSessionIdForEducationalBot: (state, action) => {
+            state.selectedConvoSessionId = action?.payload
+        }
     },
 });
 
@@ -111,6 +127,11 @@ export const {
     setSessionExpiring,
     setCountDown,
     setTimerColor,
+    setAdminFirstLoginRequest,
+    setResetAdminPasswordRequest,
+    setResetAdminPasswordResponse,
+    setAuthSessionIdRequest,
+    setSelectedConversationSessionIdForEducationalBot
 } = actions;
 
 export default reducer;

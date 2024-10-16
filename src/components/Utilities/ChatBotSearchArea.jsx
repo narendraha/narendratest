@@ -1,27 +1,78 @@
 import React, { useEffect, useRef, useState } from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) {
   const inputRef = useRef();
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
 
-  const [inputValue, setInputValue] = useState(""); // chat search field(user entered value) stored in this state
-  const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show Send button if input is not empty else Hide it.
+  const [inputValue, setInputValue] = useState(""); // user input
+  const [isShowSendBtn, setIsShowSendBtn] = useState(false); // Show send button if input is not empty
+  const [spechBtn, setSpechBtn] = useState(true); // Speech start and stop icon handling
 
-  useEffect(() => { inputRef.current?.focus() });
+  useEffect(() => {
+    inputRef.current?.focus();
+    return () => {
+      resetTranscript();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (transcript) {
+      setInputValue(prevInput => prevInput + transcript);
+      if (inputValue + transcript) {
+        setIsShowSendBtn(true);
+      }
+    }
+  }, [transcript]);
 
   const handleInputChange = (e) => {
-    setIsShowSendBtn(true)
-    setInputValue(e);
-  }
+    const value = e.target.value;
+    setInputValue(value);
+    if (value.trim() !== "") {
+      setIsShowSendBtn(true);
+    } else {
+      setIsShowSendBtn(false);
+    }
+  };
 
   const getIconClassName = () => {
-    return isShowSendBtn ? "icon_alfred_sendmsg h-auto" : "icon_alfred_speech h-auto"
-  }
+    let className = isShowSendBtn
+      ? "icon_alfred_sendmsg h-auto"
+      : spechBtn && !listening
+        ? "icon_alfred_speech h-auto"
+        : listening && "icon_alfred_audiostop pointer text-danger mt-0";
+    let concatDisableclass = isInputDisable ? className?.concat(" disabled pointer") : className
+    return concatDisableclass;
+  };
 
   const handleIconSubmit = () => {
-    if (isShowSendBtn)
-      handleFormSubmit(inputValue)
-    handleInputChange("")
-  }
+    if (isShowSendBtn) {
+      handleFormSubmit(inputValue);
+      setIsShowSendBtn(false); // Hide the send button after submission
+    } else {
+      if (spechBtn) {
+        SpeechRecognition.startListening();
+      } else {
+        SpeechRecognition.stopListening();
+      }
+      setSpechBtn(!listening); // Toggle the speech button status
+    }
+    setInputValue(""); // Clear the input after submission
+  };
+
+  const clearInputValue = () => {
+    setInputValue("");
+    resetTranscript();
+    setIsShowSendBtn(false);
+  };
+
+  const handleBackspace = (e) => {
+    if (e?.key === "Backspace" && inputValue.length === 0) {
+      resetTranscript(); // If no text is in input, reset transcript
+      setIsShowSendBtn(false);
+      setSpechBtn(true);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -32,27 +83,23 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
           placeholder="Ask a question about Atrial Fibrillation"
           name="message"
           value={inputValue}
-          onChange={(e) => handleInputChange(e?.target?.value)}
-          disabled={isInputDisable} //Disabled once input value is submitted
+          onChange={handleInputChange}
+          disabled={isInputDisable}
           ref={inputRef}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              setInputValue("")
-              e.preventDefault(); // Prevent default form submission behavior
-              handleFormSubmit(e); // Call handleFormSubmit when Enter is pressed
+            if (e?.key === "Enter") {
+              e.preventDefault();
+              handleFormSubmit(inputValue);
+              setInputValue("");
+              setIsShowSendBtn(false); // Hide send button after submission
             }
+            handleBackspace(e); // Ensure backspace works
           }}
         />
-        {isShowSendBtn && inputValue &&
-          <i
-            className="icon_alfred_close"
-            onClick={() => setInputValue("")}
-          />
-        }
-        <i
-          className={getIconClassName()}
-          onClick={handleIconSubmit}
-        />
+        {isShowSendBtn && inputValue && (
+          <i className="icon_alfred_close" onClick={clearInputValue} />
+        )}
+        <i className={getIconClassName()} onClick={handleIconSubmit} />
       </form>
     </React.Fragment>
   );

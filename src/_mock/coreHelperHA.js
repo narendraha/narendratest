@@ -14,8 +14,9 @@ let controleErrors = {
     "min": "Minimum {min} {type} are required",
     "max": "Max {max} {type} are allowed",
     "alphasp": "Allow only alpha and {spacial} but not allowed Space",
-    "alphaspace": "Allow only alpha Characters ",
-    "alphaNumeric": "Allow only alpha numercis"
+    "alphaspace": "Allow only alpha characters ",
+    "alphaNumeric": "Allow only alpha numercis",
+    "alphaspaceSpl": "Allow only alpha and {special} characters "
 }
 
 var N = (e, s, t) => new Promise((a, n) => {
@@ -63,7 +64,8 @@ export var customContentValidation = (errorMsg, pattenObj, max = 0, min = 0) => 
 
     return (errorMsg !== "" && (reuiredF = reuiredF.required(errorMsg)),
         min !== 0 && (minV = controleErrors.min.replace("{min}", min + "").replace("{type}", pattenObj?.patternType === "number" ? 'numbers' : 'characters'), reuiredF = reuiredF.min(min, minV).trim(minV)),
-        max !== 0 && (reuiredF = reuiredF.max(max, controleErrors.max.replace("{max}", max + ""))),
+
+        max !== 0 && (reuiredF = reuiredF.max(max, controleErrors.max.replace("{max}", max + "").replace("{type}", pattenObj?.patternType === "number" ? 'numbers' : 'characters'))),
         pattenObj && (
             customPattern = pattenObj.patternType ? getCustomPatten(pattenObj.patternType) : "",
             customPattern && (

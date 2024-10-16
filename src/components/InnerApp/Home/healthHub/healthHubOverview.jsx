@@ -30,60 +30,121 @@ export const HealthHubOverview = () => {
                             <tbody>
                                 <tr>
                                     <td className="w-25">Week 1</td>
-                                    <td><strong>General content about Atrial Fibrilliation</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                    <td><strong>Understanding AF: causes, symptoms, diagnosis and quick overview of treatment.</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand how atrial fibrillation starts, and the symptoms and main pillars of treatment of atrial fibrillation</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 2</td>
-                                    <td><strong>Antiarrhythmic medication(Rhythm Control)</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                    <td><strong>Rate Control Medications: types how they work, and side effects.</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand role of rate control in AF treatment and types of medications</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 3</td>
-                                    <td><strong>Information about Ablation(Rhythm Control)</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
+                                    <td><strong>Rhythm Control with Antiarrhythmic Medications</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand role of rhythm control and purpose of medications</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 4</td>
-                                    <td><strong>Blood Thinners(Stroke Prevention)</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                    <td><strong>Rhythm Control with Catheter Ablation</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand ablation, risks of procedure, and what to look for after procedure</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 5</td>
-                                    <td><strong>Left Atrial Appendage Occlusion(Stroke Prevention)</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                    <td><strong>Rhythm Control with Surgical Ablation</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand surgical ablation and differences from catheter ablation</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="w-25">Week 6</td>
-                                    <td><strong>Lifestyle</strong>
-                                        <ol type="1" className="mb-0">
-                                            <li className="mb-1">Introduction</li>
-                                            <li className="mb-1">Content</li>
-                                            <li className="mb-1">Videos</li>
+                                    <td><strong>Rhythm Control with Electrical Cardioversion</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand what DCCV is, purpose of procedure, how it differs from ablation</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 7</td>
+                                    <td><strong>Stroke Prevention</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Learn various aspects of stroke prevention in atrial fibrillation</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 8</td>
+                                    <td><strong>Importance of Lifestyle modifications</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand importance of lifestyle modifications to reduce recurrence of afib and improve overall burden.</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 9</td>
+                                    <td><strong>Importance of  Risk factors</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Learn various aspects of managing modifiable risk factors in atrial fibrillation</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 10</td>
+                                    <td><strong>Managing symptoms: dealing with fatigue, palpitations, and stress</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Learn how to manage symptoms of afib</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 11</td>
+                                    <td><strong>AF treatment complications and how to prevent them</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Learning overview of complications that can occur in atrial fibrillation treatment plans and their prevention.</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="w-25">Week 12</td>
+                                    <td><strong>Follow-up care, summarization and long-term management</strong>
+                                        <ol type="1" className="mb-0 mt-1">
+                                            <li className="mb-1">Understand the need for continued follow-up care and role of long-term management in treatment of afib</li>
+                                            <li className="mb-1">Activities</li>
+                                            <li className="mb-1">Quiz</li>
                                         </ol>
                                     </td>
                                 </tr>

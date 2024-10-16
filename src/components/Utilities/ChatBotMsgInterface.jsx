@@ -51,6 +51,7 @@ const ChatBotMsgInterface = ({ props }) => {
   })
 
   const chatBotLoadingIndex = useSelector((state) => state?.utilityCallFunctionSlice?.chatBotLoadingIndex);
+  const actionData = useSelector((state) => state?.utilityCallFunctionSlice?.actionData);
   const isUser = chatHistory?.role === getRole.USER;
   const isCurrentLoadingIndex = chatBotLoadingIndex === index
 
@@ -138,7 +139,8 @@ const ChatBotMsgInterface = ({ props }) => {
   let getTextFromHtmlContent = getParsedTextFromHtml(chatHistory?.content);
 
   const shareActionHandle = (i, toatlHistory, status) => {
-    setShareModelObj({ isModelOpen: status, alfredValue: toatlHistory?.[i]?.content, userValue: toatlHistory?.[i - 1]?.content })
+    // setShareModelObj({ isModelOpen: status, alfredValue: toatlHistory?.[i]?.content, userValue: toatlHistory?.[i - 1]?.content })
+    dispatch(setActionTypeAndActionData({ actionData: { isModelOpen: status, alfredValue: toatlHistory?.[i]?.content, userValue: toatlHistory?.[i - 1]?.content } }))
   }
 
   // text to speech
@@ -191,7 +193,7 @@ const ChatBotMsgInterface = ({ props }) => {
               <ChatBotFeedBackModal props={{ setActionTypesForPrompt, handlePromptTabs, actionType }} />}
 
             {/* sharemodel */}
-            {shareModelObj?.isModelOpen && <ChatBotShareModal props={{ shareActionHandle, shareModelObj }} />}
+            {actionData?.isModelOpen && <ChatBotShareModal props={{ shareActionHandle, actionData }} />}
           </>)}
         </Col>
       </Row>

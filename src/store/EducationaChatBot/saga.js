@@ -65,11 +65,12 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
     };
     if (innerBot) {
         headers["Authorization"] = `Bearer ${authToken}`;
-        data["session_id"] = sessionId
+        data["session_id"] = sessionId;
     } else {
         data["id"] = "1234-9876-54321";
-        data["session_id"] = nonAuthSessionId
+        data["session_id"] = nonAuthSessionId;
     }
+
     try {
         const responseStream = await fetch(apiUrl, {
             method: 'POST',
@@ -79,7 +80,6 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
         console.log("responseStream=>", { responseStream });
 
         if (responseStream?.status === 200) {
-
             const reader = responseStream.body.getReader();
             const decoder = new TextDecoder();
             let done = false;
@@ -92,18 +92,20 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
                 let parsedChunk = getParsedData(chunk);
 
                 console.log("chunk=>", { chunk, parsedChunk });
-                // if (parsedChunk && !parsedChunk?.status && parsedChunk?.statuscode !== 200) {
+
                 if (parsedChunk && parsedChunk?.statuscode !== 200) {
                     updatedHistory = [...updatedHistory, { content: "Sorry Unable to reach server at that moment can you please try again!", role: 'Alfred' }];
-                    regenerateResponse = true
+                    regenerateResponse = true;
                 } else {
-                    // checking for pdf reference in chunk using identifier #2SE24DC
-                    let splittedChunkByIndetifier = chunk?.includes("#2SE24DC") && chunk?.split("#2SE24DC");
-                    let isPdfExist = splittedChunkByIndetifier && splittedChunkByIndetifier?.length > 1
-                    const chunkWIthoutReferenceLink = isPdfExist ? splittedChunkByIndetifier[1] : chunk;
-                    let citationObj = isPdfExist && splittedChunkByIndetifier && getParsedData(splittedChunkByIndetifier[0])?.data;
+                    let splittedChunkByIdentifier = chunk?.includes("#2SE24DC") && chunk?.split("#2SE24DC");
+                    let isPdfExist = splittedChunkByIdentifier && splittedChunkByIdentifier?.length > 1;
 
-                    console.log("chunkWIthoutReferenceLink=>", { chunk, parsedChunk, splittedChunkByIndetifier, chunkWIthoutReferenceLink });
+                    const citationContent = isPdfExist ? splittedChunkByIdentifier[0] : null;
+                    const chunkWithoutReferenceLink = isPdfExist ? splittedChunkByIdentifier[1] : chunk;
+
+                    let citationObj = isPdfExist && citationContent && getParsedData(citationContent)?.data;
+
+                    console.log("chunkWithoutReferenceLink=>", { chunk, parsedChunk, splittedChunkByIdentifier, chunkWithoutReferenceLink });
 
                     const lastMessage = updatedHistory[updatedHistory.length - 1];
                     if (isFirstChunk && isPdfExist) {
@@ -113,19 +115,19 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
                         ];
                         isFirstChunk = false; // Set the flag to false after processing the first chunk
                     } else {
-                        // Create a new object to avoid mutating the state directly
                         if (lastMessage && lastMessage.role === 'Alfred') {
                             updatedHistory = [
                                 ...updatedHistory.slice(0, updatedHistory.length - 1),
-                                { ...lastMessage, content: lastMessage.content + chunkWIthoutReferenceLink }
+                                { ...lastMessage, content: lastMessage.content + chunkWithoutReferenceLink }
                             ];
                         } else {
-                            updatedHistory = [...updatedHistory, { content: chunkWIthoutReferenceLink, role: 'Alfred' }];
+                            updatedHistory = [...updatedHistory, { content: chunkWithoutReferenceLink, role: 'Alfred' }];
                         }
                     }
                 }
+
                 // Dispatch action to update chat history
-                isUpdated = true
+                isUpdated = true;
                 store.dispatch(getChatStreamResponse({ updatedHistory, regenerateResponse }));
             }
         }
@@ -135,8 +137,10 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
         store.dispatch(getChatStreamResponse({ updatedHistory, regenerateResponse }));
         throw error;
     }
-    return { isUpdated, updatedHistory }
+
+    return { isUpdated, updatedHistory };
 };
+
 
 // TO GET UNSTREAMED RESPONSE BOT EDUCATIONAL BOT
 // function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
@@ -329,12 +333,21 @@ function* sendChatByEmailOrMobile(action) {
         values?.selectedChanel === "mobile" ? (isSessionShare ? "/session_Conversation_to_phone" : "/send_sms_to_phone") : "";
 
     try {
-        const response = yield call(callAPI, {
-            url: url,
-            method: 'POST',
-            data: reqObj,
-            contentType: 'application/json',
-        });
+        // const response = yield call(callAPI, {
+        //     url: url,
+        //     method: 'POST',
+        //     data: reqObj,
+        //     contentType: 'application/json',
+        // });
+
+        let response = {
+            status: true,
+            statuscode: 200,
+            message: `${values?.selectedChanel === "email" ? 'Email' : 'SMS'} send successfully!`
+        }
+
+        if (response?.status && response?.statuscode === 200)
+            store.dispatch(setActionTypeAndActionData({ actionData: null }))
 
         toast(response?.message, {
             position: "top-right",

@@ -20,8 +20,9 @@ import {
 // LIKE DISLIKE CHAT RESPONSE
 function* updateChatPreference(action) {
     let feedBackAlert = false;
+    let feedBackMessage = "Glad you liked this answer!"
     const authUser = yield select(state => state.sessionStoreSlice?.authUser);
-    let url = authUser?.role === loginRoles.PATIENT ? '/preference_chat' : '/preference_chat_admin';
+    let url = authUser?.role === loginRoles.PATIENT ? '/preference_chat' : authUser?.role === loginRoles.ADMIN ? '/preference_chat_admin' : '/preference_chat_unknown';
 
     try {
 
@@ -31,8 +32,9 @@ function* updateChatPreference(action) {
             data: action?.payload,
             contentType: 'application/json',
         });
+        console.log("updateChatPreference_response=>", response)
         if (response?.status && response?.statuscode === 200)
-            feedBackAlert = true
+            feedBackAlert = action?.payload?.preference
         else
             toast(response?.message, {
                 position: "top-right",
@@ -45,7 +47,7 @@ function* updateChatPreference(action) {
         //     type: "error",
         // });
     }
-    yield put(updateChatPreferenceResponse(feedBackAlert))
+    yield put(updateChatPreferenceResponse({ feedBackAlert, feedBackMessage }))
 }
 
 
@@ -229,6 +231,7 @@ function* getEducationalBotChatStream(action) {
 function* setChatFeedBackComment(action) {
 
     let feedBackAlert = false;
+    let feedBackMessage = "Thanks for your feedback!"
     let { comment, botResponse } = action?.payload;
 
     let reqObj = {
@@ -237,7 +240,7 @@ function* setChatFeedBackComment(action) {
     }
 
     const authUser = yield select(state => state.sessionStoreSlice?.authUser);
-    let url = authUser?.role === loginRoles.PATIENT ? '/chat_comment' : '/chat_comment_admin';
+    let url = authUser?.role === loginRoles.ADMIN ? '/chat_comment_admin' : '/chat_comment';
 
     try {
         const response = yield call(callAPI, {
@@ -245,22 +248,24 @@ function* setChatFeedBackComment(action) {
             method: 'POST',
             data: reqObj,
             contentType: 'application/json',
+            intenalToken: authUser?.role === loginRoles.PATIENT ? null : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50X2lkIjoiMTIzNC05ODc2LTU0MzIxIn0.dX4_jwAwsw6FHJeQicHp1NmOWVfkLzYa5QujP8Cit8g"
         });
+        console.log("setChatFeedBackComment_response=>", response);
         if (response?.status && response?.statuscode === 200) {
             feedBackAlert = true
             store.dispatch(setActionTypeAndActionData(getActionTypes.UNSELECT))
-        }
-        toast(response?.message, {
-            position: "top-right",
-            type: response?.status && response?.statuscode === 200 ? "success" : "error",
-        });
+        } else
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {
             position: "top-right",
             type: "error",
         });
     }
-    yield put(setChatFeedBackCommentResponse(feedBackAlert))
+    yield put(setChatFeedBackCommentResponse({ feedBackAlert, feedBackMessage }))
 }
 
 // TO GET ALL THE CONVERSATION OF EDUCATION BOT 

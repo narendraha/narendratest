@@ -34,7 +34,7 @@ const ChatBotMsgInterface = ({ props }) => {
     getProfileDetails,
     isInputDisable,
     actionType,
-    feedBackAlert,
+    // feedBackAlert,
     toatlHistory
   } = props;
 
@@ -52,6 +52,9 @@ const ChatBotMsgInterface = ({ props }) => {
 
   const chatBotLoadingIndex = useSelector((state) => state?.utilityCallFunctionSlice?.chatBotLoadingIndex);
   const actionData = useSelector((state) => state?.utilityCallFunctionSlice?.actionData);
+  const feedBackAlert = useSelector((state) => state?.educationalChatBotSlice?.feedBackAlert); // temprory fix
+  const feedBackMessage = useSelector((state) => state?.educationalChatBotSlice?.feedBackMessage); // temprory fix
+
   const isUser = chatHistory?.role === getRole.USER;
   const isCurrentLoadingIndex = chatBotLoadingIndex === index
 
@@ -185,8 +188,8 @@ const ChatBotMsgInterface = ({ props }) => {
               <DislikePrompt props={{ setActionTypesForPrompt, promptdislikeQuestions, handlePromptTabs }} />}
 
             {/* Feedback alert */}
-            {selectedIcons[index]?.reaction === 'like' && feedBackAlert &&
-              <Alert color="success" className='mt-2 d-inline-flex align-items-center'><i className="icon_alfred_smile_emoji me-1" style={{ fontSize: "15px" }}></i>Glad you liked this answer!</Alert>}
+            {(['like', 'dislike']?.includes(selectedIcons?.[index]?.reaction) && feedBackAlert) &&
+              <Alert color="success" className='mt-2 d-inline-flex align-items-center'><i className="icon_alfred_smile_emoji me-1" style={{ fontSize: "15px" }}></i>{feedBackMessage}</Alert>}
 
             {/* Feedbackmodal */}
             {selectedIcons[index]?.isPromptOpen && actionType === getActionTypes.CHATCOMMETOPEN &&

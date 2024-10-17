@@ -64,7 +64,7 @@ const AdminEducationBot = (props) => {
         }
     }, []);
 
-    console.log("isPdfViewExpandisPdfViewExpand", isPdfViewExpand)
+    console.log("isPdfViewExpandisPdfViewExpand", { selectedConvoSessionId })
 
     return (
         <React.Fragment>

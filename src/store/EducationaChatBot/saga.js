@@ -212,8 +212,8 @@ function* getEducationalBotChatStream(action) {
             });
             console.log("dumpBotChatResponse", { nonAuthSessionId, reqObj, dumpBotChatResponse });
 
-            if (dumpBotChatResponse?.status && dumpBotChatResponse?.statuscode === 200)
-                // to sync conversation
+            if (dumpBotChatResponse?.status && dumpBotChatResponse?.statuscode === 200 && authUser?.role === loginRoles.ADMIN)
+                // to sync conversation for admin
                 store.dispatch(getEducationalBotConversationRequest({ isInternalCall: true }));
             else
                 console.error("error=>", dumpBotChatResponse?.message);

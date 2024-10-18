@@ -34,7 +34,7 @@ export const ApproveUsersTableView = ({ users }) => {
                     <>
                         <td>{users?.updated_by || "N/A"}</td>
                         <td>{users?.updated_date || "N/A"}</td>
-                        <td>{users?.remark || "N/A"}</td>
+                        {!checkStatus(getAdminUserStatus.APPROVE) && <td>{users?.remark || "N/A"}</td>}
                     </>
                 }
                 <td>

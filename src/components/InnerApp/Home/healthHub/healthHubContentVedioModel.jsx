@@ -40,7 +40,7 @@ export const HealthHubContentVedioMdal = React.memo(() => {
                                                 allowFullScreen
                                                 rel="noreferrer"
                                                 style={{ borderRadius: "8px" }}
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
+                                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
                                             ></iframe>
                                         </CardBody>
                                     </Card>

@@ -38,7 +38,7 @@ const AdminEducationBot = (props) => {
 
     const handleFormSubmit = (e) => {
         let inputValue = e?.target?.value || e;
-        if (!inputValue.trim()) return; // Do not submit empty input
+        if (inputValue && !inputValue.trim()) return; // Do not submit empty input
         dispatch(setInputDisableRequest(true))
         dispatch(setChatHistoryRequest({ content: inputValue, role: 'User' }))
         dispatch(getChatStreamRequest({ inputValue, innerBot: true }))

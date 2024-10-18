@@ -66,7 +66,8 @@ function* userStatusUpdate(action) {
         if (response?.status && response?.statuscode === 200) {
             yield call(getUsersListWithStatus, { activeTab })
             yield put(setRemarkOpenModel({ isRemakrOpen: false, status: null }))
-            setFieldValue('isRearkEnter', false)
+            if (remark)
+                setFieldValue('isRearkEnter', false)
         }
         toast(response?.message, {
             position: "top-right",

@@ -4,7 +4,7 @@ const initialState = {
     chatHistory: [],
     isInputDisable: false,
     isChatBotLoading: false,
-    regenerateResponse: false,
+    regenerateResponse: true,
     feedBackAlert: false,
     feedBackMessage: "",
     isMenuExpand: true,
@@ -65,7 +65,10 @@ const educationalChatBotSlice = createSlice({
         setSelectedConversationSessionId: (state, action) => {
             state.selectedConvoSessionId = action?.payload
         },
-        sendChatByEmailOrMobileRequest: () => { }
+        sendChatByEmailOrMobileRequest: () => { },
+        resetRegenerateResponse: (state) => {
+            state.regenerateResponse = false
+        }
     }
 });
 
@@ -81,7 +84,8 @@ export const {
     setMenuOrPdfExpend,
     getEducationalBotConversationRequest, getEducationalBotConversationResponse,
     setSelectedConversationSessionId,
-    sendChatByEmailOrMobileRequest
+    sendChatByEmailOrMobileRequest,
+    resetRegenerateResponse,
 } = actions;
 
 export default reducer;

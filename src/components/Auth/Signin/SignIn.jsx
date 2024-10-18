@@ -6,13 +6,15 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FormGroup, Label, UncontrolledTooltip } from "reactstrap";
 import * as Yup from 'yup';
-import { getAuthRoute, getRegForm, pageTitle } from "../../../_mock/helperIndex";
-import apple from '../../../images/apple.svg';
+import { getAuth, GoogleAuthProvider, OAuthProvider } from "firebase/auth"; // Import Firebase auth functions
+import app from '../../Firebase/googleFirebase'; // Import your Firebase config
 import google from '../../../images/google.svg';
+import apple from '../../../images/apple.svg';
 import handwave from '../../../images/handwave.png';
 import { loginRequest, setActiveRegistrationForm, setAuthRoutes } from "../../../store/SessionStore/slice";
-import { appleAuth, appleAuthProvider } from '../../Firebase/appleFirebase';
-import { googleAuth, googleAuthprovider } from "../../Firebase/googleFirebase";
+import { getRegForm, getAuthRoute, pageTitle } from "../../../_mock/helperIndex";
+
+const auth = getAuth(app); // Get Firebase auth instance
 
 export const Signin = () => {
   pageTitle('Signin');
@@ -20,26 +22,33 @@ export const Signin = () => {
   const dispatch = useDispatch();
 
   const signInToGooglehandle = async () => {
-    await signInWithPopup(googleAuth, googleAuthprovider)
-      .then((data) => {
-        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
-      })
-      .catch((error) => { });
-  }
-
-  const signUpAndForgotPassHandle = (activeForm, isRegister = false) => {
-    navigate(activeForm)
-    dispatch(setAuthRoutes(activeForm))
-    if (isRegister)
-      dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION))
-  }
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      dispatch(loginRequest({ values: user, navigate, isGoogleOrAppleLogin: true }));
+    } catch (error) {
+      console.error("Error during Google sign-in: ", error);
+    }
+  };
 
   const signInToApplehandle = async () => {
-    await signInWithPopup(appleAuth, appleAuthProvider)
-      .then((data) => {
-        dispatch(loginRequest({ values: data?.user, navigate, isGoogleOrAppleLogin: true }))
-      })
-      .catch((error) => { });
+    const provider = new OAuthProvider('apple.com');
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      dispatch(loginRequest({ values: user, navigate, isGoogleOrAppleLogin: true }));
+    } catch (error) {
+      console.error("Error during Apple sign-in: ", error);
+    }
+  };
+
+  const signUpAndForgotPassHandle = (activeForm, isRegister = false) => {
+    navigate(activeForm);
+    dispatch(setAuthRoutes(activeForm));
+    if (isRegister) {
+      dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION));
+    }
   };
 
   return (
@@ -62,21 +71,18 @@ export const Signin = () => {
           password: Yup.string()
             .max(50, "Max 50 characters are allowed")
             .required("Password is required")
-        })
-        }
+        })}
         onSubmit={(values) => {
-          console.log("Submit=>", values)
-          dispatch(loginRequest({ values, navigate }))
+          console.log("Submit=>", values);
+          dispatch(loginRequest({ values, navigate }));
         }}
-      >{({ values, setFieldValue }) => (
-        <>
+      >
+        {({ values, setFieldValue }) => (
           <Form className="wflexLayout">
             <div className="al_homemenu" id="backtohome" onClick={() => navigate("/")}>
               <i className="icon_alfred_home"></i>
               <UncontrolledTooltip
-                modifiers={[
-                  { preventOverflow: { boundariesElement: "window" } },
-                ]}
+                modifiers={[{ preventOverflow: { boundariesElement: "window" } }]}
                 placement="left"
                 target="backtohome"
               >
@@ -101,10 +107,7 @@ export const Signin = () => {
                     </span>
                   </span>
                 </h5>
-                <p
-                  className="cs_light text-grey text-italic mb-4"
-                  style={{ fontFamily: "STIX Two Text" }}
-                >
+                <p className="cs_light text-grey text-italic mb-4" style={{ fontFamily: "STIX Two Text" }}>
                   "Let's take your wellness journey to new heights"
                 </p>
 
@@ -163,10 +166,7 @@ export const Signin = () => {
                     >
                       Forgot password?
                     </Link>
-                    <button
-                      type="submit"
-                      className="al_login_button mt-3"
-                    >
+                    <button type="submit" className="al_login_button mt-3">
                       Sign in
                     </button>
                     <div className="mt-3 text-medium">
@@ -198,7 +198,8 @@ export const Signin = () => {
                   />
                   Sign in / Sign up With Google
                 </button>
-                <button type="button"
+                <button
+                  type="button"
                   className="al_signinbuttons"
                   onClick={signInToApplehandle}
                 >
@@ -213,9 +214,8 @@ export const Signin = () => {
               </div>
             </div>
           </Form>
-        </>
-      )}
+        )}
       </Formik>
-    </React.Fragment >
-  )
-}
+    </React.Fragment>
+  );
+};

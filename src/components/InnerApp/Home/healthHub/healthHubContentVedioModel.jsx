@@ -27,11 +27,12 @@ export const HealthHubContentVedioMdal = React.memo(() => {
                 <ModalBody className="wflexLayout p-0">
                     <div className='wflexScroll px-4 my-3'>
                         <Row>
-                            {healthHubVedioContent && healthHubVedioContent?.map((embededUrl) => (
-                                <Col lg="4" sm="6" className="mb-3">
+                            {healthHubVedioContent && healthHubVedioContent?.map((embededUrl, index) => (
+                                <Col lg="4" sm="6" className="mb-3" key={index}>
                                     <Card className="al_cardbg mb-0">
                                         <CardBody className="p-0">
                                             <iframe
+                                                id={index}
                                                 width="100%"
                                                 height="150"
                                                 src={embededUrl}

@@ -4,7 +4,7 @@ const initialState = {
     chatHistory: [],
     isInputDisable: false,
     isChatBotLoading: false,
-    regenerateResponse: true,
+    regenerateResponse: false,
     feedBackAlert: false,
     feedBackMessage: "",
     isMenuExpand: true,

@@ -49,12 +49,13 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
       handleFormSubmit(inputValue);
       setIsShowSendBtn(false); // Hide the send button after submission
     } else {
-      if (spechBtn) {
-        SpeechRecognition.startListening();
-      } else {
+      if (listening) {
         SpeechRecognition.stopListening();
+        setSpechBtn(true); // Reset to initial speech button state when stopped
+      } else {
+        SpeechRecognition.startListening();
+        setSpechBtn(false);
       }
-      setSpechBtn(!listening); // Toggle the speech button status
     }
     setInputValue(""); // Clear the input after submission
   };
@@ -63,6 +64,7 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
     setInputValue("");
     resetTranscript();
     setIsShowSendBtn(false);
+    setSpechBtn(true);
   };
 
   const handleBackspace = (e) => {
@@ -72,6 +74,14 @@ export default function ChatBotSearchArea({ handleFormSubmit, isInputDisable }) 
       setSpechBtn(true);
     }
   };
+
+
+  useEffect(() => {
+    if (inputValue?.length === 0) {
+      setIsShowSendBtn(false);
+      setSpechBtn(true);
+    }
+  }, [inputValue])
 
   return (
     <React.Fragment>

@@ -17,6 +17,9 @@ import {
     updateChatPreferenceResponse
 } from "./slice";
 
+
+let edBotStreamAPiBaseUrl = process.env.REACT_APP_NODE_ENV === "test" ? process.env.REACT_APP_HALF_EDUCATIONA_BOT_TESTING_STRREAMING_API_BASE_URL : process.env.REACT_APP_HALF_EDUCATIONA_BOT_STRREAMING_API_BASE_URL;
+
 // LIKE DISLIKE CHAT RESPONSE
 function* updateChatPreference(action) {
     let feedBackAlert = false;
@@ -61,7 +64,7 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
     const data = {
         message: payload || "",
     };
-    const apiUrl = `https://api.stream.helloalfred.ai/${innerBot ? `educational_bot` : `educational_bot_home`}`;
+    const apiUrl = `${edBotStreamAPiBaseUrl}/${innerBot ? `educational_bot` : `educational_bot_home`}`;
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -193,7 +196,7 @@ function* getEducationalBotChatStream(action) {
         let { isUpdated, updatedHistory } = yield call(fetchChatStream, (inputValue || action?.payload), prevChatHistory, innerBot, authToken, convoSessionId, nonAuthSessionId);
 
         if (isUpdated) {
-            let URL = `https://api.stream.helloalfred.ai/${innerBot
+            let URL = `${edBotStreamAPiBaseUrl}/${innerBot
                 ? (authUser.role === loginRoles.PATIENT ? `educational-bot-answer-dump` : `educational-bot-answer-dump-admin`)
                 : `educational-bot-home-answer-dump`}`;
 

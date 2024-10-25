@@ -4,6 +4,7 @@ import ChatFemaleuser from "../images/femaleuserImg.jpg";
 import nodata from "../images/nodata.svg";
 import nosearchdata from "../images/nosearchdata.svg";
 import ChatMaleuser from "../images/userprofile.jpg";
+import moment from "moment";
 
 // gender options 
 export const getGenderoptions = [
@@ -338,3 +339,11 @@ export const getSplitContentIntoChunks = (htmlContent, wordsPerChunk = 200) => {
         return { __html: chunk }; // Return chunks as HTML again
     });
 };
+
+
+// get dateformat of MM/DD/yyyy
+export const getFormattedDate = (date) => {
+    if (!date) return "";
+
+    return moment(date).isValid() ? moment(date).format("MM/DD/yyyy") : date
+}

@@ -10,10 +10,9 @@ export const ApplicationTutorialInfo = React.memo(() => {
 
     return (
         <React.Fragment>
-            {getCurrentComponent && <div className='al_menu_info'>
-                <small> {getCurrentComponent?.header} Tutorial | Welcome to HelloAlfred.ai</small>
-                <a href={getCurrentComponent?.youtubeLink} rel="" target="_blank" className="d-flex"> <i className='icon_alfred_details' /></a>
-            </div>}
+            {getCurrentComponent && 
+                <a href={getCurrentComponent?.youtubeLink} rel="" target="_blank" className="al_menu_info"><small> {getCurrentComponent?.header} Tutorial | Welcome to HelloAlfred.ai</small> <i className='icon_alfred_details' /></a>
+            }
         </React.Fragment >
     )
 });

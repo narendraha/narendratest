@@ -29,7 +29,7 @@ export default function MainLayout() {
                     <SideNav isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
                     <div className='al_right_container'>
                         <Topbar isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
-                        <div classname='al_menu_info'><small>Health Hub Tutorial | Welcome to HelloAlfred.ai</small><i className='icon_alfred_details'></i></div>          
+                        <div className='al_menu_info'><small>Health Hub Tutorial | Welcome to HelloAlfred.ai</small><i className='icon_alfred_details'></i></div>          
                         <main className='al_main_container'>
                             <Outlet />
                         </main>

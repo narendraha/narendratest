@@ -53,7 +53,8 @@ export const getActivetab = {
     EXPTMONITORING: "expert_monitoring",
     SYMPTOMSLIST: "list_your_symptoms",
     LIFEGOAL: "lifestyle_goals",
-    ORMANAGEMENT: "optimal_risk_managemment"
+    ORMANAGEMENT: "optimal_risk_managemment",
+    ACCREGISTRATION: "register",
 }
 
 // custom pattens for custom validations
@@ -347,3 +348,13 @@ export const getFormattedDate = (date) => {
 
     return moment(date).isValid() ? moment(date).format("MM/DD/yyyy") : date
 }
+
+// HelloAlfred tutorial vedios and headers 
+export const getHATutAndHeader = [
+    { id: 0, youtubeLink: "https://youtu.be/sxkq26E5KGA?si=SrTekvN6wvn9Cioy", header: "Health Hub", headerKey: getActivetab.HEALTHHUB },
+    { id: 1, youtubeLink: "https://youtu.be/2MOa-NqZxL4?si=cU1WpIiK8-WbwDDY", header: "Expert Monitoring", headerKey: getActivetab.EXPTMONITORING },
+    { id: 2, youtubeLink: "https://youtu.be/M_elKj1Cl1g?si=zPh2vTqoujMAKz84", header: "List Your Symptoms", headerKey: getActivetab.SYMPTOMSLIST },
+    { id: 3, youtubeLink: "https://youtu.be/8AHT1vYIcFA?si=29o7I7ytrg3CnnnI", header: "Lifestyle Goals", headerKey: getActivetab.LIFEGOAL },
+    { id: 4, youtubeLink: "https://youtu.be/iqCknsaBeAw?si=-N93SKYhj0IqsOD6", header: "Optimal Risk Management", headerKey: getActivetab.ORMANAGEMENT },
+    { id: 5, youtubeLink: "https://youtu.be/AaV5h4XMLAg?si=7ygrQ89X31F76xk7", header: "Registering an Account", headerKey: getActivetab.ACCREGISTRATION }
+]

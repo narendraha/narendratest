@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getActionTypes, getAdminUserStatus } from '../../../_mock/helperIndex';
+import { getActionTypes, getAdminUserStatus, getFormattedDate } from '../../../_mock/helperIndex';
 import { setRemarkOpenModel, setUserStatusRequest } from '../../../store/ApproveUsers/slice';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import moment from 'moment';
 
 export const ApproveUsersTableView = ({ users }) => {
     const dispatch = useDispatch();
@@ -29,12 +30,12 @@ export const ApproveUsersTableView = ({ users }) => {
                 <td>{users?.email}</td>
                 <td>{users?.gender}</td>
                 <td>{users?.mobile}</td>
-                <td>{users?.dob}</td>
+                <td>{getFormattedDate(users?.dob)}</td>
                 {!checkStatus(getAdminUserStatus.PENDING) &&
                     <>
                         <td>{users?.updated_by || "N/A"}</td>
-                        <td>{users?.updated_date || "N/A"}</td>
-                        <td>{users?.remark || "N/A"}</td>
+                        <td>{getFormattedDate(users?.updated_date) || "N/A"}</td>
+                        {!checkStatus(getAdminUserStatus.APPROVE) && <td>{users?.remark || "N/A"}</td>}
                     </>
                 }
                 <td>

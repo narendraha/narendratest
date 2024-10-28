@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import DropDown from './DropDown';
-import SocialWidget from '../DefaultPages/Widget/SocialWidget';
-import Newsletter from '../DefaultPages/Widget/Newsletter';
+import { getAuthRoute } from '../../_mock/internalJsControl';
+import { setAuthRoutes } from '../../store/SessionStore/slice';
 import IconBoxStyle11 from '../DefaultPages/IconBox/IconBoxStyle11';
 import Spacing from '../DefaultPages/Spacing';
-import { getAuthRoute } from '../../_mock/internalJsControl';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthRoutes } from '../../store/SessionStore/slice';
+import Newsletter from '../DefaultPages/Widget/Newsletter';
+import SocialWidget from '../DefaultPages/Widget/SocialWidget';
+import DropDown from './DropDown';
 
 export default function Header({ logoSrc, variant }) {
   const dispatch = useDispatch();
@@ -31,7 +31,91 @@ export default function Header({ logoSrc, variant }) {
     };
   }, []);
 
-  const homemenuData = useSelector((state) => (state?.sessionStoreSlice?.menuData) || []);
+  const homemenuData = [
+    {
+      moduleId: '1',
+      name: 'Home',
+      link: ''
+    },
+    {
+      moduleId: '5',
+      name: 'About',
+      link: 'about'
+    },
+    {
+      moduleId: '6',
+      name: 'Personomics',
+      link: 'personomics'
+    },
+    {
+      moduleId: '2',
+      name: 'Disease Journey',
+      link: '/affaq',
+      subModules: [
+        { id: "1", name: "AF FAQ's", link: 'affaq' },
+        { id: "2", name: "Symptoms", link: 'symptoms' },
+        {
+          id: "3", name: "Four Pillars of Treatment", link: '',
+          // innerModules: [
+          //   { id: "31", name: "Medications", link: 'medications' },
+          //   { id: "32", name: "Ablation", link: 'ablation' },
+          //   { id: "33", name: "Device/Pacemaker", link: 'devicepacemaker' }
+          // ]
+          innerModules: [
+            { id: "31", name: "Rate Control", link: 'ratecontrol' },
+            { id: "32", name: "Rhythm Control", link: 'rhythmcontrol' },
+            { id: "33", name: "Stroke Risk", link: 'strokerisk' },
+            {
+              id: "34", name: "Risk Factors", link: '',
+              innersubModules: [
+                { id: "341", name: "Obesity", link: 'obesity' },
+                { id: "342", name: "Sleep apnea", link: 'sleepapnea' },
+                { id: "343", name: "Alcohol", link: 'alocohol' },
+                { id: "345", name: "Smoking", link: 'smoking' },
+                { id: "346", name: "Exercise", link: 'exercise' }
+              ]
+            }
+          ]
+        },
+        {
+          id: "5", name: "Heart Disease", link: '',
+          innerModules: [
+            { id: "51", name: "Coronary Artery", link: 'coronary' },
+            { id: "52", name: "Heart Valves", link: 'heartvalves' },
+            { id: "53", name: "Congestive Heart Failure", link: 'congestive' },
+            { id: "54", name: "Vascular", link: 'vascular' }
+          ]
+        }
+      ]
+    },
+    {
+      moduleId: '3',
+      name: 'Disease Tasks',
+      link: '/appointments',
+      subModules: [
+        { id: "1", name: "Appointments", link: 'appointments' },
+        { id: "2", name: "Pharmacy", link: 'pharmacy' },
+        { id: "3", name: "Community Resources(Health Equity)", link: 'communityresources' }
+      ]
+    },
+    {
+      moduleId: '4',
+      name: 'Health Partners',
+      link: '/healthplan',
+      subModules: [
+        { id: "1", name: "Health Plan", link: 'healthplan' },
+        { id: "2", name: "Accountable Care Organization", link: 'aco' },
+        { id: "3", name: "Pharmacy", link: 'ecopharmacy' },
+        { id: "4", name: "Dietician", link: 'dietician' },
+        { id: "4", name: "Health care Consultants", link: 'healthcare' }
+      ]
+    },
+    {
+      moduleId: '6',
+      name: 'Contact Us',
+      link: 'contactus'
+    }
+  ];
 
   const handleSigninClick = () => {
     dispatch(setAuthRoutes(getAuthRoute.SIGNIN))

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRegForm, getRole, pageTitle } from "../../../_mock/helperIndex";
+import { getActivetab, getRegForm, getRole, pageTitle } from "../../../_mock/helperIndex";
 import { setActiveRegistrationForm, setResetSessionState } from "../../../store/SessionStore/slice";
-import { getMobileValidationLengthByCountryCodeResponse } from "../../../store/UtilityCallFunction/slice";
+import { getMobileValidationLengthByCountryCodeResponse, setHATutorialComponent } from "../../../store/UtilityCallFunction/slice";
 import { DoctorRegister } from "./DoctorRegister";
 import OtpForm from "./OtpForm";
 import { PatientRegister } from "./PatientRegister";
@@ -22,13 +22,15 @@ const RegistrationManager = () => {
   let isDoctorAccount = (regActiveForm === getRegForm.REGFORM) && (regAccountType === getRole.PHYSICIAN);
 
   useEffect(() => {
+    dispatch(setHATutorialComponent(getActivetab.ACCREGISTRATION));
     if (regActiveForm === "")
-      dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION))
+      dispatch(setActiveRegistrationForm(getRegForm.REGTYPESELECTION));
     return () => {
-      dispatch(setResetSessionState())
-      dispatch(getMobileValidationLengthByCountryCodeResponse(null))
+      dispatch(setResetSessionState());
+      dispatch(getMobileValidationLengthByCountryCodeResponse(null));
+      dispatch(setHATutorialComponent(null))
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <React.Fragment>

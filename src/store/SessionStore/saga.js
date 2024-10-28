@@ -17,6 +17,7 @@ import {
     setResetAdminPasswordRequest,
     setResetPasswordRequest,
     setResetPasswordResponse,
+    setSelectedConversationSessionIdForEducationalBot,
     setSessionTimeStart,
     updatePasswordFromForgotPasswrodRequest,
     verifyRegistrationOtpRequest,
@@ -440,6 +441,7 @@ function* userLoginRequest(action) {
         console.log("userLoginRequest=>", { response, reqObj })
         if (response?.status && response?.statuscode === 200) {
             sessionId = randomId;
+            yield put(setSelectedConversationSessionIdForEducationalBot(sessionId))
             authUser = getDecodedTokenFromLocalStorage(response?.data?.token);
             console.log("authUser=>", authUser)
             authToken = response?.data?.token

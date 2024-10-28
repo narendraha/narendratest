@@ -9,6 +9,7 @@ import ConfirmationAction from './ConfirmationAction';
 import Loading from './Loading';
 import SideNav from './SideNav';
 import Topbar from './Topbar';
+import { ApplicationTutorialInfo } from '../Utilities/ApplicationTutorialInfo';
 
 export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
@@ -29,7 +30,8 @@ export default function MainLayout() {
                     <SideNav isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
                     <div className='al_right_container'>
                         <Topbar isShowmenu={isShowmenu} setIsShowmenu={setIsShowmenu} />
-                        <div className='al_menu_info'><small>Health Hub Tutorial | Welcome to HelloAlfred.ai</small><i className='icon_alfred_details'></i></div>          
+                        {/* application tutorial */}
+                        <ApplicationTutorialInfo />
                         <main className='al_main_container'>
                             <Outlet />
                         </main>

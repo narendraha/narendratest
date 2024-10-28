@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
@@ -16,24 +16,17 @@ const reasonOptions = [
 
 export const ApproveUsersRemarkModal = React.memo(() => {
     const dispatch = useDispatch();
-    const [showRemarks, setShowRemarks] = useState(false);
 
     const remrkOpenModelObj = useSelector((state) => state?.approveUsersSlice.remrkOpenModelObj);
     let { isRemakrOpen, status, users } = remrkOpenModelObj || "";
-    
-    useEffect(()=>{
-        return()=>{
-            setShowRemarks(false)
-        }
-    },[])
 
     const handleClose = () => {
         dispatch(setRemarkOpenModel({ isRemakrOpen: false, status: null }));
     };
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values, setFieldValue) => {
         let remark = values?.remarks || values?.reason;
-        dispatch(setUserStatusRequest({ patient_id: users?.patient_id, status, remark }));
+        dispatch(setUserStatusRequest({ patient_id: users?.patient_id, status, remark, setFieldValue }));
     }
 
     const validationSchema = Yup.object({
@@ -53,7 +46,7 @@ export const ApproveUsersRemarkModal = React.memo(() => {
             >
                 <div className="d-flex align-items-center justify-content-between p-4">
                     <h6 className="mb-0">
-                        {remrkOpenModelObj?.user_status === getAdminUserStatus.HOLD
+                        {remrkOpenModelObj?.status === getAdminUserStatus.HOLD
                             ? 'Hold Reason'
                             : 'Reject Reason'}
                     </h6>
@@ -68,13 +61,14 @@ export const ApproveUsersRemarkModal = React.memo(() => {
                         <Formik
                             initialValues={{
                                 reason: '',
-                                remarks: ''
+                                remarks: '',
+                                isRearkEnter: false
                             }}
                             validationSchema={validationSchema}
-                            onSubmit={(values, { setSubmitting }) => {
+                            onSubmit={(values, { setFieldValue, setSubmitting }) => {
                                 console.log(values);
                                 setSubmitting(false);
-                                handleSubmit(values);
+                                handleSubmit(values, setFieldValue);
                             }}
                         >
                             {({ setFieldValue, values, touched, errors, isSubmitting }) => (
@@ -115,7 +109,7 @@ export const ApproveUsersRemarkModal = React.memo(() => {
                                                     }}
                                                     onChange={(option) => {
                                                         setFieldValue('reason', option.value);
-                                                        setShowRemarks(option.value === 'other'); // Show textarea if "Others" is selected
+                                                        setFieldValue('isRearkEnter', option.value === 'other' && true)
                                                     }}
                                                     value={reasonOptions.find((option) => option.value === values.reason)}
                                                 />
@@ -126,7 +120,7 @@ export const ApproveUsersRemarkModal = React.memo(() => {
                                         ) : null}
                                     </FormGroup>
 
-                                    {showRemarks && (
+                                    {values?.isRearkEnter && (
                                         <FormGroup>
                                             <Label>Enter Remarks</Label>
                                             <Field

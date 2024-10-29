@@ -25,7 +25,7 @@ export const Signin = () => {
     return (() => {
       dispatch(setHATutorialComponent(null));
     })
-  }, []);
+  }, [dispatch]);
 
   const signInToGooglehandle = async () => {
     await signInWithPopup(googleAuth, googleAuthprovider)

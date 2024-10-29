@@ -110,21 +110,21 @@ const menus = [
             },
         ],
     },
-    // {
-    //     role: loginRoles.ADMIN,
-    //     moduleId: "8",
-    //     name: "Bot Manager",
-    //     link: "uploaddocument",
-    //     icon: "icon_alfred_approveusers",
-    //     subModules: [
-    //         {
-    //             id: "1",
-    //             name: "Upload Documents",
-    //             link: "uploaddocument",
-    //             icon: "icon_alfred_uploaddocument",
-    //         },
-    //     ],
-    // },
+    {
+        role: loginRoles.ADMIN,
+        moduleId: "8",
+        name: "Bot Manager",
+        link: "uploaddocument",
+        icon: "icon_alfred_approveusers",
+        subModules: [
+            {
+                id: "1",
+                name: "Upload Documents",
+                link: "uploaddocument",
+                icon: "icon_alfred_uploaddocument",
+            },
+        ],
+    },
     {
         role: loginRoles.ADMIN,
         moduleId: "7",
@@ -155,21 +155,6 @@ const menus = [
             },
         ],
     },
-    // {
-    //     role: loginRoles.ADMIN,
-    //     moduleId: "8",
-    //     name: "Educational Bot",
-    //     link: "educationbot",
-    //     icon: "icon_alfred_bot",
-    //     subModules: [
-    //         {
-    //             id: "1",
-    //             name: "Request for Sign-in",
-    //             link: "educationbot",
-    //             icon: "icon_alfred_bot",
-    //         },
-    //     ],
-    // },
     {
         role: loginRoles.ADMIN,
         moduleId: "10",

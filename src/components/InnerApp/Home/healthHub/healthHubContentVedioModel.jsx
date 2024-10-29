@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardBody, Col, Modal, ModalBody, Row } from "reactstrap";
 import { getActionTypes } from "../../../../_mock/helperIndex";
@@ -6,11 +6,16 @@ import { setActionTypeAndActionData } from "../../../../store/UtilityCallFunctio
 
 export const HealthHubContentVedioMdal = React.memo(() => {
     const dispatch = useDispatch();
+    const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
 
-    const healthHubVedioContent = useSelector((state) => (state?.homePageSlice?.healthHubVedioContent) || undefined)
+    const healthHubVedioContent = useSelector((state) => (state?.homePageSlice?.healthHubVedioContent) || undefined);
 
     const vedioSelectHandle = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT, actionData: { isVedioModel: false } }));
+    }
+
+    const handleVideoSelect = (index) => {
+        setSelectedVideoIndex(index);
     }
 
     return (
@@ -30,19 +35,15 @@ export const HealthHubContentVedioMdal = React.memo(() => {
                             {healthHubVedioContent && healthHubVedioContent?.map((embededUrl, index) => (
                                 <Col lg="4" sm="6" className="mb-3" key={index}>
                                     <Card className="al_cardbg mb-0">
-                                        <CardBody className="p-0">
-                                            <iframe
-                                                id={index}
+                                        <CardBody className="p-0" onClick={() => handleVideoSelect(index)}>
+                                            <video
                                                 width="100%"
                                                 height="150"
                                                 src={embededUrl}
-                                                title="video1"
-                                                frameBorder="0"
-                                                allowFullScreen
-                                                rel="noreferrer"
+                                                controls
+                                                autoPlay={selectedVideoIndex === index}
                                                 style={{ borderRadius: "8px" }}
-                                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
-                                            ></iframe>
+                                            />
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -52,5 +53,5 @@ export const HealthHubContentVedioMdal = React.memo(() => {
                 </ModalBody>
             </Modal>
         </React.Fragment>
-    )
+    );
 });

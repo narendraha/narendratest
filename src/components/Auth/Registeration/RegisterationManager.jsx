@@ -30,6 +30,7 @@ const RegistrationManager = () => {
       dispatch(getMobileValidationLengthByCountryCodeResponse(null));
       dispatch(setHATutorialComponent(null))
     }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   return (

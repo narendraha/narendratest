@@ -3093,6 +3093,8 @@ button.al_upgrade_btn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    color:#2C2C37;
+    &:hover{color:#2C2C37;}
 }
 
 .al_zoom-text {

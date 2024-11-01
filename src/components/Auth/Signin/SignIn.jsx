@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { signInWithPopup } from "firebase/auth";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -6,18 +6,26 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FormGroup, Label, UncontrolledTooltip } from "reactstrap";
 import * as Yup from 'yup';
-import { getAuthRoute, getRegForm, pageTitle } from "../../../_mock/helperIndex";
+import { getActivetab, getAuthRoute, getRegForm, pageTitle } from "../../../_mock/helperIndex";
 import apple from '../../../images/apple.svg';
 import google from '../../../images/google.svg';
 import handwave from '../../../images/handwave.png';
 import { loginRequest, setActiveRegistrationForm, setAuthRoutes } from "../../../store/SessionStore/slice";
 import { appleAuth, appleAuthProvider } from '../../Firebase/appleFirebase';
 import { googleAuth, googleAuthprovider } from "../../Firebase/googleFirebase";
+import { setHATutorialComponent } from "../../../store/UtilityCallFunction/slice";
 
 export const Signin = () => {
   pageTitle('Signin');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHATutorialComponent(getActivetab.ACCREGISTRATION));
+    return (() => {
+      dispatch(setHATutorialComponent(null));
+    })
+  }, [dispatch]);
 
   const signInToGooglehandle = async () => {
     await signInWithPopup(googleAuth, googleAuthprovider)
@@ -51,14 +59,15 @@ export const Signin = () => {
           passwordEyeClose: false,
         }}
         validationSchema={Yup.object().shape({
-          username: Yup.string()
-            .trim()
-            .required("Mobile Number / Email-ID field is required")
-            .matches(
-              // Regular expression for email or phone number validation
-              /^(?:[0-9]{10}|\w+[.-]*\w+@\w+\.[A-Za-z]{2,3})$/,
-              "Invalid email or phone number"
-            ),
+          username: Yup.string().trim().max(50, "Maximum 50 characters are allowed").email("Invalid email or phone number").required("Mobile Number / Email-ID field is required"),
+          // username: Yup.string()
+          //   .trim()
+          //   .required("Mobile Number / Email-ID field is required")
+          //   .matches(
+          //     // Regular expression for email or phone number validation
+          //     /^(?:[0-9]{10}|\w+[.-]*\w+@\w+\.[A-Za-z]{2,3})$/,
+          //     "Invalid email or phone number"
+          //   ),
           password: Yup.string()
             .max(50, "Max 50 characters are allowed")
             .required("Password is required")

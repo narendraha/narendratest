@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
 import { getTruncateString } from "../../../_mock/internalJsControl";
 import nodata from '../../../images/nodata.svg';
-import { setMenuOrPdfExpend } from "../../../store/EducationaChatBot/slice";
+import { resetRegenerateResponse, setMenuOrPdfExpend } from "../../../store/EducationaChatBot/slice";
 import { setAuthSessionIdRequest, setSelectedConversationSessionIdForEducationalBot } from "../../../store/SessionStore/slice";
 import { ChatBotShareModal } from "../../Utilities/ChatBotShareModal";
 import EducationalBotHTMLcontent from "../../Utilities/EducationalBotHTMLcontent";
@@ -35,12 +35,14 @@ export const AdminEducationalBotHistory = React.memo(() => {
     const handleConversationView = (selectedSessionId = null) => {
         let convo_session_id = selectedSessionId ? selectedSessionId : newSessionId;
         dispatch(setSelectedConversationSessionIdForEducationalBot(convo_session_id));
+        dispatch(resetRegenerateResponse())
     };
 
     const handleNewSessionOpen = async () => {
         if (!isInputDisable) {
             let randomId = nanoid();
             await dispatch(setAuthSessionIdRequest(randomId));
+            await dispatch(resetRegenerateResponse())
             handleConversationView();
         }
     }

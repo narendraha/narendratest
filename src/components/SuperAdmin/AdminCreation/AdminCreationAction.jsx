@@ -252,7 +252,7 @@ export const AdminCreationAction = React.memo(() => {
                                                     <button
                                                         type="submit"
                                                         className="al_savebtn"
-                                                        disabled={!dirty}
+                                                        disabled={!dirty || values?.mobile === "" || (values?.mobileValueLengthWithoutCountryCode !== null && values?.mobileValueLengthWithoutCountryCode !== mobileFieldValidation)}
                                                     >Save
                                                     </button>
                                                 </div>

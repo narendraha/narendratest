@@ -335,6 +335,7 @@ button:focus-visible {
 
 video {
   clip-path: inset(1px 1px);
+  object-fit: cover;
 }
 
 .popover {
@@ -1146,7 +1147,7 @@ button#notificationpopover {
     &:nth-child(5) {
       .nav-link {
         background-color: #F0E1FC;
-
+        margin-right: 0;
         &.active {
           background-color: #9C67C6;
 
@@ -1154,8 +1155,6 @@ button#notificationpopover {
             background-color: #9C67C6;
           }
         }
-
-        margin-right: 0;
       }
     }
 

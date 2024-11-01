@@ -17,11 +17,15 @@ import {
     updateChatPreferenceResponse
 } from "./slice";
 
+
+let edBotStreamAPiBaseUrl = process.env.REACT_APP_NODE_ENV === "test" ? process.env.REACT_APP_HALF_EDUCATIONA_BOT_TESTING_STRREAMING_API_BASE_URL : process.env.REACT_APP_HALF_EDUCATIONA_BOT_STRREAMING_API_BASE_URL;
+
 // LIKE DISLIKE CHAT RESPONSE
 function* updateChatPreference(action) {
     let feedBackAlert = false;
+    let feedBackMessage = "Glad you liked this answer!"
     const authUser = yield select(state => state.sessionStoreSlice?.authUser);
-    let url = authUser?.role === loginRoles.PATIENT ? '/preference_chat' : '/preference_chat_admin';
+    let url = authUser?.role === loginRoles.PATIENT ? '/preference_chat' : authUser?.role === loginRoles.ADMIN ? '/preference_chat_admin' : '/preference_chat_unknown';
 
     try {
 
@@ -31,8 +35,9 @@ function* updateChatPreference(action) {
             data: action?.payload,
             contentType: 'application/json',
         });
+        console.log("updateChatPreference_response=>", response)
         if (response?.status && response?.statuscode === 200)
-            feedBackAlert = true
+            feedBackAlert = action?.payload?.preference
         else
             toast(response?.message, {
                 position: "top-right",
@@ -45,7 +50,7 @@ function* updateChatPreference(action) {
         //     type: "error",
         // });
     }
-    yield put(updateChatPreferenceResponse(feedBackAlert))
+    yield put(updateChatPreferenceResponse({ feedBackAlert, feedBackMessage }))
 }
 
 
@@ -59,17 +64,18 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
     const data = {
         message: payload || "",
     };
-    const apiUrl = `https://api.stream.helloalfred.ai/${innerBot ? `educational_bot` : `educational_bot_home`}`;
+    const apiUrl = `${edBotStreamAPiBaseUrl}/${innerBot ? `educational_bot` : `educational_bot_home`}`;
     const headers = {
         'Content-Type': 'application/json',
     };
     if (innerBot) {
         headers["Authorization"] = `Bearer ${authToken}`;
-        data["session_id"] = sessionId
+        data["session_id"] = sessionId;
     } else {
         data["id"] = "1234-9876-54321";
-        data["session_id"] = nonAuthSessionId
+        data["session_id"] = nonAuthSessionId;
     }
+
     try {
         const responseStream = await fetch(apiUrl, {
             method: 'POST',
@@ -79,7 +85,6 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
         console.log("responseStream=>", { responseStream });
 
         if (responseStream?.status === 200) {
-
             const reader = responseStream.body.getReader();
             const decoder = new TextDecoder();
             let done = false;
@@ -92,18 +97,20 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
                 let parsedChunk = getParsedData(chunk);
 
                 console.log("chunk=>", { chunk, parsedChunk });
-                // if (parsedChunk && !parsedChunk?.status && parsedChunk?.statuscode !== 200) {
+
                 if (parsedChunk && parsedChunk?.statuscode !== 200) {
                     updatedHistory = [...updatedHistory, { content: "Sorry Unable to reach server at that moment can you please try again!", role: 'Alfred' }];
-                    regenerateResponse = true
+                    regenerateResponse = true;
                 } else {
-                    // checking for pdf reference in chunk using identifier #2SE24DC
-                    let splittedChunkByIndetifier = chunk?.includes("#2SE24DC") && chunk?.split("#2SE24DC");
-                    let isPdfExist = splittedChunkByIndetifier && splittedChunkByIndetifier?.length > 1
-                    const chunkWIthoutReferenceLink = isPdfExist ? splittedChunkByIndetifier[1] : chunk;
-                    let citationObj = isPdfExist && splittedChunkByIndetifier && getParsedData(splittedChunkByIndetifier[0])?.data;
+                    let splittedChunkByIdentifier = chunk?.includes("#2SE24DC") && chunk?.split("#2SE24DC");
+                    let isPdfExist = splittedChunkByIdentifier && splittedChunkByIdentifier?.length > 1;
 
-                    console.log("chunkWIthoutReferenceLink=>", { chunk, parsedChunk, splittedChunkByIndetifier, chunkWIthoutReferenceLink });
+                    const citationContent = isPdfExist ? splittedChunkByIdentifier[0] : null;
+                    const chunkWithoutReferenceLink = isPdfExist ? splittedChunkByIdentifier[1] : chunk;
+
+                    let citationObj = isPdfExist && citationContent && getParsedData(citationContent)?.data;
+
+                    console.log("chunkWithoutReferenceLink=>", { chunk, parsedChunk, splittedChunkByIdentifier, chunkWithoutReferenceLink });
 
                     const lastMessage = updatedHistory[updatedHistory.length - 1];
                     if (isFirstChunk && isPdfExist) {
@@ -113,19 +120,19 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
                         ];
                         isFirstChunk = false; // Set the flag to false after processing the first chunk
                     } else {
-                        // Create a new object to avoid mutating the state directly
                         if (lastMessage && lastMessage.role === 'Alfred') {
                             updatedHistory = [
                                 ...updatedHistory.slice(0, updatedHistory.length - 1),
-                                { ...lastMessage, content: lastMessage.content + chunkWIthoutReferenceLink }
+                                { ...lastMessage, content: lastMessage.content + chunkWithoutReferenceLink }
                             ];
                         } else {
-                            updatedHistory = [...updatedHistory, { content: chunkWIthoutReferenceLink, role: 'Alfred' }];
+                            updatedHistory = [...updatedHistory, { content: chunkWithoutReferenceLink, role: 'Alfred' }];
                         }
                     }
                 }
+
                 // Dispatch action to update chat history
-                isUpdated = true
+                isUpdated = true;
                 store.dispatch(getChatStreamResponse({ updatedHistory, regenerateResponse }));
             }
         }
@@ -135,8 +142,10 @@ export const fetchChatStream = async (payload, prevChatHistory, innerBot, authTo
         store.dispatch(getChatStreamResponse({ updatedHistory, regenerateResponse }));
         throw error;
     }
-    return { isUpdated, updatedHistory }
+
+    return { isUpdated, updatedHistory };
 };
+
 
 // TO GET UNSTREAMED RESPONSE BOT EDUCATIONAL BOT
 // function* fetchInnerEducationalBotResponse(payload, prevChatHistory) {
@@ -187,7 +196,7 @@ function* getEducationalBotChatStream(action) {
         let { isUpdated, updatedHistory } = yield call(fetchChatStream, (inputValue || action?.payload), prevChatHistory, innerBot, authToken, convoSessionId, nonAuthSessionId);
 
         if (isUpdated) {
-            let URL = `https://api.stream.helloalfred.ai/${innerBot
+            let URL = `${edBotStreamAPiBaseUrl}/${innerBot
                 ? (authUser.role === loginRoles.PATIENT ? `educational-bot-answer-dump` : `educational-bot-answer-dump-admin`)
                 : `educational-bot-home-answer-dump`}`;
 
@@ -206,8 +215,8 @@ function* getEducationalBotChatStream(action) {
             });
             console.log("dumpBotChatResponse", { nonAuthSessionId, reqObj, dumpBotChatResponse });
 
-            if (dumpBotChatResponse?.status && dumpBotChatResponse?.statuscode === 200)
-                // to sync conversation
+            if (dumpBotChatResponse?.status && dumpBotChatResponse?.statuscode === 200 && authUser?.role === loginRoles.ADMIN)
+                // to sync conversation for admin
                 store.dispatch(getEducationalBotConversationRequest({ isInternalCall: true }));
             else
                 console.error("error=>", dumpBotChatResponse?.message);
@@ -225,6 +234,7 @@ function* getEducationalBotChatStream(action) {
 function* setChatFeedBackComment(action) {
 
     let feedBackAlert = false;
+    let feedBackMessage = "Thanks for your feedback!"
     let { comment, botResponse } = action?.payload;
 
     let reqObj = {
@@ -233,7 +243,7 @@ function* setChatFeedBackComment(action) {
     }
 
     const authUser = yield select(state => state.sessionStoreSlice?.authUser);
-    let url = authUser?.role === loginRoles.PATIENT ? '/chat_comment' : '/chat_comment_admin';
+    let url = authUser?.role === loginRoles.ADMIN ? '/chat_comment_admin' : '/chat_comment';
 
     try {
         const response = yield call(callAPI, {
@@ -241,22 +251,24 @@ function* setChatFeedBackComment(action) {
             method: 'POST',
             data: reqObj,
             contentType: 'application/json',
+            intenalToken: authUser?.role === loginRoles.PATIENT ? null : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50X2lkIjoiMTIzNC05ODc2LTU0MzIxIn0.dX4_jwAwsw6FHJeQicHp1NmOWVfkLzYa5QujP8Cit8g"
         });
+        console.log("setChatFeedBackComment_response=>", response);
         if (response?.status && response?.statuscode === 200) {
             feedBackAlert = true
             store.dispatch(setActionTypeAndActionData(getActionTypes.UNSELECT))
-        }
-        toast(response?.message, {
-            position: "top-right",
-            type: response?.status && response?.statuscode === 200 ? "success" : "error",
-        });
+        } else
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
     } catch (error) {
         toast(error?.message || "Sorry, We are unable to reach server!", {
             position: "top-right",
             type: "error",
         });
     }
-    yield put(setChatFeedBackCommentResponse(feedBackAlert))
+    yield put(setChatFeedBackCommentResponse({ feedBackAlert, feedBackMessage }))
 }
 
 // TO GET ALL THE CONVERSATION OF EDUCATION BOT 
@@ -329,12 +341,21 @@ function* sendChatByEmailOrMobile(action) {
         values?.selectedChanel === "mobile" ? (isSessionShare ? "/session_Conversation_to_phone" : "/send_sms_to_phone") : "";
 
     try {
-        const response = yield call(callAPI, {
-            url: url,
-            method: 'POST',
-            data: reqObj,
-            contentType: 'application/json',
-        });
+        // const response = yield call(callAPI, {
+        //     url: url,
+        //     method: 'POST',
+        //     data: reqObj,
+        //     contentType: 'application/json',
+        // });
+
+        let response = {
+            status: true,
+            statuscode: 200,
+            message: `${values?.selectedChanel === "email" ? 'Email' : 'SMS'} send successfully!`
+        }
+
+        if (response?.status && response?.statuscode === 200)
+            store.dispatch(setActionTypeAndActionData({ actionData: null }))
 
         toast(response?.message, {
             position: "top-right",

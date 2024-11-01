@@ -55,13 +55,14 @@ export const AdminCreationAction = React.memo(() => {
         mobileValueLengthWithoutCountryCode: (actionData?.mobile_checks?.Dial_Code && getmobileLengthWithoutCO(actionData?.mobile, null, actionData?.mobile_checks?.Dial_Code)) || null,
         country: actionData?.mobile_checks?.country_code || "us",
         dialCode: actionData?.mobile_checks?.Dial_Code || "",
-        superadminEmail: actionData?.superadminEmail || ""
+        superadminEmail: actionData?.superadminEmail || "",
+        nationality: actionData?.mobile_checks?.country_code || "",
     }
 
     const getValidationSchema = Yup.object().shape({
         adminName: customContentValidation('Name is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
         email: Yup.string().trim().max(50, "Max 50 characters are allowed").email("please eneter a valid email address").required("Email-ID is required"),
-        designation: customContentValidation('Designation is required', { patternType: 'alphaspace', message: 'alphaspace' }, 50, 2),
+        designation: customContentValidation('Designation is required', { patternType: 'alphaspaceSpl', message: 'alphaspaceSpl', spacialChar: '_()/&-' }, 50, 2),
         accountExp: Yup.date().nullable().required("Account expiry date is required").min(new Date(new Date().setHours(0, 0, 0, 0)), "Account expired, please change the date to proceeds"),
         uniqueIDCode: Yup.lazy(() => {
             return actionType === getActionTypes.ADD
@@ -252,7 +253,7 @@ export const AdminCreationAction = React.memo(() => {
                                                     <button
                                                         type="submit"
                                                         className="al_savebtn"
-                                                        disabled={!dirty}
+                                                        disabled={!dirty || values?.mobile === "" || (values?.mobileValueLengthWithoutCountryCode !== null && mobileFieldValidation && values?.mobileValueLengthWithoutCountryCode !== mobileFieldValidation)}
                                                     >Save
                                                     </button>
                                                 </div>

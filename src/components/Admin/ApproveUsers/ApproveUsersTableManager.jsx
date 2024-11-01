@@ -65,6 +65,8 @@ let rejectTable = {
 export const ApproveUsersTableManager = React.memo(() => {
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortColumn, setSortColumn] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc'); // asc or desc
 
     const activetab = useSelector((state) => (state?.approveUsersSlice?.approveUsersActiveTab));
     const approveUserSelection = useSelector((state) => (state?.approveUsersSlice?.approveUserSelection));
@@ -86,12 +88,29 @@ export const ApproveUsersTableManager = React.memo(() => {
     // const itemsPerPage = getPaginationItem;
     const itemsPerPage = 5;
     const totalPages = Math.ceil(filteredUssersList?.length / itemsPerPage);
-    const paginatedUsersList = filteredUssersList?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const paginatedUsersList = filteredUssersList?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) || [];
 
     useEffect(() => {
         dispatch(getUsersListWithStatusRequest(activetab));
         setCurrentPage(1);
     }, [activetab, dispatch]);
+
+    // Function to handle sorting
+    const handleSort = (column) => {
+        const order = sortColumn === column && sortOrder === 'asc' ? 'desc' : 'asc';
+        setSortColumn(column);
+        setSortOrder(order);
+    };
+
+    // Sort users based on the selected column and order
+    const sortedUsersList = paginatedUsersList && [...paginatedUsersList].sort((a, b) => {
+        const valA = a[sortColumn];
+        const valB = b[sortColumn];
+
+        if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+        if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+    });
 
     return (
         <React.Fragment>
@@ -104,22 +123,27 @@ export const ApproveUsersTableManager = React.memo(() => {
                                     <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                                         <thead className='sticky_header'>
                                             <tr>
-                                                {tableColumnsByTabId && tableColumnsByTabId?.map((tableKey) => {
-                                                    return (
-                                                        <th>
-                                                            <div>{tableKey?.label}
-                                                                {false ? (
-                                                                    <i className={true ? "icon_alfred_tablesortup" : "icon_alfred_tablesortdown"} />
-                                                                ) : <i className="icon_alfred_tablesort" />}
-                                                            </div>
-                                                        </th>
-                                                    )
-                                                })}
+                                                {tableColumnsByTabId && tableColumnsByTabId?.map((tableKey) => (
+                                                    <th key={tableKey.value} onClick={() => handleSort(tableKey.value)}>
+                                                        <div>
+                                                            {tableKey?.label}
+                                                            {sortColumn === tableKey.value ? (
+                                                                sortOrder === 'asc' ? (
+                                                                    <i className="icon_alfred_tablesortup" />
+                                                                ) : (
+                                                                    <i className="icon_alfred_tablesortdown" />
+                                                                )
+                                                            ) : (
+                                                                <i className="icon_alfred_tablesort" />
+                                                            )}
+                                                        </div>
+                                                    </th>
+                                                ))}
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {paginatedUsersList && paginatedUsersList?.map((users) => (
+                                            {sortedUsersList && sortedUsersList?.map((users) => (
                                                 <ApproveUsersTableView key={users.patient_id} users={users} />
                                             ))}
                                         </tbody>

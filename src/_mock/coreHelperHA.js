@@ -16,7 +16,7 @@ let controleErrors = {
     "alphasp": "Allow only alpha and {spacial} but not allowed Space",
     "alphaspace": "Allow only alpha characters ",
     "alphaNumeric": "Allow only alpha numercis",
-    "alphaspaceSpl": "Allow only alpha and {special} characters "
+    "alphaspaceSpl": "Allow only alpha and {spacial} characters "
 }
 
 var N = (e, s, t) => new Promise((a, n) => {

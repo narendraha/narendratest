@@ -6,11 +6,12 @@ import Chatbot from "../../../images/alfredicon.svg";
 import botIcon from "../../../images/botIcon.png";
 import {
     getChatStreamRequest,
+    resetRegenerateResponse,
     setChatHistoryRequest,
     setInputDisableRequest,
     setMenuOrPdfExpend
 } from "../../../store/EducationaChatBot/slice";
-import { setResetSessionState, setSelectedConversationSessionIdForEducationalBot } from '../../../store/SessionStore/slice';
+import { setSelectedConversationSessionIdForEducationalBot } from '../../../store/SessionStore/slice';
 import ChatBotMsgInterface from '../../Utilities/ChatBotMsgInterface';
 import ChatBotSearchArea from '../../Utilities/ChatBotSearchArea';
 
@@ -38,7 +39,7 @@ const AdminEducationBot = (props) => {
 
     const handleFormSubmit = (e) => {
         let inputValue = e?.target?.value || e;
-        if (!inputValue.trim()) return; // Do not submit empty input
+        if (inputValue && !inputValue.trim()) return; // Do not submit empty input
         dispatch(setInputDisableRequest(true))
         dispatch(setChatHistoryRequest({ content: inputValue, role: 'User' }))
         dispatch(getChatStreamRequest({ inputValue, innerBot: true }))
@@ -60,11 +61,10 @@ const AdminEducationBot = (props) => {
 
     useEffect(() => {
         return () => {
-            dispatch(setSelectedConversationSessionIdForEducationalBot(null))
+            dispatch(setSelectedConversationSessionIdForEducationalBot(null));
+            dispatch(resetRegenerateResponse(false))
         }
     }, []);
-
-    console.log("isPdfViewExpandisPdfViewExpand", isPdfViewExpand)
 
     return (
         <React.Fragment>

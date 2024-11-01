@@ -13,7 +13,8 @@ const initialState = {
     assetUrl: "",
     chatBotLoadingIndex: null,
     mobileFieldValidation: "",
-    isProfileImageEnableToDelete: false
+    isProfileImageEnableToDelete: false,
+    haTutorialCmp: ""
 };
 
 const utilityCallFunctionSlice = createSlice({
@@ -61,7 +62,10 @@ const utilityCallFunctionSlice = createSlice({
         getMobileValidationLengthByCountryCodeResponse: (state, action) => {
             state.mobileFieldValidation = action?.payload
         },
-        sendEmailPdfRequest: () => { }
+        sendEmailPdfRequest: () => { },
+        setHATutorialComponent: (state, action) => {
+            state.haTutorialCmp = action?.payload
+        }
     },
 });
 
@@ -77,6 +81,7 @@ export const {
     getMobileValidationLengthByCountryCodeRequest, getMobileValidationLengthByCountryCodeResponse,
     sendEmailPdfRequest,
     setResetUtilityActions,
+    setHATutorialComponent
 } = actions;
 
 export default reducer;

@@ -6,6 +6,7 @@ const initialState = {
     isChatBotLoading: false,
     regenerateResponse: false,
     feedBackAlert: false,
+    feedBackMessage: "",
     isMenuExpand: true,
     isPdfViewExpand: false,
     pdfReferenceLink: "",
@@ -32,7 +33,8 @@ const educationalChatBotSlice = createSlice({
         },
         updateChatPreferenceRequest: () => { },
         updateChatPreferenceResponse: (state, action) => {
-            state.feedBackAlert = action?.payload
+            state.feedBackAlert = action?.payload?.feedBackAlert
+            state.feedBackMessage = action?.payload?.feedBackMessage
         },
         getChatStreamRequest: (state) => {
             state.isChatBotLoading = true
@@ -47,7 +49,8 @@ const educationalChatBotSlice = createSlice({
         },
         setChatFeedBackCommentRequest: () => { },
         setChatFeedBackCommentResponse: (state, action) => {
-            state.feedBackAlert = action?.payload
+            state.feedBackAlert = action?.payload?.feedBackAlert
+            state.feedBackMessage = action?.payload?.feedBackMessage
         },
         setMenuOrPdfExpend: (state, action) => {
             state.isMenuExpand = action?.payload?.isMenuExpand
@@ -62,7 +65,10 @@ const educationalChatBotSlice = createSlice({
         setSelectedConversationSessionId: (state, action) => {
             state.selectedConvoSessionId = action?.payload
         },
-        sendChatByEmailOrMobileRequest: () => { }
+        sendChatByEmailOrMobileRequest: () => { },
+        resetRegenerateResponse: (state) => {
+            state.regenerateResponse = false
+        }
     }
 });
 
@@ -78,7 +84,8 @@ export const {
     setMenuOrPdfExpend,
     getEducationalBotConversationRequest, getEducationalBotConversationResponse,
     setSelectedConversationSessionId,
-    sendChatByEmailOrMobileRequest
+    sendChatByEmailOrMobileRequest,
+    resetRegenerateResponse,
 } = actions;
 
 export default reducer;

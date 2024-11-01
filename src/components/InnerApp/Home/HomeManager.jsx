@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import { getActivetab, pageTitle } from "../../../_mock/internalJsControl";
 import { getActiveTabRequest, setActiveTabRequest } from "../../../store/Home/slice";
-import { getUsersDetailsRequest } from '../../../store/UtilityCallFunction/slice';
+import { getUsersDetailsRequest, setHATutorialComponent } from '../../../store/UtilityCallFunction/slice';
 import { ExpertMonitoring } from './expertMonitoring/expertMonitoring';
 import HealthHubManager from "./healthHub/healthHubManager";
 import { LifeStyleGoal } from "./lifeStyleGoal/lifeStyleGoal";
@@ -46,6 +46,13 @@ export default function HomeManager() {
           "Optimal Risk Management";
 
   pageTitle(`Home | ${currentHometab}`);
+
+  useEffect(() => {
+    dispatch(setHATutorialComponent(activeTab));
+    return (() => {
+      dispatch(setHATutorialComponent(null));
+    })
+  }, [activeTab, dispatch]);
 
   return (
     <>

@@ -13,6 +13,8 @@
 .cs_funfact.cs_style_1 {
   max-width: 20%;
   padding: 20px 30px;
+  flex: none;
+
   @media (max-width: 1400px) {
     padding: 10px 15px;
   }
@@ -28,7 +30,6 @@
     max-width: 100%;
     padding: 15px 0;
   }
-  flex: none;
   .cs_funfact_number {
     margin-bottom: 8px;
   }

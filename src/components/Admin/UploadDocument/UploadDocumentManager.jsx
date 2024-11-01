@@ -3,16 +3,23 @@ import { useSelector } from 'react-redux';
 import { getActionTypes } from '../../../_mock/internalJsControl';
 import { UploadDocumentAction } from './UploadDocumentAction';
 import { UploadDocumentFilter } from './UploadDocumentFilter';
+import UserLocationDetector from '../../Utilities/UserLocationDetector';
+import { UploadDocumentTableManager } from './UploadDocumentTableManager';
 
 const UploadDocumentManager = () => {
 
     let actionType = useSelector((state) => state?.utilityCallFunctionSlice?.actionType);
 
-    console.log("actionTypeactionType",actionType)
     return (
         <React.Fragment>
             <div className="wflexLayout">
-                {actionType === getActionTypes.ADD ? <UploadDocumentAction /> : <UploadDocumentFilter />}
+                {actionType === getActionTypes.ADD ? <UploadDocumentAction /> :
+                    <>
+                        <div className="wflexLayout">
+                            <UploadDocumentFilter />
+                            <UploadDocumentTableManager />
+                        </div>
+                    </>}
             </div>
         </React.Fragment>
     )

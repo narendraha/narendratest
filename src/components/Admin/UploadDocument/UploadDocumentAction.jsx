@@ -11,9 +11,18 @@ import { FileUploadAnimation } from "./fileUploadAnimation";
 export const UploadDocumentAction = React.memo(() => {
     const dispatch = useDispatch();
 
-    const DragAndDropHandle = (e) => {
+    const handleDragOver = (e) => {
         e.preventDefault();
         e.stopPropagation();
+    };
+
+    const handleDrop = (e, setFieldValue) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const files = e.dataTransfer.files;
+        if (files.length) {
+            setFieldValue('uploadedDocument', files);
+        }
     }
 
     const handleFileUploadParent = (setFieldValue) => {
@@ -31,10 +40,10 @@ export const UploadDocumentAction = React.memo(() => {
                     uploadedDocument: ""
                 }}
                 onSubmit={(values) => {
-                    console.log("Submit=>", values)
+                    console.log("Submit=>", values);
                 }}
-            >{({ values, setFieldValue }) => (
-                <>
+            >
+                {({ values, setFieldValue }) => (
                     <Form>
                         <div className='wflexScroll d-flex flex-column'>
                             <div className='flex-grow-1'>
@@ -46,10 +55,10 @@ export const UploadDocumentAction = React.memo(() => {
                                     <Col xl="4" lg="5" md="6" sm="12" className='px-0'>
                                         <div className='al-pad pb-0'>
                                             <div className='al_filedragupload'
-                                                onDrop={e => DragAndDropHandle(e)}
-                                                onDragOver={e => DragAndDropHandle(e)}
-                                                onDragEnter={e => DragAndDropHandle(e)}
-                                                onDragLeave={e => DragAndDropHandle(e)}
+                                                onDrop={(e) => handleDrop(e, setFieldValue)}
+                                                onDragOver={handleDragOver}
+                                                onDragEnter={handleDragOver}
+                                                onDragLeave={handleDragOver}
                                             >
                                                 <img src={fileupload} alt="dragfile" />
                                                 <div className='mt-2'>Drag & Drop the file</div>
@@ -58,9 +67,8 @@ export const UploadDocumentAction = React.memo(() => {
                                                     type="file"
                                                     id="document"
                                                     hidden
-                                                    onChange={(e) => setFieldValue('uploadedDocument', e?.target?.files)}
+                                                    onChange={(e) => setFieldValue('uploadedDocument', e.target.files)}
                                                 />
-
                                                 <div id="al_blockele">
                                                     <label htmlFor="document" className="al_choose">
                                                         Browse File
@@ -68,7 +76,7 @@ export const UploadDocumentAction = React.memo(() => {
                                                 </div>
                                             </div>
                                             {/* File Upload animation */}
-                                            <FileUploadAnimation props={{ fileUpload: values?.uploadedDocument, handleFileUpload: () => handleFileUploadParent(setFieldValue) }} />
+                                            <FileUploadAnimation props={{ fileUpload: values.uploadedDocument, handleFileUpload: () => handleFileUploadParent(setFieldValue) }} />
                                         </div>
                                     </Col>
                                     <UploadDocumentRecentFileView />
@@ -84,15 +92,13 @@ export const UploadDocumentAction = React.memo(() => {
                                 <button
                                     type="submit"
                                     className="al_savebtn"
-                                // onClick={() => setView("view")}
                                 >Save
                                 </button>
                             </div>
                         </div>
                     </Form>
-                </>
-            )}
+                )}
             </Formik>
         </React.Fragment>
-    )
+    );
 });

@@ -48,7 +48,7 @@ function* userStatusUpdate(action) {
     store.dispatch(setLoading(true));
     const activeTab = yield select(state => state.approveUsersSlice?.approveUsersActiveTab);
 
-    let { patient_id, status, remark } = action?.payload;
+    let { patient_id, status, remark, setFieldValue } = action?.payload;
 
     let reqObj = {
         patient_id: patient_id,
@@ -66,6 +66,8 @@ function* userStatusUpdate(action) {
         if (response?.status && response?.statuscode === 200) {
             yield call(getUsersListWithStatus, { activeTab })
             yield put(setRemarkOpenModel({ isRemakrOpen: false, status: null }))
+            if (remark)
+                setFieldValue('isRearkEnter', false)
         }
         toast(response?.message, {
             position: "top-right",

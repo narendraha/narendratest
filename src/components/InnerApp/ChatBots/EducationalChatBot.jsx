@@ -15,6 +15,7 @@ const EducationalChatBot2 = (props) => {
     const isInputDisable = useSelector((state) => state?.educationalChatBotSlice?.isInputDisable);
     const isChatBotLoading = useSelector((state) => state?.educationalChatBotSlice?.isChatBotLoading);
     const regenerateResponse = useSelector((state) => state?.educationalChatBotSlice?.regenerateResponse);
+    const feedBackAlert = useSelector((state) => state?.educationalChatBotSlice?.feedBackAlert);
 
     const getProfileDetails = useSelector((state) => state?.utilityCallFunctionSlice?.getProfileDetails || undefined);
     const actionType = useSelector((state) => state?.utilityCallFunctionSlice?.actionType || getActionTypes.UNSELECT);
@@ -92,7 +93,8 @@ const EducationalChatBot2 = (props) => {
                                         getProfileDetails,
                                         isInputDisable,
                                         actionType,
-                                        toatlHistory: chatHistory
+                                        toatlHistory: chatHistory,
+                                        feedBackAlert
                                     }} />
                                 })}
                                 {isChatBotLoading &&

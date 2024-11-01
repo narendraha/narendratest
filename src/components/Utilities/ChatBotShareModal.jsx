@@ -8,7 +8,7 @@ import { sendChatByEmailOrMobileRequest } from '../../store/EducationaChatBot/sl
 export const ChatBotShareModal = ({ props }) => {
     const dispatch = useDispatch();
 
-    let { shareActionHandle, shareModelObj } = props;
+    let { shareActionHandle, actionData } = props;
 
     const moalCloseHandle = () => {
         shareActionHandle(false, null);
@@ -25,7 +25,7 @@ export const ChatBotShareModal = ({ props }) => {
                 })}
                 onSubmit={(values) => {
                     console.log('submit=>', values);
-                    dispatch(sendChatByEmailOrMobileRequest({ values, shareModelObj }))
+                    dispatch(sendChatByEmailOrMobileRequest({ values, actionData }))
                 }}
             >
                 {({ }) => (

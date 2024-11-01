@@ -335,8 +335,10 @@ function* getHealthHubProgress() {
 // TO GET WEEK WISE CONTENT ON HEALH HUB
 function* getWeekWiseHealthContent(action) {
     let healthHubWeeklyContent = "";
-    let data = action?.payload || action
-    let reqParam = data && data[data?.length - 1]
+    let data = action?.payload || action;
+    const reqParam = data.match(/\d+/)[0];
+    // let reqParam = data && data[data?.length - 1]
+
     try {
         const response = yield call(callAPI, {
             url: ('/getweeklycontent/{week}')?.replace('{week}', reqParam),
@@ -400,7 +402,8 @@ function* setHealthHubSkippedWeek(action) {
 
     let reqObjKey = isUpdateSkippedWeek ? "update_complete_week" : "skip_week"
     let reqObj = {
-        [reqObjKey]: value[value?.length - 1]
+        // [reqObjKey]: value[value?.length - 1]
+        [reqObjKey]: value.match(/\d+/)[0]
     }
     try {
         const response = yield call(callAPI, {

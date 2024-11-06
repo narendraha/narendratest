@@ -69,6 +69,7 @@ const UserFeedback = React.lazy(() => import("./components/Admin/UserFeedback/in
 
 // SuperAdmin
 const AdminCreation = React.lazy(() => import("./components/SuperAdmin/AdminCreation/AdminCreationManager"));
+const PromptChanges = React.lazy(() => import("./components/SuperAdmin/PromptChanges/PromptChanges1.jsx"));
 
 const AllRoutes = ({ authenticated }) => {
 
@@ -96,6 +97,7 @@ const AllRoutes = ({ authenticated }) => {
                 <>
                   <Route index path="/" element={<AdminCreation />} />
                   <Route path="admincreation" element={<AdminCreation />} />
+                  <Route path="promptchanges" element={<PromptChanges />} />
                 </>}
               {role === loginRoles.ADMIN &&
                 <>

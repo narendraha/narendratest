@@ -46,7 +46,7 @@ function* getAllUploadedDocuments() {
 }
 
 function* watchUploadDocumentSaga() {
-    yield takeLeading(getAllUploadedDocumentRequest.typs, getAllUploadedDocuments)
+    // yield takeLeading(getAllUploadedDocumentRequest.typs, getAllUploadedDocuments)
 }
 
 export default watchUploadDocumentSaga;

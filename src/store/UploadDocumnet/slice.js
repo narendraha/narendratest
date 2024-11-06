@@ -25,7 +25,7 @@ export const {
     getAllUploadedDocumentRequest, getAllUploadedDocumentResponse,
     uploadDocumentRequest, uploadDocumentResponse,
     deleteUploadedDocumentRequest,
-    setResetUploadedDocumnetPendingRequests
+    setResetUploadedDocumnetPendingRequests,
 } = uploadDocumentSlice.actions;
 
 export default uploadDocumentSlice.reducer;

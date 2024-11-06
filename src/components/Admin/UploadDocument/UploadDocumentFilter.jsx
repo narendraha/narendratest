@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { getActionTypes } from '../../../_mock/helperIndex';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
 
 export const UploadDocumentFilter = React.memo(() => {
     const dispatch = useDispatch();
+
+    const totalUploadedDocuments = useSelector((state) => (state?.uploadDocumentSlice?.totalUploadedDocuments) || undefined);
 
     const handleAdd = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ADD }));
@@ -23,7 +25,9 @@ export const UploadDocumentFilter = React.memo(() => {
                 </Col>
                 <div className='w-auto px-3'>
                     <div className="al_searchleft px-0">
-                        <input type="text" className="form-control" placeholder="Search" />
+                        <input type="text" className="form-control" placeholder="Search"
+                            disabled={totalUploadedDocuments?.length === 0}
+                        />
                         <i className="icon_alfred_search"></i>
                     </div>
                 </div>

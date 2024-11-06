@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { getActionTypes } from '../../../_mock/internalJsControl';
 import { UploadDocumentAction } from './UploadDocumentAction';
 import { UploadDocumentFilter } from './UploadDocumentFilter';
-import UserLocationDetector from '../../Utilities/UserLocationDetector';
 import { UploadDocumentTableManager } from './UploadDocumentTableManager';
 
 const UploadDocumentManager = () => {

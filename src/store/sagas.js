@@ -5,7 +5,7 @@ import watchHomeEducationalBotSaga from './EducationaChatBot/saga';
 import watchHomePageSaga from './Home/saga';
 import watchProfileSaga from './Profile/saga';
 import watchSessionStateSaga from './SessionStore/saga';
-import watchUploadDocumentSaga from './UploadDocument/saga';
+import watchUploadDocumentSaga from './UploadDocumnet/saga';
 import watchUtilityCallFunctionSaga from './UtilityCallFunction/saga';
 
 function* rootSaga() {

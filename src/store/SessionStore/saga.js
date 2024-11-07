@@ -111,6 +111,21 @@ const menus = [
         ],
     },
     {
+        role: loginRoles.SUPERADMIN,
+        moduleId: "11",
+        name: "User Management",
+        link: "promptchanges",
+        icon: "icon_alfred_prompt_menu",
+        subModules: [
+            {
+                id: "1",
+                name: "List of Prompt Changes",
+                link: "promptchanges",
+                icon: "icon_alfred_prompt_menu",
+            },
+        ],
+    },
+    {
         role: loginRoles.ADMIN,
         moduleId: "8",
         name: "Bot Manager",

@@ -648,6 +648,16 @@ textarea {
   }
 }
 
+.w-20{width: 20%;}
+
+.al_actions{
+  .icon_alfred_save{color: #04C1D6;}
+  .icon_alfred_clear{color: #6D6D6D;}
+  .icon_alfred_close{color: #F54A68;}
+  i{cursor: pointer;}
+  span{display: flex; justify-content: center;}
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],

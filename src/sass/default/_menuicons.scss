@@ -25,6 +25,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon_alfred_prompt_menu:before {
+  content: "\e972";
+}
+.icon_alfred_warning:before {
+  content: "\ea07";
+}
+.icon_alfred_clear:before {
+  content: "\e971";
+}
 .icon_alfred_audioplay:before {
   content: "\e96e";
 }
@@ -369,7 +378,4 @@
 }
 .icon_alfred_folder:before {
   content: "\e91f";
-}
-.icon_alfred_warning:before{
-  content: "\26A0";
 }

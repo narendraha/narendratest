@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { setMenuOrPdfExpend } from '../../../store/EducationaChatBot/slice';
 import { Spinner } from 'reactstrap'; // Use any spinner or loading component you prefer
-import { setActionTypeAndActionData } from '../../store/UtilityCallFunction/slice';
-import { getActionTypes } from '../../_mock/internalJsControl';
+
 
 export const DocumentViewer = React.memo((props) => {
-    const dispatch = useDispatch();
+    
     const [loading, setLoading] = useState(true);
 
     const actionData = useSelector((state) => (state?.utilityCallFunctionSlice?.actionData));
 
     let { link, fileType } = actionData;
-
-    const menuExpandHandle = () => {
-        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT, actionData: null }))
-    };
 
     const handleIframeLoad = () => {
         setLoading(false);
@@ -23,11 +18,6 @@ export const DocumentViewer = React.memo((props) => {
 
     return (
         <React.Fragment>
-            <div className="al_pdf_expand">
-                <i
-                    className="icon_alfred_close pointer text-end"
-                    onClick={menuExpandHandle}
-                ></i>
 
                 {/* Show loading spinner until iframe is loaded */}
                 {loading && (
@@ -50,7 +40,6 @@ export const DocumentViewer = React.memo((props) => {
                 ) : (
                     <p className='mb-0'>No PDF available to display.</p>
                 )}
-            </div>
         </React.Fragment>
     );
 });

@@ -27,7 +27,7 @@ export const UploadDocumentTableManager = React.memo(() => {
 
     useEffect(() => {
         dispatch(getAllUploadedDocumentRequest());
-    }, [])
+    }, [dispatch])
 
     return (
         <React.Fragment>

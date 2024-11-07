@@ -55,10 +55,10 @@ export default function PromptChanges() {
                                         />
                                     </FormGroup>
                                     <div className='al_actions d-flex flex-column gap-3 mt-3'>
-                                        {/* <span><i className='icon_alfred_edit'></i></span> */}
-                                        <span><i className='icon_alfred_save'></i></span>
+                                        <span><i className='icon_alfred_edit'></i></span>
+                                        {/* <span><i className='icon_alfred_save'></i></span>
                                         <span><i className='icon_alfred_clear'></i></span>
-                                        <span><i className='icon_alfred_close'></i></span>
+                                        <span><i className='icon_alfred_close'></i></span> */}
                                     </div>
                                 </div>
                             </div>

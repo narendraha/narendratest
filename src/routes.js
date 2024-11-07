@@ -55,21 +55,21 @@ const HistoryChat = React.lazy(() => import("./components/InnerApp/HistoryChatBo
 const BehavioralChat = React.lazy(() => import("./components/InnerApp/BehaviouralChatBot/BehaviouralChatBot"));
 
 // Admin
-const ListofPatients = React.lazy(() => import("./components/Admin/ListofPatients/index"));
 const ApproveUsers = React.lazy(() => import("./components/Admin/ApproveUsers/ApproveUsersManager"));
 const UploadDocument = React.lazy(() => import("./components/Admin/UploadDocument/UploadDocumentManager"));
 const AdminEducationBot = React.lazy(() => import("./components/Admin/EducationBot/AdminEducationalBotManager"));
-
-const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
-const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/index"));
-const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
-const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
 const HealthHubBuilder = React.lazy(() => import("./components/Admin/HealthHubBuilder/index"));
 const UserFeedback = React.lazy(() => import("./components/Admin/UserFeedback/index"));
 
+// const BotQuestionnaire = React.lazy(() => import("./components/Admin/BotQuestionnaire/index"));
+// const DoctorsList = React.lazy(() => import("./components/InnerApp/DoctorsList/index"));
+// const RoleManagement = React.lazy(() => import("./components/Admin/RoleManagement/index"));
+// const UserManagement = React.lazy(() => import("./components/Admin/UserManagement/index"));
+// const ListofPatients = React.lazy(() => import("./components/Admin/ListofPatients/index"));
+
 // SuperAdmin
 const AdminCreation = React.lazy(() => import("./components/SuperAdmin/AdminCreation/AdminCreationManager"));
-const PromptChanges = React.lazy(() => import("./components/SuperAdmin/PromptChanges/PromptChanges1.jsx"));
+const PromptChanges = React.lazy(() => import("./components/SuperAdmin/PromptChanges/PropmtChangesManager"));
 
 const AllRoutes = ({ authenticated }) => {
 
@@ -102,18 +102,19 @@ const AllRoutes = ({ authenticated }) => {
               {role === loginRoles.ADMIN &&
                 <>
                   <Route index path="/" element={<UploadDocument />} />
-                  <Route path="approveusers" element={<ApproveUsers />} />
                   <Route path="uploaddocument" element={<UploadDocument />} />
+                  <Route path="approveusers" element={<ApproveUsers />} />
                   <Route path="educationbot" element={<AdminEducationBot />} />
+                  <Route path="userFeedback" element={<UserFeedback />} />
+                  <Route path="botQuestio" element={<HealthHubBuilder />} />
                 </>}
               <Route path="profile" element={<Profile />} />
-              <Route path="botquestionnaire" element={<BotQuestionnaire />} />
+              {/* unused routes */}
+              {/* <Route path="botquestionnaire" element={<BotQuestionnaire />} />
               <Route path="patientslist" element={<ListofPatients />} />
               <Route path="doctorslist" element={<DoctorsList />} />
               <Route path="users" element={<UserManagement />} />
-              <Route path="roles" element={<RoleManagement />} />
-              <Route path="healthhubbuilder" element={<HealthHubBuilder />} />
-              <Route path="userFeedback" element={<UserFeedback />} />
+              <Route path="roles" element={<RoleManagement />} /> */}
             </Route>
             <Route path="*" element={<BackToHomeErrorPage />} />
           </>

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     totalUploadedDocuments: [],
-
+    searchKey: ""
 };
 
 const uploadDocumentSlice = createSlice({
@@ -18,6 +18,9 @@ const uploadDocumentSlice = createSlice({
         },
         uploadDocumentRequest: () => { },
         deleteUploadedDocumentRequest: () => { },
+        setUploadDocumentSearchKey: (state, action) => {
+            state.searchKey = action?.payload
+        }
     },
 });
 
@@ -25,7 +28,8 @@ export const {
     getAllUploadedDocumentRequest, getAllUploadedDocumentResponse,
     uploadDocumentRequest, uploadDocumentResponse,
     deleteUploadedDocumentRequest,
-    setResetUploadedDocumnetPendingRequests
+    setResetUploadedDocumnetPendingRequests,
+    setUploadDocumentSearchKey
 } = uploadDocumentSlice.actions;
 
 export default uploadDocumentSlice.reducer;

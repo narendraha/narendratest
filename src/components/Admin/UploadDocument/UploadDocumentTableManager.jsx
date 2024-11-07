@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
 import { getNoDataFoundOrNoResult, getPaginationItem, getSearchedDataByKeyValues } from '../../../_mock/helperIndex';
 import { getAllUploadedDocumentRequest } from '../../../store/UploadDocumnet/slice';
+import Pagination from '../../Utilities/Pagination';
 import UploadDocumentTableView from './UploadDcoumentTableView';
 
 export const UploadDocumentTableManager = React.memo(() => {
@@ -28,7 +29,6 @@ export const UploadDocumentTableManager = React.memo(() => {
         dispatch(getAllUploadedDocumentRequest());
     }, [])
 
-    console.log("totalUploadedDocumentstotalUploadedDocuments", { searchKey, totalUploadedDocuments, filterredUploadedDoc, paginatedUploadDocList })
     return (
         <React.Fragment>
             <div className="wflexLayout">
@@ -62,6 +62,15 @@ export const UploadDocumentTableManager = React.memo(() => {
                         }
                     </div>
                 </div>
+                {totalPages > 1 && (
+                    <div className="px-3 pb-3 mx-auto">
+                        <Pagination
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
+                    </div>
+                )}
             </div>
         </React.Fragment >
     )

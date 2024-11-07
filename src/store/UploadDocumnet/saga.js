@@ -54,6 +54,69 @@ function* getAllUploadedDocuments() {
                     type: "pdf",
                     fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
                 },
+                {
+                    id: 3,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 4,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 5,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 6,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 7,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 8,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
+                {
+                    id: 9,
+                    fileName: "boted",
+                    updatedBy: "Purnima",
+                    updatedOn: "06-11-2024",
+                    size: "4mb",
+                    type: "xml",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
+                },
             ]
         }
 

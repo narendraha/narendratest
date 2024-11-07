@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { getActionTypes } from '../../../_mock/helperIndex';
+import { setUploadDocumentSearchKey } from '../../../store/UploadDocumnet/slice';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
 
 export const UploadDocumentFilter = React.memo(() => {
@@ -11,6 +12,10 @@ export const UploadDocumentFilter = React.memo(() => {
 
     const handleAdd = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ADD }));
+    };
+
+    const searchHandle = (e) => {
+        dispatch(setUploadDocumentSearchKey(e.target.value));
     };
 
     return (
@@ -27,6 +32,7 @@ export const UploadDocumentFilter = React.memo(() => {
                     <div className="al_searchleft px-0">
                         <input type="text" className="form-control" placeholder="Search"
                             disabled={totalUploadedDocuments?.length === 0}
+                            onChange={searchHandle}
                         />
                         <i className="icon_alfred_search"></i>
                     </div>

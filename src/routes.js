@@ -99,7 +99,7 @@ const AllRoutes = ({ authenticated }) => {
                 </>}
               {role === loginRoles.ADMIN &&
                 <>
-                  <Route index path="/" element={<ApproveUsers />} />
+                  <Route index path="/" element={<UploadDocument />} />
                   <Route path="approveusers" element={<ApproveUsers />} />
                   <Route path="uploaddocument" element={<UploadDocument />} />
                   <Route path="educationbot" element={<AdminEducationBot />} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getActionTypes } from '../../../_mock/internalJsControl';
+import { DocumentViewer } from '../../Utilities/DocumentViewer';
 import { UploadDocumentAction } from './UploadDocumentAction';
 import { UploadDocumentFilter } from './UploadDocumentFilter';
 import { UploadDocumentTableManager } from './UploadDocumentTableManager';
@@ -18,6 +19,7 @@ const UploadDocumentManager = () => {
                             <UploadDocumentFilter />
                             <UploadDocumentTableManager />
                         </div>
+                        {actionType === getActionTypes.SELECT && <DocumentViewer />}
                     </>}
             </div>
         </React.Fragment>

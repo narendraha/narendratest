@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { put, call, takeLeading } from 'redux-saga/effects';
-import { callAPI } from '../../_mock/internalJsControl';
-import { setLoading } from '../UtilityCallFunction/slice';
+import { callAPI, getActionTypes } from '../../_mock/internalJsControl';
+import { setConfirmationOpen, setLoading } from '../UtilityCallFunction/slice';
 import { store } from '../store';
 import {
     deleteUploadedDocumentRequest,
@@ -33,7 +33,8 @@ function* getAllUploadedDocuments() {
                     updatedBy: "Purnima",
                     updatedOn: "06-11-2024",
                     size: "4mb",
-                    type: "txt"
+                    type: "img",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
                 },
                 {
                     id: 1,
@@ -41,7 +42,8 @@ function* getAllUploadedDocuments() {
                     updatedBy: "Purnima",
                     updatedOn: "06-11-2024",
                     size: "4mb",
-                    type: "txt"
+                    type: "txt",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
                 },
                 {
                     id: 2,
@@ -49,7 +51,8 @@ function* getAllUploadedDocuments() {
                     updatedBy: "Purnima",
                     updatedOn: "06-11-2024",
                     size: "4mb",
-                    type: "txt"
+                    type: "pdf",
+                    fileUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fworld%2F&psig=AOvVaw2hGX57WEp_oUyELGs9S9Fe&ust=1731043221031000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiT_NS8yYkDFQAAAAAdAAAAABAE"
                 },
             ]
         }
@@ -83,7 +86,8 @@ function* deleteUploadedDocument() {
             data: null,
             contentType: 'application/json',
         });
-
+        if (response?.status && response?.statuscode === 200)
+            store.dispatch(setConfirmationOpen({ actionType: getActionTypes.UNSELECT }))
         toast(response?.message, {
             position: "top-right",
             type: response?.status && response?.statuscode === 200 ? "success" : "error",

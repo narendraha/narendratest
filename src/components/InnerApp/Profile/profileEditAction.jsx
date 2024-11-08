@@ -60,6 +60,7 @@ export const ProfileEditAction = () => {
     const handleMobileChange = (value, country, setFieldValue) => {
         setFieldValue('mobile', value);
         setFieldValue('country', country?.countryCode)
+        setFieldValue('nationality', country?.name)
         getMobileValueWithoutCountryCode(value, country, setFieldValue)
     }
 

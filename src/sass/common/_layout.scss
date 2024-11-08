@@ -3116,3 +3116,48 @@ button.al_upgrade_btn {
         /* Zoom in */
     }
 }
+
+.al_updf_expand {
+    background-color: #ffffff;
+    border-left: 1px solid #e9e9e9;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    // overflow-y: auto;
+    width: 600px;
+    transition: all .3s ease;
+    position: relative;
+
+    &.al_updf_slide_in {
+        margin-right: 0;
+    }
+
+    &.al_updf_slide_out{
+        margin-right: -600px;
+    }
+
+    .column.is-2 {
+        width: 30% !important;
+    }
+
+    .columns.is-gapless.box {
+        padding: 0.5rem !important;
+    }
+
+    .column.is-3 {
+        width: 39% !important;
+    }
+
+    .icon_alfred_close {
+        position: absolute;
+        left: -30px;
+        z-index: 2;
+        top: 0;
+        font-size: 11px;
+        padding: 10px;
+        background: #ff6b6b;
+        color: #ffffff;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+}
